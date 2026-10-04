@@ -1,0 +1,44 @@
+# Bloodlinez
+
+A detective game about inheritance law for families that aren't entirely human. You play a night-shift associate at Ashgrove & Pell, a probate firm, working estates where the deceased might be a vampire, the heir a changeling and the will a demon contract. Every clue lives in websites that look real: a commercial genealogy site, the firm's webmail and its intranet.
+
+Case 1, *The Vane Estate*, is fully playable.
+
+## Play
+
+Open `index.html` in a browser. There's nothing to install and no server is needed. Progress saves in the browser's local storage.
+
+## Case 1 in brief
+
+Cornelius Vane, 91, went overboard off Ashby Point. His will leaves everything to his grandson Julian. His great-niece Margaret objects, and a third woman, Daphne, says she's his daughter. You get five findings to prove and three filings to get them past the partners.
+
+The tools:
+
+- **Bloodlines** (genealogy site): a family tree, record pages with an image viewer and index, search with collection filters, DNA matches for four kits, and member-tree hints. Some hints are planted by the people you're investigating.
+- **A&P Mail**: case briefings, claimant letters, attachments, and emails that react to what you find.
+- **A&P Intranet**: the matter page (parties, assets, evidence register, activity log), a photo lab that certifies identity by matching scars and moles, the ruling form, and a law library holding the Succession Act and the Nocturnal Accord 1888.
+
+Each finding needs the right answer plus the evidence that actually proves it. A right answer with thin evidence is rejected the same way as a wrong one.
+
+## Repo layout
+
+```
+index.html        built game, open this
+build.py          rebuilds index.html from src/
+src/template.html CSS and page markup (browser chrome, three site designs)
+src/data.js       case content: people, records, law, findings, mail, portrait art
+src/app.js        routing, rendering for each site, photo lab, ruling logic, events
+docs/DESIGN.md    premise, structure and the player's own arc
+docs/ASSETS.md    image assets still needed
+```
+
+Edit files in `src/`, then run:
+
+```
+python3 build.py              # writes index.html
+python3 build.py --artifact   # writes dist/artifact.html for claude.ai artifacts
+```
+
+## Status
+
+Prototype. The portraits are placeholder SVG faces. The next priorities are real period photos (see `docs/ASSETS.md`) and a second case built on a different creature's legal rules.
