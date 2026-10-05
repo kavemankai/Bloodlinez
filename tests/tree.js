@@ -42,8 +42,18 @@ const GAME='file://'+path.resolve(__dirname,'..')+'/index.html';
  // 2e. F2, F3 and F4 no longer lean on the identity links
  await ev(()=>{revealAllTree(); S.tree.links=S.tree.links.filter(l=>l.t!=='took'); refreshLayout()});
  ok(await ev(()=>treeOk('F2')&&treeOk('F4')&&treeOk('F5')&&!treeOk('F1')&&!treeOk('F3')),'without the identity links, F2, F4 and F5 still pass their tree checks; F1 and F3 do not');
- r=await ev(()=>tryEvent('cornelius','nobody','birth1888')); ok(!r.ok,'an event the record does not give is refused');
- ok(await ev(()=>{go('record/birth1888','bl');render();return !!document.querySelector('form[data-form=event]')}),'the event form shows on records without events too');
+ r=await ev(()=>tryEvent('cornelius','nobody','birth1888')); ok(!r.ok,'a statement the record does not make is refused');
+ // events: each record offers only its own plain statements, never a menu of conclusions
+ ok(await ev(()=>{go('record/birth1888','bl');render();return !document.querySelector('form[data-form=event]')}),'a record that states no event shows no event form');
+ const evOpts=await ev(()=>{go('record/hospital1888','bl');render();return [...document.querySelectorAll('form[data-form=event] [data-ev=k] option')].map(o=>o.textContent);});
+ ok(evOpts.length===1&&/attacked on the wharf/.test(evOpts[0]),'the hospital register offers only its own statement: "'+evOpts[0]+'"');
+ const allSays=await ev(()=>Object.values(EVENT_DEFS).flat().map(d=>d.say).join(' | '));
+ ok(!/turned|another man|buried under|vampire|staged|took the identity/i.test(allSays),'no event wording states a conclusion');
+ await fresh(); r=await ev(()=>tryEvent('ambrose','turned','hospital1888')); ok(r.st==='proven','the attack recorded against Ambrose, whom the register names, is proven');
+ r=await ev(()=>tryEvent('cornelius','turned','news1888')); ok(r.ok&&r.st==='unproven','the attack recorded against someone else is kept but unproven');
+ r=await ev(()=>tryEvent('ambrose','misid','inquest1934')); ok(r.ok&&r.st==='reading'&&!/not|wrong|unproven/i.test(r.msg),'naming whose remains were in the fire gets no verdict, even when wrong');
+ r=await ev(()=>tryEvent('desmond','misid','inquest1934')); ok(r.ok&&r.st==='reading','the right answer gets the same neutral reply');
+ ok(await ev(()=>hasEvent('desmond','misid')&&!hasEvent('cornelius','turned')),'only proven statements and readings count toward findings');
  await fresh(); await ev(()=>{FIND.forEach(f=>S.ans[f.id]=f.opts.find(o=>o[0]!==f.ans)[0]);go('matter/ruling','net');render()}); await p.click('form[data-form=rule] button.nbtn'); await p.waitForTimeout(150);
  ok(await p.locator('ul.tchk li').count()===0,'after one failed filing, the tree requirements stay hidden');
  await p.click('form[data-form=rule] button.nbtn'); await p.waitForTimeout(150);

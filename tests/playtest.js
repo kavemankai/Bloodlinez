@@ -8,7 +8,7 @@ const GAME='file://'+path.resolve(__dirname,'..')+'/index.html';
  const ev=(f,a)=>p.evaluate(f,a); const fresh=()=>ev(()=>{localStorage.clear();Object.assign(S,FRESH());S.cookie=true;render()});
  await p.goto(GAME); await fresh();
  // 1. flags ask, they do not answer
- const turningFlags=()=>ev(()=>{refreshLayout();return FLAGS.filter(f=>/turned/.test(f.text)).map(f=>({sev:f.sev,text:f.text}));});
+ const turningFlags=()=>ev(()=>{refreshLayout();return FLAGS.filter(f=>/attack on/.test(f.text)).map(f=>({sev:f.sev,text:f.text}));});
  await ev(()=>{ revealAllTree(); S.pins=S.pins.filter(x=>x!=='lawA3'); });
  let F=await turningFlags();
  ok(F.length>0,'the turning raises flags once it is in the tree ('+F.length+')');

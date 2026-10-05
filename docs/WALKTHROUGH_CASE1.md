@@ -73,7 +73,7 @@ The tree starts with Cornelius, Julian, Margaret and Daphne.
 
 Links to make that are not parent or spouse:
 - **adopted or raised as a stepchild:** Ambrose → Desmond (deed poll), Desmond → Cornelius (1948 order), Cornelius and Helen → Julian (1996 order).
-- **took the identity of:** Ambrose → Desmond, Cornelius and Julian, each proven by a certified comparison between an Ambrose photo and a photo of that name taken after the handover.
+- **also lived under the name of:** Ambrose → Desmond, Cornelius and Julian, each proven by a certified comparison between an Ambrose photo and a photo of that name taken after the handover.
 
 ## The Harriet line (Finding 5)
 
@@ -86,7 +86,7 @@ Two links on Margaret's line need two records each.
 
 The ruling form does not list these; they appear in the nudges after a second failed filing.
 
-- F1: Ambrose took the identity of Desmond, Cornelius and Julian, each proven.
+- F1: Ambrose also lived under the names of Desmond, Cornelius and Julian, each proven.
 - F2: "died with no body seen" for Cornelius, and an earlier death recorded as "buried under another man's name".
 - F3: Desmond recorded as "buried under another man's name" (from the 1934 inquest), and Ambrose proven to have taken his identity.
 - F4: Daphne linked to Cornelius; her Askew matches recorded; Cornelius recorded as "buried under another man's name" (from the 1976 inquest).
