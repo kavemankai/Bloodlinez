@@ -59,6 +59,8 @@ I'd guess 5 to 10 minutes for a speed-clicker and 25 to 40 for a reader who open
 
 ## Fixes, in order of value
 
+Fixes 1 to 4 are implemented (`evidenceOk()` in `src/data.js`, called from `judge()`). Checked with a script over 21 evidence sets, not by playing the game. The old shortcut sets now fail and one correct set per finding passes. Fixes 5 to 8 are not done.
+
 1. **Make the judge enforce the law it quotes.** F1: require a positive lab report plus at least two other documents, and require the set to span more than 100 years. Raw photos no longer count on their own (Art. 2.2). Drop `dnaJulian` from the F1 list or demote it. About 20 lines in `judge()` and `supports()`.
 2. **Require evidence groups, not a count.** Each finding lists groups, and the player needs one record from every group.
    - F2: one of (`marine2025`, `funeral2025`) and one of (`death1934`, `news1934`, `trust1934`). The official 2025 death records stop counting.

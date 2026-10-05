@@ -519,7 +519,7 @@ function ruleView(){
       return `<fieldset class="finding ${r===true?'ok':r===false?'no':''}"><div class="fhead"><span class="n">FINDING ${i+1}</span><legend>${f.q}</legend>${r===true?'<span class="pill green">Accepted</span>':r===false?'<span class="pill red">Not accepted</span>':''}</div>
       ${r===false?`<p class="nudge">${f.nudge}${S.flags['hint_'+f.id]?' Also: you attached a hint from a member tree. The claimant built that tree.':''}</p>`:''}
       ${f.opts.map(([v,l])=>`<label class="opt"><input type="radio" name="${f.id}" id="${f.id}-${v}" value="${v}" ${S.ans[f.id]===v?'checked':''} ${locked?'disabled':''}><span>${l}</span></label>`).join('')}
-      <div style="font-size:12px;font-weight:600;color:var(--nt-muted);text-transform:uppercase;letter-spacing:.05em;margin-top:4px">Supporting evidence · ${(S.ev[f.id]||[]).filter(pinned).length} attached${f.id==='F1'?' · needs 3 documents':''}</div>
+      <div style="font-size:12px;font-weight:600;color:var(--nt-muted);text-transform:uppercase;letter-spacing:.05em;margin-top:4px">Supporting evidence · ${(S.ev[f.id]||[]).filter(pinned).length} attached · 4 at most${f.id==='F1'?' · needs 3 documents':''}</div>
       ${S.pins.length?`<div class="chips">${S.pins.map(p=>`<button type="button" class="chip" data-a="ev" data-f="${f.id}" data-v="${p}" aria-pressed="${(S.ev[f.id]||[]).includes(p)}" ${locked?'disabled':''}>${REC[p].title}</button>`).join('')}</div>`:'<p style="font-size:13px;margin:0;color:var(--nt-muted)">Add evidence to the matter first. It will appear here.</p>'}
       </fieldset>`;}).join('')}
     <div><button class="nbtn" ${done?'disabled':''}>${S.won?'Ruling accepted':S.failed?'Matter reassigned':'File ruling with partners'}</button></div></form>
@@ -532,9 +532,7 @@ function judge(){
     if(S.res[f.id]===true) return;
     const ev = (S.ev[f.id]||[]).filter(pinned), hint = ev.includes('hintOfficial');
     if(hint){ S.flags['hint_'+f.id]=true; S.flags.usedHint=true; }
-    const good = ev.filter(id=>supports(id,f.id));
-    const enough = f.id==='F1' ? good.length>=3 : f.id==='F5' ? (ev.includes('lawA4') && good.filter(x=>x!=='lawA4'&&x!=='lawA3').length>=1) : good.length>=NEED[f.id];
-    const ok = S.ans[f.id]===f.ans && enough && !hint;
+    const ok = S.ans[f.id]===f.ans && evidenceOk(f.id, ev) && !hint;
     S.res[f.id] = ok; if(!ok) all = false;
   });
   S.attempts++;
@@ -572,7 +570,9 @@ document.addEventListener('click', e=>{
     case 'open': if(!$('#modal').hidden) closePreview(); openDoc(v); return;
     case 'close': closePreview(); return;
     case 'pin': togglePin(v); if(b.dataset.m){ showPreview(v); render(); } else render(); return;
-    case 'ev': { const f=b.dataset.f, l=S.ev[f]||(S.ev[f]=[]); S.ev[f] = l.includes(v)?l.filter(x=>x!==v):[...l,v]; save(); render(); return; }
+    case 'ev': { const f=b.dataset.f, l=S.ev[f]||(S.ev[f]=[]);
+      if(!l.includes(v) && l.filter(pinned).length>=MAX_EV){ toast('Four items at most per finding'); return; }
+      S.ev[f] = l.includes(v)?l.filter(x=>x!==v):[...l,v]; save(); render(); return; }
     case 'searchname': S.q={name:v,kw:'',kind:'All'}; S.searched=true; go('search','bl'); return;
     case 'clearsearch': S.q={name:'',kw:'',kind:'All'}; S.searched=false; save(); render(); return;
     case 'facet': S.q.kind=v; save(); render(); return;

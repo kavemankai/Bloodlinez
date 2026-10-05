@@ -56,12 +56,12 @@ const MARK_NAME = {scar:'Scar through the left eyebrow', mole:'Mole on the lower
 
 /* ================= PHOTOS ================= */
 const PH = {
-  photo1889:{alt:'Studio portrait of Ambrose Vane, 1889',faces:[{...VAMP,tone:'sepia'}],who:'Ambrose Vane (1889)',vamp:true},
-  photo1912:{alt:'Wedding portrait, 1912: groom and bride\'s father',faces:[{tone:'sepia',hair:'flat',era:'victorian',mous:true,jaw:26,nose:'broad',heavy:true},{...VAMP,tone:'sepia'}],who:'Bride\'s father (1912)',vamp:true,offset:120},
-  photo1950:{alt:'Thomas Holloway, 1950',faces:[{tone:'mono',hair:'wave',era:'suit',mole:true,glasses:true,jaw:25}],who:'Thomas Holloway (1950)'},
-  photo1962:{alt:'Newspaper photograph of Cornelius Vane, 1962',faces:[{...VAMP,tone:'mono',era:'suit'}],who:'Cornelius Vane (1962)',vamp:true,news:true},
-  licence1972:{alt:'Licence photo of Cornelius Vane, 1972',faces:[{...VAMP,tone:'seventies',hair:'long',era:'seventies'}],who:'Cornelius Vane (1972)',vamp:true},
-  licence2019:{alt:'Licence photo of Julian Vane, 2019',faces:[{...VAMP,tone:'modern',hair:'short',era:'modern'}],who:'Julian Vane (2019)',vamp:true}
+  photo1889:{year:1889,alt:'Studio portrait of Ambrose Vane, 1889',faces:[{...VAMP,tone:'sepia'}],who:'Ambrose Vane (1889)',vamp:true},
+  photo1912:{year:1912,alt:'Wedding portrait, 1912: groom and bride\'s father',faces:[{tone:'sepia',hair:'flat',era:'victorian',mous:true,jaw:26,nose:'broad',heavy:true},{...VAMP,tone:'sepia'}],who:'Bride\'s father (1912)',vamp:true,offset:120},
+  photo1950:{year:1950,alt:'Thomas Holloway, 1950',faces:[{tone:'mono',hair:'wave',era:'suit',mole:true,glasses:true,jaw:25}],who:'Thomas Holloway (1950)'},
+  photo1962:{year:1962,alt:'Newspaper photograph of Cornelius Vane, 1962',faces:[{...VAMP,tone:'mono',era:'suit'}],who:'Cornelius Vane (1962)',vamp:true,news:true},
+  licence1972:{year:1972,alt:'Licence photo of Cornelius Vane, 1972',faces:[{...VAMP,tone:'seventies',hair:'long',era:'seventies'}],who:'Cornelius Vane (1972)',vamp:true},
+  licence2019:{year:2019,alt:'Licence photo of Julian Vane, 2019',faces:[{...VAMP,tone:'modern',hair:'short',era:'modern'}],who:'Julian Vane (2019)',vamp:true}
 };
 function marksOf(id){
   const p = PH[id], dx = p.offset||0, f = p.faces[dx?1:0], out = {};
@@ -241,27 +241,54 @@ const HINTS = [
 /* ================= FINDINGS ================= */
 const FIND = [
   {id:'F1',q:'Who is Julian Ambrose Vane?',opts:[['grandson',"Cornelius Vane's grandson, as the will says"],['self','Ambrose and Cornelius Vane: one man under three names'],['impostor','An unrelated impostor after the money'],['desmond','Desmond Vane, who faked his own death in 1994']],ans:'self',
-    nudge:'Identity across names needs three independent documents spanning more than a century (Accord Art. 2). Faces with permanent marks hold up best. The photo lab can certify a match.'},
+    nudge:'Identity across names needs three independent documents spanning more than a century (Accord Art. 2). A photograph only counts once the photo lab has certified it. Pair that with records that are not photographs.'},
   {id:'F2',q:'Did Cornelius Vane die on 2 March 2025?',opts:[['drowned','Yes. He went overboard off Ashby Point.'],['staged','No. The death was staged.'],['open','It cannot be determined. Leave it as an open finding.']],ans:'staged',
     nudge:'Look at what happened to the boat afterwards, and at what was ordered for the memorial. Then look at 1934.'},
   {id:'F3',q:'Was Desmond Vane a real person?',opts:[['real',"Yes. Cornelius's son, who died in 1994."],['fabricated','No. A paper identity, created to give Julian a father.'],['adopted','A real man, informally adopted, never registered']],ans:'fabricated',
     nudge:'Look for Desmond anywhere a living adult would leave a mark. Search the birth registers yourself.'},
   {id:'F4',q:"What is Daphne Marsh-Pike's claim worth?",opts:[['daughter',"She is Cornelius's daughter and takes a child's share"],['not','She cannot be his daughter and takes nothing'],['unproven','Her claim is unproven for now and should be held open']],ans:'not',
-    nudge:'When did Ambrose stop being able to father children? Read Article 3, then check her DNA against Margaret\'s.'},
+    nudge:'When did Ambrose stop being able to father children? Read Article 3. You need the date he was turned and the date she was born.'},
   {id:'F5',q:'Who receives the estate?',opts:[['julian','Julian Vane, under the 2024 will'],['margaretSA','Margaret Holloway, as next of kin under the Succession Act'],['margaretA4','Margaret Holloway, as issue of the blood, under Accord Art. 4'],['owner','No one. The estate stays with its living owner.'],['registry','The Nocturnal Registry, as forfeit property'],['split','Margaret and Daphne, in equal shares']],ans:'margaretA4',
     nudge:'A staged death does not leave the estate where it was. Read Article 4, then prove the heir\'s line was begotten before the turning.'}
 ];
-const SUP = {
-  F1:['photo1889','photo1912','photo1962','licence1972','licence2019','birth1934','trust1934','dnaJulian','hospital1888'],
-  F2:['death2025','marine2025','funeral2025','news2025','death1934','news1934','trust1934'],
-  F3:['death1994','nilDesmond','rolls','news1994','birth1993'],
-  F4:['dnaDaphne','birth1966','lawA3','hospital1888','news1888','diary1888'],
-  F5:['lawA4','birth1888','dnaMargaret','hospital1888','news1888','diary1888','lawA3']
+/* What bears on each finding (BEARS), and what a finding must contain to be accepted (NEED).
+   Each NEED group lists records; the player needs n of them. A finding passes only if every group is met.
+   Records in BEARS but in no group are context: they cost nothing. Anything outside BEARS counts against the evidence. */
+const ATTACK = ['hospital1888','news1888','diary1888'];
+const BEARS = {
+ F1:['photo1889','photo1912','photo1962','licence1972','licence2019','birth1934','trust1934','dnaJulian','hospital1888'],
+ F2:['death2025','news2025','marine2025','funeral2025','death1934','news1934','trust1934'],
+ F3:['death1994','nilDesmond','rolls','news1994','birth1993'],
+ F4:['dnaDaphne','birth1966','lawA3',...ATTACK],
+ F5:['lawA4','lawA3','birth1888','dnaMargaret',...ATTACK]
 };
-const NEED = {F1:3,F2:2,F3:2,F4:2,F5:2};
-function supports(id,F){
-  if(id.startsWith('cmp:')){ const r=S.reports[id]; return F==='F1' && r && r.ok; }
-  return SUP[F].includes(id);
+const NEED = {
+ F1:[{cmp:true,n:1},{ids:['birth1934','trust1934','hospital1888'],n:2}],
+ F2:[{ids:['marine2025','funeral2025'],n:1},{ids:['death1934','news1934','trust1934'],n:1}],
+ F3:[{ids:['nilDesmond','rolls'],n:1},{ids:['death1994','news1994'],n:1}],
+ F4:[{ids:ATTACK,n:1},{ids:['birth1966'],n:1},{ids:['lawA3'],n:1}],
+ F5:[{ids:['lawA4'],n:1},{ids:ATTACK,n:1},{ids:['birth1888'],n:1}]
+};
+const MAX_EV = 4;
+const goodLab = id => id.startsWith('cmp:') && S.reports[id] && S.reports[id].ok;
+const inGroup = (id,g) => g.cmp ? goodLab(id) : g.ids.includes(id);
+function relevant(id,F){ return id.startsWith('cmp:') || BEARS[F].includes(id); }
+/* years covered by the counted documents; a lab report covers the years of both its photos */
+function yearsOf(id){
+ if(id.startsWith('cmp:')){ const r=S.reports[id]; return [PH[r.a].year, PH[r.b].year]; }
+ return [REC[id].year];
+}
+function evidenceOk(F, ev){
+ if(ev.length>MAX_EV) return false;
+ if(ev.filter(id=>!relevant(id,F)).length>1) return false;
+ const used = new Set(), counted = [];
+ for(const g of NEED[F]){
+  const got = ev.filter(id=>inGroup(id,g) && !used.has(id));
+  if(got.length<g.n) return false;
+  got.slice(0,g.n).forEach(id=>{used.add(id); counted.push(id);});
+ }
+ if(F==='F1'){ const ys = counted.flatMap(yearsOf); if(Math.max(...ys)-Math.min(...ys) <= 100) return false; }
+ return true;
 }
 
 /* ================= MAIL ================= */
