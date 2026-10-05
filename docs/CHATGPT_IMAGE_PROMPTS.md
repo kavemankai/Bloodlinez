@@ -240,7 +240,7 @@ Ask for a plain white background and an empty centre, then remove the background
 
 ### `ashgrove_portrait_1740.jpg` (later, not in the game yet)
 
-> A genuine 1740 English oil portrait of a gentleman of about 45 in a dark gown with a white neckcloth and a powdered wig, a rolled document in one hand, three-quarter length, dark ground, warm glazed skin tones, visible craquelure and darkened varnish, gilt frame. He has a long, composed face and a faint patient smile. No text. Portrait 2:3.
+> A genuine 1740 English oil portrait of a gentleman who looks about 33 in a dark gown with a white neckcloth and a powdered wig, a rolled document in one hand, three-quarter length, dark ground, warm glazed skin tones, visible craquelure and darkened varnish, gilt frame. He has a long, composed face and a faint patient smile, the same man as the 1620 portrait. No text. Portrait 2:3.
 
 ### `cellar_coffins.jpg`
 

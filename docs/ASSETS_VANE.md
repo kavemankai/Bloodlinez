@@ -181,7 +181,7 @@ Checks before accepting a photo:
 ## 7. Payoff images (later)
 
 - `cellar_coffins.jpg`: Margaret's torch-lit phone photo of four coffins. Three brass plates read AMBROSE, CORNELIUS, JULIAN. The fourth is older and darker, its plate reads ASHGROVE. Underexposed, handheld, slightly blurred.
-- `ashgrove_portrait_1740.jpg` (not in the game yet): an oil portrait of an Ashgrove ancestor from 1740, in the style of a gentleman's portrait of the period. Dark gown, white neckcloth, powdered wig, a document in his hand. The face resembles the present R. Ashgrove. It is the hook for the 1740 file.
+- `ashgrove_portrait_1740.jpg` (not in the game yet): an oil portrait of Ashgrove from 1740, in the style of a gentleman's portrait of the period. He looks about 33, as in 1620. Dark gown, white neckcloth, powdered wig, a document in his hand. He is plainly the same man as the 1620 portrait. It is the hook for the 1740 file.
 - `ashgrove_plate.jpg`: close-up of the ASHGROVE plate. Tarnished brass, engraved copperplate, a date that is not yet legible (the 1740 file is the later hook).
 
 ## Specs
