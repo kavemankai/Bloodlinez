@@ -6,6 +6,8 @@ Case 1, *The Vane Estate*, is fully playable.
 
 ## Play
 
+New to the game? Read `docs/GAME_GUIDE.md`, or just start: the game has a welcome email, a training list in the matter overview and a field guide in the bookmarks bar. If you get stuck, `docs/WALKTHROUGH_CASE1.md` has the full solution (spoilers).
+
 Open `index.html` in a browser. There's nothing to install and no server is needed. Keep the `assets/` folder next to it, since the pictures load from there. Progress saves in the browser's local storage.
 
 ## Case 1 in brief

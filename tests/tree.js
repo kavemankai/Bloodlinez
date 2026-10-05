@@ -32,6 +32,12 @@ const GAME='file://'+path.resolve(__dirname,'..')+'/index.html';
  await p.selectOption('#lk-a-birth1934','cornelius'); await p.selectOption('#lk-t-birth1934','spouse'); await p.selectOption('#lk-b-birth1934','ambrose');
  await p.click('form[data-form=link] button'); await p.waitForTimeout(200);
  ok(await ev(()=>S.tree.links.length===1),'a wrong choice in the form adds nothing');
+ // 4b. Daphne's letter opens in a pop-up and still takes a claimed link
+ await fresh(); await ev(()=>{go('home','bl');showPreview('letterDaphne')});
+ ok(await p.locator('#modal form[data-form=link]').count()===1,'a letter opened from the mail shows the Build your tree form');
+ await p.selectOption('#lk-a-letterDaphne','cornelius'); await p.selectOption('#lk-t-letterDaphne','claimed'); await p.selectOption('#lk-b-letterDaphne','daphne');
+ await p.click('#modal form[data-form=link] button'); await p.waitForTimeout(200);
+ ok(await ev(()=>S.tree.links.some(l=>l.t==='claimed'&&l.a==='cornelius'&&l.b==='daphne')),'Daphne\'s claim goes in as a dashed, claimed link');
  // 5. claim table matches the world
  const audit=await ev(()=>{
    const truth=new Set(), claimed=new Set();

@@ -518,6 +518,24 @@ textarea#notes{width:100%;min-height:240px;border:1px solid #c5ccd2;border-radiu
 .tpanel select{width:100%}
 .pv .tpanel{margin-top:16px;background:#fff;color:#222}
 .pv .tpanel .sform{display:flex;flex-direction:column;gap:10px}
+.bm.guidebtn{margin-left:auto}
+.train{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.train li{display:flex;align-items:flex-start;gap:10px}
+.train .tk{width:18px;height:18px;border:1.5px solid var(--nt-muted);border-radius:4px;display:grid;place-items:center;font-size:13px;line-height:1;flex:none;margin-top:2px;color:#fff}
+.train li.dn .tk{background:#2d7d46;border-color:#2d7d46}
+.train li.dn .tx b{color:var(--nt-muted);text-decoration:line-through}
+.train .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;font-size:14px}
+.train .tx small{color:var(--nt-muted);font-size:12.5px}
+.pv.gd{width:min(980px,96vw)}
+.gwrap{display:grid;grid-template-columns:210px 1fr;gap:24px;align-items:start;color:#222;font-family:var(--f-bl)}
+.gnav{display:flex;flex-direction:column;gap:2px;position:sticky;top:0}
+.gnav button{text-align:left;padding:8px 12px;border-radius:6px;font-size:14px;color:#333}
+.gnav button:hover{background:#efeae6}.gnav button.on{background:#7a1f33;color:#fff;font-weight:600}
+.gbody{max-width:620px;line-height:1.6;font-size:15.5px}
+.gbody h2{font-family:var(--f-bl-d);font-weight:400;font-size:26px;margin:0 0 12px}
+.gbody p{margin:0 0 12px}.gbody ul,.gbody ol{margin:0 0 12px;padding-left:22px;display:flex;flex-direction:column;gap:6px}
+.gloss{display:grid;grid-template-columns:150px 1fr;gap:8px 16px;margin:0}.gloss dt{font-weight:700}.gloss dd{margin:0}
+@media (max-width:760px){.gwrap{grid-template-columns:1fr}.gnav{flex-direction:row;flex-wrap:wrap;position:static}.gloss{grid-template-columns:1fr}}
 </style>
 
 <div class="app">

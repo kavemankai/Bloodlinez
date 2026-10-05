@@ -109,7 +109,7 @@ const IDX = {
   marine2025:[['Vessel','MY Marguerite'],['Report date','3 Mar 2025'],['Reported by','J. Vane'],['Reference','HA-25-031']],
   funeral2025:[['Account','J. Vane, Vane House'],['Service','Memorial, no body'],['Date','March 2025'],['Director','Mortlake & Daughters']]
 };
-const MAIL_DATE = {m1:'Sun 22:52',m2:'Sun 21:30',m3:'Sun 21:02',m10:'Sun 20:15',m4:'Fri 23:58',m11:'Now',m5:'Now',m6:'Now',m7:'Now',m9:'Now',m12:'Now'};
+const MAIL_DATE = {m1:'Sun 22:52',m0:'Sun 22:40',m2:'Sun 21:30',m3:'Sun 21:02',m10:'Sun 20:15',m4:'Fri 23:58',m11:'Now',m5:'Now',m6:'Now',m7:'Now',m9:'Now',m12:'Now'};
 const FILES = {cellarPhoto:'Cellar_photos.jpg',letterJulian:'Letter_JVane_claim.pdf',letterMargaret:'Letter_MHolloway_objection.pdf',letterDaphne:'Letter_DMarshPike_claim.pdf',diary1888:'EVane_diary_Feb1888.jpg'};
 
 /* ================= ICONS ================= */
@@ -218,7 +218,7 @@ function chrome(){
   $('#lock').innerHTML = ic('lock','i lock'); $('#url').innerHTML = `<b>${host}</b><span>${esc(path)}</span>`;
   $('#star').innerHTML = `<span style="color:var(--cr-muted);display:flex">${ic('star')}</span>`;
   $('#bookmarks').innerHTML = [['bl','home','Bloodlines'],['bl','tree','Vane estate tree'],['mail','inbox/m1','A&P Mail'],['net','matter/overview','Matter 2025-0417'],['net','law','Law Library']]
-    .map(([t,r,l])=>`<button class="bm" data-a="go" data-t="${t}" data-v="${r}"><span class="fav" style="background:${FAV[t][0]}">${FAV[t][1]}</span>${l}</button>`).join('');
+    .map(([t,r,l])=>`<button class="bm" data-a="go" data-t="${t}" data-v="${r}"><span class="fav" style="background:${FAV[t][0]}">${FAV[t][1]}</span>${l}</button>`).join('') + `<button class="bm guidebtn" data-a="guide"><span class="fav" style="background:#3c5a78">?</span>Field guide</button>`;
   document.title = titleOf(S.tab,cur()).replace(/ [|–] .*/,'') + ' · Bloodlines game';
 }
 function render(){
@@ -296,6 +296,32 @@ function blHome(){
 function kitStage(){ return Math.min(4, 2 + Math.floor(S.pins.length/7)); }
 
 /* ---- tree ---- */
+/* ================= FIELD GUIDE & TRAINING ================= */
+const GUIDE = [{"id": "job", "t": "Your job", "h": "<p>You are a night-shift associate at Ashgrove &amp; Pell, a probate firm. Your file is the estate of <b>Cornelius Vane</b>, lost overboard in March. Three people want the estate. Nobody has shown they are who they say they are.</p>\n<p>The partners want <b>five findings</b>, each one an answer plus the evidence that proves it. You have <b>three filings</b>. A finding is accepted only if the answer is right and the evidence is the right kind. A right answer on thin evidence is turned down the same as a wrong one.</p>\n<p>Nobody will tell you the answers. You work them out from records, and you build a family tree to do it.</p>"}, {"id": "sites", "t": "Your three screens", "h": "<p>The tabs along the top are three different websites.</p>\n<ul><li><b>Bloodlines</b> is a commercial genealogy site. It holds the records, the family tree, DNA results and hints.</li>\n<li><b>A&amp;P Mail</b> is the firm's webmail. The brief, the claimants' letters and replies to your work arrive here.</li>\n<li><b>Matter 2025-0417</b> is the firm's intranet. It holds your evidence, the photo lab, the handwriting examiner, the ruling form and the law library.</li></ul>\n<p>Your progress saves in the browser, so you can close the page and come back.</p>"}, {"id": "tree", "t": "Build the tree", "h": "<p>Your tree starts with four names and no links. It fills in as you prove who is related to whom.</p>\n<ol><li>Search a name on Bloodlines and open a record.</li><li>Read it. The <b>Build your tree</b> panel on the record page lists the people it names.</li><li>Pick two of them, say how they are related, and press <b>Add to tree</b>.</li></ol>\n<p>The tree only takes a link that the record in front of you shows. If you guess, you get \"This record doesn't show that\" and nothing else. Records you open also tell you which names to search next.</p>\n<p>Several people can share a name. Check the dates before you decide which one a record means.</p>\n<p>Hints from other people's trees can put a link in your tree. They are claims, not proof. See <b>Hints</b> below.</p>"}, {"id": "search", "t": "Searching", "h": "<p>Search covers names, places and keywords, so try the places and objects in the letters and reports, not just surnames. You can narrow results by collection (births, deaths, censuses, newspapers and so on).</p>\n<p>Most records are not attached to any tree. They only turn up if you search for them.</p>\n<p>If a record should exist and does not, you can ask for a <b>certified nil return</b>. Type the name into the search box and press <b>Request nil return</b>. The certificate says a search found nothing, and it can be saved as evidence.</p>"}, {"id": "read", "t": "Reading a record", "h": "<p>Read the whole record, including the small print.</p>\n<ul><li>Who gave the information? Registers name an <b>informant</b>.</li><li>Who signed it, and when?</li><li>Do the ages, dates and places fit the other records?</li><li>Read the notes at the bottom. Registrars, enumerators and clerks often wrote down what they noticed.</li></ul>\n<p>Use the zoom buttons above the record to read fine detail. Every record has a <b>Save to matter</b> button.</p>"}, {"id": "evidence", "t": "Saving evidence", "h": "<p><b>Save to matter</b> puts a record in your evidence register (the Evidence tab of the matter). Save the records you rely on, and nothing you don't.</p>\n<p>On the Ruling tab you attach saved records to each finding. Each finding takes <b>four attachments at most</b>, and attaching records that have nothing to do with it counts against you. Choose what proves the point.</p>"}, {"id": "dna", "t": "DNA results", "h": "<p>The DNA page shows a kit's closest matches and how much DNA each shares, measured in centimorgans (cM). Read <b>who</b> the matches are as well as how much they share. Two people can share the same amount for different reasons.</p>"}, {"id": "lab", "t": "The photo lab", "h": "<p>The photo lab compares two photographs you have opened on Bloodlines. Choose both, then click each permanent mark you can see on the face, such as a scar or a mole. Press <b>Certify comparison</b>.</p>\n<p>A result is positive only when <b>two or more marks</b> match on both photos. One mark is not enough, because a mole can run in a family. A positive result counts as one identifying document.</p>"}, {"id": "hand", "t": "The handwriting examiner", "h": "<p>The handwriting examiner compares the signatures on two documents you have opened. It certifies whether the same hand wrote both. A positive result counts as one identifying document, but only when the hand is the one being identified.</p>"}, {"id": "law", "t": "The law library", "h": "<p>The law library holds the Succession Act and the Nocturnal Accord of 1888. The firm's rule is that if any party turns out not to be strictly human, the Accord decides the matter. Read every article. Save the provisions you rely on, the same way you save a record.</p>"}, {"id": "ruling", "t": "Filing a ruling", "h": "<p>On the Ruling tab, answer each of the five findings and attach your evidence, then file. The partners accept or reject each finding separately.</p>\n<ul><li>Accepted findings lock in.</li><li>After your first filing you only see which findings failed. From the second filing you also get a nudge on each.</li><li>You have <b>three filings</b>. After that the file goes to someone else.</li></ul>\n<p>Your result is graded by filings used: A for one, B for two, C for three. A minus sign means you relied on a hint from someone else's tree.</p>"}, {"id": "hints", "t": "Hints from other trees", "h": "<p>A hint marked with a red drop comes from a public member tree. Anyone can make one, including the people you are investigating. Check who owns the tree and when it was made. Save the record behind a hint, not the hint.</p>"}, {"id": "think", "t": "Rules of thumb", "h": "<ul><li>Dates have to fit. People are not parents before they are born.</li>\n<li>Ask who benefits from a record, and who wrote it.</li>\n<li>A record that should exist and does not is a clue.</li>\n<li>Two matching facts are stronger than one. One matching fact might be chance or family.</li>\n<li>If a person is hard to find in the records, ask why.</li>\n<li>A neat story is not evidence. Records are.</li></ul>"}, {"id": "gloss", "t": "Glossary", "h": "<dl class=\"gloss\"><dt>Matter</dt><dd>A case file at the firm. This one is 2025-0417.</dd>\n<dt>Finding</dt><dd>One question you must answer, with evidence.</dd>\n<dt>Filing</dt><dd>One submission of all your findings to the partners. You get three.</dd>\n<dt>Informant</dt><dd>The person who gave a registrar the details.</dd>\n<dt>Enumerator</dt><dd>The person who collected census forms.</dd>\n<dt>Nil return</dt><dd>A certificate that a search found no record.</dd>\n<dt>Centimorgan (cM)</dt><dd>The unit of shared DNA. More means closer.</dd>\n<dt>Probate</dt><dd>Settling a dead person's estate.</dd>\n<dt>Intestate</dt><dd>Dying without a valid will.</dd>\n<dt>The Accord</dt><dd>The Nocturnal Accord 1888, which governs estates where a party is not strictly human.</dd></dl>"}];
+
+const TRAIN = [
+ {t:'Read the brief',d:'Open the first email from R. Ashgrove.',done:()=>S.read.includes('m1'),go:['mail','inbox/m1']},
+ {t:'Search for a name',d:'Try one of the four names in the brief.',done:()=>!!S.flags.t_search,go:['bl','search']},
+ {t:'Open a record',d:'Read it. Who made it, and who does it name?',done:()=>S.viewed.length>0,go:['bl','search']},
+ {t:'Add your first link to the tree',d:'Use the Build your tree panel on a record page.',done:()=>S.tree.links.length>0,go:['bl','tree']},
+ {t:'Save a record to the matter',d:'Use Save to matter on a record you would rely on.',done:()=>S.pins.length>0,go:['bl','search']},
+ {t:'Certify a photo comparison',d:'Open two photographs first, then use the photo lab.',done:()=>Object.keys(S.reports).some(k=>k.startsWith('cmp:')),go:['net','matter/lab']},
+ {t:'Cite a provision from the law library',d:'Read the articles, then cite the ones you rely on.',done:()=>S.pins.some(p=>p.startsWith('law')),go:['net','law']},
+ {t:'File a ruling',d:'Answer the findings, attach your evidence, and file.',done:()=>S.attempts>0,go:['net','matter/ruling']}
+];
+function trainingBox(){
+  const n = TRAIN.filter(s=>s.done()).length;
+  if(S.flags.hideTraining) return `<div class="box"><div class="bh"><h2>Training</h2><span style="color:var(--nt-muted);font-size:13px">${n} of ${TRAIN.length}</span></div><div class="bb"><button class="lnk" data-a="training" data-v="show">Show the training list</button> · <button class="lnk" data-a="guide">Field guide</button></div></div>`;
+  return `<div class="box"><div class="bh"><h2>Training</h2><span style="color:var(--nt-muted);font-size:13px">${n} of ${TRAIN.length}</span></div><div class="bb"><ol class="train">${TRAIN.map(s=>{ const dn=s.done(); return `<li class="${dn?'dn':''}"><span class="tk" aria-hidden="true">${dn?'✓':''}</span><span class="tx"><b>${s.t}</b><small>${s.d}</small></span>${dn?'':`<button class="lnk" data-a="go" data-t="${s.go[0]}" data-v="${s.go[1]}">Go</button>`}</li>`; }).join('')}</ol>
+    <div style="display:flex;gap:14px;margin-top:10px"><button class="lnk" data-a="guide">Open the field guide</button><button class="lnk" data-a="training" data-v="hide">Hide this list</button></div></div></div>`;
+}
+function showGuide(sec){
+  const g = GUIDE.find(x=>x.id===sec)||GUIDE[0], m = $('#modal'); S.flags.t_guide = true; S.flags.guideSec = g.id;
+  m.innerHTML = `<div class="pv gd" role="dialog" aria-modal="true" aria-label="Field guide"><div class="pvh"><span class="fi" style="background:#3c5a78">?</span><div class="t"><b>Field guide</b><small>Ashgrove &amp; Pell · night roster</small></div><button class="nbtn sec sm" data-a="close">Close</button></div>
+    <div class="pvb light"><div class="gwrap"><nav class="gnav" aria-label="Guide sections">${GUIDE.map(x=>`<button class="${x.id===g.id?'on':''}" data-a="guidesec" data-v="${x.id}">${x.t}</button>`).join('')}</nav><article class="gbody"><h2>${g.t}</h2>${g.h}</article></div></div></div>`;
+  m.hidden = false; m.querySelector('[data-a="close"]').focus(); save();
+}
+
 /* ---- tree auto layout ----
    Reads PEOPLE and REL (Father, Mother, Child, Spouse, Claimed father) and works out who goes where.
    To add someone: give them a PEOPLE entry and a REL entry. No coordinates, no hand-drawn lines.
@@ -643,7 +669,7 @@ function mailApp(r){
     <div class="racts"><button disabled>${ic('reply')}Reply</button><button disabled>${ic('fwdm')}Forward</button></div></div>
     <div class="rtext">${m.body()}</div>
     ${m.attach?`<button class="attach" data-a="open" data-v="${m.attach}"><span class="fi">${(FILES[m.attach]||'x.pdf').split('.').pop().toUpperCase()}</span><span><b>${FILES[m.attach]}</b><small>${m.attach==='diary1888'?'1.2 MB':'214 KB'} · Click to preview</small></span></button>`:''}
-    ${id==='m1'?`<div style="margin-top:22px;display:flex;gap:10px;flex-wrap:wrap"><button class="mlbtn" data-a="go" data-t="bl" data-v="tree">Open the Vane tree on Bloodlines</button><button class="mlbtn ghost" data-a="go" data-t="net" data-v="matter/overview">Open matter 2025-0417</button></div>`:''}
+    ${id==='m1'?`<div style="margin-top:22px;display:flex;gap:10px;flex-wrap:wrap"><button class="mlbtn" data-a="go" data-t="bl" data-v="tree">Open the Vane tree on Bloodlines</button><button class="mlbtn ghost" data-a="go" data-t="net" data-v="matter/overview">Open matter 2025-0417</button><button class="mlbtn ghost" data-a="guide">Open the field guide</button></div>`:''}
     ${id==='m7'||id==='m12'?endCard():''}</div>`;
   return `<div class="ml ${S.mlRead?'reading':''}"><div class="mltop"><span class="brand"><i>A&amp;P</i>Mail</span><div class="mlsearch">${ic('search')}Search mail and people</div><span class="me">AS</span></div>
   <div class="mlbody"><nav class="folders"><span class="compose">${ic('draft')}New message</span>
@@ -691,8 +717,7 @@ function mOverview(){
       <tr><td>Vane House, 14 Hollow Lane</td><td>Heritage listed</td><td class="num">$2,140,000</td></tr><tr><td>Vane Family Trust investments</td><td>Held since 1934</td><td class="num">$3,880,000</td></tr>
       <tr><td>Cellar contents</td><td>Do not enter before nightfall (will, cl. 3)</td><td class="num">Undisclosed</td></tr><tr><td>Family crypt, Ashby cemetery</td><td>—</td><td class="num">Not valued</td></tr></table></div></div>
   </div><div style="display:flex;flex-direction:column;gap:18px">
-    <div class="box"><div class="bh"><h2>Tasks</h2></div><div class="bb" style="display:flex;flex-direction:column;gap:8px;font-size:14px">
-      <span>${S.pins.length>=8?'☑':'☐'} Gather evidence (8+ items)</span><span>${Object.keys(S.reports).some(k=>k.startsWith('cmp:')&&S.reports[k].ok)?'☑':'☐'} Certify a photo comparison</span><span>${S.pins.some(p=>p.startsWith('law'))?'☑':'☐'} Cite applicable law</span><span>${S.won?'☑':'☐'} File a ruling the partners accept</span></div></div>
+    ${trainingBox()}
     <div class="box"><div class="bh"><h2>Activity</h2></div><div class="bb">${S.log.length?`<ul class="log">${S.log.slice(0,10).map(l=>`<li><time>${l.t}</time><span>${esc(l.msg)}</span></li>`).join('')}</ul>`:'<p style="margin:0;color:var(--nt-muted)">No activity yet.</p>'}</div></div>
   </div></div>`;
 }
@@ -822,7 +847,7 @@ document.addEventListener('click', e=>{
     case 'ev': { const f=b.dataset.f, l=S.ev[f]||(S.ev[f]=[]);
       if(!l.includes(v) && l.filter(pinned).length>=MAX_EV){ toast('Four items at most per finding'); return; }
       S.ev[f] = l.includes(v)?l.filter(x=>x!==v):[...l,v]; save(); render(); return; }
-    case 'searchname': S.q={name:v,kw:'',kind:'All'}; S.searched=true; go('search','bl'); return;
+    case 'searchname': S.q={name:v,kw:'',kind:'All'}; S.searched=true; S.flags.t_search=true; go('search','bl'); return;
     case 'clearsearch': S.q={name:'',kw:'',kind:'All'}; S.searched=false; save(); render(); return;
     case 'facet': S.q.kind=v; save(); render(); return;
     case 'facetall': S.q={name:'',kw:'',kind:v}; S.searched=true; save(); render(); return;
@@ -834,6 +859,9 @@ document.addEventListener('click', e=>{
       S.reports[id]={a:L.a,b:L.b,shared,ok}; REC[id]=cmpRec(id);
       if(!pinned(id)){ S.pins.push(id); log('Photo lab certified: '+REC[id].title+(ok?' (positive)':' (inconclusive)')); }
       save(); render(); showPreview(id); return; }
+    case 'guide': showGuide(S.flags.guideSec&&S.flags.t_guide&&v===undefined?S.flags.guideSec:'job'); return;
+    case 'guidesec': showGuide(v); return;
+    case 'training': S.flags.hideTraining = v==='hide'; save(); render(); return;
     case 'sigcert': {
       const H=S.hw, id='sig:'+[H.a,H.b].sort().join('-'), ok=SIGNED[H.a][1]===SIGNED[H.b][1];
       S.reports[id]={a:H.a,b:H.b,ok}; REC[id]=sigRec(id);
@@ -859,8 +887,8 @@ document.addEventListener('change', e=>{
 document.addEventListener('input', e=>{ if(e.target.id==='notes'){ S.notes=e.target.value; save(); }});
 document.addEventListener('submit', e=>{
   e.preventDefault(); const f = e.target;
-  if(f.dataset.form==='qsearch'){ S.q={name:'',kw:$('#hq').value,kind:'All'}; S.searched=true; go('search','bl'); }
-  if(f.dataset.form==='search'){ S.q={name:$('#sname').value,kw:$('#skw').value,kind:$('#skind').value}; S.searched=true; log(`Searched Bloodlines: "${(S.q.name+' '+S.q.kw).trim()||S.q.kind}"`); save(); render(); }
+  if(f.dataset.form==='qsearch'){ S.q={name:'',kw:$('#hq').value,kind:'All'}; S.searched=true; S.flags.t_search=true; go('search','bl'); }
+  if(f.dataset.form==='search'){ S.q={name:$('#sname').value,kw:$('#skw').value,kind:$('#skind').value}; S.searched=true; S.flags.t_search=true; log(`Searched Bloodlines: "${(S.q.name+' '+S.q.kw).trim()||S.q.kind}"`); save(); render(); }
   if(f.dataset.form==='link'){
     const rec=f.dataset.rec, A=f.querySelector('[data-lk=a]').value, B=f.querySelector('[data-lk=b]').value, T=f.querySelector('select:not([data-lk])').value;
     const res=tryLink(A,T,B,rec); toast(res.msg); if(res.ok){ save(); const m=$('#modal'); if(!m.hidden){ showPreview(rec); } else render(); }

@@ -447,6 +447,12 @@ const MAIL = {
     <p>The partners want five findings, each backed by evidence. The ruling form is in the case file. The tree has four names on it and no links. Find out who is related to whom: open a record, read it, and add the links it proves from the record page. Pin records as you go, then attach them to the findings they prove. You get three filings. After that, Pell takes the file and you take the blame.</p>
     <p>The Nocturnal Accord is in the law library. Read it. If any party turns out not to be strictly human, it decides the matter and the Succession Act doesn't.</p>
     <p>R.A.</p>`},
+  m0:{from:'People & Culture',time:'10:40 pm',subj:'Your first night: how this works',body:()=>`
+    <p>Welcome to the night roster. A few things before you start.</p>
+    <p>You work in three places, shown as tabs along the top: Bloodlines (records and the family tree), this mailbox, and the firm's intranet for matter 2025-0417. Your tree starts nearly empty. You fill it in from the records.</p>
+    <p>On the intranet, the matter overview has a short training list that ticks itself off as you work. The bookmarks bar has a field guide that explains every tool. Nobody here will give you the answers, so the guide won't either.</p>
+    <p>Read slowly. Most of what you need is in the small print.</p>
+    <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap"><button class="mlbtn" data-a="guide">Open the field guide</button><button class="mlbtn ghost" data-a="go" data-t="net" data-v="matter/overview">Open the training list</button></div>`},
   m2:{from:'Firm IT',time:'9:30 pm',subj:'Bloodlines: search tips and hints',body:()=>`
     <p>Two reminders for all staff.</p>
     <p>Most records aren't attached to any tree. Search covers names, places and keywords, so try "Hollow Lane", "Marguerite" or "hospital", not just surnames. If a search comes up empty, a nil return can be certified and saved.</p>
@@ -484,7 +490,7 @@ const MAIL = {
     <p>Don't take it personally. The first one is always the hardest. Most of them are.</p><p>R.A.</p>`}
 };
 function mailIds(){
-  const ids = ['m1','m10','m2','m3','m4'];
+  const ids = ['m1','m0','m10','m2','m3','m4'];
   if(S.flags.diary) ids.unshift('m11');
   if(S.won) ids.unshift('m7','m9','m6','m5');
   if(S.failed) ids.unshift('m12');
