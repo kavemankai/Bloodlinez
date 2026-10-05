@@ -41,6 +41,7 @@ function faceG(o, dx=0){
 }
 const VAMP = {scar:true,mole:true,hair:'part',era:'victorian'};
 function photo(p, attrs=''){
+  if(p.img) return `<svg viewBox="0 0 ${p.w} ${p.h}" role="img" aria-label="${p.alt}" ${attrs} class="${p.w>p.h?'wide':''}"><image href="${p.img}" width="${p.w}" height="${p.h}" preserveAspectRatio="xMidYMid slice"/></svg>`;
   const w = 120*p.faces.length, c = TONES[p.faces[0].tone], id='g'+(gN++), hid='h'+(gN++);
   const halftone = p.news ? `<defs><pattern id="${hid}" width="3" height="3" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r=".7" fill="#000" opacity=".22"/></pattern></defs><rect width="${w}" height="150" fill="url(#${hid})"/>` : '';
   return `<svg viewBox="0 0 ${w} 150" role="img" aria-label="${p.alt}" ${attrs} class="${w>120?'wide':''}">
@@ -78,7 +79,30 @@ const PH = {
   licence1972:{year:1972,alt:'Licence photo of Cornelius Vane, 1972',faces:[{...VAMP,tone:'seventies',hair:'long',era:'seventies'}],who:'Cornelius Vane (1972)',vamp:true},
   licence2019:{year:2019,alt:'Licence photo of Julian Vane, 2019',faces:[{...VAMP,tone:'modern',hair:'short',era:'modern'}],who:'Julian Vane (2019)',vamp:true}
 };
+const IMGS = {
+  photo1875:{w:600,h:750,marks:{mole:[240,377]}},
+  photo1889:{w:600,h:750,marks:{scar:[391,226],mole:[243,375]}},
+  photo1912:{w:1200,h:750,marks:{scar:[893,193],mole:[784,323]}},
+  photo1921:{w:600,h:750,marks:{scar:[363,216]}},
+  photo1950:{w:600,h:750,marks:{mole:[233,374]}},
+  photo1962:{w:600,h:750,marks:{scar:[407,266],mole:[227,429]}},
+  licence1972:{w:600,h:750,marks:{scar:[408,281],mole:[251,428]}},
+  licence2019:{w:600,h:750,marks:{scar:[383,277],mole:[219,452]}}
+};
+for(const k in IMGS) Object.assign(PH[k],{img:'assets/'+k+'.jpg',hit:40},IMGS[k]);
+const PROPS = {
+  mount_cabinet:{w:600,h:750,hole:[97,82,406,501]},
+  licence_card_1972:{w:1200,h:800,hole:[130,182,329,430]},
+  licence_card_2019:{w:1200,h:800,hole:[105,195,353,438]}
+};
+function framed(photoHtml, prop){
+  const P=PROPS[prop], [x,y,w,h]=P.hole, pc=(v,m)=>(100*v/m).toFixed(2)+'%';
+  return `<div class="framed" style="aspect-ratio:${P.w}/${P.h}"><div class="fwin" style="left:${pc(x,P.w)};top:${pc(y,P.h)};width:${pc(w,P.w)};height:${pc(h,P.h)}">${photoHtml}</div><img class="fprop" src="assets/${prop}.webp" alt=""></div>`;
+}
+const mounted = p => framed(photo(p,'preserveAspectRatio="xMidYMid slice"'),'mount_cabinet');
+const licard = (p,prop) => `<div class="licard">${framed(photo(p,'preserveAspectRatio="xMidYMid slice"'),prop)}</div>`;
 function marksOf(id){
+  const pp = PH[id]; if(pp.marks) return {...pp.marks};
   const p = PH[id], dx = p.offset||0, f = p.faces[dx?1:0], out = {};
   if(f.scar) out.scar = [MARKS_FACE.scar[0]+dx, MARKS_FACE.scar[1]];
   if(f.mole) out.mole = [MARKS_FACE.mole[0]+dx, MARKS_FACE.mole[1]];
@@ -100,8 +124,26 @@ const PEOPLE = {
 
 /* ================= RECORDS ================= */
 const dl = rows => `<dl>${rows.map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join('')}</dl>`;
-const regDoc = (head, no, rows, sigTxt, note, sigLabel='Signature of informant:', dist='Ashby', pre='District of') => `<div class="doc"><h4>${head}</h4><div class="c">${pre} ${dist} · No. ${no}</div>${dl(rows)}${sigTxt?`<div class="sigline"><span>${sigLabel}</span>${sigTxt}</div>`:''}${note?`<p class="rn">${note}</p>`:''}</div>`;
+const regDoc = (head, no, rows, sigTxt, note, sigLabel='Signature of informant:', dist='Ashby', pre='District of') => `<div class="doc">${pre==='District of'?'<img class="stamp" src="assets/stamp_registrar.webp" alt="">':''}<h4>${head}</h4><div class="c">${pre} ${dist} · No. ${no}</div>${dl(rows)}${sigTxt?`<div class="sigline"><span>${sigLabel}</span>${sigTxt}</div>`:''}${note?`<p class="rn">${note}</p>`:''}</div>`;
 const clip = (paper, date, head, body, ph) => `<div class="clip"><div class="mast"><span>${paper}</span><span>${date}</span></div><h4>${head}</h4>${ph?photo(ph):''}${body.map(p=>`<p>${p}</p>`).join('')}</div>`;
+
+const PAPER = {};
+[['paper_parchment','lo',['court1436','will1509','will1577','deed1740']],
+ ['paper_parish_1751','lo',['burial1544','bapt1550','marr1612','bapt1620','tax1674','marr1682','bapt1688','bapt1720','bapt1751','bapt1789']],
+ ['paper_parish_form','hi',['marr1818','burial1889']],['paper_census_1841','hi',['census1841']],
+ ['paper_census','hi',['census1861','census1881','census1891','census1911','census1921']],
+ ['paper_civil_1850','hi',['marr1850','birth1857','birth1861','marr1886','birth1888']],
+ ['paper_hospital','hi',['hospital1888']],['paper_diary','lo',['diary1888']],
+ ['paper_news_victorian','hi',['news1888','news1889']],['paper_news_1930s','hi',['news1934']],['paper_news_postwar','hi',['photo1962','news1994']],
+ ['paper_deed_1934','lo',['trust1934']],
+ ['paper_register','hi',['birth1934','death1934','inquest1934','birth1958d','birth1966','birth1993','death1994','death2025']],
+ ['paper_will_modern','lo',['will2024']],['paper_letter','lo',['letterJulian']],['paper_letter_margaret','lo',['letterMargaret']],['paper_letter_daphne','lo',['letterDaphne']],
+ ['paper_invoice','hi',['funeral2025']],['paper_harbour','hi',['marine2025']]
+].forEach(([f,w,ids])=>ids.forEach(i=>PAPER[i]=[f,w]));
+function paperHtml(id, html){
+  const p = PAPER[id]; if(!p) return html;
+  return html.replace(/class="(doc|clip|letter)">/, (m,c)=>`class="${c} paper wash-${p[1]}" style="--paper:url(assets/${p[0]}.jpg)">`);
+}
 
 const REC = {
   census1891:{kind:'Census',year:1891,title:'1891 Census, Vane House, 14 Hollow Lane',k:'Ambrose Eliza Harriet Vane Hollow Lane Vane House',
@@ -113,7 +155,9 @@ const REC = {
     <div class="sigline"><span>Signature of head of household:</span>${sig('A. Vane')}</div>
     <p class="rn">Enumerator's note: Head of household not at home during the day. Returned after dusk to collect schedule. Curtains drawn throughout.</p></div>`},
   photo1889:{kind:'Photo',year:1889,title:'Studio portrait, Ambrose Vane',k:'Ambrose Vane portrait Halloran',
-    render:()=>`<div class="photo">${photo(PH.photo1889)}<div class="doc" style="max-width:420px"><p><b>Halloran &amp; Sons, Photographic Studio, Ashby.</b></p><p>Pencilled on reverse: "A.V., aged 32. Taken by lamplight at the sitter's request. 1889."</p></div></div>`},
+    render:()=>`<div class="photo">${mounted(PH.photo1889)}<div class="doc" style="max-width:420px"><p><b>Halloran &amp; Sons, Photographic Studio, Ashby.</b></p><p>Pencilled on reverse: "A.V., aged 32. Taken by lamplight at the sitter's request. 1889."</p></div></div>`},
+  cellarPhoto:{kind:'Attachment',year:2025,title:'Photos from the cellar of Vane House',k:'',hidden:true,
+    render:()=>`<div class="photo"><img class="pic" src="assets/cellar_coffins.jpg" alt="Four coffins in a brick cellar, lit by a torch"><img class="pic" src="assets/ashgrove_plate.jpg" alt="Brass coffin plate engraved Ashgrove"><p class="rn">Sent by Margaret Holloway from her phone. The plate on the fourth coffin.</p></div>`},
   court1436:{kind:'Court',year:1436,title:'Court roll, Manor of Ashby, 1436',k:'Hugh atte Vane Hollow Lane messuage court roll manor Asgrove Ashgrove clerk',
     render:()=>regDoc('Manor of Ashby · Court Roll','15 Henry VI',[['Court held','Feast of St Michael, 15 Henry VI (29 September 1436)'],['Tenant','Hugh atte Vane, boatman'],['Holding','One messuage and garden in Hollow Lane'],['Rent','Fourpence a year'],['Pledges','Roland Asgrove, clerk; John Tyler'],['Fine','Twelvepence']],'',"Translated from the Latin. Index note: the clerk's name as written, Asgrove, is indexed as Ashgrove.",'','Ashby','Manor of')},
   will1509:{kind:'Will',year:1509,title:'Will of John atte Vane, boatman, 1509',k:'John atte Vane will Hollow Lane Askgrove Ashgrove scrivener Agnes Richard',
@@ -137,7 +181,7 @@ const REC = {
   bapt1720:{kind:'Parish',year:1720,title:'Baptism, John Vane, 1720',k:'John Vane baptism St Columba William Anne cooper',
     render:()=>regDoc('Baptism Register','17',[['Child','John, son of William Vane, cooper, and Anne his wife'],['Baptised','10 April 1720'],['Parish','St Columba, Ashby']],'','','','St Columba, Ashby','Parish of')},
   portrait1620:{kind:'Art',year:1620,title:'Portrait of Roland Ashgrove, Recorder of Ashby, 1620',k:'Roland Ashgrove portrait Recorder Ashby Guildhall oil painting',
-    render:()=>`${photo({alt:'Oil portrait of Roland Ashgrove, 1620',faces:[{tone:'sepia',hair:'long',era:'victorian',jaw:25}]})}<p class="rn">Oil on panel, Ashby Guildhall collection. Inscribed on the reverse: "R. ASHGROVE, RECORDER, AETAT. 33, 1620."</p>`},
+    render:()=>`${photo({alt:'Oil portrait of Roland Ashgrove, 1620',img:'assets/portrait1620.jpg',w:600,h:750})}<p class="rn">Oil on panel, Ashby Guildhall collection. Inscribed on the reverse: "R. ASHGROVE, RECORDER, AETAT. 33, 1620."</p>`},
   deed1740:{kind:'Legal',year:1740,title:'Lease of a tenement in Hollow Lane, 1740',k:'William Vane cooper lease Hollow Lane Ashgrove House Ashgrove estate',
     render:()=>`<div class="doc"><h4>Lease · Hollow Lane</h4>${dl([['Lessor','R. Ashgrove, gentleman, of Ashgrove House'],['Lessee','William Vane, cooper'],['Holding','One tenement and yard in Hollow Lane'],['Term','Ninety-nine years'],['Rent','One peppercorn, if demanded']])}
     <div class="sigline"><span>Signed by the lessor:</span>${sig('R. Ashgrove','r')}</div>
@@ -163,7 +207,7 @@ const REC = {
     <tr><td>Josiah Vane</td><td>Head</td><td>37</td><td>Shipwright</td></tr><tr><td>Hannah Vane</td><td>Wife</td><td>33</td><td>—</td></tr>
     <tr><td>Mary Vane</td><td>Mother, widow</td><td>67</td><td>Annuitant</td></tr><tr><td>Ambrose Vane</td><td>Son</td><td>4</td><td>—</td></tr></table></div></div>`},
   photo1875:{kind:'Photo',year:1875,title:'Studio portrait, Ambrose Vane, aged 18',k:'Ambrose Vane portrait Halloran youth',
-    render:()=>`${photo(PH.photo1875)}<p class="rn">Halloran &amp; Sons, Photographic Studio, Ashby. Pencilled on reverse: "Ambrose, 18, for Mother. Taken at noon. 1875."</p>`},
+    render:()=>`<div class="photo">${mounted(PH.photo1875)}</div><p class="rn">Halloran &amp; Sons, Photographic Studio, Ashby. Pencilled on reverse: "Ambrose, 18, for Mother. Taken at noon. 1875."</p>`},
   census1881:{kind:'Census',year:1881,title:'1881 Census, Vane House, Hollow Lane',k:'Josiah Hannah Ambrose Vane Hollow Lane Vane House clerk',
     render:()=>`<div class="doc"><h4>Census of 1881 · Householder's Schedule</h4><div class="c">District of Ashby · Hollow Lane · 3 April 1881</div>
     <div class="doctable-wrap"><table class="doctable"><tr><th>Name</th><th>Relation</th><th>Age</th><th>Occupation</th></tr>
@@ -234,7 +278,7 @@ const REC = {
     <tr><td>2023</td><td>Cornelius Vane</td><td>Retired</td></tr><tr><td>2025</td><td>Julian Ambrose Vane</td><td>Gentleman</td></tr></table></div>
     <p class="rn">Enrolment became compulsory for all adults in 1924. One elector at this address in every year on file.</p></div>`},
   licence1972:{kind:'ID',year:1972,title:'Driver licence, Cornelius Vane',k:'Cornelius Vane licence',
-    render:()=>`<div class="licence"><div class="ph">${photo(PH.licence1972)}</div><div class="f"><div class="hd">MOTOR REGISTRY · DRIVER LICENCE · 1972</div>
+    render:()=>`<div class="licence">${licard(PH.licence1972,'licence_card_1972')}<div class="f"><div class="hd">MOTOR REGISTRY · DRIVER LICENCE · 1972</div>
     ${dl([['Name','VANE, Cornelius'],['Date of birth','02/03/1934 (age 38)'],['Address','14 Hollow Lane, Ashby'],['Class','C'],['Conditions','N: night driving only (medical, photosensitivity)']])}
     <div class="sigline">${sig('C. Vane')}</div></div></div>`},
   death1994:{kind:'Death',year:1994,title:'Death registration, Desmond Vane',k:'Desmond Vane Cornelius',
@@ -247,7 +291,7 @@ const REC = {
   birth1966:{kind:'Birth',year:1966,title:'Birth registration, Daphne Marsh-Pike',k:'Daphne Lorna Marsh-Pike',
     render:()=>regDoc('Registration of Birth','1966/0730',[['Child','Daphne Marsh-Pike'],['Born','9 August 1966, Ashby Hospital'],['Father','Not stated'],['Mother','Lorna Marsh-Pike, typist'],['Informant','L. Marsh-Pike, mother'],['Registered','15 August 1966']],sig('L. Marsh-Pike','m'))},
   licence2019:{kind:'ID',year:2019,title:'Driver licence, Julian Vane',k:'Julian Vane licence',
-    render:()=>`<div class="licence"><div class="ph">${photo(PH.licence2019)}</div><div class="f"><div class="hd">MOTOR REGISTRY · DRIVER LICENCE · 2019</div>
+    render:()=>`<div class="licence">${licard(PH.licence2019,'licence_card_2019')}<div class="f"><div class="hd">MOTOR REGISTRY · DRIVER LICENCE · 2019</div>
     ${dl([['Name','VANE, Julian Ambrose'],['Date of birth','14/01/1993 (age 26)'],['Address','14 Hollow Lane, Ashby'],['Class','C'],['Conditions','N: night driving only (medical, photosensitivity)']])}
     <div class="sigline">${sig('J. Vane')}</div></div></div>`},
   will2024:{kind:'Legal',year:2024,title:'Last will and testament, Cornelius Vane',k:'Cornelius Julian Vane will',
@@ -292,7 +336,7 @@ const REC = {
   hintOfficial:{kind:'Hint',year:2025,title:'Member-tree hint: Julian is grandson of Cornelius',k:'',hidden:true,
     render:()=>`<p>Source: public member tree <b>VaneFamily_Official</b>, owner <b>nightowl_jv</b>. Tree created 3 March 2025. One attached record (the will). No birth record for Desmond Vane attached.</p>`},
   nilDesmond:{kind:'Certificate',year:2025,title:'Nil-return search certificate, Desmond Vane birth',k:'',hidden:true,
-    render:()=>`<div class="doc"><h4>Certificate of Search · Nil Return</h4><p>A search of birth registrations for the districts of Ashby, Port Hollis, Calder and Wenmouth, 1940 to 1994, under the surname VANE and given name DESMOND, found no entry.</p><p>A search under the father's name, Cornelius Vane, found no child registered before 1993.</p><p class="rn">Issued through Bloodlines Professional on behalf of Ashgrove &amp; Pell.</p></div>`},
+    render:()=>`<div class="doc"><img class="stamp nil" src="assets/stamp_nil.webp" alt=""><h4>Certificate of Search · Nil Return</h4><p>A search of birth registrations for the districts of Ashby, Port Hollis, Calder and Wenmouth, 1940 to 1994, under the surname VANE and given name DESMOND, found no entry.</p><p>A search under the father's name, Cornelius Vane, found no child registered before 1993.</p><p class="rn">Issued through Bloodlines Professional on behalf of Ashgrove &amp; Pell.</p></div>`},
   lawSA:{kind:'Law',year:1919,title:'Succession Act 1919, ss 12 and 49',k:'',hidden:true,render:()=>lawHtml('lawSA')},
   lawA1:{kind:'Law',year:1888,title:'Nocturnal Accord, Art. 1 (continuity)',k:'',hidden:true,render:()=>lawHtml('lawA1')},
   lawA2:{kind:'Law',year:1888,title:'Nocturnal Accord, Art. 2 (identity)',k:'',hidden:true,render:()=>lawHtml('lawA2')},
@@ -419,7 +463,7 @@ const MAIL = {
     <p>Under Article 4 the whole estate goes to Margaret. Daphne has been told. She took it better than Pryor did.</p>
     <p>Your DNA results should be back. Don't read anything into them.</p>
     <p>And don't open file 0001.</p><p>R.A.</p>`},
-  m9:{from:'Margaret Holloway',time:'just now',subj:'The cellar',body:()=>`
+  m9:{from:'Margaret Holloway',time:'just now',subj:'The cellar',attach:'cellarPhoto',body:()=>`
     <p>Thank you. I mean it. I've never owned anything in my life and now I own a house I'm frightened of.</p>
     <p>I went down to the cellar with a torch at noon, the way the will said not to. There were four coffins. Three had brass plates: AMBROSE, CORNELIUS, JULIAN. All empty, all with latches on the inside.</p>
     <p>The fourth was older than the others. Its plate said ASHGROVE.</p>

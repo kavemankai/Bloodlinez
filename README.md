@@ -6,7 +6,7 @@ Case 1, *The Vane Estate*, is fully playable.
 
 ## Play
 
-Open `index.html` in a browser. There's nothing to install and no server is needed. Progress saves in the browser's local storage.
+Open `index.html` in a browser. There's nothing to install and no server is needed. Keep the `assets/` folder next to it, since the pictures load from there. Progress saves in the browser's local storage.
 
 ## Case 1 in brief
 
@@ -24,6 +24,8 @@ Each finding needs the right answer plus the evidence that actually proves it, w
 
 ```
 index.html        built game, open this
+assets/           art: photos, portraits, paper, frames, stamps (loaded by relative path)
+tests/            browser checks (see tests/README.md)
 build.py          rebuilds index.html from src/
 src/template.html CSS and page markup (browser chrome, three site designs)
 src/data.js       case content: people, records, law, findings, mail, portrait art
@@ -41,4 +43,4 @@ python3 build.py --artifact   # writes dist/artifact.html for claude.ai artifact
 
 ## Status
 
-Prototype. The portraits are placeholder SVG faces. The next priorities are real period photos (see `docs/ASSETS.md`) and a second case built on a different creature's legal rules.
+Prototype. The Case 1 art is in and wired: period photos with real scar and mole positions in the photo lab, portraits, era paper behind documents, stamps, mounts and branding. `build.py --artifact` writes a single file with no images, so use the normal build for the full game. The next priority is a second case built on a different creature's legal rules.

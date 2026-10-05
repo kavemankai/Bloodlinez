@@ -42,6 +42,8 @@ const REL = {
   julian:[['Father','desmond']],
   daphne:[['Claimed father','cornelius']]
 };
+const AVATARS = new Set(['ambrose','ann','arthur','cornelius','daphne','eliza','hannah','harriet','josiah','julian','margaret','samuel','thomas','thomasv','william']);
+const COLTHUMB = {Census:'census',Birth:'birth',Death:'death',Photo:'photos',Newspaper:'newspapers',Roll:'rolls'};
 const PHOTO_OF = {ambrose:'photo1889',cornelius:'licence1972',julian:'licence2019',thomas:'photo1950'};
 const HINT_OF = {julian:['hintOfficial'],ambrose:['h2','h3'],harriet:['h4']};
 const COLL = {Court:'Manor of Ashby Court Rolls, 1350–1840',Will:'Probate Wills & Inventories, 1450–1858',Tax:'Hearth & Land Tax Returns, 1662–1830',Art:'Ashby Guildhall Portraits & Prints, 1500–1900',Parish:'Ashby Parish Registers, 1538–1900',Marriage:'Ashby District Marriage Registrations, 1850–2025',Inquest:"Coroner's Inquest Records, 1890–1960",Census:'Ashby Census Returns, 1841–1921',Birth:'Ashby District Birth Registrations, 1850–2025',Death:'Ashby District Death Registrations, 1850–2025',
@@ -106,7 +108,7 @@ const IDX = {
   funeral2025:[['Account','J. Vane, Vane House'],['Service','Memorial, no body'],['Date','March 2025'],['Director','Mortlake & Daughters']]
 };
 const MAIL_DATE = {m1:'Sun 22:52',m2:'Sun 21:30',m3:'Sun 21:02',m10:'Sun 20:15',m4:'Fri 23:58',m11:'Now',m5:'Now',m6:'Now',m7:'Now',m9:'Now',m12:'Now'};
-const FILES = {letterJulian:'Letter_JVane_claim.pdf',letterMargaret:'Letter_MHolloway_objection.pdf',letterDaphne:'Letter_DMarshPike_claim.pdf',diary1888:'EVane_diary_Feb1888.jpg'};
+const FILES = {cellarPhoto:'Cellar_photos.jpg',letterJulian:'Letter_JVane_claim.pdf',letterMargaret:'Letter_MHolloway_objection.pdf',letterDaphne:'Letter_DMarshPike_claim.pdf',diary1888:'EVane_diary_Feb1888.jpg'};
 
 /* ================= ICONS ================= */
 const I = {
@@ -225,8 +227,7 @@ function render(){
 
 /* ================= BLOODLINES ================= */
 function avatar(id, crop=true){
-  const ph = PHOTO_OF[id];
-  if(ph) return photo(PH[ph]).replace('viewBox="0 0 120 150"','viewBox="24 22 72 72"');
+  if(AVATARS.has(id)) return `<img src="assets/av_${id}.jpg" alt="">`;
   return PEOPLE[id]?.ini || '?';
 }
 function blShell(section, inner){
@@ -236,7 +237,7 @@ function blShell(section, inner){
   <div class="promo">Ancestors' Week: save 25% on Bloodlines DNA kits. <u data-a="toastonly" data-msg="Offer not available on Professional accounts">Shop now</u></div>
   <header class="blbar">
     <button class="icobtn burger" data-a="burger" aria-label="Menu">${ic('menu')}</button>
-    <button class="bl-logo" data-a="go" data-t="bl" data-v="home"><svg viewBox="0 0 20 26"><path d="M10 1 C 6 9, 2 13, 2 17.5 A 8 8 0 0 0 18 17.5 C 18 13, 14 9, 10 1 Z" fill="currentColor"/><path d="M6.5 17 a3.5 3.5 0 0 0 3 3.6" stroke="#fff" stroke-opacity=".6" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>bloodlines</button>
+    <button class="bl-logo" data-a="go" data-t="bl" data-v="home"><img class="logoimg" src="assets/bloodlines_logo.webp" alt="">bloodlines</button>
     <nav class="blnav ${S.navOpen?'open':''}">${nav.map(([k,l])=>`<button class="${section===k?'on':''}" data-a="go" data-t="bl" data-v="${k==='dna'?'dna/'+S.kit:k}">${l}</button>`).join('')}</nav>
     <div class="blright">
       <button class="icobtn" data-a="go" data-t="bl" data-v="search" aria-label="Search">${ic('search')}</button>
@@ -364,7 +365,7 @@ function blRecord(id){
       <button class="bbtn sec" disabled>${inTree?'In your tree':'Save to tree'}</button></div></div>
   <div class="recgrid">
     <div class="viewer"><div class="vtool"><button data-a="zoom" data-v="-0.15" aria-label="Zoom out">${ic('minus')}</button><button data-a="zoom" data-v="0.15" aria-label="Zoom in">${ic('plus')}</button><button data-a="zoom" data-v="0" aria-label="Fit">${ic('fit')}</button><span style="padding-left:8px;font-variant-numeric:tabular-nums">${Math.round(S.zoom*100)}%</span><span class="sp"></span><button data-a="toastonly" data-msg="Downloads are disabled for licensed collections" aria-label="Download">${ic('dl')}</button></div>
-      <div class="vstage"><div class="vinner" style="transform:scale(${S.zoom})">${r.render()}</div></div></div>
+      <div class="vstage"><div class="vinner" style="transform:scale(${S.zoom})">${paperHtml(id,r.render())}</div></div></div>
     <div class="side">
       <div class="panel"><div class="ph"><h2>Record details</h2></div><div class="pb"><table class="idx">${idx.map(([k,v])=>`<tr><th>${k}</th><td>${v}</td></tr>`).join('')}</table></div></div>
       <div class="panel"><div class="ph"><h2>Source citation</h2></div><div class="pb"><div class="cite">Bloodlines. <i>${COLL[r.kind]}</i> [database online]. Ashby: Bloodlines Ltd, 2026. Original record: ${r.title}, ${r.year}.</div></div></div>
@@ -394,7 +395,7 @@ function blSearch(){
   let right;
   if(!S.searched){
     const ck = {}; Object.values(REC).forEach(r=>{ if(!r.hidden&&PAGE_KINDS.has(r.kind)) ck[r.kind]=(ck[r.kind]||0)+1; });
-    right = `<div class="panel"><div class="ph"><h2>Featured collections for Ashby</h2></div><div class="pb"><div class="rtable-wrap"><table class="rtable"><tr><th>Collection</th><th>Indexed for your tree</th></tr>${Object.keys(COLL).map(k=>`<tr><td><button class="nm lnk" data-a="facetall" data-v="${k}">${COLL[k]}</button></td><td>${ck[k]||0} records</td></tr>`).join('')}</table></div></div></div>
+    right = `<div class="panel"><div class="ph"><h2>Featured collections for Ashby</h2></div><div class="pb"><div class="rtable-wrap"><table class="rtable"><tr><th>Collection</th><th>Indexed for your tree</th></tr>${Object.keys(COLL).map(k=>`<tr><td><span class="colrow">${COLTHUMB[k]?`<img class="colimg" src="assets/collection_${COLTHUMB[k]}.jpg" alt="">`:''}<button class="nm lnk" data-a="facetall" data-v="${k}">${COLL[k]}</button></span></td><td>${ck[k]||0} records</td></tr>`).join('')}</table></div></div></div>
     <p class="muted" style="font-size:13.5px">Tip: most records aren't attached to any tree. Search by place or keyword as well as by name.</p>`;
   } else {
     right = `
@@ -464,7 +465,7 @@ function showPreview(id){
   const light = ['DNA','Hint'].includes(r.kind);
   m.innerHTML = `<div class="pv" role="dialog" aria-modal="true" aria-label="${esc(r.title)}"><div class="pvh"><span class="fi" style="background:${ext==='JPG'?'#2d7d46':ext==='HTML'?'#3c5a78':'#c0392b'}">${ext}</span><div class="t"><b>${fname}</b><small>${r.title}</small></div>
     <button class="nbtn ${pinned(id)?'sec':''} sm" data-a="pin" data-v="${id}" data-m="1">${pinned(id)?'Remove from matter':'Save to matter'}</button><button class="nbtn sec sm" data-a="close">Close</button></div>
-    <div class="pvb ${light?'light':''}"><div ${light?'style="font-family:var(--f-bl);display:flex;flex-direction:column;gap:10px"':''}>${r.render()}</div></div></div>`;
+    <div class="pvb ${light?'light':''}"><div ${light?'style="font-family:var(--f-bl);display:flex;flex-direction:column;gap:10px"':''}>${paperHtml(id,r.render())}</div></div></div>`;
   m.hidden = false; m.querySelector('[data-a="close"]').focus();
 }
 function closePreview(){ $('#modal').hidden = true; $('#modal').innerHTML=''; render(); }
@@ -499,7 +500,7 @@ function endCard(){
 /* ================= INTRANET ================= */
 function netApp(r){
   const sec = r==='law'?'law':'matters';
-  const top = `<div class="nttop"><span class="crest"><i>A·P</i><span>Ashgrove &amp; Pell</span></span>
+  const top = `<div class="nttop"><span class="crest"><img class="crestimg" src="assets/ap_crest.webp" alt=""><span>Ashgrove &amp; Pell</span></span>
     <nav class="ntnav"><button disabled>Home</button><button class="${sec==='matters'?'on':''}" data-a="go" data-t="net" data-v="matter/overview">Matters</button><button class="${sec==='law'?'on':''}" data-a="go" data-t="net" data-v="law">Law library</button><button disabled>People</button></nav>
     <span class="user">Associate · Night roster</span></div>`;
   return `<div class="nt">${top}<main class="ntmain">${r==='law'?lawPage():matterPage(r.split('/')[1]||'overview')}</main></div>`;
@@ -538,7 +539,7 @@ function mOverview(){
 function srcLabel(id){
   const r = REC[id];
   if(PAGE_KINDS.has(r.kind)) return 'Bloodlines · '+COLL[r.kind].split(',')[0];
-  return r.kind==='Lab'&&id.startsWith('sig:') ? 'Handwriting examiner' : {Law:'Law library',DNA:'Bloodlines DNA',Lab:'Photo lab',Letter:'Email attachment',Diary:'Email attachment',Hint:'Bloodlines member tree',Certificate:'Bloodlines Professional'}[r.kind]||'—';
+  return r.kind==='Lab'&&id.startsWith('sig:') ? 'Handwriting examiner' : {Law:'Law library',DNA:'Bloodlines DNA',Lab:'Photo lab',Letter:'Email attachment',Diary:'Email attachment',Hint:'Bloodlines member tree',Certificate:'Bloodlines Professional',Attachment:'Email attachment'}[r.kind]||'—';
 }
 function mEvidence(){
   if(!S.pins.length) return `<div class="empty">No evidence yet. Use "Save to matter" on Bloodlines records, DNA reports, email attachments and law library provisions.</div>`;
@@ -563,7 +564,7 @@ function labView(){
 }
 function labSvg(id,marks){
   const m = marksOf(id);
-  return photo(PH[id], `data-lab="1" data-id="${id}"`).replace('</svg>', marks.map(k=>`<circle class="markc" cx="${m[k][0]}" cy="${m[k][1]}" r="6"/>`).join('')+'</svg>');
+  return photo(PH[id], `data-lab="1" data-id="${id}"`).replace('</svg>', marks.map(k=>`<circle class="markc" cx="${m[k][0]}" cy="${m[k][1]}" r="${PH[id].hit?PH[id].hit*0.55:6}" style="stroke-width:${PH[id].hit?3.5:1.6}"/>`).join('')+'</svg>');
 }
 function cmpRec(id){
   const r = S.reports[id];
@@ -637,7 +638,7 @@ document.addEventListener('click', e=>{
     const side = svg.closest('.labpane').querySelector('select').dataset.labSelect, id = svg.dataset.id, pt = svg.createSVGPoint();
     pt.x = e.clientX; pt.y = e.clientY; const p = pt.matrixTransform(svg.getScreenCTM().inverse());
     const m = marksOf(id), list = side==='a'?S.lab.ma:S.lab.mb;
-    const hit = Object.keys(m).find(k=>Math.hypot(m[k][0]-p.x, m[k][1]-p.y) < 8);
+    const hit = Object.keys(m).find(k=>Math.hypot(m[k][0]-p.x, m[k][1]-p.y) < (PH[id].hit||8));
     if(hit){ if(!list.includes(hit)) list.push(hit); } else S.lab.miss++;
     save(); render(); return;
   }

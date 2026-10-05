@@ -4,6 +4,6 @@ Generated artwork based on the repository's art briefs and Vane reference sheet:
 
 Portraits are 600 × 750; the wedding image is 1200 × 750. Avatars are 256 × 256, collection thumbnails 512 × 512, and paper textures 1000 pixels wide. JPEG exports are compressed for use in the game. Logo PNGs are accompanied by traced SVG versions.
 
-These files are an art delivery. They are not yet connected to the game's renderers or photo-lab hit regions. The card and frame renders currently have opaque backgrounds and require masking before use as overlays. Document text should be rendered by the game over the paper textures.
+The art is wired into the game. Photo-lab mark positions are in `src/data.js` (`IMGS`) and in `docs/ASSETS_VANE.md`. The frames, mounts, cards, stamps, crest and logo were masked to transparent WebP; `props.json` holds the size and photo-window position of each. Document text is rendered by the game over the paper textures.
 
 Desmond has no portrait, as specified in the brief. Arthur, Ambrose, Cornelius, and Julian avatars are cropped from their corresponding evidence photographs.

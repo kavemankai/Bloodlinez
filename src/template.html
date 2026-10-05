@@ -109,7 +109,7 @@ svg.i{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-widt
 .blfoot .legal{border-top:1px solid #4a3d41;padding-block:16px 24px;display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:#b3a7ab}
 
 /* home */
-.hero{background:linear-gradient(180deg,#fff, var(--bl-bg));border-bottom:1px solid var(--bl-line)}
+.hero{background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(250,246,242,.96)),url(assets/bl_hero_home.jpg) center/cover;border-bottom:1px solid var(--bl-line)}
 .hero .wrap{padding-block:30px 26px;display:flex;gap:24px;align-items:center;flex-wrap:wrap}
 .hero .greet{flex:1;min-width:260px}
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:16px;padding-block:24px}
@@ -229,7 +229,7 @@ svg.i{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-widt
 .callout p{margin:0;flex:1;min-width:220px}
 
 /* dna */
-.dnahero{background:linear-gradient(120deg,#3b1520,#7a1f33);color:#fff}
+.dnahero{background:linear-gradient(120deg,rgba(59,21,32,.88),rgba(122,31,51,.72)),url(assets/dna_banner.jpg) center/cover;color:#fff}
 .dnahero .wrap{padding-block:24px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
 .dnahero h1{color:#fff}
 .dnahero select{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:20px;padding:7px 14px;font-weight:600}
@@ -496,6 +496,24 @@ textarea#notes{width:100%;min-height:240px;border:1px solid #c5ccd2;border-radiu
   .canvas-wrap{height:520px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ---- art assets ---- */
+.ava img,.big img{width:100%;height:100%;object-fit:cover;display:block}
+.bl-logo .logoimg{width:24px;height:30px;object-fit:contain}
+.crest .crestimg{width:30px;height:30px;object-fit:contain}
+.colrow{display:flex;align-items:center;gap:10px}.colimg{width:46px;height:46px;object-fit:cover;border-radius:4px;flex:none}
+.doc,.clip,.letter{position:relative}
+.doc .stamp{position:absolute;right:16px;top:12px;width:92px;opacity:.5;transform:rotate(-9deg);pointer-events:none;mix-blend-mode:multiply}
+.doc .stamp.nil{width:150px;right:10px;top:8px;opacity:.6;transform:rotate(-6deg)}
+.paper{background-image:linear-gradient(var(--wash),var(--wash)),var(--paper);background-size:cover;background-position:center}
+.wash-lo{--wash:rgba(250,245,233,.4)}.wash-hi{--wash:rgba(250,246,238,.74)}
+.framed{position:relative;width:100%}
+.framed .fwin{position:absolute;overflow:hidden}
+.framed .fwin svg{width:100%;height:100%;display:block;border:0;box-shadow:none;border-radius:0}
+.framed .fprop{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.photo>.framed{width:300px;max-width:100%;filter:drop-shadow(0 4px 12px rgba(0,0,0,.35))}
+.licard{width:min(100%,460px);filter:drop-shadow(0 3px 8px rgba(0,0,0,.3))}
+.photo .pic{width:min(100%,520px);border-radius:3px;box-shadow:0 4px 14px rgba(0,0,0,.4)}
 </style>
 
 <div class="app">

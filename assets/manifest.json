@@ -1,530 +1,548 @@
 [
-  {
-    "file": "ap_crest.png",
-    "width": 512,
-    "height": 512,
-    "bytes": 139332,
-    "master": "ap_crest.png",
-    "prompt": "ONE separate game asset for Bloodlinez named ap_crest.svg. A flat law-firm crest: a plain shield with the letters A and P joined in a serif monogram, navy and gold on transparent background. Simple enough to read at 24 px. Square. No collage or captions. Flat vector-style crisp simple geometric mark, two solid ink colors only, no gradient, no shadows, no mockup, real transparent alpha background."
-  },
-  {
-    "file": "ashgrove_plate.jpg",
-    "width": 1200,
-    "height": 800,
-    "bytes": 154331,
-    "master": "ashgrove_plate.png",
-    "prompt": "ONE separate finished game asset for Bloodlinez: ashgrove_plate.jpg. A close-up photograph of a tarnished brass coffin name plate engraved in copperplate script with the single word ASHGROVE, with a date line below it that is worn and illegible. Raking light, dark oak behind it, shallow depth of field. Landscape 3:2."
-  },
-  {
-    "file": "ashgrove_portrait_1740.jpg",
-    "width": 600,
-    "height": 750,
-    "bytes": 89776,
-    "master": "ashgrove_portrait_1740.png",
-    "prompt": "ONE separate finished game asset for Bloodlinez: ashgrove_portrait_1740.jpg. A genuine 1740 English oil portrait of a gentleman who looks about 33 in a dark gown with a white neckcloth and a powdered wig, a rolled document in one hand, three-quarter length, dark ground, warm glazed skin tones, visible craquelure and darkened varnish, gilt frame. He has a long, composed face and a faint patient smile, the same man as the 1620 portrait. No text. Portrait 4:5. Use attached 1620 oil portrait as exact facial identity reference. SAME MAN, STILL 33, same long face, eyes, nose, lips, complexion, with NO scar or mole. Change only period dress and hair to a 1740 gentleman with powdered wig and white neckcloth. This must visibly be an oil painting, not photography."
-  },
-  {
-    "file": "av_ann.jpg",
-    "width": 256,
-    "height": 256,
-    "bytes": 18733,
-    "master": "av_ann.png",
-    "prompt": "A genuine 1860s carte de visite, a brown albumen print on a thin card with rounded corners, of a seated woman of about 34, a chandler's wife. Patterned day dress, hair parted in the middle and looped over the ears, hands in her lap, painted garden backdrop. Brown tone, fine crackle, studio mark too small to read. Three-quarter length, face centred. No text. Square."
-  },
-  {
-    "file": "av_daphne.jpg",
-    "width": 256,
-    "height": 256,
-    "bytes": 11893,
-    "master": "av_daphne.png",
-    "prompt": "A recent digital colour photograph of a woman of about 59: Daphne, guarded expression, shoulder-length hair dyed dark brown with grey at the roots, blazer over a plain top, office or kitchen background out of focus, ordinary overhead lighting, no retouching. Head and shoulders, face centred. No text. Square."
-  },
-  {
-    "file": "av_eliza.jpg",
-    "width": 256,
-    "height": 256,
-    "bytes": 13407,
-    "master": "av_eliza.png",
-    "prompt": "A genuine 1890s cabinet card, a warm brown albumen print on a thick mount with a gilt border and a blank studio-name panel, of a woman of about 30: Eliza, a shipping clerk's wife. Hair parted in the middle and pinned up, plain high-necked dark dress with a small brooch, calm direct gaze. Soft focus at the edges, painted studio backdrop. Head and shoulders, face centred. No text. Square."
-  },
-  {
-    "file": "av_hannah.jpg",
-    "width": 256,
-    "height": 256,
-    "bytes": 17094,
-    "master": "av_hannah.png",
-    "prompt": "A genuine 1860s carte de visite, a brown albumen print on a thin card with rounded corners, of a woman of about 38 standing beside a draped table against a painted studio backdrop. Crinoline skirt, fitted bodice, lace cap, hands folded. Brown tone, yellowed highlights, fine crackle, a printed studio mark along the lower edge that is too small to read. Three-quarter length, face centred and clear. No text. Square."
-  },
-  {
-    "file": "av_harriet.jpg",
-    "width": 256,
-    "height": 256,
-    "bytes": 14039,
-    "master": "av_harriet.png",
-    "prompt": "A genuine 1912 gelatin silver studio portrait, cool grey-brown, of a woman of about 24: Harriet, a bride. Hair in a soft pompadour with a lace veil pushed back, high lace collar, slight tension in the expression, a faint resemblance around the eyes to a pale narrow-faced man. Hard studio light, gentle contrast, white border. Head and shoulders, face centred. No text. Square."
-  },
-  {
-    "file": "av_josiah.jpg",
-    "width": 256,
-    "height": 256,
-    "bytes": 17179,
-    "master": "av_josiah.png",
-    "prompt": "Create ONE separate finished game art asset for Bloodlinez, av_josiah.jpg. A genuine 1851 daguerreotype portrait of a man of about 27, a shipwright, head and shoulders, newly married. Shown as a small hinged leather case opened flat with a brass mat and velvet lining. Polished silver plate with its mirror-like sheen, dark vignetting at the edges, a slight tarnish ring, very sharp central detail. Dark frock coat and short side whiskers, the faintest hand-tinted pink in the cheeks, a stiff held-still expression. No text. Square. Authentic historical medium, excellent material texture, restrained aging, no contemporary typography, no labels, no collage. Square composition. Preserve frame/case edges; face as large and readable as the historical object permits. No identifying eyebrow scar or cheek mole."
-  },
-  {
-    "file": "av_margaret.jpg",
-    "width": 256,
-    "height": 256,
-    "bytes": 15832,
-    "master": "av_margaret.png",
-    "prompt": "A recent digital colour photograph of a woman in her seventies: Margaret, tired and kind, short grey hair, cardigan, daylight from a window, lived-in face with natural wrinkles, no retouching. Head and shoulders, face centred, plain home background slightly out of focus. No text. Square."
-  },
-  {
-    "file": "av_samuel.jpg",
-    "width": 256,
-    "height": 256,
-    "bytes": 17510,
-    "master": "av_samuel.png",
-    "prompt": "Create ONE separate finished game art asset for Bloodlinez, av_samuel.jpg. A genuine 1790s silhouette portrait: a man's head and shoulders in profile facing left, cut from black paper and mounted on cream card, fine detail of a tied-back queue of hair and a plain coat collar picked out in the cut edge. Pure black on cream, no shading, no facial features inside the profile. Oval gilt frame with slightly convex glass glare. Age spots and foxing on the card. No text. Square. Authentic historical medium, excellent material texture, restrained aging, no contemporary typography, no labels, no collage. Square composition. Preserve frame/case edges; face as large and readable as the historical object permits. No identifying eyebrow scar or cheek mole."
-  },
-  {
-    "file": "av_thomasv.jpg",
-    "width": 256,
-    "height": 256,
-    "bytes": 17163,
-    "master": "av_thomasv.png",
-    "prompt": "Create ONE separate finished game art asset for Bloodlinez, av_thomasv.jpg. An early 19th-century provincial oil portrait by a travelling painter, of a man of about 29, a cooper, head and shoulders in a stiff three-quarter pose. Slightly naive and flat: simplified features, hard outlines, uneven proportions, dark brown ground, a plain blue coat and white neckcloth, a small wooden mallet held at the edge of the frame. Visible brushwork, cracked darkened varnish, small paint losses, in a heavy gilt frame. Looks like a painting, not a photograph. No text. Square. Authentic historical medium, excellent material texture, restrained aging, no contemporary typography, no labels, no collage. Square composition. Preserve frame/case edges; face as large and readable as the historical object permits. No identifying eyebrow scar or cheek mole."
-  },
-  {
-    "file": "av_william.jpg",
-    "width": 256,
-    "height": 256,
-    "bytes": 14926,
-    "master": "av_william.png",
-    "prompt": "A genuine 1860s carte de visite, a brown albumen print on a thin card with rounded corners, of a man of about 36 standing with one hand on a chair back against a painted studio backdrop of a column and curtain. Dark wool suit, waistcoat with a watch chain, whiskers, a steady look. Three-quarter length, face centred. Brown tone, fine crackle, studio mark too small to read. No text. Square."
-  },
-  {
-    "file": "bl_hero_home.jpg",
-    "width": 1200,
-    "height": 800,
-    "bytes": 151774,
-    "master": "bl_hero_home.png",
-    "prompt": "ONE separate game asset for Bloodlinez named bl_hero_home.jpg. A wide photograph of an archive room with wooden card-index drawers and old photo albums on shelves, warm low light, shallow depth of field, calm and slightly dusty. No people, no readable text. Landscape 3:2. No collage or captions. Faithful material and restrained photographic lighting. No readable text."
-  },
-  {
-    "file": "bloodlines_logo.png",
-    "width": 512,
-    "height": 512,
-    "bytes": 76305,
-    "master": "bloodlines_logo.png",
-    "prompt": "ONE separate game asset for Bloodlinez named bloodlines_logo.svg. A flat logo mark for a genealogy website: a single leaf shape whose lower half is a blood drop, in deep green and dark red on a transparent background. No words. Simple enough to read at 24 px. Square. No collage or captions. Flat vector-style crisp simple geometric mark, two solid ink colors only, no gradient, no shadows, no mockup, real transparent alpha background."
-  },
-  {
-    "file": "case_daguerreotype.png",
-    "width": 600,
-    "height": 750,
-    "bytes": 430313,
-    "master": "case_daguerreotype.png",
-    "prompt": "ONE isolated separate reusable game overlay asset for Bloodlinez: case_daguerreotype.png. A hinged 1850s daguerreotype case opened flat, black pressed leather on the left, red velvet lining, a gilt brass mat with an empty oval opening, flat front view.  Portrait 4:5. Actual transparent alpha background, no white backdrop or checkerboard painted into image. Entire outer object fits inside canvas with a narrow clear margin. For frames and mounts the portrait opening must be completely TRANSPARENT so a photo can sit underneath; remove backing in opening. For licence cards only photo slot and exterior are transparent; preserve printed card body and blank rules. Flat straight-on orthographic view, no perspective.  No collage, no labels, no extra objects."
-  },
-  {
-    "file": "cellar_coffins.jpg",
-    "width": 1200,
-    "height": 800,
-    "bytes": 154256,
-    "master": "cellar_coffins.png",
-    "prompt": "ONE separate finished game asset for Bloodlinez: cellar_coffins.jpg. A dim handheld phone photograph taken by torchlight in a brick cellar: four wooden coffins on the floor, three of them with small brass name plates, the fourth older and darker. Underexposed, slightly blurred, harsh torch glare on the wood, wet brick walls. The plates must be too small to read. No people. Landscape 3:2."
-  },
-  {
-    "file": "collection_birth.jpg",
-    "width": 512,
-    "height": 512,
-    "bytes": 62392,
-    "master": "collection_birth.png",
-    "prompt": "ONE separate finished game asset for Bloodlinez: collection_birth.jpg. One square close-up photograph of a box of birth certificates tied with cotton string on a dark wooden archive desk, soft side window light, shallow depth of field, warm natural tones, subtle dust, realistic fibres and bindings. Simple strong composition readable as a small collection thumbnail. No readable text, no modern props, no other subjects, no collage."
-  },
-  {
-    "file": "collection_census.jpg",
-    "width": 512,
-    "height": 512,
-    "bytes": 68913,
-    "master": "collection_census.png",
-    "prompt": "ONE separate finished game asset for Bloodlinez: collection_census.jpg. One square close-up photograph of a stack of thick nineteenth-century census books on a dark wooden archive desk, soft side window light, shallow depth of field, warm natural tones, subtle dust, realistic fibres and bindings. Simple strong composition readable as a small collection thumbnail. No readable text, no modern props, no other subjects, no collage."
-  },
-  {
-    "file": "collection_death.jpg",
-    "width": 512,
-    "height": 512,
-    "bytes": 58578,
-    "master": "collection_death.png",
-    "prompt": "ONE separate finished game asset for Bloodlinez: collection_death.jpg. One square close-up photograph of a black-bordered Victorian death notice card with blank centre on a dark wooden archive desk, soft side window light, shallow depth of field, warm natural tones, subtle dust, realistic fibres and bindings. Simple strong composition readable as a small collection thumbnail. No readable text, no modern props, no other subjects, no collage."
-  },
-  {
-    "file": "collection_newspapers.jpg",
-    "width": 512,
-    "height": 512,
-    "bytes": 60935,
-    "master": "collection_newspapers.png",
-    "prompt": "ONE separate finished game asset for Bloodlinez: collection_newspapers.jpg. One square close-up photograph of a folded old newspaper on a dark wooden archive desk, soft side window light, shallow depth of field, warm natural tones, subtle dust, realistic fibres and bindings. Simple strong composition readable as a small collection thumbnail. No readable text, no modern props, no other subjects, no collage."
-  },
-  {
-    "file": "collection_photos.jpg",
-    "width": 512,
-    "height": 512,
-    "bytes": 63472,
-    "master": "collection_photos.png",
-    "prompt": "ONE separate finished game asset for Bloodlinez: collection_photos.jpg. One square close-up photograph of a pile of assorted old sepia portrait photographs on a dark wooden archive desk, soft side window light, shallow depth of field, warm natural tones, subtle dust, realistic fibres and bindings. Simple strong composition readable as a small collection thumbnail. No readable text, no modern props, no other subjects, no collage."
-  },
-  {
-    "file": "collection_rolls.jpg",
-    "width": 512,
-    "height": 512,
-    "bytes": 54848,
-    "master": "collection_rolls.png",
-    "prompt": "ONE separate finished game asset for Bloodlinez: collection_rolls.jpg. One square close-up photograph of an electoral ledger open to a mostly blank ruled page on a dark wooden archive desk, soft side window light, shallow depth of field, warm natural tones, subtle dust, realistic fibres and bindings. Simple strong composition readable as a small collection thumbnail. No readable text, no modern props, no other subjects, no collage."
-  },
-  {
-    "file": "dna_banner.jpg",
-    "width": 1200,
-    "height": 800,
-    "bytes": 93613,
-    "master": "dna_banner.png",
-    "prompt": "ONE separate game asset for Bloodlinez named dna_banner.jpg. A wide abstract image of a DNA double helix in pale red lines on a very dark red background, soft glow, no text. Landscape 3:2. No collage or captions. Faithful material and restrained photographic lighting. No readable text."
-  },
-  {
-    "file": "frame_oil.png",
-    "width": 600,
-    "height": 750,
-    "bytes": 479227,
-    "master": "frame_oil.png",
-    "prompt": "ONE isolated separate reusable game overlay asset for Bloodlinez: frame_oil.png. A single empty heavy rectangular gilt picture frame with a dark brown painted inner edge and aged gilding, flat front view, empty dark centre.  Portrait 4:5. Actual transparent alpha background, no white backdrop or checkerboard painted into image. Entire outer object fits inside canvas with a narrow clear margin. For frames and mounts the portrait opening must be completely TRANSPARENT so a photo can sit underneath; remove backing in opening. For licence cards only photo slot and exterior are transparent; preserve printed card body and blank rules. Flat straight-on orthographic view, no perspective.  No collage, no labels, no extra objects."
-  },
-  {
-    "file": "frame_silhouette.png",
-    "width": 600,
-    "height": 750,
-    "bytes": 411854,
-    "master": "frame_silhouette.png",
-    "prompt": "ONE isolated separate reusable game overlay asset for Bloodlinez: frame_silhouette.png. A single empty oval gilt picture frame with convex glass glare and cream card behind it, flat front view, nothing inside the oval.  Portrait 4:5. Actual transparent alpha background, no white backdrop or checkerboard painted into image. Entire outer object fits inside canvas with a narrow clear margin. For frames and mounts the portrait opening must be completely TRANSPARENT so a photo can sit underneath; remove backing in opening. For licence cards only photo slot and exterior are transparent; preserve printed card body and blank rules. Flat straight-on orthographic view, no perspective.  No collage, no labels, no extra objects."
-  },
-  {
-    "file": "licence1972.jpg",
-    "width": 600,
-    "height": 750,
-    "bytes": 73034,
-    "master": "licence1972.png",
-    "prompt": "Attach vane_sheet.png. A 1972 driver licence photo of the man in the reference, head and shoulders, shot in a licence office. Faded colour print with an orange-magenta shift, flat frontal flash, pale blue-grey wall behind him, slightly soft. Hair long over the ears with sideburns, wide-collared shirt with wide lapels. Neutral expression, looking at the camera. He still looks about 32. Marks, as they appear in the picture: pale scar cutting through the eyebrow on the RIGHT side of the picture; small dark mole low on the cheek on the LEFT side of the picture. Both clearly visible despite the fading. No card, no text, just the photograph. Portrait 2:3."
-  },
-  {
-    "file": "licence2019.jpg",
-    "width": 600,
-    "height": 750,
-    "bytes": 58278,
-    "master": "licence2019.png",
-    "prompt": "Attach vane_sheet.png. A modern driver licence photo of the man in the reference, head and shoulders, plain light grey backdrop, harsh direct front flash, sharp digital capture, no smile, short neat dark hair, dark crew-neck top. Looks about 32. Marks, as they appear in the picture: pale scar cutting through the eyebrow on the RIGHT side of the picture; small dark mole low on the cheek on the LEFT side of the picture. Both very clear. No card, no text. Portrait 2:3."
-  },
-  {
-    "file": "licence_card_1972.png",
-    "width": 1200,
-    "height": 800,
-    "bytes": 1366551,
-    "master": "licence_card_1972.png",
-    "prompt": "ONE isolated separate reusable game overlay asset for Bloodlinez: licence_card_1972.png. A blank 1970s driver licence card, flat top-down, rounded corners, pale green and cream printed security pattern, an empty rectangular photo slot on the left, empty ruled lines on the right, no words and no numbers.  Landscape 3:2. Actual transparent alpha background, no white backdrop or checkerboard painted into image. Entire outer object fits inside canvas with a narrow clear margin. For frames and mounts the portrait opening must be completely TRANSPARENT so a photo can sit underneath; remove backing in opening. For licence cards only photo slot and exterior are transparent; preserve printed card body and blank rules. Flat straight-on orthographic view, no perspective.  No collage, no labels, no extra objects."
-  },
-  {
-    "file": "licence_card_2019.png",
-    "width": 1200,
-    "height": 800,
-    "bytes": 1071800,
-    "master": "licence_card_2019.png",
-    "prompt": "ONE isolated separate reusable game overlay asset for Bloodlinez: licence_card_2019.png. A blank modern plastic driver licence card, flat top-down, rounded corners, blue-grey gradient with a fine guilloche pattern, an empty photo slot on the left, empty lines on the right, no words and no numbers.  Landscape 3:2. Actual transparent alpha background, no white backdrop or checkerboard painted into image. Entire outer object fits inside canvas with a narrow clear margin. For frames and mounts the portrait opening must be completely TRANSPARENT so a photo can sit underneath; remove backing in opening. For licence cards only photo slot and exterior are transparent; preserve printed card body and blank rules. Flat straight-on orthographic view, no perspective.  No collage, no labels, no extra objects."
-  },
-  {
-    "file": "mount_cabinet.png",
-    "width": 600,
-    "height": 750,
-    "bytes": 379846,
-    "master": "mount_cabinet.png",
-    "prompt": "ONE isolated separate reusable game overlay asset for Bloodlinez: mount_cabinet.png. A blank Victorian cabinet card mount, thick cream card with a gilt border and an empty rectangle where the photograph goes, an empty panel along the lower edge for the studio name, flat front view.  Portrait 4:5. Actual transparent alpha background, no white backdrop or checkerboard painted into image. Entire outer object fits inside canvas with a narrow clear margin. For frames and mounts the portrait opening must be completely TRANSPARENT so a photo can sit underneath; remove backing in opening. For licence cards only photo slot and exterior are transparent; preserve printed card body and blank rules. Flat straight-on orthographic view, no perspective.  No collage, no labels, no extra objects."
-  },
-  {
-    "file": "mount_carte.png",
-    "width": 600,
-    "height": 750,
-    "bytes": 216294,
-    "master": "mount_carte.png",
-    "prompt": "ONE isolated separate reusable game overlay asset for Bloodlinez: mount_carte.png. A blank Victorian carte de visite card, thin cream card with rounded corners and a thin printed border, an empty rectangle where the photograph goes and a small illegible studio mark along the lower edge, flat front view.  Portrait 4:5. Actual transparent alpha background, no white backdrop or checkerboard painted into image. Entire outer object fits inside canvas with a narrow clear margin. For frames and mounts the portrait opening must be completely TRANSPARENT so a photo can sit underneath; remove backing in opening. For licence cards only photo slot and exterior are transparent; preserve printed card body and blank rules. Flat straight-on orthographic view, no perspective.  No collage, no labels, no extra objects."
-  },
-  {
-    "file": "paper_census.jpg",
-    "width": 1000,
-    "height": 667,
-    "bytes": 86502,
-    "master": "paper_census.png",
-    "prompt": "ONE standalone background texture asset for Bloodlinez, paper_census.jpg. A flat top-down scan of an empty printed census householder's schedule from about 1900: pre-printed grid and column headings as unreadable marks, ink entries as illegible strokes, folded, a little brown ink smudging. Landscape 3:2. This is a functional game document background for overlaying real HTML text. Keep central 70% very pale and mostly empty so dark text can be read over it. Only faint nonsemantic unreadable marks in margins or isolated lines; NO legible words, names, letters, dates or numbers. Delicate paper fibres, historically accurate material, restrained believable wear. Scan flat and orthogonal, page fills entire canvas, no desk, no hands, no perspective, no props outside sheet, no collage."
-  },
-  {
-    "file": "paper_census_1841.jpg",
-    "width": 1000,
-    "height": 1500,
-    "bytes": 86255,
-    "master": "paper_census_1841.png",
-    "prompt": "ONE standalone background texture asset for Bloodlinez, paper_census_1841.jpg. A flat top-down scan of a thin 1841 printed census householder's schedule: small printed type as unreadable marks, a few faint ink entries, enumerator's pencil ticks in the margin, folded creases, thin yellowed paper. No readable words. Portrait 2:3. This is a functional game document background for overlaying real HTML text. Keep central 70% very pale and mostly empty so dark text can be read over it. Only faint nonsemantic unreadable marks in margins or isolated lines; NO legible words, names, letters, dates or numbers. Delicate paper fibres, historically accurate material, restrained believable wear. Scan flat and orthogonal, page fills entire canvas, no desk, no hands, no perspective, no props outside sheet, no collage."
-  },
-  {
-    "file": "paper_civil_1850.jpg",
-    "width": 1000,
-    "height": 1500,
-    "bytes": 86656,
-    "master": "paper_civil_1850.png",
-    "prompt": "ONE standalone background texture asset for Bloodlinez, paper_civil_1850.jpg. A flat top-down scan of a blank Victorian civil registration form: a copperplate-style printed heading as unreadable marks, wide margins, ruled boxes, a few steel-nib entries as illegible strokes, a red folio stamp, yellowed paper. No readable words. Portrait 2:3. This is a functional game document background for overlaying real HTML text. Keep central 70% very pale and mostly empty so dark text can be read over it. Only faint nonsemantic unreadable marks in margins or isolated lines; NO legible words, names, letters, dates or numbers. Delicate paper fibres, historically accurate material, restrained believable wear. Scan flat and orthogonal, page fills entire canvas, no desk, no hands, no perspective, no props outside sheet, no collage."
-  },
-  {
-    "file": "paper_deed_1934.jpg",
-    "width": 1000,
-    "height": 1500,
-    "bytes": 85901,
-    "master": "paper_deed_1934.png",
-    "prompt": "ONE separate game texture for Bloodlinez named paper_deed_1934.jpg. A flat top-down scan of a blank 1934 typewritten legal deed: heavy cream paper, faint typewriter lines as unreadable marks, a red paper seal and a pink silk ribbon at the bottom, light age. No readable words. Portrait 2:3. This is a document background underneath readable HTML evidence text. Keep the central majority pale with ample open space. Writing must be abstract tiny illegible marks with NO readable words, NO invented clue text, NO names or numbers. For newspaper layouts use pale grey blocks and extremely faint abstract ink columns to suggest type without readable characters. Subtle true-to-period material, no excessive distressing. Perfectly flat orthogonal scan, page fills canvas, no desk, hands or exterior props."
-  },
-  {
-    "file": "paper_diary.jpg",
-    "width": 1000,
-    "height": 1500,
-    "bytes": 86190,
-    "master": "paper_diary.png",
-    "prompt": "ONE standalone background texture asset for Bloodlinez, paper_diary.jpg. A flat scan of a cheap lined notebook page from 1888, binding shadow down the left side, brown foxing spots, blank lines with only faint illegible brown handwriting strokes, no readable words. Portrait 2:3. This is a functional game document background for overlaying real HTML text. Keep central 70% very pale and mostly empty so dark text can be read over it. Only faint nonsemantic unreadable marks in margins or isolated lines; NO legible words, names, letters, dates or numbers. Delicate paper fibres, historically accurate material, restrained believable wear. Scan flat and orthogonal, page fills entire canvas, no desk, no hands, no perspective, no props outside sheet, no collage."
-  },
-  {
-    "file": "paper_harbour.jpg",
-    "width": 1000,
-    "height": 1500,
-    "bytes": 86283,
-    "master": "paper_harbour.png",
-    "prompt": "ONE separate game texture for Bloodlinez named paper_harbour.jpg. A flat scan of a maritime authority incident report form with ruled boxes, one red date stamp that is blurred and unreadable, light coffee stain, no readable text. Portrait 2:3. This is a document background underneath readable HTML evidence text. Keep the central majority pale with ample open space. Writing must be abstract tiny illegible marks with NO readable words, NO invented clue text, NO names or numbers. For newspaper layouts use pale grey blocks and extremely faint abstract ink columns to suggest type without readable characters. Subtle true-to-period material, no excessive distressing. Perfectly flat orthogonal scan, page fills canvas, no desk, hands or exterior props."
-  },
-  {
-    "file": "paper_hospital.jpg",
-    "width": 1000,
-    "height": 1500,
-    "bytes": 86407,
-    "master": "paper_hospital.png",
-    "prompt": "ONE standalone background texture asset for Bloodlinez, paper_hospital.jpg. A flat top-down scan of a Victorian hospital casualty register page: columns ruled in red and black, blank entries with only faint blurred steel-nib handwriting strokes, aged paper, a binding gutter on the left. No readable text. Portrait 2:3. This is a functional game document background for overlaying real HTML text. Keep central 70% very pale and mostly empty so dark text can be read over it. Only faint nonsemantic unreadable marks in margins or isolated lines; NO legible words, names, letters, dates or numbers. Delicate paper fibres, historically accurate material, restrained believable wear. Scan flat and orthogonal, page fills entire canvas, no desk, no hands, no perspective, no props outside sheet, no collage."
-  },
-  {
-    "file": "paper_invoice.jpg",
-    "width": 1000,
-    "height": 1500,
-    "bytes": 84057,
-    "master": "paper_invoice.png",
-    "prompt": "ONE separate game texture for Bloodlinez named paper_invoice.jpg. A flat scan of a carbon-copy invoice form in faded blue, with ruled boxes and a blank header band, no readable text. Portrait 2:3. This is a document background underneath readable HTML evidence text. Keep the central majority pale with ample open space. Writing must be abstract tiny illegible marks with NO readable words, NO invented clue text, NO names or numbers. For newspaper layouts use pale grey blocks and extremely faint abstract ink columns to suggest type without readable characters. Subtle true-to-period material, no excessive distressing. Perfectly flat orthogonal scan, page fills canvas, no desk, hands or exterior props."
-  },
-  {
-    "file": "paper_letter.jpg",
-    "width": 1000,
-    "height": 1500,
-    "bytes": 86330,
-    "master": "paper_letter.png",
-    "prompt": "ONE separate game asset for Bloodlinez named paper_letter.jpg. Flat top-down scan of blank heavy cream letter paper, fine cotton fibres and subtle blind-embossed JV monogram in upper left corner. Otherwise entirely blank, no ink, elegant restrained expensive paper. Portrait 2:3. No collage or captions. Faithful material and restrained photographic lighting. No readable text."
-  },
-  {
-    "file": "paper_letter_daphne.jpg",
-    "width": 1000,
-    "height": 1500,
-    "bytes": 80768,
-    "master": "paper_letter_daphne.png",
-    "prompt": "ONE separate game asset for Bloodlinez named paper_letter_daphne.jpg. Flat top-down scan of pristine white law-firm letterhead paper with a thin plain navy blue horizontal rule near the top, blank header and completely blank body. No words, no letters, no logo. Fine smooth paper. Portrait 2:3. No collage or captions. Faithful material and restrained photographic lighting. No readable text."
-  },
-  {
-    "file": "paper_letter_margaret.jpg",
-    "width": 1000,
-    "height": 1500,
-    "bytes": 86790,
-    "master": "paper_letter_margaret.png",
-    "prompt": "ONE separate game asset for Bloodlinez named paper_letter_margaret.jpg. Flat top-down scan of blank domestic lined notepaper with a torn top edge, pale blue horizontal rules, warm off-white paper, faint natural creases. No words or handwriting, plenty of empty writing space. Portrait 2:3. No collage or captions. Faithful material and restrained photographic lighting. No readable text."
-  },
-  {
-    "file": "paper_news_1930s.jpg",
-    "width": 1000,
-    "height": 1500,
-    "bytes": 86488,
-    "master": "paper_news_1930s.png",
-    "prompt": "ONE separate game texture for Bloodlinez named paper_news_1930s.jpg. A flat top-down scan of a 1930s newspaper page with no readable words: six columns of grey texture, blocks for bold headlines, a rectangular blank area for a halftone photograph, yellowed newsprint. Portrait 2:3. This is a document background underneath readable HTML evidence text. Keep the central majority pale with ample open space. Writing must be abstract tiny illegible marks with NO readable words, NO invented clue text, NO names or numbers. For newspaper layouts use pale grey blocks and extremely faint abstract ink columns to suggest type without readable characters. Subtle true-to-period material, no excessive distressing. Perfectly flat orthogonal scan, page fills canvas, no desk, hands or exterior props."
-  },
-  {
-    "file": "paper_news_postwar.jpg",
-    "width": 1000,
-    "height": 1500,
-    "bytes": 83674,
-    "master": "paper_news_postwar.png",
-    "prompt": "ONE separate game texture for Bloodlinez named paper_news_postwar.jpg. A flat top-down scan of a mid-century newspaper page with no readable words: columns of grey texture, a coarse halftone dot pattern in a blank photo area, grey newsprint with uneven ink. Portrait 2:3. This is a document background underneath readable HTML evidence text. Keep the central majority pale with ample open space. Writing must be abstract tiny illegible marks with NO readable words, NO invented clue text, NO names or numbers. For newspaper layouts use pale grey blocks and extremely faint abstract ink columns to suggest type without readable characters. Subtle true-to-period material, no excessive distressing. Perfectly flat orthogonal scan, page fills canvas, no desk, hands or exterior props."
-  },
-  {
-    "file": "paper_news_victorian.jpg",
-    "width": 1000,
-    "height": 1500,
-    "bytes": 84585,
-    "master": "paper_news_victorian.png",
-    "prompt": "ONE separate game texture for Bloodlinez named paper_news_victorian.jpg. A flat top-down scan of a Victorian newspaper page with no readable words: seven narrow columns of dense letterpress as grey texture, a few wood-engraved advert boxes, no photographs, grey-brown brittle paper with a torn edge. Portrait 2:3. This is a document background underneath readable HTML evidence text. Keep the central majority pale with ample open space. Writing must be abstract tiny illegible marks with NO readable words, NO invented clue text, NO names or numbers. For newspaper layouts use pale grey blocks and extremely faint abstract ink columns to suggest type without readable characters. Subtle true-to-period material, no excessive distressing. Perfectly flat orthogonal scan, page fills canvas, no desk, hands or exterior props."
-  },
-  {
-    "file": "paper_parchment.jpg",
-    "width": 1000,
-    "height": 1500,
-    "bytes": 86665,
-    "master": "paper_parchment.png",
-    "prompt": "ONE standalone background texture asset for Bloodlinez, paper_parchment.jpg. A flat top-down scan of an aged parchment sheet from the 1400s to 1700s, creamy brown and slightly translucent, a sewn edge on the left, a few lines of illegible secretary-hand writing in brown iron-gall ink with abbreviation marks, a small red wax seal at the lower edge. No readable words. Portrait 2:3. This is a functional game document background for overlaying real HTML text. Keep central 70% very pale and mostly empty so dark text can be read over it. Only faint nonsemantic unreadable marks in margins or isolated lines; NO legible words, names, letters, dates or numbers. Delicate paper fibres, historically accurate material, restrained believable wear. Scan flat and orthogonal, page fills entire canvas, no desk, no hands, no perspective, no props outside sheet, no collage."
-  },
-  {
-    "file": "paper_parish_1751.jpg",
-    "width": 1000,
-    "height": 1500,
-    "bytes": 85807,
-    "master": "paper_parish_1751.png",
-    "prompt": "ONE standalone background texture asset for Bloodlinez, paper_parish_1751.jpg. A flat top-down scan of a blank 1750s parish baptism register page: hand-ruled laid paper with visible chain lines and a faint watermark, brown iron-gall ink gone pale with halos around the strokes, faint illegible round-hand writing in a few lines and no printed columns, foxing and one stitched edge. No readable words. Portrait 2:3. This is a functional game document background for overlaying real HTML text. Keep central 70% very pale and mostly empty so dark text can be read over it. Only faint nonsemantic unreadable marks in margins or isolated lines; NO legible words, names, letters, dates or numbers. Delicate paper fibres, historically accurate material, restrained believable wear. Scan flat and orthogonal, page fills entire canvas, no desk, no hands, no perspective, no props outside sheet, no collage."
-  },
-  {
-    "file": "paper_parish_form.jpg",
-    "width": 1000,
-    "height": 1500,
-    "bytes": 86465,
-    "master": "paper_parish_form.png",
-    "prompt": "ONE standalone background texture asset for Bloodlinez, paper_parish_form.jpg. A flat top-down scan of a blank early 19th-century printed parish marriage register page: printed ruled columns with illegible headings, a few handwritten entries as unreadable brown ink strokes, one entry ending in a clear X mark, aged mid-brown paper. No readable words. Portrait 2:3. This is a functional game document background for overlaying real HTML text. Keep central 70% very pale and mostly empty so dark text can be read over it. Only faint nonsemantic unreadable marks in margins or isolated lines; NO legible words, names, letters, dates or numbers. Delicate paper fibres, historically accurate material, restrained believable wear. Scan flat and orthogonal, page fills entire canvas, no desk, no hands, no perspective, no props outside sheet, no collage."
-  },
-  {
-    "file": "paper_register.jpg",
-    "width": 1000,
-    "height": 1500,
-    "bytes": 88296,
-    "master": "paper_register.png",
-    "prompt": "ONE separate game texture for Bloodlinez named paper_register.jpg. A flat top-down scan of a blank civil registration form from the 1930s: pre-printed boxes and rules in faded black ink, aged cream paper, one faint folio stamp, no readable words. Portrait 2:3. This is a document background underneath readable HTML evidence text. Keep the central majority pale with ample open space. Writing must be abstract tiny illegible marks with NO readable words, NO invented clue text, NO names or numbers. For newspaper layouts use pale grey blocks and extremely faint abstract ink columns to suggest type without readable characters. Subtle true-to-period material, no excessive distressing. Perfectly flat orthogonal scan, page fills canvas, no desk, hands or exterior props."
-  },
-  {
-    "file": "paper_will_modern.jpg",
-    "width": 1000,
-    "height": 1500,
-    "bytes": 87161,
-    "master": "paper_will_modern.png",
-    "prompt": "ONE separate game texture for Bloodlinez named paper_will_modern.jpg. A flat top-down scan of a plain white laser-printed legal document with no readable words: lines of grey texture, a signature block at the bottom with two blank witness lines. Portrait 2:3. This is a document background underneath readable HTML evidence text. Keep the central majority pale with ample open space. Writing must be abstract tiny illegible marks with NO readable words, NO invented clue text, NO names or numbers. For newspaper layouts use pale grey blocks and extremely faint abstract ink columns to suggest type without readable characters. Subtle true-to-period material, no excessive distressing. Perfectly flat orthogonal scan, page fills canvas, no desk, hands or exterior props."
-  },
-  {
-    "file": "photo1875.jpg",
-    "width": 600,
-    "height": 750,
-    "bytes": 82743,
-    "master": "photo1875.png",
-    "prompt": "Generate one separate finished archival game image for Bloodlinez, asset photo1875.jpg. Use the face in the close-up on the RIGHT of the supplied character sheet as the EXACT identity reference; preserve facial geometry and identity, not the modern clothes. Attach vane_sheet.png. A genuine-looking 1875 studio cabinet portrait of the man in the reference as an 18-year-old, head and shoulders, sepia albumen print on a card mount. Same facial structure as the reference but visibly a youth: softer jaw, fuller cheeks, slightly thinner neck, a faint attempt at a moustache is not needed. Daylight from a window on the left, painted pale backdrop, soft focus toward the edges, fine paper grain. Plain wool jacket, small white collar, hair neatly parted. Looks straight at the lens. He has one small dark round mole on the LEFT side of the picture, low on the cheek level with the corner of the mouth. He has NO scar: both eyebrows are clear and unmarked. No text, no border. Portrait 4:5. No collage, no multiple panels, no labels. The 18-year-old has NO SCAR; remove the reference scar entirely."
-  },
-  {
-    "file": "photo1889.jpg",
-    "width": 600,
-    "height": 750,
-    "bytes": 80452,
-    "master": "photo1889.png",
-    "prompt": "Generate one separate finished archival game image for Bloodlinez, asset photo1889.jpg. Use the face in the close-up on the RIGHT of the supplied character sheet as the EXACT identity reference; preserve facial geometry and identity, not the modern clothes. Attach vane_sheet.png. A genuine-looking 1889 studio cabinet portrait of the man in the reference, head and shoulders, sepia albumen print on a card mount, slightly cropped to the print. Painted dark studio backdrop, lit by a single warm lamp from the left, soft focus toward the edges, fine paper grain, small scratches. High stiff white collar, black cravat, dark frock coat, oiled hair with a side parting. Face centred, looking straight at the lens, neutral expression. Same man as the reference. Looks about 32. Very pale skin, narrow face, angular jaw, high cheekbones, straight nose, thin lips, dark heavy-lidded eyes. Two permanent marks, described as they appear in the picture: a pale raised scar about 2.5 cm long cutting diagonally through the eyebrow on the RIGHT side of the picture, splitting the eyebrow hair, with two tiny stitch marks across it; and one small dark round mole on the LEFT side of the picture, low on the cheek level with the corner of the mouth. The eyebrow on the left of the picture and the cheek on the right are clear. Both marks clearly visible. No text, no border, no modern elements. Portrait 4:5. No collage, no multiple panels, no labels. Apparent age 32, SAME MAN as the reference. Both identifying marks unmistakable: scar cuts THROUGH eyebrow hair on image-right with two little stitch marks; dark mole low on image-left cheek at mouth level. Preserve both in archival texture. Natural understated photographic realism, not a stylized fantasy illustration."
-  },
-  {
-    "file": "photo1912.jpg",
-    "width": 1200,
-    "height": 750,
-    "bytes": 132967,
-    "master": "photo1912.png",
-    "prompt": "Generate one separate finished archival game image for Bloodlinez, asset photo1912.jpg. Use the face in the close-up on the RIGHT of the supplied character sheet as the EXACT identity reference; preserve facial geometry and identity, not the modern clothes. Attach vane_sheet.png. A 1912 evening studio portrait of two men standing side by side, half-length, taken after a wedding reception. Gelatin silver print, warm grey-brown tone, slightly low contrast, hard flash shadows on a plain wall behind them. On the LEFT of the picture: the groom, a heavier-built man of about 28 with a moustache, broad nose, flat combed hair, wearing morning dress with a white buttonhole flower. On the RIGHT of the picture: the man in the reference, wearing a black frock coat and high collar, looking about 32, clearly no older than the groom. Both look at the camera. The man on the right has two permanent marks, described as they appear in the picture: a pale raised scar cutting through the eyebrow on the RIGHT side of his face as seen in the picture, and a small dark mole low on his cheek on the LEFT side of his face as seen in the picture. Both marks sharp and visible. The groom has no scar and no mole. No bride, no other people, no text. Landscape 8:5. No collage, no multiple panels, no labels. Apparent age 32, SAME MAN as the reference. Both identifying marks unmistakable: scar cuts THROUGH eyebrow hair on image-right with two little stitch marks; dark mole low on image-left cheek at mouth level. Preserve both in archival texture. Natural understated photographic realism, not a stylized fantasy illustration."
-  },
-  {
-    "file": "photo1921.jpg",
-    "width": 600,
-    "height": 750,
-    "bytes": 92068,
-    "master": "photo1921.png",
-    "prompt": "Create ONE separate finished game art asset for Bloodlinez, photo1921.jpg. A 1921 gelatin silver print, grey-brown with a white border and a slight curl, of a heavy-set man of about 40 in a committee portrait, head and shoulders: Frank Tully, secretary of a wharf workers' union. Thick moustache, flat cap off, rough wool jacket with a collar and tie, direct stare, hard interior flash with a shadow on the wall behind him. A pale raised scar cuts through the eyebrow on the RIGHT side of the picture, splitting the hair of the brow. No mole anywhere on his face. He does not look pale or gaunt; he looks weathered. No text. Portrait 4:5. Authentic historical medium, excellent material texture, restrained aging, no contemporary typography, no labels, no collage. Scar through image-RIGHT eyebrow, absolutely NO cheek mole. Centered face looking forward."
-  },
-  {
-    "file": "photo1950.jpg",
-    "width": 600,
-    "height": 750,
-    "bytes": 62669,
-    "master": "photo1950.png",
-    "prompt": ""
-  },
-  {
-    "file": "photo1962.jpg",
-    "width": 600,
-    "height": 750,
-    "bytes": 153815,
-    "master": "photo1962.png",
-    "prompt": "Attach vane_sheet.png. A 1962 newspaper photograph of the man in the reference at a society ball, head and shoulders, in a black dinner suit and bow tie, hair slicked back. Printed as a coarse newspaper halftone dot screen on yellowed newsprint, black and white, slightly overexposed press-flash look, a little blurred ink spread. The face is large and centred, looking at the camera. Because halftone loses detail, make the scar through the eyebrow and the mole slightly bolder than normal. Marks, as they appear in the picture: pale scar cutting through the eyebrow on the RIGHT side of the picture; small dark mole low on the cheek on the LEFT side of the picture. No caption, no headline, no text. Portrait 2:3."
-  },
-  {
-    "file": "portrait1620.jpg",
-    "width": 600,
-    "height": 750,
-    "bytes": 77608,
-    "master": "portrait1620.png",
-    "prompt": "Create ONE separate finished game art asset for Bloodlinez, portrait1620.jpg. A genuine 1620 English oil portrait on panel of a man who looks about 33, a town recorder, three-quarter length against a dark brown ground. Black doublet, white falling collar, long dark hair to the shoulders, a composed and patient face with a faint closed-mouth smile, one hand resting on a rolled document. Warm glazed flesh tones, visible craquelure, darkened varnish, a gilt slip frame. No scar and no mole. No text. Portrait 4:5. Authentic historical medium, excellent material texture, restrained aging, no contemporary typography, no labels, no collage. This man must have a distinct original identity, not the Vane character: long composed face, dark almond eyes, prominent straight nose, shoulder length dark hair, fine arched eyebrows, slightly longer upper lip. Appears 33, not older."
-  },
-  {
-    "file": "stamp_nil.png",
-    "width": 512,
-    "height": 512,
-    "bytes": 168623,
-    "master": "stamp_nil.png",
-    "prompt": "ONE isolated separate reusable game overlay asset for Bloodlinez: stamp_nil.png. A red-ink rectangular rubber stamp impression on a plain white background, a thick border with heavy blocky capital letters spelling NIL RETURN, uneven ink, slightly rotated. Square. Actual transparent alpha background, no white backdrop or checkerboard painted into image. Only ink is visible; all spaces between ink marks fully transparent.  No collage, no labels, no extra objects."
-  },
-  {
-    "file": "stamp_registrar.png",
-    "width": 512,
-    "height": 512,
-    "bytes": 214815,
-    "master": "stamp_registrar.png",
-    "prompt": "ONE isolated separate reusable game overlay asset for Bloodlinez: stamp_registrar.png. A circular DISTRICT OF ASHBY registrar rubber-stamp impression, double ring, simple star at centre, faded dark red ink, worn impression, exactly the words DISTRICT OF ASHBY around rim, no other text, square. Actual transparent alpha background, no white backdrop or checkerboard painted into image. Only ink is visible; all spaces between ink marks fully transparent.  No collage, no labels, no extra objects."
-  },
-  {
-    "file": "bloodlines_logo.svg",
-    "width": 512,
-    "height": 512,
-    "bytes": 12639,
-    "source": "bloodlines_logo.png",
-    "method": "Vector trace of generated artwork"
-  },
-  {
-    "file": "ap_crest.svg",
-    "width": 512,
-    "height": 512,
-    "bytes": 29991,
-    "source": "ap_crest.png",
-    "method": "Vector trace of generated artwork"
-  },
-  {
-    "file": "av_arthur.jpg",
-    "width": 256,
-    "height": 256,
-    "bytes": 14013,
-    "source": "photo1912.jpg",
-    "crop": "420x420+160+10"
-  },
-  {
-    "file": "av_ambrose.jpg",
-    "width": 256,
-    "height": 256,
-    "bytes": 13879,
-    "source": "photo1889.jpg",
-    "crop": "550x550+25+25"
-  },
-  {
-    "file": "av_cornelius.jpg",
-    "width": 256,
-    "height": 256,
-    "bytes": 13705,
-    "source": "licence1972.jpg",
-    "crop": "550x550+25+25"
-  },
-  {
-    "file": "av_julian.jpg",
-    "width": 256,
-    "height": 256,
-    "bytes": 12139,
-    "source": "licence2019.jpg",
-    "crop": "550x550+25+25"
-  }
+ {
+  "file": "ap_crest.webp",
+  "width": 512,
+  "height": 512,
+  "bytes": 19132,
+  "master": "ap_crest.webp",
+  "prompt": "ONE separate game asset for Bloodlinez named ap_crest.svg. A flat law-firm crest: a plain shield with the letters A and P joined in a serif monogram, navy and gold on transparent background. Simple enough to read at 24 px. Square. No collage or captions. Flat vector-style crisp simple geometric mark, two solid ink colors only, no gradient, no shadows, no mockup, real transparent alpha background.",
+  "masked": true
+ },
+ {
+  "file": "ashgrove_plate.jpg",
+  "width": 1200,
+  "height": 800,
+  "bytes": 154331,
+  "master": "ashgrove_plate.png",
+  "prompt": "ONE separate finished game asset for Bloodlinez: ashgrove_plate.jpg. A close-up photograph of a tarnished brass coffin name plate engraved in copperplate script with the single word ASHGROVE, with a date line below it that is worn and illegible. Raking light, dark oak behind it, shallow depth of field. Landscape 3:2."
+ },
+ {
+  "file": "ashgrove_portrait_1740.jpg",
+  "width": 600,
+  "height": 750,
+  "bytes": 89776,
+  "master": "ashgrove_portrait_1740.png",
+  "prompt": "ONE separate finished game asset for Bloodlinez: ashgrove_portrait_1740.jpg. A genuine 1740 English oil portrait of a gentleman who looks about 33 in a dark gown with a white neckcloth and a powdered wig, a rolled document in one hand, three-quarter length, dark ground, warm glazed skin tones, visible craquelure and darkened varnish, gilt frame. He has a long, composed face and a faint patient smile, the same man as the 1620 portrait. No text. Portrait 4:5. Use attached 1620 oil portrait as exact facial identity reference. SAME MAN, STILL 33, same long face, eyes, nose, lips, complexion, with NO scar or mole. Change only period dress and hair to a 1740 gentleman with powdered wig and white neckcloth. This must visibly be an oil painting, not photography."
+ },
+ {
+  "file": "av_ann.jpg",
+  "width": 256,
+  "height": 256,
+  "bytes": 18733,
+  "master": "av_ann.png",
+  "prompt": "A genuine 1860s carte de visite, a brown albumen print on a thin card with rounded corners, of a seated woman of about 34, a chandler's wife. Patterned day dress, hair parted in the middle and looped over the ears, hands in her lap, painted garden backdrop. Brown tone, fine crackle, studio mark too small to read. Three-quarter length, face centred. No text. Square."
+ },
+ {
+  "file": "av_daphne.jpg",
+  "width": 256,
+  "height": 256,
+  "bytes": 11893,
+  "master": "av_daphne.png",
+  "prompt": "A recent digital colour photograph of a woman of about 59: Daphne, guarded expression, shoulder-length hair dyed dark brown with grey at the roots, blazer over a plain top, office or kitchen background out of focus, ordinary overhead lighting, no retouching. Head and shoulders, face centred. No text. Square."
+ },
+ {
+  "file": "av_eliza.jpg",
+  "width": 256,
+  "height": 256,
+  "bytes": 13407,
+  "master": "av_eliza.png",
+  "prompt": "A genuine 1890s cabinet card, a warm brown albumen print on a thick mount with a gilt border and a blank studio-name panel, of a woman of about 30: Eliza, a shipping clerk's wife. Hair parted in the middle and pinned up, plain high-necked dark dress with a small brooch, calm direct gaze. Soft focus at the edges, painted studio backdrop. Head and shoulders, face centred. No text. Square."
+ },
+ {
+  "file": "av_hannah.jpg",
+  "width": 256,
+  "height": 256,
+  "bytes": 17094,
+  "master": "av_hannah.png",
+  "prompt": "A genuine 1860s carte de visite, a brown albumen print on a thin card with rounded corners, of a woman of about 38 standing beside a draped table against a painted studio backdrop. Crinoline skirt, fitted bodice, lace cap, hands folded. Brown tone, yellowed highlights, fine crackle, a printed studio mark along the lower edge that is too small to read. Three-quarter length, face centred and clear. No text. Square."
+ },
+ {
+  "file": "av_harriet.jpg",
+  "width": 256,
+  "height": 256,
+  "bytes": 14039,
+  "master": "av_harriet.png",
+  "prompt": "A genuine 1912 gelatin silver studio portrait, cool grey-brown, of a woman of about 24: Harriet, a bride. Hair in a soft pompadour with a lace veil pushed back, high lace collar, slight tension in the expression, a faint resemblance around the eyes to a pale narrow-faced man. Hard studio light, gentle contrast, white border. Head and shoulders, face centred. No text. Square."
+ },
+ {
+  "file": "av_josiah.jpg",
+  "width": 256,
+  "height": 256,
+  "bytes": 17179,
+  "master": "av_josiah.png",
+  "prompt": "Create ONE separate finished game art asset for Bloodlinez, av_josiah.jpg. A genuine 1851 daguerreotype portrait of a man of about 27, a shipwright, head and shoulders, newly married. Shown as a small hinged leather case opened flat with a brass mat and velvet lining. Polished silver plate with its mirror-like sheen, dark vignetting at the edges, a slight tarnish ring, very sharp central detail. Dark frock coat and short side whiskers, the faintest hand-tinted pink in the cheeks, a stiff held-still expression. No text. Square. Authentic historical medium, excellent material texture, restrained aging, no contemporary typography, no labels, no collage. Square composition. Preserve frame/case edges; face as large and readable as the historical object permits. No identifying eyebrow scar or cheek mole."
+ },
+ {
+  "file": "av_margaret.jpg",
+  "width": 256,
+  "height": 256,
+  "bytes": 15832,
+  "master": "av_margaret.png",
+  "prompt": "A recent digital colour photograph of a woman in her seventies: Margaret, tired and kind, short grey hair, cardigan, daylight from a window, lived-in face with natural wrinkles, no retouching. Head and shoulders, face centred, plain home background slightly out of focus. No text. Square."
+ },
+ {
+  "file": "av_samuel.jpg",
+  "width": 256,
+  "height": 256,
+  "bytes": 17510,
+  "master": "av_samuel.png",
+  "prompt": "Create ONE separate finished game art asset for Bloodlinez, av_samuel.jpg. A genuine 1790s silhouette portrait: a man's head and shoulders in profile facing left, cut from black paper and mounted on cream card, fine detail of a tied-back queue of hair and a plain coat collar picked out in the cut edge. Pure black on cream, no shading, no facial features inside the profile. Oval gilt frame with slightly convex glass glare. Age spots and foxing on the card. No text. Square. Authentic historical medium, excellent material texture, restrained aging, no contemporary typography, no labels, no collage. Square composition. Preserve frame/case edges; face as large and readable as the historical object permits. No identifying eyebrow scar or cheek mole."
+ },
+ {
+  "file": "av_thomasv.jpg",
+  "width": 256,
+  "height": 256,
+  "bytes": 17163,
+  "master": "av_thomasv.png",
+  "prompt": "Create ONE separate finished game art asset for Bloodlinez, av_thomasv.jpg. An early 19th-century provincial oil portrait by a travelling painter, of a man of about 29, a cooper, head and shoulders in a stiff three-quarter pose. Slightly naive and flat: simplified features, hard outlines, uneven proportions, dark brown ground, a plain blue coat and white neckcloth, a small wooden mallet held at the edge of the frame. Visible brushwork, cracked darkened varnish, small paint losses, in a heavy gilt frame. Looks like a painting, not a photograph. No text. Square. Authentic historical medium, excellent material texture, restrained aging, no contemporary typography, no labels, no collage. Square composition. Preserve frame/case edges; face as large and readable as the historical object permits. No identifying eyebrow scar or cheek mole."
+ },
+ {
+  "file": "av_william.jpg",
+  "width": 256,
+  "height": 256,
+  "bytes": 14926,
+  "master": "av_william.png",
+  "prompt": "A genuine 1860s carte de visite, a brown albumen print on a thin card with rounded corners, of a man of about 36 standing with one hand on a chair back against a painted studio backdrop of a column and curtain. Dark wool suit, waistcoat with a watch chain, whiskers, a steady look. Three-quarter length, face centred. Brown tone, fine crackle, studio mark too small to read. No text. Square."
+ },
+ {
+  "file": "bl_hero_home.jpg",
+  "width": 1200,
+  "height": 800,
+  "bytes": 151774,
+  "master": "bl_hero_home.png",
+  "prompt": "ONE separate game asset for Bloodlinez named bl_hero_home.jpg. A wide photograph of an archive room with wooden card-index drawers and old photo albums on shelves, warm low light, shallow depth of field, calm and slightly dusty. No people, no readable text. Landscape 3:2. No collage or captions. Faithful material and restrained photographic lighting. No readable text."
+ },
+ {
+  "file": "bloodlines_logo.webp",
+  "width": 512,
+  "height": 512,
+  "bytes": 18410,
+  "master": "bloodlines_logo.webp",
+  "prompt": "ONE separate game asset for Bloodlinez named bloodlines_logo.svg. A flat logo mark for a genealogy website: a single leaf shape whose lower half is a blood drop, in deep green and dark red on a transparent background. No words. Simple enough to read at 24 px. Square. No collage or captions. Flat vector-style crisp simple geometric mark, two solid ink colors only, no gradient, no shadows, no mockup, real transparent alpha background.",
+  "masked": true
+ },
+ {
+  "file": "case_daguerreotype.webp",
+  "width": 600,
+  "height": 750,
+  "bytes": 67594,
+  "master": "case_daguerreotype.webp",
+  "prompt": "ONE isolated separate reusable game overlay asset for Bloodlinez: case_daguerreotype.png. A hinged 1850s daguerreotype case opened flat, black pressed leather on the left, red velvet lining, a gilt brass mat with an empty oval opening, flat front view.  Portrait 4:5. Actual transparent alpha background, no white backdrop or checkerboard painted into image. Entire outer object fits inside canvas with a narrow clear margin. For frames and mounts the portrait opening must be completely TRANSPARENT so a photo can sit underneath; remove backing in opening. For licence cards only photo slot and exterior are transparent; preserve printed card body and blank rules. Flat straight-on orthographic view, no perspective.  No collage, no labels, no extra objects.",
+  "masked": true
+ },
+ {
+  "file": "cellar_coffins.jpg",
+  "width": 1200,
+  "height": 800,
+  "bytes": 154256,
+  "master": "cellar_coffins.png",
+  "prompt": "ONE separate finished game asset for Bloodlinez: cellar_coffins.jpg. A dim handheld phone photograph taken by torchlight in a brick cellar: four wooden coffins on the floor, three of them with small brass name plates, the fourth older and darker. Underexposed, slightly blurred, harsh torch glare on the wood, wet brick walls. The plates must be too small to read. No people. Landscape 3:2."
+ },
+ {
+  "file": "collection_birth.jpg",
+  "width": 512,
+  "height": 512,
+  "bytes": 62392,
+  "master": "collection_birth.png",
+  "prompt": "ONE separate finished game asset for Bloodlinez: collection_birth.jpg. One square close-up photograph of a box of birth certificates tied with cotton string on a dark wooden archive desk, soft side window light, shallow depth of field, warm natural tones, subtle dust, realistic fibres and bindings. Simple strong composition readable as a small collection thumbnail. No readable text, no modern props, no other subjects, no collage."
+ },
+ {
+  "file": "collection_census.jpg",
+  "width": 512,
+  "height": 512,
+  "bytes": 68913,
+  "master": "collection_census.png",
+  "prompt": "ONE separate finished game asset for Bloodlinez: collection_census.jpg. One square close-up photograph of a stack of thick nineteenth-century census books on a dark wooden archive desk, soft side window light, shallow depth of field, warm natural tones, subtle dust, realistic fibres and bindings. Simple strong composition readable as a small collection thumbnail. No readable text, no modern props, no other subjects, no collage."
+ },
+ {
+  "file": "collection_death.jpg",
+  "width": 512,
+  "height": 512,
+  "bytes": 58578,
+  "master": "collection_death.png",
+  "prompt": "ONE separate finished game asset for Bloodlinez: collection_death.jpg. One square close-up photograph of a black-bordered Victorian death notice card with blank centre on a dark wooden archive desk, soft side window light, shallow depth of field, warm natural tones, subtle dust, realistic fibres and bindings. Simple strong composition readable as a small collection thumbnail. No readable text, no modern props, no other subjects, no collage."
+ },
+ {
+  "file": "collection_newspapers.jpg",
+  "width": 512,
+  "height": 512,
+  "bytes": 60935,
+  "master": "collection_newspapers.png",
+  "prompt": "ONE separate finished game asset for Bloodlinez: collection_newspapers.jpg. One square close-up photograph of a folded old newspaper on a dark wooden archive desk, soft side window light, shallow depth of field, warm natural tones, subtle dust, realistic fibres and bindings. Simple strong composition readable as a small collection thumbnail. No readable text, no modern props, no other subjects, no collage."
+ },
+ {
+  "file": "collection_photos.jpg",
+  "width": 512,
+  "height": 512,
+  "bytes": 63472,
+  "master": "collection_photos.png",
+  "prompt": "ONE separate finished game asset for Bloodlinez: collection_photos.jpg. One square close-up photograph of a pile of assorted old sepia portrait photographs on a dark wooden archive desk, soft side window light, shallow depth of field, warm natural tones, subtle dust, realistic fibres and bindings. Simple strong composition readable as a small collection thumbnail. No readable text, no modern props, no other subjects, no collage."
+ },
+ {
+  "file": "collection_rolls.jpg",
+  "width": 512,
+  "height": 512,
+  "bytes": 54848,
+  "master": "collection_rolls.png",
+  "prompt": "ONE separate finished game asset for Bloodlinez: collection_rolls.jpg. One square close-up photograph of an electoral ledger open to a mostly blank ruled page on a dark wooden archive desk, soft side window light, shallow depth of field, warm natural tones, subtle dust, realistic fibres and bindings. Simple strong composition readable as a small collection thumbnail. No readable text, no modern props, no other subjects, no collage."
+ },
+ {
+  "file": "dna_banner.jpg",
+  "width": 1200,
+  "height": 800,
+  "bytes": 93613,
+  "master": "dna_banner.png",
+  "prompt": "ONE separate game asset for Bloodlinez named dna_banner.jpg. A wide abstract image of a DNA double helix in pale red lines on a very dark red background, soft glow, no text. Landscape 3:2. No collage or captions. Faithful material and restrained photographic lighting. No readable text."
+ },
+ {
+  "file": "frame_oil.webp",
+  "width": 600,
+  "height": 750,
+  "bytes": 86036,
+  "master": "frame_oil.webp",
+  "prompt": "ONE isolated separate reusable game overlay asset for Bloodlinez: frame_oil.png. A single empty heavy rectangular gilt picture frame with a dark brown painted inner edge and aged gilding, flat front view, empty dark centre.  Portrait 4:5. Actual transparent alpha background, no white backdrop or checkerboard painted into image. Entire outer object fits inside canvas with a narrow clear margin. For frames and mounts the portrait opening must be completely TRANSPARENT so a photo can sit underneath; remove backing in opening. For licence cards only photo slot and exterior are transparent; preserve printed card body and blank rules. Flat straight-on orthographic view, no perspective.  No collage, no labels, no extra objects.",
+  "masked": true
+ },
+ {
+  "file": "frame_silhouette.webp",
+  "width": 600,
+  "height": 750,
+  "bytes": 78716,
+  "master": "frame_silhouette.webp",
+  "prompt": "ONE isolated separate reusable game overlay asset for Bloodlinez: frame_silhouette.png. A single empty oval gilt picture frame with convex glass glare and cream card behind it, flat front view, nothing inside the oval.  Portrait 4:5. Actual transparent alpha background, no white backdrop or checkerboard painted into image. Entire outer object fits inside canvas with a narrow clear margin. For frames and mounts the portrait opening must be completely TRANSPARENT so a photo can sit underneath; remove backing in opening. For licence cards only photo slot and exterior are transparent; preserve printed card body and blank rules. Flat straight-on orthographic view, no perspective.  No collage, no labels, no extra objects.",
+  "masked": true
+ },
+ {
+  "file": "licence1972.jpg",
+  "width": 600,
+  "height": 750,
+  "bytes": 73034,
+  "master": "licence1972.png",
+  "prompt": "Attach vane_sheet.png. A 1972 driver licence photo of the man in the reference, head and shoulders, shot in a licence office. Faded colour print with an orange-magenta shift, flat frontal flash, pale blue-grey wall behind him, slightly soft. Hair long over the ears with sideburns, wide-collared shirt with wide lapels. Neutral expression, looking at the camera. He still looks about 32. Marks, as they appear in the picture: pale scar cutting through the eyebrow on the RIGHT side of the picture; small dark mole low on the cheek on the LEFT side of the picture. Both clearly visible despite the fading. No card, no text, just the photograph. Portrait 2:3."
+ },
+ {
+  "file": "licence2019.jpg",
+  "width": 600,
+  "height": 750,
+  "bytes": 58278,
+  "master": "licence2019.png",
+  "prompt": "Attach vane_sheet.png. A modern driver licence photo of the man in the reference, head and shoulders, plain light grey backdrop, harsh direct front flash, sharp digital capture, no smile, short neat dark hair, dark crew-neck top. Looks about 32. Marks, as they appear in the picture: pale scar cutting through the eyebrow on the RIGHT side of the picture; small dark mole low on the cheek on the LEFT side of the picture. Both very clear. No card, no text. Portrait 2:3."
+ },
+ {
+  "file": "licence_card_1972.webp",
+  "width": 1200,
+  "height": 800,
+  "bytes": 187860,
+  "master": "licence_card_1972.webp",
+  "prompt": "ONE isolated separate reusable game overlay asset for Bloodlinez: licence_card_1972.png. A blank 1970s driver licence card, flat top-down, rounded corners, pale green and cream printed security pattern, an empty rectangular photo slot on the left, empty ruled lines on the right, no words and no numbers.  Landscape 3:2. Actual transparent alpha background, no white backdrop or checkerboard painted into image. Entire outer object fits inside canvas with a narrow clear margin. For frames and mounts the portrait opening must be completely TRANSPARENT so a photo can sit underneath; remove backing in opening. For licence cards only photo slot and exterior are transparent; preserve printed card body and blank rules. Flat straight-on orthographic view, no perspective.  No collage, no labels, no extra objects.",
+  "masked": true
+ },
+ {
+  "file": "licence_card_2019.webp",
+  "width": 1200,
+  "height": 800,
+  "bytes": 129578,
+  "master": "licence_card_2019.webp",
+  "prompt": "ONE isolated separate reusable game overlay asset for Bloodlinez: licence_card_2019.png. A blank modern plastic driver licence card, flat top-down, rounded corners, blue-grey gradient with a fine guilloche pattern, an empty photo slot on the left, empty lines on the right, no words and no numbers.  Landscape 3:2. Actual transparent alpha background, no white backdrop or checkerboard painted into image. Entire outer object fits inside canvas with a narrow clear margin. For frames and mounts the portrait opening must be completely TRANSPARENT so a photo can sit underneath; remove backing in opening. For licence cards only photo slot and exterior are transparent; preserve printed card body and blank rules. Flat straight-on orthographic view, no perspective.  No collage, no labels, no extra objects.",
+  "masked": true
+ },
+ {
+  "file": "mount_cabinet.webp",
+  "width": 600,
+  "height": 750,
+  "bytes": 47972,
+  "master": "mount_cabinet.webp",
+  "prompt": "ONE isolated separate reusable game overlay asset for Bloodlinez: mount_cabinet.png. A blank Victorian cabinet card mount, thick cream card with a gilt border and an empty rectangle where the photograph goes, an empty panel along the lower edge for the studio name, flat front view.  Portrait 4:5. Actual transparent alpha background, no white backdrop or checkerboard painted into image. Entire outer object fits inside canvas with a narrow clear margin. For frames and mounts the portrait opening must be completely TRANSPARENT so a photo can sit underneath; remove backing in opening. For licence cards only photo slot and exterior are transparent; preserve printed card body and blank rules. Flat straight-on orthographic view, no perspective.  No collage, no labels, no extra objects.",
+  "masked": true
+ },
+ {
+  "file": "mount_carte.webp",
+  "width": 600,
+  "height": 750,
+  "bytes": 18496,
+  "master": "mount_carte.webp",
+  "prompt": "ONE isolated separate reusable game overlay asset for Bloodlinez: mount_carte.png. A blank Victorian carte de visite card, thin cream card with rounded corners and a thin printed border, an empty rectangle where the photograph goes and a small illegible studio mark along the lower edge, flat front view.  Portrait 4:5. Actual transparent alpha background, no white backdrop or checkerboard painted into image. Entire outer object fits inside canvas with a narrow clear margin. For frames and mounts the portrait opening must be completely TRANSPARENT so a photo can sit underneath; remove backing in opening. For licence cards only photo slot and exterior are transparent; preserve printed card body and blank rules. Flat straight-on orthographic view, no perspective.  No collage, no labels, no extra objects.",
+  "masked": true
+ },
+ {
+  "file": "paper_census.jpg",
+  "width": 1000,
+  "height": 667,
+  "bytes": 86502,
+  "master": "paper_census.png",
+  "prompt": "ONE standalone background texture asset for Bloodlinez, paper_census.jpg. A flat top-down scan of an empty printed census householder's schedule from about 1900: pre-printed grid and column headings as unreadable marks, ink entries as illegible strokes, folded, a little brown ink smudging. Landscape 3:2. This is a functional game document background for overlaying real HTML text. Keep central 70% very pale and mostly empty so dark text can be read over it. Only faint nonsemantic unreadable marks in margins or isolated lines; NO legible words, names, letters, dates or numbers. Delicate paper fibres, historically accurate material, restrained believable wear. Scan flat and orthogonal, page fills entire canvas, no desk, no hands, no perspective, no props outside sheet, no collage."
+ },
+ {
+  "file": "paper_census_1841.jpg",
+  "width": 1000,
+  "height": 1500,
+  "bytes": 86255,
+  "master": "paper_census_1841.png",
+  "prompt": "ONE standalone background texture asset for Bloodlinez, paper_census_1841.jpg. A flat top-down scan of a thin 1841 printed census householder's schedule: small printed type as unreadable marks, a few faint ink entries, enumerator's pencil ticks in the margin, folded creases, thin yellowed paper. No readable words. Portrait 2:3. This is a functional game document background for overlaying real HTML text. Keep central 70% very pale and mostly empty so dark text can be read over it. Only faint nonsemantic unreadable marks in margins or isolated lines; NO legible words, names, letters, dates or numbers. Delicate paper fibres, historically accurate material, restrained believable wear. Scan flat and orthogonal, page fills entire canvas, no desk, no hands, no perspective, no props outside sheet, no collage."
+ },
+ {
+  "file": "paper_civil_1850.jpg",
+  "width": 1000,
+  "height": 1500,
+  "bytes": 86656,
+  "master": "paper_civil_1850.png",
+  "prompt": "ONE standalone background texture asset for Bloodlinez, paper_civil_1850.jpg. A flat top-down scan of a blank Victorian civil registration form: a copperplate-style printed heading as unreadable marks, wide margins, ruled boxes, a few steel-nib entries as illegible strokes, a red folio stamp, yellowed paper. No readable words. Portrait 2:3. This is a functional game document background for overlaying real HTML text. Keep central 70% very pale and mostly empty so dark text can be read over it. Only faint nonsemantic unreadable marks in margins or isolated lines; NO legible words, names, letters, dates or numbers. Delicate paper fibres, historically accurate material, restrained believable wear. Scan flat and orthogonal, page fills entire canvas, no desk, no hands, no perspective, no props outside sheet, no collage."
+ },
+ {
+  "file": "paper_deed_1934.jpg",
+  "width": 1000,
+  "height": 1500,
+  "bytes": 85901,
+  "master": "paper_deed_1934.png",
+  "prompt": "ONE separate game texture for Bloodlinez named paper_deed_1934.jpg. A flat top-down scan of a blank 1934 typewritten legal deed: heavy cream paper, faint typewriter lines as unreadable marks, a red paper seal and a pink silk ribbon at the bottom, light age. No readable words. Portrait 2:3. This is a document background underneath readable HTML evidence text. Keep the central majority pale with ample open space. Writing must be abstract tiny illegible marks with NO readable words, NO invented clue text, NO names or numbers. For newspaper layouts use pale grey blocks and extremely faint abstract ink columns to suggest type without readable characters. Subtle true-to-period material, no excessive distressing. Perfectly flat orthogonal scan, page fills canvas, no desk, hands or exterior props."
+ },
+ {
+  "file": "paper_diary.jpg",
+  "width": 1000,
+  "height": 1500,
+  "bytes": 86190,
+  "master": "paper_diary.png",
+  "prompt": "ONE standalone background texture asset for Bloodlinez, paper_diary.jpg. A flat scan of a cheap lined notebook page from 1888, binding shadow down the left side, brown foxing spots, blank lines with only faint illegible brown handwriting strokes, no readable words. Portrait 2:3. This is a functional game document background for overlaying real HTML text. Keep central 70% very pale and mostly empty so dark text can be read over it. Only faint nonsemantic unreadable marks in margins or isolated lines; NO legible words, names, letters, dates or numbers. Delicate paper fibres, historically accurate material, restrained believable wear. Scan flat and orthogonal, page fills entire canvas, no desk, no hands, no perspective, no props outside sheet, no collage."
+ },
+ {
+  "file": "paper_harbour.jpg",
+  "width": 1000,
+  "height": 1500,
+  "bytes": 86283,
+  "master": "paper_harbour.png",
+  "prompt": "ONE separate game texture for Bloodlinez named paper_harbour.jpg. A flat scan of a maritime authority incident report form with ruled boxes, one red date stamp that is blurred and unreadable, light coffee stain, no readable text. Portrait 2:3. This is a document background underneath readable HTML evidence text. Keep the central majority pale with ample open space. Writing must be abstract tiny illegible marks with NO readable words, NO invented clue text, NO names or numbers. For newspaper layouts use pale grey blocks and extremely faint abstract ink columns to suggest type without readable characters. Subtle true-to-period material, no excessive distressing. Perfectly flat orthogonal scan, page fills canvas, no desk, hands or exterior props."
+ },
+ {
+  "file": "paper_hospital.jpg",
+  "width": 1000,
+  "height": 1500,
+  "bytes": 86407,
+  "master": "paper_hospital.png",
+  "prompt": "ONE standalone background texture asset for Bloodlinez, paper_hospital.jpg. A flat top-down scan of a Victorian hospital casualty register page: columns ruled in red and black, blank entries with only faint blurred steel-nib handwriting strokes, aged paper, a binding gutter on the left. No readable text. Portrait 2:3. This is a functional game document background for overlaying real HTML text. Keep central 70% very pale and mostly empty so dark text can be read over it. Only faint nonsemantic unreadable marks in margins or isolated lines; NO legible words, names, letters, dates or numbers. Delicate paper fibres, historically accurate material, restrained believable wear. Scan flat and orthogonal, page fills entire canvas, no desk, no hands, no perspective, no props outside sheet, no collage."
+ },
+ {
+  "file": "paper_invoice.jpg",
+  "width": 1000,
+  "height": 1500,
+  "bytes": 84057,
+  "master": "paper_invoice.png",
+  "prompt": "ONE separate game texture for Bloodlinez named paper_invoice.jpg. A flat scan of a carbon-copy invoice form in faded blue, with ruled boxes and a blank header band, no readable text. Portrait 2:3. This is a document background underneath readable HTML evidence text. Keep the central majority pale with ample open space. Writing must be abstract tiny illegible marks with NO readable words, NO invented clue text, NO names or numbers. For newspaper layouts use pale grey blocks and extremely faint abstract ink columns to suggest type without readable characters. Subtle true-to-period material, no excessive distressing. Perfectly flat orthogonal scan, page fills canvas, no desk, hands or exterior props."
+ },
+ {
+  "file": "paper_letter.jpg",
+  "width": 1000,
+  "height": 1500,
+  "bytes": 86330,
+  "master": "paper_letter.png",
+  "prompt": "ONE separate game asset for Bloodlinez named paper_letter.jpg. Flat top-down scan of blank heavy cream letter paper, fine cotton fibres and subtle blind-embossed JV monogram in upper left corner. Otherwise entirely blank, no ink, elegant restrained expensive paper. Portrait 2:3. No collage or captions. Faithful material and restrained photographic lighting. No readable text."
+ },
+ {
+  "file": "paper_letter_daphne.jpg",
+  "width": 1000,
+  "height": 1500,
+  "bytes": 80768,
+  "master": "paper_letter_daphne.png",
+  "prompt": "ONE separate game asset for Bloodlinez named paper_letter_daphne.jpg. Flat top-down scan of pristine white law-firm letterhead paper with a thin plain navy blue horizontal rule near the top, blank header and completely blank body. No words, no letters, no logo. Fine smooth paper. Portrait 2:3. No collage or captions. Faithful material and restrained photographic lighting. No readable text."
+ },
+ {
+  "file": "paper_letter_margaret.jpg",
+  "width": 1000,
+  "height": 1500,
+  "bytes": 86790,
+  "master": "paper_letter_margaret.png",
+  "prompt": "ONE separate game asset for Bloodlinez named paper_letter_margaret.jpg. Flat top-down scan of blank domestic lined notepaper with a torn top edge, pale blue horizontal rules, warm off-white paper, faint natural creases. No words or handwriting, plenty of empty writing space. Portrait 2:3. No collage or captions. Faithful material and restrained photographic lighting. No readable text."
+ },
+ {
+  "file": "paper_news_1930s.jpg",
+  "width": 1000,
+  "height": 1500,
+  "bytes": 86488,
+  "master": "paper_news_1930s.png",
+  "prompt": "ONE separate game texture for Bloodlinez named paper_news_1930s.jpg. A flat top-down scan of a 1930s newspaper page with no readable words: six columns of grey texture, blocks for bold headlines, a rectangular blank area for a halftone photograph, yellowed newsprint. Portrait 2:3. This is a document background underneath readable HTML evidence text. Keep the central majority pale with ample open space. Writing must be abstract tiny illegible marks with NO readable words, NO invented clue text, NO names or numbers. For newspaper layouts use pale grey blocks and extremely faint abstract ink columns to suggest type without readable characters. Subtle true-to-period material, no excessive distressing. Perfectly flat orthogonal scan, page fills canvas, no desk, hands or exterior props."
+ },
+ {
+  "file": "paper_news_postwar.jpg",
+  "width": 1000,
+  "height": 1500,
+  "bytes": 83674,
+  "master": "paper_news_postwar.png",
+  "prompt": "ONE separate game texture for Bloodlinez named paper_news_postwar.jpg. A flat top-down scan of a mid-century newspaper page with no readable words: columns of grey texture, a coarse halftone dot pattern in a blank photo area, grey newsprint with uneven ink. Portrait 2:3. This is a document background underneath readable HTML evidence text. Keep the central majority pale with ample open space. Writing must be abstract tiny illegible marks with NO readable words, NO invented clue text, NO names or numbers. For newspaper layouts use pale grey blocks and extremely faint abstract ink columns to suggest type without readable characters. Subtle true-to-period material, no excessive distressing. Perfectly flat orthogonal scan, page fills canvas, no desk, hands or exterior props."
+ },
+ {
+  "file": "paper_news_victorian.jpg",
+  "width": 1000,
+  "height": 1500,
+  "bytes": 84585,
+  "master": "paper_news_victorian.png",
+  "prompt": "ONE separate game texture for Bloodlinez named paper_news_victorian.jpg. A flat top-down scan of a Victorian newspaper page with no readable words: seven narrow columns of dense letterpress as grey texture, a few wood-engraved advert boxes, no photographs, grey-brown brittle paper with a torn edge. Portrait 2:3. This is a document background underneath readable HTML evidence text. Keep the central majority pale with ample open space. Writing must be abstract tiny illegible marks with NO readable words, NO invented clue text, NO names or numbers. For newspaper layouts use pale grey blocks and extremely faint abstract ink columns to suggest type without readable characters. Subtle true-to-period material, no excessive distressing. Perfectly flat orthogonal scan, page fills canvas, no desk, hands or exterior props."
+ },
+ {
+  "file": "paper_parchment.jpg",
+  "width": 1000,
+  "height": 1500,
+  "bytes": 86665,
+  "master": "paper_parchment.png",
+  "prompt": "ONE standalone background texture asset for Bloodlinez, paper_parchment.jpg. A flat top-down scan of an aged parchment sheet from the 1400s to 1700s, creamy brown and slightly translucent, a sewn edge on the left, a few lines of illegible secretary-hand writing in brown iron-gall ink with abbreviation marks, a small red wax seal at the lower edge. No readable words. Portrait 2:3. This is a functional game document background for overlaying real HTML text. Keep central 70% very pale and mostly empty so dark text can be read over it. Only faint nonsemantic unreadable marks in margins or isolated lines; NO legible words, names, letters, dates or numbers. Delicate paper fibres, historically accurate material, restrained believable wear. Scan flat and orthogonal, page fills entire canvas, no desk, no hands, no perspective, no props outside sheet, no collage."
+ },
+ {
+  "file": "paper_parish_1751.jpg",
+  "width": 1000,
+  "height": 1500,
+  "bytes": 85807,
+  "master": "paper_parish_1751.png",
+  "prompt": "ONE standalone background texture asset for Bloodlinez, paper_parish_1751.jpg. A flat top-down scan of a blank 1750s parish baptism register page: hand-ruled laid paper with visible chain lines and a faint watermark, brown iron-gall ink gone pale with halos around the strokes, faint illegible round-hand writing in a few lines and no printed columns, foxing and one stitched edge. No readable words. Portrait 2:3. This is a functional game document background for overlaying real HTML text. Keep central 70% very pale and mostly empty so dark text can be read over it. Only faint nonsemantic unreadable marks in margins or isolated lines; NO legible words, names, letters, dates or numbers. Delicate paper fibres, historically accurate material, restrained believable wear. Scan flat and orthogonal, page fills entire canvas, no desk, no hands, no perspective, no props outside sheet, no collage."
+ },
+ {
+  "file": "paper_parish_form.jpg",
+  "width": 1000,
+  "height": 1500,
+  "bytes": 86465,
+  "master": "paper_parish_form.png",
+  "prompt": "ONE standalone background texture asset for Bloodlinez, paper_parish_form.jpg. A flat top-down scan of a blank early 19th-century printed parish marriage register page: printed ruled columns with illegible headings, a few handwritten entries as unreadable brown ink strokes, one entry ending in a clear X mark, aged mid-brown paper. No readable words. Portrait 2:3. This is a functional game document background for overlaying real HTML text. Keep central 70% very pale and mostly empty so dark text can be read over it. Only faint nonsemantic unreadable marks in margins or isolated lines; NO legible words, names, letters, dates or numbers. Delicate paper fibres, historically accurate material, restrained believable wear. Scan flat and orthogonal, page fills entire canvas, no desk, no hands, no perspective, no props outside sheet, no collage."
+ },
+ {
+  "file": "paper_register.jpg",
+  "width": 1000,
+  "height": 1500,
+  "bytes": 88296,
+  "master": "paper_register.png",
+  "prompt": "ONE separate game texture for Bloodlinez named paper_register.jpg. A flat top-down scan of a blank civil registration form from the 1930s: pre-printed boxes and rules in faded black ink, aged cream paper, one faint folio stamp, no readable words. Portrait 2:3. This is a document background underneath readable HTML evidence text. Keep the central majority pale with ample open space. Writing must be abstract tiny illegible marks with NO readable words, NO invented clue text, NO names or numbers. For newspaper layouts use pale grey blocks and extremely faint abstract ink columns to suggest type without readable characters. Subtle true-to-period material, no excessive distressing. Perfectly flat orthogonal scan, page fills canvas, no desk, hands or exterior props."
+ },
+ {
+  "file": "paper_will_modern.jpg",
+  "width": 1000,
+  "height": 1500,
+  "bytes": 87161,
+  "master": "paper_will_modern.png",
+  "prompt": "ONE separate game texture for Bloodlinez named paper_will_modern.jpg. A flat top-down scan of a plain white laser-printed legal document with no readable words: lines of grey texture, a signature block at the bottom with two blank witness lines. Portrait 2:3. This is a document background underneath readable HTML evidence text. Keep the central majority pale with ample open space. Writing must be abstract tiny illegible marks with NO readable words, NO invented clue text, NO names or numbers. For newspaper layouts use pale grey blocks and extremely faint abstract ink columns to suggest type without readable characters. Subtle true-to-period material, no excessive distressing. Perfectly flat orthogonal scan, page fills canvas, no desk, hands or exterior props."
+ },
+ {
+  "file": "photo1875.jpg",
+  "width": 600,
+  "height": 750,
+  "bytes": 82743,
+  "master": "photo1875.png",
+  "prompt": "Generate one separate finished archival game image for Bloodlinez, asset photo1875.jpg. Use the face in the close-up on the RIGHT of the supplied character sheet as the EXACT identity reference; preserve facial geometry and identity, not the modern clothes. Attach vane_sheet.png. A genuine-looking 1875 studio cabinet portrait of the man in the reference as an 18-year-old, head and shoulders, sepia albumen print on a card mount. Same facial structure as the reference but visibly a youth: softer jaw, fuller cheeks, slightly thinner neck, a faint attempt at a moustache is not needed. Daylight from a window on the left, painted pale backdrop, soft focus toward the edges, fine paper grain. Plain wool jacket, small white collar, hair neatly parted. Looks straight at the lens. He has one small dark round mole on the LEFT side of the picture, low on the cheek level with the corner of the mouth. He has NO scar: both eyebrows are clear and unmarked. No text, no border. Portrait 4:5. No collage, no multiple panels, no labels. The 18-year-old has NO SCAR; remove the reference scar entirely."
+ },
+ {
+  "file": "photo1889.jpg",
+  "width": 600,
+  "height": 750,
+  "bytes": 80452,
+  "master": "photo1889.png",
+  "prompt": "Generate one separate finished archival game image for Bloodlinez, asset photo1889.jpg. Use the face in the close-up on the RIGHT of the supplied character sheet as the EXACT identity reference; preserve facial geometry and identity, not the modern clothes. Attach vane_sheet.png. A genuine-looking 1889 studio cabinet portrait of the man in the reference, head and shoulders, sepia albumen print on a card mount, slightly cropped to the print. Painted dark studio backdrop, lit by a single warm lamp from the left, soft focus toward the edges, fine paper grain, small scratches. High stiff white collar, black cravat, dark frock coat, oiled hair with a side parting. Face centred, looking straight at the lens, neutral expression. Same man as the reference. Looks about 32. Very pale skin, narrow face, angular jaw, high cheekbones, straight nose, thin lips, dark heavy-lidded eyes. Two permanent marks, described as they appear in the picture: a pale raised scar about 2.5 cm long cutting diagonally through the eyebrow on the RIGHT side of the picture, splitting the eyebrow hair, with two tiny stitch marks across it; and one small dark round mole on the LEFT side of the picture, low on the cheek level with the corner of the mouth. The eyebrow on the left of the picture and the cheek on the right are clear. Both marks clearly visible. No text, no border, no modern elements. Portrait 4:5. No collage, no multiple panels, no labels. Apparent age 32, SAME MAN as the reference. Both identifying marks unmistakable: scar cuts THROUGH eyebrow hair on image-right with two little stitch marks; dark mole low on image-left cheek at mouth level. Preserve both in archival texture. Natural understated photographic realism, not a stylized fantasy illustration."
+ },
+ {
+  "file": "photo1912.jpg",
+  "width": 1200,
+  "height": 750,
+  "bytes": 132967,
+  "master": "photo1912.png",
+  "prompt": "Generate one separate finished archival game image for Bloodlinez, asset photo1912.jpg. Use the face in the close-up on the RIGHT of the supplied character sheet as the EXACT identity reference; preserve facial geometry and identity, not the modern clothes. Attach vane_sheet.png. A 1912 evening studio portrait of two men standing side by side, half-length, taken after a wedding reception. Gelatin silver print, warm grey-brown tone, slightly low contrast, hard flash shadows on a plain wall behind them. On the LEFT of the picture: the groom, a heavier-built man of about 28 with a moustache, broad nose, flat combed hair, wearing morning dress with a white buttonhole flower. On the RIGHT of the picture: the man in the reference, wearing a black frock coat and high collar, looking about 32, clearly no older than the groom. Both look at the camera. The man on the right has two permanent marks, described as they appear in the picture: a pale raised scar cutting through the eyebrow on the RIGHT side of his face as seen in the picture, and a small dark mole low on his cheek on the LEFT side of his face as seen in the picture. Both marks sharp and visible. The groom has no scar and no mole. No bride, no other people, no text. Landscape 8:5. No collage, no multiple panels, no labels. Apparent age 32, SAME MAN as the reference. Both identifying marks unmistakable: scar cuts THROUGH eyebrow hair on image-right with two little stitch marks; dark mole low on image-left cheek at mouth level. Preserve both in archival texture. Natural understated photographic realism, not a stylized fantasy illustration."
+ },
+ {
+  "file": "photo1921.jpg",
+  "width": 600,
+  "height": 750,
+  "bytes": 92068,
+  "master": "photo1921.png",
+  "prompt": "Create ONE separate finished game art asset for Bloodlinez, photo1921.jpg. A 1921 gelatin silver print, grey-brown with a white border and a slight curl, of a heavy-set man of about 40 in a committee portrait, head and shoulders: Frank Tully, secretary of a wharf workers' union. Thick moustache, flat cap off, rough wool jacket with a collar and tie, direct stare, hard interior flash with a shadow on the wall behind him. A pale raised scar cuts through the eyebrow on the RIGHT side of the picture, splitting the hair of the brow. No mole anywhere on his face. He does not look pale or gaunt; he looks weathered. No text. Portrait 4:5. Authentic historical medium, excellent material texture, restrained aging, no contemporary typography, no labels, no collage. Scar through image-RIGHT eyebrow, absolutely NO cheek mole. Centered face looking forward."
+ },
+ {
+  "file": "photo1950.jpg",
+  "width": 600,
+  "height": 750,
+  "bytes": 62669,
+  "master": "photo1950.png",
+  "prompt": ""
+ },
+ {
+  "file": "photo1962.jpg",
+  "width": 600,
+  "height": 750,
+  "bytes": 153815,
+  "master": "photo1962.png",
+  "prompt": "Attach vane_sheet.png. A 1962 newspaper photograph of the man in the reference at a society ball, head and shoulders, in a black dinner suit and bow tie, hair slicked back. Printed as a coarse newspaper halftone dot screen on yellowed newsprint, black and white, slightly overexposed press-flash look, a little blurred ink spread. The face is large and centred, looking at the camera. Because halftone loses detail, make the scar through the eyebrow and the mole slightly bolder than normal. Marks, as they appear in the picture: pale scar cutting through the eyebrow on the RIGHT side of the picture; small dark mole low on the cheek on the LEFT side of the picture. No caption, no headline, no text. Portrait 2:3."
+ },
+ {
+  "file": "portrait1620.jpg",
+  "width": 600,
+  "height": 750,
+  "bytes": 77608,
+  "master": "portrait1620.png",
+  "prompt": "Create ONE separate finished game art asset for Bloodlinez, portrait1620.jpg. A genuine 1620 English oil portrait on panel of a man who looks about 33, a town recorder, three-quarter length against a dark brown ground. Black doublet, white falling collar, long dark hair to the shoulders, a composed and patient face with a faint closed-mouth smile, one hand resting on a rolled document. Warm glazed flesh tones, visible craquelure, darkened varnish, a gilt slip frame. No scar and no mole. No text. Portrait 4:5. Authentic historical medium, excellent material texture, restrained aging, no contemporary typography, no labels, no collage. This man must have a distinct original identity, not the Vane character: long composed face, dark almond eyes, prominent straight nose, shoulder length dark hair, fine arched eyebrows, slightly longer upper lip. Appears 33, not older."
+ },
+ {
+  "file": "stamp_nil.webp",
+  "width": 512,
+  "height": 512,
+  "bytes": 20148,
+  "master": "stamp_nil.webp",
+  "prompt": "ONE isolated separate reusable game overlay asset for Bloodlinez: stamp_nil.png. A red-ink rectangular rubber stamp impression on a plain white background, a thick border with heavy blocky capital letters spelling NIL RETURN, uneven ink, slightly rotated. Square. Actual transparent alpha background, no white backdrop or checkerboard painted into image. Only ink is visible; all spaces between ink marks fully transparent.  No collage, no labels, no extra objects.",
+  "masked": true
+ },
+ {
+  "file": "stamp_registrar.webp",
+  "width": 512,
+  "height": 512,
+  "bytes": 35042,
+  "master": "stamp_registrar.webp",
+  "prompt": "ONE isolated separate reusable game overlay asset for Bloodlinez: stamp_registrar.png. A circular DISTRICT OF ASHBY registrar rubber-stamp impression, double ring, simple star at centre, faded dark red ink, worn impression, exactly the words DISTRICT OF ASHBY around rim, no other text, square. Actual transparent alpha background, no white backdrop or checkerboard painted into image. Only ink is visible; all spaces between ink marks fully transparent.  No collage, no labels, no extra objects.",
+  "masked": true
+ },
+ {
+  "file": "bloodlines_logo.svg",
+  "width": 512,
+  "height": 512,
+  "bytes": 12639,
+  "source": "bloodlines_logo.png",
+  "method": "Vector trace of generated artwork"
+ },
+ {
+  "file": "ap_crest.svg",
+  "width": 512,
+  "height": 512,
+  "bytes": 29991,
+  "source": "ap_crest.png",
+  "method": "Vector trace of generated artwork"
+ },
+ {
+  "file": "av_arthur.jpg",
+  "width": 256,
+  "height": 256,
+  "bytes": 14013,
+  "source": "photo1912.jpg",
+  "crop": "420x420+160+10"
+ },
+ {
+  "file": "av_ambrose.jpg",
+  "width": 256,
+  "height": 256,
+  "bytes": 13879,
+  "source": "photo1889.jpg",
+  "crop": "550x550+25+25"
+ },
+ {
+  "file": "av_cornelius.jpg",
+  "width": 256,
+  "height": 256,
+  "bytes": 13705,
+  "source": "licence1972.jpg",
+  "crop": "550x550+25+25"
+ },
+ {
+  "file": "av_julian.jpg",
+  "width": 256,
+  "height": 256,
+  "bytes": 12139,
+  "source": "licence2019.jpg",
+  "crop": "550x550+25+25"
+ },
+ {
+  "file": "av_thomas.jpg",
+  "width": 256,
+  "height": 256,
+  "bytes": 14933,
+  "derived_from": "photo1950.jpg"
+ }
 ]

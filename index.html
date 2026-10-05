@@ -117,7 +117,7 @@ svg.i{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-widt
 .blfoot .legal{border-top:1px solid #4a3d41;padding-block:16px 24px;display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:#b3a7ab}
 
 /* home */
-.hero{background:linear-gradient(180deg,#fff, var(--bl-bg));border-bottom:1px solid var(--bl-line)}
+.hero{background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(250,246,242,.96)),url(assets/bl_hero_home.jpg) center/cover;border-bottom:1px solid var(--bl-line)}
 .hero .wrap{padding-block:30px 26px;display:flex;gap:24px;align-items:center;flex-wrap:wrap}
 .hero .greet{flex:1;min-width:260px}
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:16px;padding-block:24px}
@@ -237,7 +237,7 @@ svg.i{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-widt
 .callout p{margin:0;flex:1;min-width:220px}
 
 /* dna */
-.dnahero{background:linear-gradient(120deg,#3b1520,#7a1f33);color:#fff}
+.dnahero{background:linear-gradient(120deg,rgba(59,21,32,.88),rgba(122,31,51,.72)),url(assets/dna_banner.jpg) center/cover;color:#fff}
 .dnahero .wrap{padding-block:24px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
 .dnahero h1{color:#fff}
 .dnahero select{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:20px;padding:7px 14px;font-weight:600}
@@ -504,6 +504,24 @@ textarea#notes{width:100%;min-height:240px;border:1px solid #c5ccd2;border-radiu
   .canvas-wrap{height:520px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ---- art assets ---- */
+.ava img,.big img{width:100%;height:100%;object-fit:cover;display:block}
+.bl-logo .logoimg{width:24px;height:30px;object-fit:contain}
+.crest .crestimg{width:30px;height:30px;object-fit:contain}
+.colrow{display:flex;align-items:center;gap:10px}.colimg{width:46px;height:46px;object-fit:cover;border-radius:4px;flex:none}
+.doc,.clip,.letter{position:relative}
+.doc .stamp{position:absolute;right:16px;top:12px;width:92px;opacity:.5;transform:rotate(-9deg);pointer-events:none;mix-blend-mode:multiply}
+.doc .stamp.nil{width:150px;right:10px;top:8px;opacity:.6;transform:rotate(-6deg)}
+.paper{background-image:linear-gradient(var(--wash),var(--wash)),var(--paper);background-size:cover;background-position:center}
+.wash-lo{--wash:rgba(250,245,233,.4)}.wash-hi{--wash:rgba(250,246,238,.74)}
+.framed{position:relative;width:100%}
+.framed .fwin{position:absolute;overflow:hidden}
+.framed .fwin svg{width:100%;height:100%;display:block;border:0;box-shadow:none;border-radius:0}
+.framed .fprop{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.photo>.framed{width:300px;max-width:100%;filter:drop-shadow(0 4px 12px rgba(0,0,0,.35))}
+.licard{width:min(100%,460px);filter:drop-shadow(0 3px 8px rgba(0,0,0,.3))}
+.photo .pic{width:min(100%,520px);border-radius:3px;box-shadow:0 4px 14px rgba(0,0,0,.4)}
 </style>
 
 <div class="app">
@@ -565,6 +583,7 @@ function faceG(o, dx=0){
 }
 const VAMP = {scar:true,mole:true,hair:'part',era:'victorian'};
 function photo(p, attrs=''){
+  if(p.img) return `<svg viewBox="0 0 ${p.w} ${p.h}" role="img" aria-label="${p.alt}" ${attrs} class="${p.w>p.h?'wide':''}"><image href="${p.img}" width="${p.w}" height="${p.h}" preserveAspectRatio="xMidYMid slice"/></svg>`;
   const w = 120*p.faces.length, c = TONES[p.faces[0].tone], id='g'+(gN++), hid='h'+(gN++);
   const halftone = p.news ? `<defs><pattern id="${hid}" width="3" height="3" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r=".7" fill="#000" opacity=".22"/></pattern></defs><rect width="${w}" height="150" fill="url(#${hid})"/>` : '';
   return `<svg viewBox="0 0 ${w} 150" role="img" aria-label="${p.alt}" ${attrs} class="${w>120?'wide':''}">
@@ -602,7 +621,30 @@ const PH = {
   licence1972:{year:1972,alt:'Licence photo of Cornelius Vane, 1972',faces:[{...VAMP,tone:'seventies',hair:'long',era:'seventies'}],who:'Cornelius Vane (1972)',vamp:true},
   licence2019:{year:2019,alt:'Licence photo of Julian Vane, 2019',faces:[{...VAMP,tone:'modern',hair:'short',era:'modern'}],who:'Julian Vane (2019)',vamp:true}
 };
+const IMGS = {
+  photo1875:{w:600,h:750,marks:{mole:[240,377]}},
+  photo1889:{w:600,h:750,marks:{scar:[391,226],mole:[243,375]}},
+  photo1912:{w:1200,h:750,marks:{scar:[893,193],mole:[784,323]}},
+  photo1921:{w:600,h:750,marks:{scar:[363,216]}},
+  photo1950:{w:600,h:750,marks:{mole:[233,374]}},
+  photo1962:{w:600,h:750,marks:{scar:[407,266],mole:[227,429]}},
+  licence1972:{w:600,h:750,marks:{scar:[408,281],mole:[251,428]}},
+  licence2019:{w:600,h:750,marks:{scar:[383,277],mole:[219,452]}}
+};
+for(const k in IMGS) Object.assign(PH[k],{img:'assets/'+k+'.jpg',hit:40},IMGS[k]);
+const PROPS = {
+  mount_cabinet:{w:600,h:750,hole:[97,82,406,501]},
+  licence_card_1972:{w:1200,h:800,hole:[130,182,329,430]},
+  licence_card_2019:{w:1200,h:800,hole:[105,195,353,438]}
+};
+function framed(photoHtml, prop){
+  const P=PROPS[prop], [x,y,w,h]=P.hole, pc=(v,m)=>(100*v/m).toFixed(2)+'%';
+  return `<div class="framed" style="aspect-ratio:${P.w}/${P.h}"><div class="fwin" style="left:${pc(x,P.w)};top:${pc(y,P.h)};width:${pc(w,P.w)};height:${pc(h,P.h)}">${photoHtml}</div><img class="fprop" src="assets/${prop}.webp" alt=""></div>`;
+}
+const mounted = p => framed(photo(p,'preserveAspectRatio="xMidYMid slice"'),'mount_cabinet');
+const licard = (p,prop) => `<div class="licard">${framed(photo(p,'preserveAspectRatio="xMidYMid slice"'),prop)}</div>`;
 function marksOf(id){
+  const pp = PH[id]; if(pp.marks) return {...pp.marks};
   const p = PH[id], dx = p.offset||0, f = p.faces[dx?1:0], out = {};
   if(f.scar) out.scar = [MARKS_FACE.scar[0]+dx, MARKS_FACE.scar[1]];
   if(f.mole) out.mole = [MARKS_FACE.mole[0]+dx, MARKS_FACE.mole[1]];
@@ -624,8 +666,26 @@ const PEOPLE = {
 
 /* ================= RECORDS ================= */
 const dl = rows => `<dl>${rows.map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join('')}</dl>`;
-const regDoc = (head, no, rows, sigTxt, note, sigLabel='Signature of informant:', dist='Ashby', pre='District of') => `<div class="doc"><h4>${head}</h4><div class="c">${pre} ${dist} · No. ${no}</div>${dl(rows)}${sigTxt?`<div class="sigline"><span>${sigLabel}</span>${sigTxt}</div>`:''}${note?`<p class="rn">${note}</p>`:''}</div>`;
+const regDoc = (head, no, rows, sigTxt, note, sigLabel='Signature of informant:', dist='Ashby', pre='District of') => `<div class="doc">${pre==='District of'?'<img class="stamp" src="assets/stamp_registrar.webp" alt="">':''}<h4>${head}</h4><div class="c">${pre} ${dist} · No. ${no}</div>${dl(rows)}${sigTxt?`<div class="sigline"><span>${sigLabel}</span>${sigTxt}</div>`:''}${note?`<p class="rn">${note}</p>`:''}</div>`;
 const clip = (paper, date, head, body, ph) => `<div class="clip"><div class="mast"><span>${paper}</span><span>${date}</span></div><h4>${head}</h4>${ph?photo(ph):''}${body.map(p=>`<p>${p}</p>`).join('')}</div>`;
+
+const PAPER = {};
+[['paper_parchment','lo',['court1436','will1509','will1577','deed1740']],
+ ['paper_parish_1751','lo',['burial1544','bapt1550','marr1612','bapt1620','tax1674','marr1682','bapt1688','bapt1720','bapt1751','bapt1789']],
+ ['paper_parish_form','hi',['marr1818','burial1889']],['paper_census_1841','hi',['census1841']],
+ ['paper_census','hi',['census1861','census1881','census1891','census1911','census1921']],
+ ['paper_civil_1850','hi',['marr1850','birth1857','birth1861','marr1886','birth1888']],
+ ['paper_hospital','hi',['hospital1888']],['paper_diary','lo',['diary1888']],
+ ['paper_news_victorian','hi',['news1888','news1889']],['paper_news_1930s','hi',['news1934']],['paper_news_postwar','hi',['photo1962','news1994']],
+ ['paper_deed_1934','lo',['trust1934']],
+ ['paper_register','hi',['birth1934','death1934','inquest1934','birth1958d','birth1966','birth1993','death1994','death2025']],
+ ['paper_will_modern','lo',['will2024']],['paper_letter','lo',['letterJulian']],['paper_letter_margaret','lo',['letterMargaret']],['paper_letter_daphne','lo',['letterDaphne']],
+ ['paper_invoice','hi',['funeral2025']],['paper_harbour','hi',['marine2025']]
+].forEach(([f,w,ids])=>ids.forEach(i=>PAPER[i]=[f,w]));
+function paperHtml(id, html){
+  const p = PAPER[id]; if(!p) return html;
+  return html.replace(/class="(doc|clip|letter)">/, (m,c)=>`class="${c} paper wash-${p[1]}" style="--paper:url(assets/${p[0]}.jpg)">`);
+}
 
 const REC = {
   census1891:{kind:'Census',year:1891,title:'1891 Census, Vane House, 14 Hollow Lane',k:'Ambrose Eliza Harriet Vane Hollow Lane Vane House',
@@ -637,7 +697,9 @@ const REC = {
     <div class="sigline"><span>Signature of head of household:</span>${sig('A. Vane')}</div>
     <p class="rn">Enumerator's note: Head of household not at home during the day. Returned after dusk to collect schedule. Curtains drawn throughout.</p></div>`},
   photo1889:{kind:'Photo',year:1889,title:'Studio portrait, Ambrose Vane',k:'Ambrose Vane portrait Halloran',
-    render:()=>`<div class="photo">${photo(PH.photo1889)}<div class="doc" style="max-width:420px"><p><b>Halloran &amp; Sons, Photographic Studio, Ashby.</b></p><p>Pencilled on reverse: "A.V., aged 32. Taken by lamplight at the sitter's request. 1889."</p></div></div>`},
+    render:()=>`<div class="photo">${mounted(PH.photo1889)}<div class="doc" style="max-width:420px"><p><b>Halloran &amp; Sons, Photographic Studio, Ashby.</b></p><p>Pencilled on reverse: "A.V., aged 32. Taken by lamplight at the sitter's request. 1889."</p></div></div>`},
+  cellarPhoto:{kind:'Attachment',year:2025,title:'Photos from the cellar of Vane House',k:'',hidden:true,
+    render:()=>`<div class="photo"><img class="pic" src="assets/cellar_coffins.jpg" alt="Four coffins in a brick cellar, lit by a torch"><img class="pic" src="assets/ashgrove_plate.jpg" alt="Brass coffin plate engraved Ashgrove"><p class="rn">Sent by Margaret Holloway from her phone. The plate on the fourth coffin.</p></div>`},
   court1436:{kind:'Court',year:1436,title:'Court roll, Manor of Ashby, 1436',k:'Hugh atte Vane Hollow Lane messuage court roll manor Asgrove Ashgrove clerk',
     render:()=>regDoc('Manor of Ashby · Court Roll','15 Henry VI',[['Court held','Feast of St Michael, 15 Henry VI (29 September 1436)'],['Tenant','Hugh atte Vane, boatman'],['Holding','One messuage and garden in Hollow Lane'],['Rent','Fourpence a year'],['Pledges','Roland Asgrove, clerk; John Tyler'],['Fine','Twelvepence']],'',"Translated from the Latin. Index note: the clerk's name as written, Asgrove, is indexed as Ashgrove.",'','Ashby','Manor of')},
   will1509:{kind:'Will',year:1509,title:'Will of John atte Vane, boatman, 1509',k:'John atte Vane will Hollow Lane Askgrove Ashgrove scrivener Agnes Richard',
@@ -661,7 +723,7 @@ const REC = {
   bapt1720:{kind:'Parish',year:1720,title:'Baptism, John Vane, 1720',k:'John Vane baptism St Columba William Anne cooper',
     render:()=>regDoc('Baptism Register','17',[['Child','John, son of William Vane, cooper, and Anne his wife'],['Baptised','10 April 1720'],['Parish','St Columba, Ashby']],'','','','St Columba, Ashby','Parish of')},
   portrait1620:{kind:'Art',year:1620,title:'Portrait of Roland Ashgrove, Recorder of Ashby, 1620',k:'Roland Ashgrove portrait Recorder Ashby Guildhall oil painting',
-    render:()=>`${photo({alt:'Oil portrait of Roland Ashgrove, 1620',faces:[{tone:'sepia',hair:'long',era:'victorian',jaw:25}]})}<p class="rn">Oil on panel, Ashby Guildhall collection. Inscribed on the reverse: "R. ASHGROVE, RECORDER, AETAT. 33, 1620."</p>`},
+    render:()=>`${photo({alt:'Oil portrait of Roland Ashgrove, 1620',img:'assets/portrait1620.jpg',w:600,h:750})}<p class="rn">Oil on panel, Ashby Guildhall collection. Inscribed on the reverse: "R. ASHGROVE, RECORDER, AETAT. 33, 1620."</p>`},
   deed1740:{kind:'Legal',year:1740,title:'Lease of a tenement in Hollow Lane, 1740',k:'William Vane cooper lease Hollow Lane Ashgrove House Ashgrove estate',
     render:()=>`<div class="doc"><h4>Lease · Hollow Lane</h4>${dl([['Lessor','R. Ashgrove, gentleman, of Ashgrove House'],['Lessee','William Vane, cooper'],['Holding','One tenement and yard in Hollow Lane'],['Term','Ninety-nine years'],['Rent','One peppercorn, if demanded']])}
     <div class="sigline"><span>Signed by the lessor:</span>${sig('R. Ashgrove','r')}</div>
@@ -687,7 +749,7 @@ const REC = {
     <tr><td>Josiah Vane</td><td>Head</td><td>37</td><td>Shipwright</td></tr><tr><td>Hannah Vane</td><td>Wife</td><td>33</td><td>—</td></tr>
     <tr><td>Mary Vane</td><td>Mother, widow</td><td>67</td><td>Annuitant</td></tr><tr><td>Ambrose Vane</td><td>Son</td><td>4</td><td>—</td></tr></table></div></div>`},
   photo1875:{kind:'Photo',year:1875,title:'Studio portrait, Ambrose Vane, aged 18',k:'Ambrose Vane portrait Halloran youth',
-    render:()=>`${photo(PH.photo1875)}<p class="rn">Halloran &amp; Sons, Photographic Studio, Ashby. Pencilled on reverse: "Ambrose, 18, for Mother. Taken at noon. 1875."</p>`},
+    render:()=>`<div class="photo">${mounted(PH.photo1875)}</div><p class="rn">Halloran &amp; Sons, Photographic Studio, Ashby. Pencilled on reverse: "Ambrose, 18, for Mother. Taken at noon. 1875."</p>`},
   census1881:{kind:'Census',year:1881,title:'1881 Census, Vane House, Hollow Lane',k:'Josiah Hannah Ambrose Vane Hollow Lane Vane House clerk',
     render:()=>`<div class="doc"><h4>Census of 1881 · Householder's Schedule</h4><div class="c">District of Ashby · Hollow Lane · 3 April 1881</div>
     <div class="doctable-wrap"><table class="doctable"><tr><th>Name</th><th>Relation</th><th>Age</th><th>Occupation</th></tr>
@@ -758,7 +820,7 @@ const REC = {
     <tr><td>2023</td><td>Cornelius Vane</td><td>Retired</td></tr><tr><td>2025</td><td>Julian Ambrose Vane</td><td>Gentleman</td></tr></table></div>
     <p class="rn">Enrolment became compulsory for all adults in 1924. One elector at this address in every year on file.</p></div>`},
   licence1972:{kind:'ID',year:1972,title:'Driver licence, Cornelius Vane',k:'Cornelius Vane licence',
-    render:()=>`<div class="licence"><div class="ph">${photo(PH.licence1972)}</div><div class="f"><div class="hd">MOTOR REGISTRY · DRIVER LICENCE · 1972</div>
+    render:()=>`<div class="licence">${licard(PH.licence1972,'licence_card_1972')}<div class="f"><div class="hd">MOTOR REGISTRY · DRIVER LICENCE · 1972</div>
     ${dl([['Name','VANE, Cornelius'],['Date of birth','02/03/1934 (age 38)'],['Address','14 Hollow Lane, Ashby'],['Class','C'],['Conditions','N: night driving only (medical, photosensitivity)']])}
     <div class="sigline">${sig('C. Vane')}</div></div></div>`},
   death1994:{kind:'Death',year:1994,title:'Death registration, Desmond Vane',k:'Desmond Vane Cornelius',
@@ -771,7 +833,7 @@ const REC = {
   birth1966:{kind:'Birth',year:1966,title:'Birth registration, Daphne Marsh-Pike',k:'Daphne Lorna Marsh-Pike',
     render:()=>regDoc('Registration of Birth','1966/0730',[['Child','Daphne Marsh-Pike'],['Born','9 August 1966, Ashby Hospital'],['Father','Not stated'],['Mother','Lorna Marsh-Pike, typist'],['Informant','L. Marsh-Pike, mother'],['Registered','15 August 1966']],sig('L. Marsh-Pike','m'))},
   licence2019:{kind:'ID',year:2019,title:'Driver licence, Julian Vane',k:'Julian Vane licence',
-    render:()=>`<div class="licence"><div class="ph">${photo(PH.licence2019)}</div><div class="f"><div class="hd">MOTOR REGISTRY · DRIVER LICENCE · 2019</div>
+    render:()=>`<div class="licence">${licard(PH.licence2019,'licence_card_2019')}<div class="f"><div class="hd">MOTOR REGISTRY · DRIVER LICENCE · 2019</div>
     ${dl([['Name','VANE, Julian Ambrose'],['Date of birth','14/01/1993 (age 26)'],['Address','14 Hollow Lane, Ashby'],['Class','C'],['Conditions','N: night driving only (medical, photosensitivity)']])}
     <div class="sigline">${sig('J. Vane')}</div></div></div>`},
   will2024:{kind:'Legal',year:2024,title:'Last will and testament, Cornelius Vane',k:'Cornelius Julian Vane will',
@@ -816,7 +878,7 @@ const REC = {
   hintOfficial:{kind:'Hint',year:2025,title:'Member-tree hint: Julian is grandson of Cornelius',k:'',hidden:true,
     render:()=>`<p>Source: public member tree <b>VaneFamily_Official</b>, owner <b>nightowl_jv</b>. Tree created 3 March 2025. One attached record (the will). No birth record for Desmond Vane attached.</p>`},
   nilDesmond:{kind:'Certificate',year:2025,title:'Nil-return search certificate, Desmond Vane birth',k:'',hidden:true,
-    render:()=>`<div class="doc"><h4>Certificate of Search · Nil Return</h4><p>A search of birth registrations for the districts of Ashby, Port Hollis, Calder and Wenmouth, 1940 to 1994, under the surname VANE and given name DESMOND, found no entry.</p><p>A search under the father's name, Cornelius Vane, found no child registered before 1993.</p><p class="rn">Issued through Bloodlines Professional on behalf of Ashgrove &amp; Pell.</p></div>`},
+    render:()=>`<div class="doc"><img class="stamp nil" src="assets/stamp_nil.webp" alt=""><h4>Certificate of Search · Nil Return</h4><p>A search of birth registrations for the districts of Ashby, Port Hollis, Calder and Wenmouth, 1940 to 1994, under the surname VANE and given name DESMOND, found no entry.</p><p>A search under the father's name, Cornelius Vane, found no child registered before 1993.</p><p class="rn">Issued through Bloodlines Professional on behalf of Ashgrove &amp; Pell.</p></div>`},
   lawSA:{kind:'Law',year:1919,title:'Succession Act 1919, ss 12 and 49',k:'',hidden:true,render:()=>lawHtml('lawSA')},
   lawA1:{kind:'Law',year:1888,title:'Nocturnal Accord, Art. 1 (continuity)',k:'',hidden:true,render:()=>lawHtml('lawA1')},
   lawA2:{kind:'Law',year:1888,title:'Nocturnal Accord, Art. 2 (identity)',k:'',hidden:true,render:()=>lawHtml('lawA2')},
@@ -943,7 +1005,7 @@ const MAIL = {
     <p>Under Article 4 the whole estate goes to Margaret. Daphne has been told. She took it better than Pryor did.</p>
     <p>Your DNA results should be back. Don't read anything into them.</p>
     <p>And don't open file 0001.</p><p>R.A.</p>`},
-  m9:{from:'Margaret Holloway',time:'just now',subj:'The cellar',body:()=>`
+  m9:{from:'Margaret Holloway',time:'just now',subj:'The cellar',attach:'cellarPhoto',body:()=>`
     <p>Thank you. I mean it. I've never owned anything in my life and now I own a house I'm frightened of.</p>
     <p>I went down to the cellar with a torch at noon, the way the will said not to. There were four coffins. Three had brass plates: AMBROSE, CORNELIUS, JULIAN. All empty, all with latches on the inside.</p>
     <p>The fourth was older than the others. Its plate said ASHGROVE.</p>
@@ -1012,6 +1074,8 @@ const REL = {
   julian:[['Father','desmond']],
   daphne:[['Claimed father','cornelius']]
 };
+const AVATARS = new Set(['ambrose','ann','arthur','cornelius','daphne','eliza','hannah','harriet','josiah','julian','margaret','samuel','thomas','thomasv','william']);
+const COLTHUMB = {Census:'census',Birth:'birth',Death:'death',Photo:'photos',Newspaper:'newspapers',Roll:'rolls'};
 const PHOTO_OF = {ambrose:'photo1889',cornelius:'licence1972',julian:'licence2019',thomas:'photo1950'};
 const HINT_OF = {julian:['hintOfficial'],ambrose:['h2','h3'],harriet:['h4']};
 const COLL = {Court:'Manor of Ashby Court Rolls, 1350–1840',Will:'Probate Wills & Inventories, 1450–1858',Tax:'Hearth & Land Tax Returns, 1662–1830',Art:'Ashby Guildhall Portraits & Prints, 1500–1900',Parish:'Ashby Parish Registers, 1538–1900',Marriage:'Ashby District Marriage Registrations, 1850–2025',Inquest:"Coroner's Inquest Records, 1890–1960",Census:'Ashby Census Returns, 1841–1921',Birth:'Ashby District Birth Registrations, 1850–2025',Death:'Ashby District Death Registrations, 1850–2025',
@@ -1076,7 +1140,7 @@ const IDX = {
   funeral2025:[['Account','J. Vane, Vane House'],['Service','Memorial, no body'],['Date','March 2025'],['Director','Mortlake & Daughters']]
 };
 const MAIL_DATE = {m1:'Sun 22:52',m2:'Sun 21:30',m3:'Sun 21:02',m10:'Sun 20:15',m4:'Fri 23:58',m11:'Now',m5:'Now',m6:'Now',m7:'Now',m9:'Now',m12:'Now'};
-const FILES = {letterJulian:'Letter_JVane_claim.pdf',letterMargaret:'Letter_MHolloway_objection.pdf',letterDaphne:'Letter_DMarshPike_claim.pdf',diary1888:'EVane_diary_Feb1888.jpg'};
+const FILES = {cellarPhoto:'Cellar_photos.jpg',letterJulian:'Letter_JVane_claim.pdf',letterMargaret:'Letter_MHolloway_objection.pdf',letterDaphne:'Letter_DMarshPike_claim.pdf',diary1888:'EVane_diary_Feb1888.jpg'};
 
 /* ================= ICONS ================= */
 const I = {
@@ -1195,8 +1259,7 @@ function render(){
 
 /* ================= BLOODLINES ================= */
 function avatar(id, crop=true){
-  const ph = PHOTO_OF[id];
-  if(ph) return photo(PH[ph]).replace('viewBox="0 0 120 150"','viewBox="24 22 72 72"');
+  if(AVATARS.has(id)) return `<img src="assets/av_${id}.jpg" alt="">`;
   return PEOPLE[id]?.ini || '?';
 }
 function blShell(section, inner){
@@ -1206,7 +1269,7 @@ function blShell(section, inner){
   <div class="promo">Ancestors' Week: save 25% on Bloodlines DNA kits. <u data-a="toastonly" data-msg="Offer not available on Professional accounts">Shop now</u></div>
   <header class="blbar">
     <button class="icobtn burger" data-a="burger" aria-label="Menu">${ic('menu')}</button>
-    <button class="bl-logo" data-a="go" data-t="bl" data-v="home"><svg viewBox="0 0 20 26"><path d="M10 1 C 6 9, 2 13, 2 17.5 A 8 8 0 0 0 18 17.5 C 18 13, 14 9, 10 1 Z" fill="currentColor"/><path d="M6.5 17 a3.5 3.5 0 0 0 3 3.6" stroke="#fff" stroke-opacity=".6" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>bloodlines</button>
+    <button class="bl-logo" data-a="go" data-t="bl" data-v="home"><img class="logoimg" src="assets/bloodlines_logo.webp" alt="">bloodlines</button>
     <nav class="blnav ${S.navOpen?'open':''}">${nav.map(([k,l])=>`<button class="${section===k?'on':''}" data-a="go" data-t="bl" data-v="${k==='dna'?'dna/'+S.kit:k}">${l}</button>`).join('')}</nav>
     <div class="blright">
       <button class="icobtn" data-a="go" data-t="bl" data-v="search" aria-label="Search">${ic('search')}</button>
@@ -1334,7 +1397,7 @@ function blRecord(id){
       <button class="bbtn sec" disabled>${inTree?'In your tree':'Save to tree'}</button></div></div>
   <div class="recgrid">
     <div class="viewer"><div class="vtool"><button data-a="zoom" data-v="-0.15" aria-label="Zoom out">${ic('minus')}</button><button data-a="zoom" data-v="0.15" aria-label="Zoom in">${ic('plus')}</button><button data-a="zoom" data-v="0" aria-label="Fit">${ic('fit')}</button><span style="padding-left:8px;font-variant-numeric:tabular-nums">${Math.round(S.zoom*100)}%</span><span class="sp"></span><button data-a="toastonly" data-msg="Downloads are disabled for licensed collections" aria-label="Download">${ic('dl')}</button></div>
-      <div class="vstage"><div class="vinner" style="transform:scale(${S.zoom})">${r.render()}</div></div></div>
+      <div class="vstage"><div class="vinner" style="transform:scale(${S.zoom})">${paperHtml(id,r.render())}</div></div></div>
     <div class="side">
       <div class="panel"><div class="ph"><h2>Record details</h2></div><div class="pb"><table class="idx">${idx.map(([k,v])=>`<tr><th>${k}</th><td>${v}</td></tr>`).join('')}</table></div></div>
       <div class="panel"><div class="ph"><h2>Source citation</h2></div><div class="pb"><div class="cite">Bloodlines. <i>${COLL[r.kind]}</i> [database online]. Ashby: Bloodlines Ltd, 2026. Original record: ${r.title}, ${r.year}.</div></div></div>
@@ -1364,7 +1427,7 @@ function blSearch(){
   let right;
   if(!S.searched){
     const ck = {}; Object.values(REC).forEach(r=>{ if(!r.hidden&&PAGE_KINDS.has(r.kind)) ck[r.kind]=(ck[r.kind]||0)+1; });
-    right = `<div class="panel"><div class="ph"><h2>Featured collections for Ashby</h2></div><div class="pb"><div class="rtable-wrap"><table class="rtable"><tr><th>Collection</th><th>Indexed for your tree</th></tr>${Object.keys(COLL).map(k=>`<tr><td><button class="nm lnk" data-a="facetall" data-v="${k}">${COLL[k]}</button></td><td>${ck[k]||0} records</td></tr>`).join('')}</table></div></div></div>
+    right = `<div class="panel"><div class="ph"><h2>Featured collections for Ashby</h2></div><div class="pb"><div class="rtable-wrap"><table class="rtable"><tr><th>Collection</th><th>Indexed for your tree</th></tr>${Object.keys(COLL).map(k=>`<tr><td><span class="colrow">${COLTHUMB[k]?`<img class="colimg" src="assets/collection_${COLTHUMB[k]}.jpg" alt="">`:''}<button class="nm lnk" data-a="facetall" data-v="${k}">${COLL[k]}</button></span></td><td>${ck[k]||0} records</td></tr>`).join('')}</table></div></div></div>
     <p class="muted" style="font-size:13.5px">Tip: most records aren't attached to any tree. Search by place or keyword as well as by name.</p>`;
   } else {
     right = `
@@ -1434,7 +1497,7 @@ function showPreview(id){
   const light = ['DNA','Hint'].includes(r.kind);
   m.innerHTML = `<div class="pv" role="dialog" aria-modal="true" aria-label="${esc(r.title)}"><div class="pvh"><span class="fi" style="background:${ext==='JPG'?'#2d7d46':ext==='HTML'?'#3c5a78':'#c0392b'}">${ext}</span><div class="t"><b>${fname}</b><small>${r.title}</small></div>
     <button class="nbtn ${pinned(id)?'sec':''} sm" data-a="pin" data-v="${id}" data-m="1">${pinned(id)?'Remove from matter':'Save to matter'}</button><button class="nbtn sec sm" data-a="close">Close</button></div>
-    <div class="pvb ${light?'light':''}"><div ${light?'style="font-family:var(--f-bl);display:flex;flex-direction:column;gap:10px"':''}>${r.render()}</div></div></div>`;
+    <div class="pvb ${light?'light':''}"><div ${light?'style="font-family:var(--f-bl);display:flex;flex-direction:column;gap:10px"':''}>${paperHtml(id,r.render())}</div></div></div>`;
   m.hidden = false; m.querySelector('[data-a="close"]').focus();
 }
 function closePreview(){ $('#modal').hidden = true; $('#modal').innerHTML=''; render(); }
@@ -1469,7 +1532,7 @@ function endCard(){
 /* ================= INTRANET ================= */
 function netApp(r){
   const sec = r==='law'?'law':'matters';
-  const top = `<div class="nttop"><span class="crest"><i>A·P</i><span>Ashgrove &amp; Pell</span></span>
+  const top = `<div class="nttop"><span class="crest"><img class="crestimg" src="assets/ap_crest.webp" alt=""><span>Ashgrove &amp; Pell</span></span>
     <nav class="ntnav"><button disabled>Home</button><button class="${sec==='matters'?'on':''}" data-a="go" data-t="net" data-v="matter/overview">Matters</button><button class="${sec==='law'?'on':''}" data-a="go" data-t="net" data-v="law">Law library</button><button disabled>People</button></nav>
     <span class="user">Associate · Night roster</span></div>`;
   return `<div class="nt">${top}<main class="ntmain">${r==='law'?lawPage():matterPage(r.split('/')[1]||'overview')}</main></div>`;
@@ -1508,7 +1571,7 @@ function mOverview(){
 function srcLabel(id){
   const r = REC[id];
   if(PAGE_KINDS.has(r.kind)) return 'Bloodlines · '+COLL[r.kind].split(',')[0];
-  return r.kind==='Lab'&&id.startsWith('sig:') ? 'Handwriting examiner' : {Law:'Law library',DNA:'Bloodlines DNA',Lab:'Photo lab',Letter:'Email attachment',Diary:'Email attachment',Hint:'Bloodlines member tree',Certificate:'Bloodlines Professional'}[r.kind]||'—';
+  return r.kind==='Lab'&&id.startsWith('sig:') ? 'Handwriting examiner' : {Law:'Law library',DNA:'Bloodlines DNA',Lab:'Photo lab',Letter:'Email attachment',Diary:'Email attachment',Hint:'Bloodlines member tree',Certificate:'Bloodlines Professional',Attachment:'Email attachment'}[r.kind]||'—';
 }
 function mEvidence(){
   if(!S.pins.length) return `<div class="empty">No evidence yet. Use "Save to matter" on Bloodlines records, DNA reports, email attachments and law library provisions.</div>`;
@@ -1533,7 +1596,7 @@ function labView(){
 }
 function labSvg(id,marks){
   const m = marksOf(id);
-  return photo(PH[id], `data-lab="1" data-id="${id}"`).replace('</svg>', marks.map(k=>`<circle class="markc" cx="${m[k][0]}" cy="${m[k][1]}" r="6"/>`).join('')+'</svg>');
+  return photo(PH[id], `data-lab="1" data-id="${id}"`).replace('</svg>', marks.map(k=>`<circle class="markc" cx="${m[k][0]}" cy="${m[k][1]}" r="${PH[id].hit?PH[id].hit*0.55:6}" style="stroke-width:${PH[id].hit?3.5:1.6}"/>`).join('')+'</svg>');
 }
 function cmpRec(id){
   const r = S.reports[id];
@@ -1607,7 +1670,7 @@ document.addEventListener('click', e=>{
     const side = svg.closest('.labpane').querySelector('select').dataset.labSelect, id = svg.dataset.id, pt = svg.createSVGPoint();
     pt.x = e.clientX; pt.y = e.clientY; const p = pt.matrixTransform(svg.getScreenCTM().inverse());
     const m = marksOf(id), list = side==='a'?S.lab.ma:S.lab.mb;
-    const hit = Object.keys(m).find(k=>Math.hypot(m[k][0]-p.x, m[k][1]-p.y) < 8);
+    const hit = Object.keys(m).find(k=>Math.hypot(m[k][0]-p.x, m[k][1]-p.y) < (PH[id].hit||8));
     if(hit){ if(!list.includes(hit)) list.push(hit); } else S.lab.miss++;
     save(); render(); return;
   }
