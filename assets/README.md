@@ -9,3 +9,5 @@ The art is wired into the game. Photo-lab mark positions are in `src/data.js` (`
 The Margaret avatar was regenerated to look early seventies, the postwar newsprint's two photo boxes were blanked, and the crest's glare was painted out.
 
 Desmond has no portrait, as specified in the brief. Arthur, Ambrose, Cornelius, and Julian avatars are cropped from their corresponding evidence photographs.
+
+Size pass: the 29 paper, scenery, banner, thumbnail and cellar images were converted from JPEG to WebP (quality 74 to 80), saving about 30%. Faces and portraits stay as JPEG, since re-encoding them saved under 5% and risked the mole detail. Where older docs say `paper_*.jpg`, the file is now `.webp`.

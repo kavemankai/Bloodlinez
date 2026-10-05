@@ -9,7 +9,7 @@ const {chromium}=require('playwright-core'); const path=require('path'); const R
  const html=fs.readFileSync(ROOT+'/index.html','utf8');
  const refs=[...new Set([...html.matchAll(/assets\/([\w.\-]+\.(?:jpg|webp|png|svg))/g)].map(m=>m[1]))];
  const missing=refs.filter(f=>!fs.existsSync(ROOT+'/assets/'+f)); ok(missing.length===0,'all '+refs.length+' static asset refs exist'+(missing.length?': '+missing:''));
- const dyn=await p.evaluate(()=>[...new Set([...Object.keys(PH).map(k=>PH[k].img),...[...AVATARS].map(i=>'assets/av_'+i+'.jpg'),...Object.values(PAPER).map(x=>'assets/'+x[0]+'.jpg'),...Object.keys(PROPS).map(k=>'assets/'+k+'.webp')])]);
+ const dyn=await p.evaluate(()=>[...new Set([...Object.keys(PH).map(k=>PH[k].img),...[...AVATARS].map(i=>'assets/av_'+i+'.jpg'),...Object.values(PAPER).map(x=>'assets/'+x[0]+'.webp'),...Object.keys(PROPS).map(k=>'assets/'+k+'.webp')])]);
  const dm=dyn.filter(f=>!fs.existsSync(ROOT+'/'+f)); ok(dm.length===0,'all '+dyn.length+' dynamic asset refs exist'+(dm.length?': '+dm:''));
  // 2. visit every record + tree, check broken images
  await p.evaluate(()=>{S.cookie=true; Object.keys(REC).filter(id=>!REC[id].hidden&&PAGE_KINDS.has(REC[id].kind)).forEach(id=>{go('record/'+id,'bl')}); go('tree','bl'); S.sel='ambrose'; render()});

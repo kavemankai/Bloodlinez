@@ -142,7 +142,7 @@ const PAPER = {};
 ].forEach(([f,w,ids])=>ids.forEach(i=>PAPER[i]=[f,w]));
 function paperHtml(id, html){
   const p = PAPER[id]; if(!p) return html;
-  return html.replace(/class="(doc|clip|letter)">/, (m,c)=>`class="${c} paper wash-${p[1]}" style="--paper:url(assets/${p[0]}.jpg)">`);
+  return html.replace(/class="(doc|clip|letter)">/, (m,c)=>`class="${c} paper wash-${p[1]}" style="--paper:url(assets/${p[0]}.webp)">`);
 }
 
 const REC = {
@@ -157,7 +157,7 @@ const REC = {
   photo1889:{kind:'Photo',year:1889,title:'Studio portrait, Ambrose Vane',k:'Ambrose Vane portrait Halloran',
     render:()=>`<div class="photo">${mounted(PH.photo1889)}<div class="doc" style="max-width:420px"><p><b>Halloran &amp; Sons, Photographic Studio, Ashby.</b></p><p>Pencilled on reverse: "A.V., aged 32. Taken by lamplight at the sitter's request. 1889."</p></div></div>`},
   cellarPhoto:{kind:'Attachment',year:2025,title:'Photos from the cellar of Vane House',k:'',hidden:true,
-    render:()=>`<div class="photo"><img class="pic" src="assets/cellar_coffins.jpg" alt="Four coffins in a brick cellar, lit by a torch"><img class="pic" src="assets/ashgrove_plate.jpg" alt="Brass coffin plate engraved Ashgrove"><p class="rn">Sent by Margaret Holloway from her phone. The plate on the fourth coffin.</p></div>`},
+    render:()=>`<div class="photo"><img class="pic" src="assets/cellar_coffins.webp" alt="Four coffins in a brick cellar, lit by a torch"><img class="pic" src="assets/ashgrove_plate.webp" alt="Brass coffin plate engraved Ashgrove"><p class="rn">Sent by Margaret Holloway from her phone. The plate on the fourth coffin.</p></div>`},
   court1436:{kind:'Court',year:1436,title:'Court roll, Manor of Ashby, 1436',k:'Hugh atte Vane Hollow Lane messuage court roll manor Asgrove Ashgrove clerk',
     render:()=>regDoc('Manor of Ashby · Court Roll','15 Henry VI',[['Court held','Feast of St Michael, 15 Henry VI (29 September 1436)'],['Tenant','Hugh atte Vane, boatman'],['Holding','One messuage and garden in Hollow Lane'],['Rent','Fourpence a year'],['Pledges','Roland Asgrove, clerk; John Tyler'],['Fine','Twelvepence']],'',"Translated from the Latin. Index note: the clerk's name as written, Asgrove, is indexed as Ashgrove.",'','Ashby','Manor of')},
   will1509:{kind:'Will',year:1509,title:'Will of John atte Vane, boatman, 1509',k:'John atte Vane will Hollow Lane Askgrove Ashgrove scrivener Agnes Richard',

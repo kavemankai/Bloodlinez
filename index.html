@@ -117,7 +117,7 @@ svg.i{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-widt
 .blfoot .legal{border-top:1px solid #4a3d41;padding-block:16px 24px;display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:#b3a7ab}
 
 /* home */
-.hero{background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(250,246,242,.96)),url(assets/bl_hero_home.jpg) center/cover;border-bottom:1px solid var(--bl-line)}
+.hero{background:linear-gradient(180deg,rgba(255,255,255,.9),rgba(250,246,242,.96)),url(assets/bl_hero_home.webp) center/cover;border-bottom:1px solid var(--bl-line)}
 .hero .wrap{padding-block:30px 26px;display:flex;gap:24px;align-items:center;flex-wrap:wrap}
 .hero .greet{flex:1;min-width:260px}
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:16px;padding-block:24px}
@@ -154,7 +154,7 @@ svg.i{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-widt
 .tnode .ava svg{width:100%;height:100%;display:block}
 .tnode b{display:block;font-size:13.5px;line-height:1.25}
 .tnode small{color:var(--bl-muted);font-size:12px;font-variant-numeric:tabular-nums}
-.tnode .leaf{position:absolute;top:5px;right:6px;width:13px;height:16px;color:var(--bl-leaf)}
+.tnode .leaf{position:absolute;top:-7px;right:-6px;width:20px;height:20px;box-sizing:border-box;padding:3px;background:#fff;border-radius:50%;box-shadow:0 1px 3px rgba(0,0,0,.3);color:var(--bl-leaf);z-index:2}
 .tnode .flag{position:absolute;bottom:-9px;right:8px;font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#8a5a00;background:#fff4dc;border:1px solid #e3c987;border-radius:9px;padding:1px 7px;line-height:1.3;z-index:2}
 .claimlbl{position:absolute;font-size:11.5px;color:#8a5a00;background:var(--bl-canvas);padding:0 4px;font-style:italic}
 .zoomctl{position:absolute;right:16px;bottom:16px;display:flex;flex-direction:column;background:#fff;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.2);overflow:hidden}
@@ -237,7 +237,7 @@ svg.i{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-widt
 .callout p{margin:0;flex:1;min-width:220px}
 
 /* dna */
-.dnahero{background:linear-gradient(120deg,rgba(59,21,32,.88),rgba(122,31,51,.72)),url(assets/dna_banner.jpg) center/cover;color:#fff}
+.dnahero{background:linear-gradient(120deg,rgba(59,21,32,.88),rgba(122,31,51,.72)),url(assets/dna_banner.webp) center/cover;color:#fff}
 .dnahero .wrap{padding-block:24px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
 .dnahero h1{color:#fff}
 .dnahero select{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:20px;padding:7px 14px;font-weight:600}
@@ -684,7 +684,7 @@ const PAPER = {};
 ].forEach(([f,w,ids])=>ids.forEach(i=>PAPER[i]=[f,w]));
 function paperHtml(id, html){
   const p = PAPER[id]; if(!p) return html;
-  return html.replace(/class="(doc|clip|letter)">/, (m,c)=>`class="${c} paper wash-${p[1]}" style="--paper:url(assets/${p[0]}.jpg)">`);
+  return html.replace(/class="(doc|clip|letter)">/, (m,c)=>`class="${c} paper wash-${p[1]}" style="--paper:url(assets/${p[0]}.webp)">`);
 }
 
 const REC = {
@@ -699,7 +699,7 @@ const REC = {
   photo1889:{kind:'Photo',year:1889,title:'Studio portrait, Ambrose Vane',k:'Ambrose Vane portrait Halloran',
     render:()=>`<div class="photo">${mounted(PH.photo1889)}<div class="doc" style="max-width:420px"><p><b>Halloran &amp; Sons, Photographic Studio, Ashby.</b></p><p>Pencilled on reverse: "A.V., aged 32. Taken by lamplight at the sitter's request. 1889."</p></div></div>`},
   cellarPhoto:{kind:'Attachment',year:2025,title:'Photos from the cellar of Vane House',k:'',hidden:true,
-    render:()=>`<div class="photo"><img class="pic" src="assets/cellar_coffins.jpg" alt="Four coffins in a brick cellar, lit by a torch"><img class="pic" src="assets/ashgrove_plate.jpg" alt="Brass coffin plate engraved Ashgrove"><p class="rn">Sent by Margaret Holloway from her phone. The plate on the fourth coffin.</p></div>`},
+    render:()=>`<div class="photo"><img class="pic" src="assets/cellar_coffins.webp" alt="Four coffins in a brick cellar, lit by a torch"><img class="pic" src="assets/ashgrove_plate.webp" alt="Brass coffin plate engraved Ashgrove"><p class="rn">Sent by Margaret Holloway from her phone. The plate on the fourth coffin.</p></div>`},
   court1436:{kind:'Court',year:1436,title:'Court roll, Manor of Ashby, 1436',k:'Hugh atte Vane Hollow Lane messuage court roll manor Asgrove Ashgrove clerk',
     render:()=>regDoc('Manor of Ashby · Court Roll','15 Henry VI',[['Court held','Feast of St Michael, 15 Henry VI (29 September 1436)'],['Tenant','Hugh atte Vane, boatman'],['Holding','One messuage and garden in Hollow Lane'],['Rent','Fourpence a year'],['Pledges','Roland Asgrove, clerk; John Tyler'],['Fine','Twelvepence']],'',"Translated from the Latin. Index note: the clerk's name as written, Asgrove, is indexed as Ashgrove.",'','Ashby','Manor of')},
   will1509:{kind:'Will',year:1509,title:'Will of John atte Vane, boatman, 1509',k:'John atte Vane will Hollow Lane Askgrove Ashgrove scrivener Agnes Richard',
@@ -1427,7 +1427,7 @@ function blSearch(){
   let right;
   if(!S.searched){
     const ck = {}; Object.values(REC).forEach(r=>{ if(!r.hidden&&PAGE_KINDS.has(r.kind)) ck[r.kind]=(ck[r.kind]||0)+1; });
-    right = `<div class="panel"><div class="ph"><h2>Featured collections for Ashby</h2></div><div class="pb"><div class="rtable-wrap"><table class="rtable"><tr><th>Collection</th><th>Indexed for your tree</th></tr>${Object.keys(COLL).map(k=>`<tr><td><span class="colrow">${COLTHUMB[k]?`<img class="colimg" src="assets/collection_${COLTHUMB[k]}.jpg" alt="">`:''}<button class="nm lnk" data-a="facetall" data-v="${k}">${COLL[k]}</button></span></td><td>${ck[k]||0} records</td></tr>`).join('')}</table></div></div></div>
+    right = `<div class="panel"><div class="ph"><h2>Featured collections for Ashby</h2></div><div class="pb"><div class="rtable-wrap"><table class="rtable"><tr><th>Collection</th><th>Indexed for your tree</th></tr>${Object.keys(COLL).map(k=>`<tr><td><span class="colrow">${COLTHUMB[k]?`<img class="colimg" src="assets/collection_${COLTHUMB[k]}.webp" alt="">`:''}<button class="nm lnk" data-a="facetall" data-v="${k}">${COLL[k]}</button></span></td><td>${ck[k]||0} records</td></tr>`).join('')}</table></div></div></div>
     <p class="muted" style="font-size:13.5px">Tip: most records aren't attached to any tree. Search by place or keyword as well as by name.</p>`;
   } else {
     right = `

@@ -9,10 +9,10 @@
   "masked": true
  },
  {
-  "file": "ashgrove_plate.jpg",
+  "file": "ashgrove_plate.webp",
   "width": 1200,
   "height": 800,
-  "bytes": 154331,
+  "bytes": 134000,
   "master": "ashgrove_plate.png",
   "prompt": "ONE separate finished game asset for Bloodlinez: ashgrove_plate.jpg. A close-up photograph of a tarnished brass coffin name plate engraved in copperplate script with the single word ASHGROVE, with a date line below it that is worn and illegible. Raking light, dark oak behind it, shallow depth of field. Landscape 3:2."
  },
@@ -105,10 +105,10 @@
   "prompt": "A genuine 1860s carte de visite, a brown albumen print on a thin card with rounded corners, of a man of about 36 standing with one hand on a chair back against a painted studio backdrop of a column and curtain. Dark wool suit, waistcoat with a watch chain, whiskers, a steady look. Three-quarter length, face centred. Brown tone, fine crackle, studio mark too small to read. No text. Square."
  },
  {
-  "file": "bl_hero_home.jpg",
+  "file": "bl_hero_home.webp",
   "width": 1200,
   "height": 800,
-  "bytes": 151774,
+  "bytes": 73814,
   "master": "bl_hero_home.png",
   "prompt": "ONE separate game asset for Bloodlinez named bl_hero_home.jpg. A wide photograph of an archive room with wooden card-index drawers and old photo albums on shelves, warm low light, shallow depth of field, calm and slightly dusty. No people, no readable text. Landscape 3:2. No collage or captions. Faithful material and restrained photographic lighting. No readable text."
  },
@@ -131,66 +131,66 @@
   "masked": true
  },
  {
-  "file": "cellar_coffins.jpg",
+  "file": "cellar_coffins.webp",
   "width": 1200,
   "height": 800,
-  "bytes": 154256,
+  "bytes": 89936,
   "master": "cellar_coffins.png",
   "prompt": "ONE separate finished game asset for Bloodlinez: cellar_coffins.jpg. A dim handheld phone photograph taken by torchlight in a brick cellar: four wooden coffins on the floor, three of them with small brass name plates, the fourth older and darker. Underexposed, slightly blurred, harsh torch glare on the wood, wet brick walls. The plates must be too small to read. No people. Landscape 3:2."
  },
  {
-  "file": "collection_birth.jpg",
+  "file": "collection_birth.webp",
   "width": 512,
   "height": 512,
-  "bytes": 62392,
+  "bytes": 31394,
   "master": "collection_birth.png",
   "prompt": "ONE separate finished game asset for Bloodlinez: collection_birth.jpg. One square close-up photograph of a box of birth certificates tied with cotton string on a dark wooden archive desk, soft side window light, shallow depth of field, warm natural tones, subtle dust, realistic fibres and bindings. Simple strong composition readable as a small collection thumbnail. No readable text, no modern props, no other subjects, no collage."
  },
  {
-  "file": "collection_census.jpg",
+  "file": "collection_census.webp",
   "width": 512,
   "height": 512,
-  "bytes": 68913,
+  "bytes": 39868,
   "master": "collection_census.png",
   "prompt": "ONE separate finished game asset for Bloodlinez: collection_census.jpg. One square close-up photograph of a stack of thick nineteenth-century census books on a dark wooden archive desk, soft side window light, shallow depth of field, warm natural tones, subtle dust, realistic fibres and bindings. Simple strong composition readable as a small collection thumbnail. No readable text, no modern props, no other subjects, no collage."
  },
  {
-  "file": "collection_death.jpg",
+  "file": "collection_death.webp",
   "width": 512,
   "height": 512,
-  "bytes": 58578,
+  "bytes": 29236,
   "master": "collection_death.png",
   "prompt": "ONE separate finished game asset for Bloodlinez: collection_death.jpg. One square close-up photograph of a black-bordered Victorian death notice card with blank centre on a dark wooden archive desk, soft side window light, shallow depth of field, warm natural tones, subtle dust, realistic fibres and bindings. Simple strong composition readable as a small collection thumbnail. No readable text, no modern props, no other subjects, no collage."
  },
  {
-  "file": "collection_newspapers.jpg",
+  "file": "collection_newspapers.webp",
   "width": 512,
   "height": 512,
-  "bytes": 60935,
+  "bytes": 32060,
   "master": "collection_newspapers.png",
   "prompt": "ONE separate finished game asset for Bloodlinez: collection_newspapers.jpg. One square close-up photograph of a folded old newspaper on a dark wooden archive desk, soft side window light, shallow depth of field, warm natural tones, subtle dust, realistic fibres and bindings. Simple strong composition readable as a small collection thumbnail. No readable text, no modern props, no other subjects, no collage."
  },
  {
-  "file": "collection_photos.jpg",
+  "file": "collection_photos.webp",
   "width": 512,
   "height": 512,
-  "bytes": 63472,
+  "bytes": 32628,
   "master": "collection_photos.png",
   "prompt": "ONE separate finished game asset for Bloodlinez: collection_photos.jpg. One square close-up photograph of a pile of assorted old sepia portrait photographs on a dark wooden archive desk, soft side window light, shallow depth of field, warm natural tones, subtle dust, realistic fibres and bindings. Simple strong composition readable as a small collection thumbnail. No readable text, no modern props, no other subjects, no collage."
  },
  {
-  "file": "collection_rolls.jpg",
+  "file": "collection_rolls.webp",
   "width": 512,
   "height": 512,
-  "bytes": 54848,
+  "bytes": 26020,
   "master": "collection_rolls.png",
   "prompt": "ONE separate finished game asset for Bloodlinez: collection_rolls.jpg. One square close-up photograph of an electoral ledger open to a mostly blank ruled page on a dark wooden archive desk, soft side window light, shallow depth of field, warm natural tones, subtle dust, realistic fibres and bindings. Simple strong composition readable as a small collection thumbnail. No readable text, no modern props, no other subjects, no collage."
  },
  {
-  "file": "dna_banner.jpg",
+  "file": "dna_banner.webp",
   "width": 1200,
   "height": 800,
-  "bytes": 93613,
+  "bytes": 41300,
   "master": "dna_banner.png",
   "prompt": "ONE separate game asset for Bloodlinez named dna_banner.jpg. A wide abstract image of a DNA double helix in pale red lines on a very dark red background, soft glow, no text. Landscape 3:2. No collage or captions. Faithful material and restrained photographic lighting. No readable text."
  },
@@ -265,154 +265,154 @@
   "masked": true
  },
  {
-  "file": "paper_census.jpg",
+  "file": "paper_census.webp",
   "width": 1000,
   "height": 667,
-  "bytes": 86502,
+  "bytes": 34932,
   "master": "paper_census.png",
   "prompt": "ONE standalone background texture asset for Bloodlinez, paper_census.jpg. A flat top-down scan of an empty printed census householder's schedule from about 1900: pre-printed grid and column headings as unreadable marks, ink entries as illegible strokes, folded, a little brown ink smudging. Landscape 3:2. This is a functional game document background for overlaying real HTML text. Keep central 70% very pale and mostly empty so dark text can be read over it. Only faint nonsemantic unreadable marks in margins or isolated lines; NO legible words, names, letters, dates or numbers. Delicate paper fibres, historically accurate material, restrained believable wear. Scan flat and orthogonal, page fills entire canvas, no desk, no hands, no perspective, no props outside sheet, no collage."
  },
  {
-  "file": "paper_census_1841.jpg",
+  "file": "paper_census_1841.webp",
   "width": 1000,
   "height": 1500,
-  "bytes": 86255,
+  "bytes": 74446,
   "master": "paper_census_1841.png",
   "prompt": "ONE standalone background texture asset for Bloodlinez, paper_census_1841.jpg. A flat top-down scan of a thin 1841 printed census householder's schedule: small printed type as unreadable marks, a few faint ink entries, enumerator's pencil ticks in the margin, folded creases, thin yellowed paper. No readable words. Portrait 2:3. This is a functional game document background for overlaying real HTML text. Keep central 70% very pale and mostly empty so dark text can be read over it. Only faint nonsemantic unreadable marks in margins or isolated lines; NO legible words, names, letters, dates or numbers. Delicate paper fibres, historically accurate material, restrained believable wear. Scan flat and orthogonal, page fills entire canvas, no desk, no hands, no perspective, no props outside sheet, no collage."
  },
  {
-  "file": "paper_civil_1850.jpg",
+  "file": "paper_civil_1850.webp",
   "width": 1000,
   "height": 1500,
-  "bytes": 86656,
+  "bytes": 78232,
   "master": "paper_civil_1850.png",
   "prompt": "ONE standalone background texture asset for Bloodlinez, paper_civil_1850.jpg. A flat top-down scan of a blank Victorian civil registration form: a copperplate-style printed heading as unreadable marks, wide margins, ruled boxes, a few steel-nib entries as illegible strokes, a red folio stamp, yellowed paper. No readable words. Portrait 2:3. This is a functional game document background for overlaying real HTML text. Keep central 70% very pale and mostly empty so dark text can be read over it. Only faint nonsemantic unreadable marks in margins or isolated lines; NO legible words, names, letters, dates or numbers. Delicate paper fibres, historically accurate material, restrained believable wear. Scan flat and orthogonal, page fills entire canvas, no desk, no hands, no perspective, no props outside sheet, no collage."
  },
  {
-  "file": "paper_deed_1934.jpg",
+  "file": "paper_deed_1934.webp",
   "width": 1000,
   "height": 1500,
-  "bytes": 85901,
+  "bytes": 47210,
   "master": "paper_deed_1934.png",
   "prompt": "ONE separate game texture for Bloodlinez named paper_deed_1934.jpg. A flat top-down scan of a blank 1934 typewritten legal deed: heavy cream paper, faint typewriter lines as unreadable marks, a red paper seal and a pink silk ribbon at the bottom, light age. No readable words. Portrait 2:3. This is a document background underneath readable HTML evidence text. Keep the central majority pale with ample open space. Writing must be abstract tiny illegible marks with NO readable words, NO invented clue text, NO names or numbers. For newspaper layouts use pale grey blocks and extremely faint abstract ink columns to suggest type without readable characters. Subtle true-to-period material, no excessive distressing. Perfectly flat orthogonal scan, page fills canvas, no desk, hands or exterior props."
  },
  {
-  "file": "paper_diary.jpg",
+  "file": "paper_diary.webp",
   "width": 1000,
   "height": 1500,
-  "bytes": 86190,
+  "bytes": 84850,
   "master": "paper_diary.png",
   "prompt": "ONE standalone background texture asset for Bloodlinez, paper_diary.jpg. A flat scan of a cheap lined notebook page from 1888, binding shadow down the left side, brown foxing spots, blank lines with only faint illegible brown handwriting strokes, no readable words. Portrait 2:3. This is a functional game document background for overlaying real HTML text. Keep central 70% very pale and mostly empty so dark text can be read over it. Only faint nonsemantic unreadable marks in margins or isolated lines; NO legible words, names, letters, dates or numbers. Delicate paper fibres, historically accurate material, restrained believable wear. Scan flat and orthogonal, page fills entire canvas, no desk, no hands, no perspective, no props outside sheet, no collage."
  },
  {
-  "file": "paper_harbour.jpg",
+  "file": "paper_harbour.webp",
   "width": 1000,
   "height": 1500,
-  "bytes": 86283,
+  "bytes": 57270,
   "master": "paper_harbour.png",
   "prompt": "ONE separate game texture for Bloodlinez named paper_harbour.jpg. A flat scan of a maritime authority incident report form with ruled boxes, one red date stamp that is blurred and unreadable, light coffee stain, no readable text. Portrait 2:3. This is a document background underneath readable HTML evidence text. Keep the central majority pale with ample open space. Writing must be abstract tiny illegible marks with NO readable words, NO invented clue text, NO names or numbers. For newspaper layouts use pale grey blocks and extremely faint abstract ink columns to suggest type without readable characters. Subtle true-to-period material, no excessive distressing. Perfectly flat orthogonal scan, page fills canvas, no desk, hands or exterior props."
  },
  {
-  "file": "paper_hospital.jpg",
+  "file": "paper_hospital.webp",
   "width": 1000,
   "height": 1500,
-  "bytes": 86407,
+  "bytes": 49172,
   "master": "paper_hospital.png",
   "prompt": "ONE standalone background texture asset for Bloodlinez, paper_hospital.jpg. A flat top-down scan of a Victorian hospital casualty register page: columns ruled in red and black, blank entries with only faint blurred steel-nib handwriting strokes, aged paper, a binding gutter on the left. No readable text. Portrait 2:3. This is a functional game document background for overlaying real HTML text. Keep central 70% very pale and mostly empty so dark text can be read over it. Only faint nonsemantic unreadable marks in margins or isolated lines; NO legible words, names, letters, dates or numbers. Delicate paper fibres, historically accurate material, restrained believable wear. Scan flat and orthogonal, page fills entire canvas, no desk, no hands, no perspective, no props outside sheet, no collage."
  },
  {
-  "file": "paper_invoice.jpg",
+  "file": "paper_invoice.webp",
   "width": 1000,
   "height": 1500,
-  "bytes": 84057,
+  "bytes": 60376,
   "master": "paper_invoice.png",
   "prompt": "ONE separate game texture for Bloodlinez named paper_invoice.jpg. A flat scan of a carbon-copy invoice form in faded blue, with ruled boxes and a blank header band, no readable text. Portrait 2:3. This is a document background underneath readable HTML evidence text. Keep the central majority pale with ample open space. Writing must be abstract tiny illegible marks with NO readable words, NO invented clue text, NO names or numbers. For newspaper layouts use pale grey blocks and extremely faint abstract ink columns to suggest type without readable characters. Subtle true-to-period material, no excessive distressing. Perfectly flat orthogonal scan, page fills canvas, no desk, hands or exterior props."
  },
  {
-  "file": "paper_letter.jpg",
+  "file": "paper_letter.webp",
   "width": 1000,
   "height": 1500,
-  "bytes": 86330,
+  "bytes": 68236,
   "master": "paper_letter.png",
   "prompt": "ONE separate game asset for Bloodlinez named paper_letter.jpg. Flat top-down scan of blank heavy cream letter paper, fine cotton fibres and subtle blind-embossed JV monogram in upper left corner. Otherwise entirely blank, no ink, elegant restrained expensive paper. Portrait 2:3. No collage or captions. Faithful material and restrained photographic lighting. No readable text."
  },
  {
-  "file": "paper_letter_daphne.jpg",
+  "file": "paper_letter_daphne.webp",
   "width": 1000,
   "height": 1500,
-  "bytes": 80768,
+  "bytes": 8310,
   "master": "paper_letter_daphne.png",
   "prompt": "ONE separate game asset for Bloodlinez named paper_letter_daphne.jpg. Flat top-down scan of pristine white law-firm letterhead paper with a thin plain navy blue horizontal rule near the top, blank header and completely blank body. No words, no letters, no logo. Fine smooth paper. Portrait 2:3. No collage or captions. Faithful material and restrained photographic lighting. No readable text."
  },
  {
-  "file": "paper_letter_margaret.jpg",
+  "file": "paper_letter_margaret.webp",
   "width": 1000,
   "height": 1500,
-  "bytes": 86790,
+  "bytes": 44236,
   "master": "paper_letter_margaret.png",
   "prompt": "ONE separate game asset for Bloodlinez named paper_letter_margaret.jpg. Flat top-down scan of blank domestic lined notepaper with a torn top edge, pale blue horizontal rules, warm off-white paper, faint natural creases. No words or handwriting, plenty of empty writing space. Portrait 2:3. No collage or captions. Faithful material and restrained photographic lighting. No readable text."
  },
  {
-  "file": "paper_news_1930s.jpg",
+  "file": "paper_news_1930s.webp",
   "width": 1000,
   "height": 1500,
-  "bytes": 86488,
+  "bytes": 96448,
   "master": "paper_news_1930s.png",
   "prompt": "ONE separate game texture for Bloodlinez named paper_news_1930s.jpg. A flat top-down scan of a 1930s newspaper page with no readable words: six columns of grey texture, blocks for bold headlines, a rectangular blank area for a halftone photograph, yellowed newsprint. Portrait 2:3. This is a document background underneath readable HTML evidence text. Keep the central majority pale with ample open space. Writing must be abstract tiny illegible marks with NO readable words, NO invented clue text, NO names or numbers. For newspaper layouts use pale grey blocks and extremely faint abstract ink columns to suggest type without readable characters. Subtle true-to-period material, no excessive distressing. Perfectly flat orthogonal scan, page fills canvas, no desk, hands or exterior props."
  },
  {
-  "file": "paper_news_postwar.jpg",
+  "file": "paper_news_postwar.webp",
   "width": 1000,
   "height": 1500,
-  "bytes": 183661,
+  "bytes": 103578,
   "master": "paper_news_postwar.png",
   "prompt": "ONE separate game texture for Bloodlinez named paper_news_postwar.jpg. A flat top-down scan of a mid-century newspaper page with no readable words: columns of grey texture, a coarse halftone dot pattern in a blank photo area, grey newsprint with uneven ink. Portrait 2:3. This is a document background underneath readable HTML evidence text. Keep the central majority pale with ample open space. Writing must be abstract tiny illegible marks with NO readable words, NO invented clue text, NO names or numbers. For newspaper layouts use pale grey blocks and extremely faint abstract ink columns to suggest type without readable characters. Subtle true-to-period material, no excessive distressing. Perfectly flat orthogonal scan, page fills canvas, no desk, hands or exterior props."
  },
  {
-  "file": "paper_news_victorian.jpg",
+  "file": "paper_news_victorian.webp",
   "width": 1000,
   "height": 1500,
-  "bytes": 84585,
+  "bytes": 147750,
   "master": "paper_news_victorian.png",
   "prompt": "ONE separate game texture for Bloodlinez named paper_news_victorian.jpg. A flat top-down scan of a Victorian newspaper page with no readable words: seven narrow columns of dense letterpress as grey texture, a few wood-engraved advert boxes, no photographs, grey-brown brittle paper with a torn edge. Portrait 2:3. This is a document background underneath readable HTML evidence text. Keep the central majority pale with ample open space. Writing must be abstract tiny illegible marks with NO readable words, NO invented clue text, NO names or numbers. For newspaper layouts use pale grey blocks and extremely faint abstract ink columns to suggest type without readable characters. Subtle true-to-period material, no excessive distressing. Perfectly flat orthogonal scan, page fills canvas, no desk, hands or exterior props."
  },
  {
-  "file": "paper_parchment.jpg",
+  "file": "paper_parchment.webp",
   "width": 1000,
   "height": 1500,
-  "bytes": 86665,
+  "bytes": 111240,
   "master": "paper_parchment.png",
   "prompt": "ONE standalone background texture asset for Bloodlinez, paper_parchment.jpg. A flat top-down scan of an aged parchment sheet from the 1400s to 1700s, creamy brown and slightly translucent, a sewn edge on the left, a few lines of illegible secretary-hand writing in brown iron-gall ink with abbreviation marks, a small red wax seal at the lower edge. No readable words. Portrait 2:3. This is a functional game document background for overlaying real HTML text. Keep central 70% very pale and mostly empty so dark text can be read over it. Only faint nonsemantic unreadable marks in margins or isolated lines; NO legible words, names, letters, dates or numbers. Delicate paper fibres, historically accurate material, restrained believable wear. Scan flat and orthogonal, page fills entire canvas, no desk, no hands, no perspective, no props outside sheet, no collage."
  },
  {
-  "file": "paper_parish_1751.jpg",
+  "file": "paper_parish_1751.webp",
   "width": 1000,
   "height": 1500,
-  "bytes": 85807,
+  "bytes": 86774,
   "master": "paper_parish_1751.png",
   "prompt": "ONE standalone background texture asset for Bloodlinez, paper_parish_1751.jpg. A flat top-down scan of a blank 1750s parish baptism register page: hand-ruled laid paper with visible chain lines and a faint watermark, brown iron-gall ink gone pale with halos around the strokes, faint illegible round-hand writing in a few lines and no printed columns, foxing and one stitched edge. No readable words. Portrait 2:3. This is a functional game document background for overlaying real HTML text. Keep central 70% very pale and mostly empty so dark text can be read over it. Only faint nonsemantic unreadable marks in margins or isolated lines; NO legible words, names, letters, dates or numbers. Delicate paper fibres, historically accurate material, restrained believable wear. Scan flat and orthogonal, page fills entire canvas, no desk, no hands, no perspective, no props outside sheet, no collage."
  },
  {
-  "file": "paper_parish_form.jpg",
+  "file": "paper_parish_form.webp",
   "width": 1000,
   "height": 1500,
-  "bytes": 86465,
+  "bytes": 105574,
   "master": "paper_parish_form.png",
   "prompt": "ONE standalone background texture asset for Bloodlinez, paper_parish_form.jpg. A flat top-down scan of a blank early 19th-century printed parish marriage register page: printed ruled columns with illegible headings, a few handwritten entries as unreadable brown ink strokes, one entry ending in a clear X mark, aged mid-brown paper. No readable words. Portrait 2:3. This is a functional game document background for overlaying real HTML text. Keep central 70% very pale and mostly empty so dark text can be read over it. Only faint nonsemantic unreadable marks in margins or isolated lines; NO legible words, names, letters, dates or numbers. Delicate paper fibres, historically accurate material, restrained believable wear. Scan flat and orthogonal, page fills entire canvas, no desk, no hands, no perspective, no props outside sheet, no collage."
  },
  {
-  "file": "paper_register.jpg",
+  "file": "paper_register.webp",
   "width": 1000,
   "height": 1500,
-  "bytes": 88296,
+  "bytes": 52350,
   "master": "paper_register.png",
   "prompt": "ONE separate game texture for Bloodlinez named paper_register.jpg. A flat top-down scan of a blank civil registration form from the 1930s: pre-printed boxes and rules in faded black ink, aged cream paper, one faint folio stamp, no readable words. Portrait 2:3. This is a document background underneath readable HTML evidence text. Keep the central majority pale with ample open space. Writing must be abstract tiny illegible marks with NO readable words, NO invented clue text, NO names or numbers. For newspaper layouts use pale grey blocks and extremely faint abstract ink columns to suggest type without readable characters. Subtle true-to-period material, no excessive distressing. Perfectly flat orthogonal scan, page fills canvas, no desk, hands or exterior props."
  },
  {
-  "file": "paper_will_modern.jpg",
+  "file": "paper_will_modern.webp",
   "width": 1000,
   "height": 1500,
-  "bytes": 87161,
+  "bytes": 50638,
   "master": "paper_will_modern.png",
   "prompt": "ONE separate game texture for Bloodlinez named paper_will_modern.jpg. A flat top-down scan of a plain white laser-printed legal document with no readable words: lines of grey texture, a signature block at the bottom with two blank witness lines. Portrait 2:3. This is a document background underneath readable HTML evidence text. Keep the central majority pale with ample open space. Writing must be abstract tiny illegible marks with NO readable words, NO invented clue text, NO names or numbers. For newspaper layouts use pale grey blocks and extremely faint abstract ink columns to suggest type without readable characters. Subtle true-to-period material, no excessive distressing. Perfectly flat orthogonal scan, page fills canvas, no desk, hands or exterior props."
  },

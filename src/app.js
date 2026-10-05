@@ -395,7 +395,7 @@ function blSearch(){
   let right;
   if(!S.searched){
     const ck = {}; Object.values(REC).forEach(r=>{ if(!r.hidden&&PAGE_KINDS.has(r.kind)) ck[r.kind]=(ck[r.kind]||0)+1; });
-    right = `<div class="panel"><div class="ph"><h2>Featured collections for Ashby</h2></div><div class="pb"><div class="rtable-wrap"><table class="rtable"><tr><th>Collection</th><th>Indexed for your tree</th></tr>${Object.keys(COLL).map(k=>`<tr><td><span class="colrow">${COLTHUMB[k]?`<img class="colimg" src="assets/collection_${COLTHUMB[k]}.jpg" alt="">`:''}<button class="nm lnk" data-a="facetall" data-v="${k}">${COLL[k]}</button></span></td><td>${ck[k]||0} records</td></tr>`).join('')}</table></div></div></div>
+    right = `<div class="panel"><div class="ph"><h2>Featured collections for Ashby</h2></div><div class="pb"><div class="rtable-wrap"><table class="rtable"><tr><th>Collection</th><th>Indexed for your tree</th></tr>${Object.keys(COLL).map(k=>`<tr><td><span class="colrow">${COLTHUMB[k]?`<img class="colimg" src="assets/collection_${COLTHUMB[k]}.webp" alt="">`:''}<button class="nm lnk" data-a="facetall" data-v="${k}">${COLL[k]}</button></span></td><td>${ck[k]||0} records</td></tr>`).join('')}</table></div></div></div>
     <p class="muted" style="font-size:13.5px">Tip: most records aren't attached to any tree. Search by place or keyword as well as by name.</p>`;
   } else {
     right = `
