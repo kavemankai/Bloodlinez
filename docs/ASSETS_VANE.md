@@ -151,18 +151,18 @@ These make the medium readable in the interface. Each has an empty centre where 
 
 ## 5. Photo lab coordinates
 
-Fill this in once the photos exist. The click test in `app.js` takes one point per mark and counts a hit within 8 units. For a 600×750 photo the hit radius should become about 40 px.
+Measured from the delivered files in `assets/`, read off a 50 px grid, so each is good to about ±10 px. The lab's click test takes one point per mark. For a 600×750 photo use a hit radius of about 40 px in place of the placeholder's 8 units.
 
 | Photo | Scar (x, y) | Mole (x, y) |
 |---|---|---|
-| `photo1875.jpg` | none | |
-| `photo1889.jpg` | | |
-| `photo1921.jpg` (Tully) | | none |
-| `photo1912.jpg` (right face) | | |
-| `photo1962.jpg` | | |
-| `licence1972.jpg` | | |
-| `licence2019.jpg` | | |
-| `photo1950.jpg` (Thomas) | none | |
+| `photo1875.jpg` | none | (240, 377) |
+| `photo1889.jpg` | (391, 226) | (243, 375) |
+| `photo1912.jpg` (right face, in the 1200×750 frame) | (893, 193) | (784, 323) |
+| `photo1962.jpg` | (407, 266) | (227, 429) |
+| `licence1972.jpg` | (408, 281) | (251, 428) |
+| `licence2019.jpg` | (383, 277) | (219, 452) |
+| `photo1921.jpg` (Tully) | (363, 216) | none |
+| `photo1950.jpg` (Thomas) | none | (233, 374) |
 
 Checks before accepting a photo:
 
