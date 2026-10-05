@@ -33,6 +33,16 @@ The 1875 photo of Ambrose at 18 has the mole and no scar. It shows he aged norma
 
 Ages are consistent across all documents. Ambrose was born 9 February 1857, so he was 31 at the 1888 hospital admission, 34 at the 1891 census and 76 at his 1934 death. Keep to that when adding records.
 
+## Adding people to the tree
+
+The tree lays itself out from the data, so there are no coordinates or hand-drawn lines to maintain. To add a person:
+
+1. Add an entry to `PEOPLE` in `src/app.js` (name, life, initials, facts, records). A `tag` of `'Disputed'` draws the dashed card.
+2. Add their relations to `REL`: `Father`, `Mother`, `Child`, `Spouse`, or `Claimed father` for a dashed claimed link. Listing one side is enough.
+3. Add `SEX`, and an avatar in `AVATARS` if there is an image.
+
+The layout works out generations, puts couples side by side, centres parents over children, places a spouse's parents above the spouse, and draws every connector. `GHOSTS` holds placeholder people who are not in `PEOPLE`, such as the unnamed mother of Cornelius. `tests/layout.js` checks for overlaps and bad placements.
+
 ## The oldest one (spoilers, not solved in Case 1)
 
 R. Ashgrove is older than the oldest record in the tree. He is the "tall foreign gentleman" who attacked Ambrose in 1888, and the senior partner who has run the Vane family's legal affairs ever since. Case 1 never says so. The player can find the trail, but no finding depends on it.

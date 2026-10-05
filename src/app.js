@@ -218,11 +218,11 @@ function chrome(){
   document.title = titleOf(S.tab,cur()).replace(/ [|–] .*/,'') + ' · Bloodlines game';
 }
 function render(){
-  const old = $('#cw'), keep = old ? old.scrollTop : null;
+  const old = $('#cw'), keep = old ? {t:old.scrollTop,l:old.scrollLeft} : null;
   chrome();
   const r = cur();
   $('#vp').innerHTML = S.tab==='bl' ? blPage(r) : S.tab==='mail' ? mailApp(r) : netApp(r);
-  const cw = $('#cw'); if(cw) cw.scrollTop = keep!==null ? keep : POS.ambrose[1]-170;
+  const cw = $('#cw'); if(cw){ if(keep!==null){ cw.scrollTop=keep.t; cw.scrollLeft=keep.l; } else { cw.scrollTop=POS.ambrose[1]-170; cw.scrollLeft=Math.max(0,POS.ambrose[0]+100-cw.clientWidth/2); } }
 }
 
 /* ================= BLOODLINES ================= */
@@ -291,29 +291,120 @@ function blHome(){
 function kitStage(){ return Math.min(4, 2 + Math.floor(S.pins.length/7)); }
 
 /* ---- tree ---- */
-const POS = {v1410:[250,24],v1445:[250,170],v1480:[250,316],v1515:[250,462],v1550:[250,608],v1585:[250,754],v1620:[250,900],v1655:[250,1046],v1688:[250,1192],v1720:[250,1338],
-  samuel:[250,1484],thomasv:[250,1630],josiah:[250,1776],hannah:[30,1776],william:[500,1776],ann:[720,1776],
-  ambrose:[250,1922],eliza:[500,1922],cornelius:[40,2068],harriet:[470,2068],arthur:[720,2068],desmond:[40,2214],daphne:[250,2214],thomas:[595,2214],julian:[40,2360],margaret:[595,2360]};
+/* ---- tree auto layout ----
+   Reads PEOPLE and REL (Father, Mother, Child, Spouse, Claimed father) and works out who goes where.
+   To add someone: give them a PEOPLE entry and a REL entry. No coordinates, no hand-drawn lines.
+   GHOSTS are placeholder people who are not in PEOPLE (an unnamed mother). */
+const GHOSTS = {unknown:{label:'Unknown',sub:'Mother of Cornelius',spouse:'ambrose',child:'cornelius'}};
+const TREE = {w:200,h:74,couple:50,sib:50,pitch:146,pad:24};
+function layoutTree(people=PEOPLE, rel=REL, ghosts=GHOSTS){
+  const {w:NW,h:NH,couple:CG,sib:SG,pitch:PITCH,pad:PAD} = TREE;
+  const ids = Object.keys(people), all = [...ids, ...Object.keys(ghosts)];
+  const parents={}, spouses={}, kids={};
+  all.forEach(i=>{parents[i]=[];spouses[i]=[];kids[i]=[];});
+  const addP=(c,p,kind)=>{ if(c===p||!parents[c]||!parents[p]) return; if(!parents[c].some(x=>x.id===p)) parents[c].push({id:p,kind}); };
+  const addS=(x,y)=>{ if(x===y||!spouses[x]||!spouses[y]) return; if(!spouses[x].includes(y)) spouses[x].push(y); if(!spouses[y].includes(x)) spouses[y].push(x); };
+  ids.forEach(i=>(rel[i]||[]).forEach(([r,o])=>{
+    if(r==='Father'||r==='Mother') addP(i,o,'solid');
+    else if(r==='Claimed father') addP(i,o,'claimed');
+    else if(r==='Child') addP(o,i,'solid');
+    else if(r==='Spouse') addS(i,o);
+  }));
+  Object.entries(ghosts).forEach(([g,d])=>{ if(d.spouse) addS(g,d.spouse); if(d.child) addP(d.child,g,'solid'); });
+  // children, in the order they are listed on the parent, then any others
+  ids.forEach(i=>(rel[i]||[]).forEach(([r,o])=>{ if(r==='Child'&&kids[o]!==undefined&&!kids[i].includes(o)) kids[i].push(o); }));
+  all.forEach(c=>parents[c].forEach(({id})=>{ if(!kids[id].includes(c)) kids[id].push(c); }));
+  // generations: below parents, level with spouses, and ancestors with no parents sit just above their children
+  const gen={}; all.forEach(i=>gen[i]=0);
+  for(let it=0; it<500; it++){ let ch=false;
+    all.forEach(c=>parents[c].forEach(({id})=>{ if(gen[c]<gen[id]+1){gen[c]=gen[id]+1;ch=true;} }));
+    all.forEach(x=>spouses[x].forEach(y=>{ if(gen[x]<gen[y]){gen[x]=gen[y];ch=true;} }));
+    all.forEach(r=>{ if(!parents[r].length&&kids[r].length){ const m=Math.min(...kids[r].map(k=>gen[k]))-1; if(gen[r]<m){gen[r]=m;ch=true;} } });
+    if(!ch) break; }
+  const minGen = Math.min(...all.map(i=>gen[i]));
+  const pos={}, rows=[], seen=new Set();
+  const yOf = g => PAD + (g-minGen)*PITCH;
+  const place=(id,x)=>{ pos[id]=[x,yOf(gen[id])]; };
+  // the oldest person with no parents who is not just someone's husband or wife starts the tree
+  const born = i => { const m=(people[i]&&people[i].life||'').match(/\d{4}/); return m?+m[0]:9999; };
+  const isInLaw = i => spouses[i].some(s=>parents[s].length>0);
+  const roots = all.filter(i=>!ghosts[i]&&!parents[i].length&&!isInLaw(i)).sort((x,y)=>born(x)-born(y));
+  const build=p=>{
+    seen.add(p);
+    const left=spouses[p].filter(s=>ghosts[s]), right=spouses[p].filter(s=>!ghosts[s]&&!seen.has(s));
+    const row=[...left,p,...right]; row.forEach(r=>seen.add(r));
+    const partners=[...left,...right];
+    const cs=kids[p].filter(c=>!seen.has(c));
+    const keyOf=c=>{ const o=parents[c].find(x=>x.kind==='solid'&&x.id!==p&&partners.includes(x.id)); return o?o.id:''; };
+    cs.forEach(c=>seen.add(c));
+    const order=[...partners,''];
+    const kidsSorted=[]; order.forEach(k=>cs.filter(c=>keyOf(c)===k).forEach(c=>kidsSorted.push(c)));
+    const children=kidsSorted.map(build);
+    const unitW=row.length*NW+(row.length-1)*CG;
+    const childW=children.length?children.reduce((s,c)=>s+c.w,0)+(children.length-1)*SG:0;
+    return {id:p,row,children,unitW,childW,w:Math.max(unitW,childW)};
+  };
+  const assign=(n,xLeft)=>{
+    const start=xLeft+(n.w-n.unitW)/2; n.row.forEach((r,i)=>place(r,start+i*(NW+CG))); rows.push(n.row);
+    let cx=xLeft+(n.w-n.childW)/2; n.children.forEach(c=>{ assign(c,cx); cx+=c.w+SG; });
+  };
+  let cursor=0;
+  roots.forEach(r=>{ if(seen.has(r)||kids[r].some(k=>seen.has(k))) return; const n=build(r); assign(n,cursor); cursor+=n.w+SG*2; });
+  // in-laws' parents go above their child, shifted right if the row is already taken
+  const rowFree=(g,x0,x1)=>!Object.keys(pos).some(k=>gen[k]===g&&pos[k][0]<x1+SG&&pos[k][0]+NW>x0-SG);
+  for(let guard=0; guard<200; guard++){
+    const q=Object.keys(pos).find(k=>!ghosts[k]&&parents[k].some(p=>p.kind==='solid'&&!pos[p.id]));
+    if(!q) break;
+    const ps=parents[q].filter(p=>p.kind==='solid'&&!pos[p.id]).map(p=>p.id);
+    const unit=[...ps]; ps.forEach(p=>spouses[p].forEach(s=>{ if(!unit.includes(s)&&!pos[s]&&!ghosts[s]) unit.push(s); }));
+    const g=gen[unit[0]], rw=unit.length*NW+(unit.length-1)*CG;
+    let x0=pos[q][0]+NW/2-rw/2;
+    while(!rowFree(g,x0,x0+rw)){ const hit=Object.keys(pos).filter(k=>gen[k]===g&&pos[k][0]<x0+rw+SG&&pos[k][0]+NW>x0-SG); x0=Math.max(...hit.map(k=>pos[k][0]+NW))+SG; }
+    unit.forEach((u,i)=>place(u,x0+i*(NW+CG))); rows.push(unit);
+  }
+  // anyone left over goes in a row at the right
+  all.filter(i=>!pos[i]).forEach(i=>{ const mx=Math.max(0,...Object.values(pos).map(p=>p[0]+NW)); place(i,mx+SG); rows.push([i]); });
+  const minX=Math.min(...Object.values(pos).map(p=>p[0])), dx=PAD-minX;
+  Object.keys(pos).forEach(k=>pos[k][0]+=dx);
+  const W=Math.max(...Object.values(pos).map(p=>p[0]+NW))+PAD, H=Math.max(...Object.values(pos).map(p=>p[1]+NH))+PAD+30;
+  // connectors
+  const edges=[], cx=id=>pos[id][0]+NW/2, midY=id=>pos[id][1]+NH/2, botY=id=>pos[id][1]+NH;
+  rows.forEach(row=>{ for(let i=0;i<row.length-1;i++){ const a=pos[row[i]],b=pos[row[i+1]]; if(a[1]===b[1]) edges.push({d:`M${a[0]+NW} ${a[1]+NH/2} H${b[0]}`,cls:''}); } });
+  const adjacent=(a,b)=>rows.some(r=>{ const i=r.indexOf(a),j=r.indexOf(b); return i>=0&&j>=0&&Math.abs(i-j)===1; });
+  const labels=[];
+  all.forEach(c=>{ if(!pos[c]) return;
+    const top=pos[c][1], mid=top-(PITCH-NH)/2;
+    const solid=parents[c].filter(p=>p.kind==='solid'&&pos[p.id]).map(p=>p.id);
+    if(solid.length){
+      let sx,sy;
+      const pair=solid.length>1&&adjacent(solid[0],solid[1]);
+      if(pair){ const l=pos[solid[0]][0]<pos[solid[1]][0]?solid[0]:solid[1], r=l===solid[0]?solid[1]:solid[0]; sx=(pos[l][0]+NW+pos[r][0])/2; sy=midY(l); }
+      else { sx=cx(solid[0]); sy=botY(solid[0]); }
+      edges.push({d:`M${sx} ${sy} V${mid} H${cx(c)} V${top}`,cls:''});
+    }
+    parents[c].filter(p=>p.kind==='claimed'&&pos[p.id]).forEach(p=>{
+      edges.push({d:`M${cx(p.id)} ${botY(p.id)} V${mid} H${cx(c)} V${top}`,cls:'dash'});
+      labels.push({x:(cx(p.id)+cx(c))/2+6,y:mid-9,t:'claimed, no source'});
+    });
+  });
+  return {pos,w:W,h:H,edges,labels,gen};
+}
+const LAY = layoutTree();
+const POS = Object.fromEntries(Object.entries(LAY.pos).filter(([k])=>PEOPLE[k]));
 function blTree(){
   const nodes = Object.entries(POS).map(([id,[x,y]])=>{
     const p = PEOPLE[id];
-    return `<button class="tnode ${SEX[id]} ${id==='daphne'?'dis':''} ${S.sel===id?'sel':''}" style="left:${x}px;top:${y}px" data-a="sel" data-v="${id}">
+    return `<button class="tnode ${SEX[id]} ${p.tag==='Disputed'?'dis':''} ${S.sel===id?'sel':''}" style="left:${x}px;top:${y}px" data-a="sel" data-v="${id}">
       <span class="ava">${avatar(id)}</span><span style="min-width:0"><b>${p.name}</b><small>${p.life}</small></span>${HINT_OF[id]?LEAF:''}${p.tag?`<span class="flag">${p.tag}</span>`:''}</button>`;}).join('');
-  const lines = `<svg class="lines" viewBox="0 0 940 2518" preserveAspectRatio="xMinYMin meet" aria-hidden="true">
-    ${[0,1,2,3,4,5,6,7,8,9].map(k=>`<path d="M350 ${98+146*k} V${170+146*k}"/>`).join('')}
-    <g transform="translate(0,1460)"><path d="M350 98 V170"/><path d="M350 244 V316"/><path d="M230 353 H250"/><path d="M350 390 V462"/><path d="M700 353 H720"/><path d="M600 390 V462"/></g>
-    <g transform="translate(0,1898)"><path d="M220 61 H250"/><path d="M450 61 H500"/><path d="M670 207 H720"/>
-    <path d="M235 61 V135 H140 V170"/><path d="M475 61 V135 H570 V170"/><path d="M695 207 V316"/>
-    <path d="M140 244 V316"/><path d="M140 390 V462"/><path d="M695 390 V462"/>
-    <path class="dash" d="M240 207 H350 V316"/></g></svg>`;
-  const unknown = `<div class="tnode u" style="left:20px;top:1922px;width:200px;opacity:.75;cursor:default"><span class="ava">?</span><span><b>Unknown</b><small>Mother of Cornelius</small></span></div>`;
+  const ghosts = Object.entries(GHOSTS).map(([id,g])=>`<div class="tnode u" style="left:${LAY.pos[id][0]}px;top:${LAY.pos[id][1]}px;width:200px;opacity:.75;cursor:default"><span class="ava">?</span><span><b>${g.label}</b><small>${g.sub}</small></span></div>`).join('');
+  const lines = `<svg class="lines" viewBox="0 0 ${LAY.w} ${LAY.h}" aria-hidden="true">${LAY.edges.map(e=>`<path ${e.cls?`class="${e.cls}" `:''}d="${e.d}"/>`).join('')}</svg>`;
+  const labels = LAY.labels.map(l=>`<span class="claimlbl" style="left:${l.x}px;top:${l.y}px">${l.t}</span>`).join('');
   return `<div class="treebar"><div class="wrap">
     <span class="treename">Vane estate ${ic('chev')}</span>
     <div class="seg"><button class="on">Tree</button><button data-a="toastonly" data-msg="Family view isn't available for Professional trees">Family</button><button data-a="toastonly" data-msg="List view is coming soon">List</button></div>
     <div class="tree-tools"><select class="tsearch" data-find="1" aria-label="Find a person"><option value="">Find a person…</option>${Object.keys(POS).map(id=>`<option value="${id}">${PEOPLE[id].name}</option>`).join('')}</select>
     <button class="bbtn sec sm" data-a="toastonly" data-msg="Only the tree owner (R. Ashgrove) can invite people">${ic('share')}Share</button></div></div></div>
-  <div class="canvas-wrap" id="cw"><div class="canvas" style="transform:scale(${S.tz});transform-origin:0 0">${lines}${unknown}${nodes}
-    <span class="claimlbl" style="left:262px;top:2096px">claimed, no source</span></div>
+  <div class="canvas-wrap" id="cw"><div class="canvas" style="width:${LAY.w}px;height:${LAY.h}px;transform:scale(${S.tz});transform-origin:0 0">${lines}${ghosts}${nodes}${labels}</div>
     ${S.sel?drawer(S.sel):''}
     <div class="zoomctl"><button data-a="tz" data-v="1.1" aria-label="Zoom in">${ic('plus')}</button><button data-a="tz" data-v="0.9" aria-label="Zoom out">${ic('minus')}</button><button data-a="tz" data-v="0" aria-label="Reset zoom">${ic('fit')}</button></div>
   </div>`;
