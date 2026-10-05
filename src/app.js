@@ -160,7 +160,7 @@ let toastT;
 function toast(msg){ const t=$('#toast'); t.textContent=msg; t.hidden=false; clearTimeout(toastT); toastT=setTimeout(()=>t.hidden=true,2600); }
 
 /* playtest log: opt-in, every player action with a timestamp, exported as a file */
-function plog(type,data){ if(!S.flags||!S.flags.plog) return; S.plog.push({t:Date.now(),type,...(data||{})}); if(S.plog.length>20000) S.plog.splice(0,S.plog.length-20000); }
+function plog(type,data){ if(!S.flags||!S.flags.plog) return; S.plog.push({...(data||{}),type,t:Date.now()}); /* t and type last: data can never overwrite them */ if(S.plog.length>20000) S.plog.splice(0,S.plog.length-20000); }
 function plogSummary(){
   const L=S.plog, c=k=>L.filter(e=>e.type===k).length, t0=L.length?L[0].t:Date.now(), t1=L.length?L[L.length-1].t:t0;
   return {events:L.length,minutes:Math.round((t1-t0)/600)/100,searches:c('search'),recordsOpened:new Set(L.filter(e=>e.type==='view'&&/^record\//.test(e.route||'')).map(e=>e.route)).size,
@@ -1124,7 +1124,7 @@ document.addEventListener('submit', e=>{
   if(f.dataset.form==='link'){
     const A=f.querySelector('[data-lk=a]').value, B=f.querySelector('[data-lk=b]').value, T=f.querySelector('[data-lk=t]').value;
     const evEl=f.querySelector('[data-lk=ev]'), rec=f.dataset.rec || (evEl?evEl.value:'');
-    const res=tryLink(A,T,B,rec); toast(res.msg); plog('link',{a:A,t:T,b:B,rec,ok:res.ok,status:res.status||null,partial:res.link?linkPartial(res.link):false,msg:res.msg});
+    const res=tryLink(A,T,B,rec); toast(res.msg); plog('link',{a:A,rel:T,b:B,rec,ok:res.ok,status:res.status||null,partial:res.link?linkPartial(res.link):false,msg:res.msg});
     if(res.ok){ save(); if(f.dataset.rec && !$('#modal').hidden) showPreview(f.dataset.rec); else render(); }
     return;
   }

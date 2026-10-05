@@ -45,7 +45,10 @@ python3 build.py --artifact   # writes dist/artifact.html for claude.ai artifact
 
 ## Playtesting
 
-Send testers the game with `?playtest=1` on the address, or ask them to press **Start recording** under Matter 2025-0417 › Overview. The log stays in the browser. **Save log file** downloads a JSON file with a summary (minutes played, searches, records opened, links tried and proven, flags shown, filings) plus every event with a timestamp. Replaying the case keeps the log and marks the replay.
+- **Where testers play.** `.github/workflows/pages.yml` publishes the game (index.html and images only, no docs) to GitHub Pages on every push to `main`. One-time setup: Settings › Pages › Source: **GitHub Actions**. Send testers the Pages address with `?playtest=1` on the end.
+- **What to send them.** `docs/playtest/TESTER_BRIEF.md`. Run the session with `docs/playtest/FACILITATOR.md`, which has the post-play questions.
+- **The log.** Testers press **Save log file** under Matter 2025-0417 › Overview. The JSON file holds a summary plus every search, record opened, link, flag and filing with a timestamp.
+- **The report.** Put the files in one folder and run `python3 scripts/analyse_playtests.py that-folder/ > report.md`. It covers time to each finding, stalls with what came before and after, records nobody opened, wrong links, joint proofs, how the 1972 licence was found, empty searches, flags and tool use.
 
 ## Status
 
