@@ -14,7 +14,7 @@ Cornelius Vane, 91, went overboard off Ashby Point. His will leaves everything t
 
 The tools:
 
-- **Bloodlines** (genealogy site): a 26-person family tree back to 1410, with records from a 1436 court roll through wills, parish registers, censuses and civil records, record pages with an image viewer and index, search with collection filters, DNA matches for four kits, and member-tree hints. Some hints are planted by the people you're investigating.
+- **Bloodlines** (genealogy site): a family tree you build yourself from four names, reaching back to 1410, with records from a 1436 court roll through wills, parish registers, censuses and civil records, record pages with an image viewer and index, search with collection filters, DNA matches for four kits, and member-tree hints. Some hints are planted by the people you're investigating.
 - **A&P Mail**: case briefings, claimant letters, attachments, and emails that react to what you find.
 - **A&P Intranet**: the matter page (parties, assets, evidence register, activity log), a photo lab that certifies identity by matching scars and moles, a handwriting examiner that compares signatures, the ruling form, and a law library holding the Succession Act and the Nocturnal Accord 1888.
 

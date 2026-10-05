@@ -35,11 +35,12 @@ Ages are consistent across all documents. Ambrose was born 9 February 1857, so h
 
 ## Adding people to the tree
 
-The tree lays itself out from the data, so there are no coordinates or hand-drawn lines to maintain. To add a person:
+The tree lays itself out from the data, so there are no coordinates or hand-drawn lines to maintain. To add a person to the data:
 
 1. Add an entry to `PEOPLE` in `src/app.js` (name, life, initials, facts, records). A `tag` of `'Disputed'` draws the dashed card.
 2. Add their relations to `REL`: `Father`, `Mother`, `Child`, `Spouse`, or `Claimed father` for a dashed claimed link. Listing one side is enough.
 3. Add `SEX`, and an avatar in `AVATARS` if there is an image.
+4. Add `CLAIMS` entries saying which records show each of their links, and make sure those records name them. The player cannot add a link that has no record behind it.
 
 The layout works out generations, puts couples side by side, centres parents over children, places a spouse's parents above the spouse, and draws every connector. `GHOSTS` holds placeholder people who are not in `PEOPLE`, such as the unnamed mother of Cornelius. `tests/layout.js` checks for overlaps and bad placements.
 
@@ -61,6 +62,22 @@ The name drifts in spelling (Asgrove, Askgrove, Ashgrove). Each index entry carr
 The handwriting examiner matches Ashgrove's signature on the 1921 census to his signature on the 1740 lease. That is a positive result but it does not count as identity evidence in Finding 1, because the hand is not the Vanes' hand.
 
 The Vane line is his tenants. What binds them to him is the 1740 estate file, which later cases open.
+
+## How the player builds the tree
+
+The tree is the player's work, not a map handed to them. It opens with the four names from the brief (Cornelius, Julian, Margaret, Daphne) as loose cards with no links.
+
+1. Search a name and open a record.
+2. Read it. The "Build your tree" panel on the record page lists the people it names.
+3. Say how two people are related (parent of, married to, or claimed to be the parent of) and add the link.
+4. The game accepts the link only if that record shows it. A wrong guess gets "This record doesn't show that" with no hint about the right answer.
+5. New people appear on the tree, new names turn up in the records, and the player searches those names next.
+
+Records are the only way in. A person's sources list, their hints and the facts on their profile fill in as records are opened. Family facts (parents, marriages) are not shown on a profile at all, only the tree's links.
+
+The member-tree hint from nightowl_jv, when accepted, adds an unproven dashed link from Cornelius to Julian. It is the planted lie and the only way to put a wrong link in the tree.
+
+The data behind this is the `CLAIMS` table in `src/app.js`. Each entry says which records show a relationship. `tests/tree.js` checks every record named in a claim really names both people, that every relationship in `REL` has a record that proves it, and that the whole tree can be reached by searching names alone, starting from the four names.
 
 ## Case 1 rules worth keeping across cases
 

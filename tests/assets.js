@@ -4,7 +4,7 @@ const {chromium}=require('playwright-core'); const path=require('path'); const R
  const p=await b.newPage({viewport:{width:1200,height:1400}}); const errs=[],bad=[]; let fails=0;
  p.on('pageerror',e=>errs.push(e.message)); p.on('requestfailed',r=>bad.push(r.url())); p.on('response',r=>{if(r.status()>=400)bad.push(r.url())});
  const ok=(c,m)=>{console.log(c?'ok  ':'FAIL',m); if(!c)fails++};
- await p.goto(GAME); await p.evaluate(()=>{localStorage.clear();Object.assign(S,FRESH());render()});
+ await p.goto(GAME); await p.evaluate(()=>{localStorage.clear();Object.assign(S,FRESH());revealAllTree();render()});
  // 1. all referenced assets exist
  const html=fs.readFileSync(ROOT+'/index.html','utf8');
  const refs=[...new Set([...html.matchAll(/assets\/([\w.\-]+\.(?:jpg|webp|png|svg))/g)].map(m=>m[1]))];

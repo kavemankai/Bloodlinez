@@ -51,6 +51,8 @@ const COLL = {Court:'Manor of Ashby Court Rolls, 1350–1840',Will:'Probate Will
   Legal:'Probate & Trust Instruments (Professional)',Medical:'Ashby Hospital Registers, 1880–1950',Marine:'Harbour Authority Incident Reports, 1900–2025',Invoice:'Professional Uploads: Funeral & Estate Accounts'};
 const PAGE_KINDS = new Set(Object.keys(COLL));
 const IDX = {
+  birth1920:[['Name','Thomas Holloway'],['Birth date','7 Mar 1920'],['Father','Arthur Holloway'],['Mother','Harriet Vane'],['Registration no.','1920/0108']],
+  birth1951:[['Name','Margaret Holloway'],['Birth date','22 Jul 1951'],['Birth place','Ashby Hospital'],['Father','Thomas Holloway'],['Registration no.','1951/0562']],
   court1436:[['Name','Hugh atte Vane'],['Court date','29 Sep 1436'],['Place','Hollow Lane, Ashby'],['Pledge','Roland Ashgrove']],
   will1509:[['Name','John atte Vane'],['Proved','14 Mar 1509'],['Occupation','Boatman'],['Scrivener','Roland Ashgrove']],
   burial1544:[['Name','Richard Vane'],['Buried','9 Nov 1544'],['Parish','St Columba, Ashby']],
@@ -135,9 +137,9 @@ const LEAF = '<svg class="leaf" viewBox="0 0 20 26" aria-hidden="true"><path d="
 const FRESH = () => ({tab:'mail',hist:{bl:{s:['home'],i:0},mail:{s:['inbox/m1'],i:0},net:{s:['matter/overview'],i:0}},
   navOpen:false,sel:null,zoom:1,tz:1,kit:'julian',cookie:false,mlRead:false,recent:[],
   pins:[],read:['m4'],seen:[],ans:{},ev:{F1:[],F2:[],F3:[],F4:[],F5:[]},res:{},attempts:0,won:false,failed:false,
-  flags:{},reports:{},lab:{a:'',b:'',ma:[],mb:[],miss:0},hw:{a:'',b:''},notes:'',log:[],q:{name:'',kw:'',kind:'All'},searched:false});
+  flags:{},reports:{},lab:{a:'',b:'',ma:[],mb:[],miss:0},hw:{a:'',b:''},tree:{people:['cornelius','julian','margaret','daphne'],links:[]},viewed:[],notes:'',log:[],q:{name:'',kw:'',kind:'All'},searched:false});
 const S = FRESH();
-const KEEP = ['tab','hist','kit','cookie','recent','pins','read','seen','ans','ev','res','attempts','won','failed','flags','reports','lab','hw','notes','log','q','searched'];
+const KEEP = ['tab','hist','kit','cookie','recent','pins','read','seen','ans','ev','res','attempts','won','failed','flags','reports','lab','hw','tree','viewed','notes','log','q','searched'];
 try{const s=JSON.parse(localStorage.getItem('bloodlines-v3')||'null'); if(s) KEEP.forEach(k=>{ if(s[k]!==undefined) S[k]=s[k]; });}catch(e){}
 function save(){try{const o={};KEEP.forEach(k=>o[k]=S[k]);localStorage.setItem('bloodlines-v3',JSON.stringify(o))}catch(e){}}
 for(const id in S.reports) REC[id] = id.startsWith('sig:') ? sigRec(id) : cmpRec(id);
@@ -160,6 +162,7 @@ function go(r, t){
 function visit(t,r){
   if(t==='bl' && r.startsWith('record/')){
     const id = r.slice(7);
+    if(!S.viewed.includes(id)) S.viewed.push(id);
     if((PH[id]||SIGNED[id]) && !S.seen.includes(id)) S.seen.push(id);
     S.recent = [id, ...S.recent.filter(x=>x!==id)].slice(0,4);
     if((id==='hospital1888'||id==='news1888') && !S.flags.diary){ S.flags.diary = true; setTimeout(()=>toast('New mail from Margaret Holloway'),600); }
@@ -168,6 +171,7 @@ function visit(t,r){
 }
 function togglePin(id){
   const was = pinned(id);
+  if(id==='hintOfficial'){ S.tree.links = S.tree.links.filter(l=>!(l.t==='claimed'&&l.recs.includes('hintOfficial'))); if(!was&&S.tree.people.includes('cornelius')&&S.tree.people.includes('julian')) S.tree.links.push({t:'claimed',a:'cornelius',b:'julian',recs:['hintOfficial']}); }
   S.pins = was ? S.pins.filter(x=>x!==id) : [...S.pins, id];
   log(`${was?'Removed':'Added'} evidence: ${REC[id].title}`);
   toast(was ? 'Removed from matter 2025-0417' : 'Saved to matter 2025-0417');
@@ -218,11 +222,12 @@ function chrome(){
   document.title = titleOf(S.tab,cur()).replace(/ [|–] .*/,'') + ' · Bloodlines game';
 }
 function render(){
+  refreshLayout();
   const old = $('#cw'), keep = old ? {t:old.scrollTop,l:old.scrollLeft} : null;
   chrome();
   const r = cur();
   $('#vp').innerHTML = S.tab==='bl' ? blPage(r) : S.tab==='mail' ? mailApp(r) : netApp(r);
-  const cw = $('#cw'); if(cw){ if(keep!==null){ cw.scrollTop=keep.t; cw.scrollLeft=keep.l; } else { cw.scrollTop=POS.ambrose[1]-170; cw.scrollLeft=Math.max(0,POS.ambrose[0]+100-cw.clientWidth/2); } }
+  const cw = $('#cw'); if(cw){ if(keep!==null){ cw.scrollTop=keep.t; cw.scrollLeft=keep.l; } else { cw.scrollTop=0; cw.scrollLeft=Math.max(0,(LAY.w-cw.clientWidth)/2); } }
 }
 
 /* ================= BLOODLINES ================= */
@@ -231,7 +236,7 @@ function avatar(id, crop=true){
   return PEOPLE[id]?.ini || '?';
 }
 function blShell(section, inner){
-  const hintN = HINTS.length + (S.won?1:0);
+  const hintN = visibleHints().length + (S.won?1:0);
   const nav = [['home','Home'],['tree','Trees'],['search','Search'],['dna','DNA'],['hints',`Hints <span class="cnt">${hintN}</span>`]];
   return `<div class="bl">
   <div class="promo">Ancestors' Week: save 25% on Bloodlines DNA kits. <u data-a="toastonly" data-msg="Offer not available on Professional accounts">Shop now</u></div>
@@ -273,11 +278,11 @@ function blHome(){
   return `<section class="hero"><div class="wrap"><div class="greet"><h1>${greet}, Ashgrove &amp; Pell</h1><p class="muted" style="margin:6px 0 0">Professional account · 1 active tree · 4 DNA kits</p></div>
     <form class="qsearch" data-form="qsearch"><input id="hq" placeholder="Search names, places or keywords" aria-label="Search records"><button class="bbtn sm">${ic('search')}Search</button></form></div></section>
   <div class="wrap"><div class="tiles">
-    <div class="panel tile pb" style="padding:18px"><span class="tiny">Your trees</span><h2>Vane estate</h2><p class="muted" style="margin:0">${Object.keys(PEOPLE).length} people · ${HINTS.length} hints · last edited by R. Ashgrove</p>
+    <div class="panel tile pb" style="padding:18px"><span class="tiny">Your trees</span><h2>Vane estate</h2><p class="muted" style="margin:0">${S.tree.people.length} people · ${visibleHints().length} hints · last edited by you</p>
       <div style="display:flex;gap:6px">${['ambrose','cornelius','julian','margaret'].map(p=>`<span class="fam" style="width:auto;padding:0"><span class="ava">${avatar(p)}</span></span>`).join('')}</div>
       <div><button class="bbtn sm" data-a="go" data-t="bl" data-v="tree">${ic('tree')}View tree</button></div></div>
     <div class="panel tile" style="padding:18px"><span class="tiny">DNA</span><h2>${S.won?'Your results are in':'Your kit is processing'}</h2><p class="muted" style="margin:0">${S.won?'You have 1 new DNA match.':`Lab stage ${kitStage()} of 4. Claimant kits for Vane estate are ready to review.`}</p><div><button class="bbtn sec sm" data-a="go" data-t="bl" data-v="dna/${S.won?'you':'julian'}">See DNA matches</button></div></div>
-    <div class="panel tile" style="padding:18px"><span class="tiny">Hints</span><h2>${HINTS.length+(S.won?1:0)} new hints</h2><p class="muted" style="margin:0">Hints are possible matches from records and other members' trees. Review each one before you accept it.</p><div><button class="bbtn sec sm" data-a="go" data-t="bl" data-v="hints">Review hints</button></div></div>
+    <div class="panel tile" style="padding:18px"><span class="tiny">Hints</span><h2>${visibleHints().length+(S.won?1:0)} new hints</h2><p class="muted" style="margin:0">Hints are possible matches from records and other members' trees. Review each one before you accept it.</p><div><button class="bbtn sec sm" data-a="go" data-t="bl" data-v="hints">Review hints</button></div></div>
   </div>
   <div class="two" style="padding-top:0">
     <div class="panel"><div class="ph"><h2>Recently viewed</h2></div><div class="pb">${recent.length?`<ul class="srclist">${recent.map(srcRow).join('')}</ul>`:'<p class="muted" style="margin:0">Records you open will show here.</p>'}</div></div>
@@ -389,22 +394,82 @@ function layoutTree(people=PEOPLE, rel=REL, ghosts=GHOSTS){
   });
   return {pos,w:W,h:H,edges,labels,gen};
 }
-const LAY = layoutTree();
-const POS = Object.fromEntries(Object.entries(LAY.pos).filter(([k])=>PEOPLE[k]));
+
+/* ---- what each record shows about who is related to whom ----
+   parent: a is the parent of b. spouse: a and b are married. claimed: the record says a is b's parent, unproven. */
+const CLAIMS = [];
+const P_=(a,b,recs)=>CLAIMS.push({t:'parent',a,b,recs}), S_=(a,b,recs)=>CLAIMS.push({t:'spouse',a,b,recs}), C_=(a,b,recs)=>CLAIMS.push({t:'claimed',a,b,recs});
+P_('v1410','v1445',['will1509']); P_('v1445','v1480',['will1509']); P_('v1480','v1515',['will1577']); P_('v1515','v1550',['will1577','bapt1550']);
+P_('v1550','v1585',['marr1612']); P_('v1585','v1620',['bapt1620']); P_('v1620','v1655',['marr1682']); P_('v1655','v1688',['bapt1688']);
+P_('v1688','v1720',['bapt1720']); P_('v1720','samuel',['bapt1751']); P_('samuel','thomasv',['bapt1789']); P_('thomasv','josiah',['marr1850']);
+P_('josiah','ambrose',['birth1857','census1861','census1881','marr1886']); P_('hannah','ambrose',['birth1857','census1861','census1881']);
+P_('william','eliza',['birth1861','marr1886']); P_('ann','eliza',['birth1861']);
+P_('ambrose','harriet',['birth1888','census1891','census1911','photo1912']); P_('eliza','harriet',['birth1888','census1891']);
+P_('ambrose','cornelius',['birth1934']); P_('harriet','thomas',['birth1920']); P_('arthur','thomas',['birth1920']); P_('thomas','margaret',['birth1951']);
+P_('cornelius','desmond',['death1994']); P_('desmond','julian',['birth1993']); C_('cornelius','daphne',['letterDaphne']);
+S_('josiah','hannah',['marr1850','census1861','census1881']); S_('ambrose','eliza',['marr1886','census1891']);
+S_('harriet','arthur',['photo1912','birth1920']); S_('william','ann',['birth1861']);
+const STARTERS = ['cornelius','julian','margaret','daphne'];
+const peopleIn = rec => { const s=[]; CLAIMS.forEach(c=>{ if(c.recs.includes(rec)) [c.a,c.b].forEach(x=>{ if(!s.includes(x)) s.push(x); }); }); return s; };
+const REL_LABEL = {parent:'is the parent of',spouse:'is married to',claimed:'is claimed to be the parent of'};
+const sameLink = (l,t,a,b) => l.t===t && ((l.a===a&&l.b===b) || (t==='spouse'&&l.a===b&&l.b===a));
+function tryLink(a,t,b,rec){
+  if(!a||!b||a===b) return {ok:false,msg:'Choose two different people.'};
+  const c = CLAIMS.find(c=>c.t===t && c.recs.includes(rec) && sameLink(c,t,a,b));
+  if(!c) return {ok:false,msg:"This record doesn't show that."};
+  const have = S.tree.links.find(l=>sameLink(l,t,a,b));
+  if(have){ if(!have.recs.includes(rec)){ have.recs.push(rec); log(`Added a source to a link: ${PEOPLE[a].name} and ${PEOPLE[b].name}`); return {ok:true,msg:'Already in your tree. Added this record as a second source.'}; } return {ok:false,msg:'Already in your tree.'}; }
+  [a,b].forEach(x=>{ if(!S.tree.people.includes(x)) S.tree.people.push(x); });
+  S.tree.links.push({t,a,b,recs:[rec]});
+  log(`Added to tree: ${PEOPLE[a].name} ${REL_LABEL[t]} ${PEOPLE[b].name}`);
+  return {ok:true,msg:`Added to your tree: ${PEOPLE[a].name} ${REL_LABEL[t]} ${PEOPLE[b].name}.`};
+}
+function revealAllTree(){ S.tree.people = Object.keys(PEOPLE); S.tree.links = CLAIMS.map(c=>({t:c.t,a:c.a,b:c.b,recs:[c.recs[0]]})); }
+function treeData(){
+  const people={}, rel={}; S.tree.people.forEach(id=>{ people[id]=PEOPLE[id]; rel[id]=[]; });
+  S.tree.links.forEach(l=>{
+    if(!rel[l.a]||!rel[l.b]) return;
+    if(l.t==='parent'){ rel[l.b].push([SEX[l.a]==='m'?'Father':'Mother',l.a]); rel[l.a].push(['Child',l.b]); }
+    else if(l.t==='spouse'){ rel[l.a].push(['Spouse',l.b]); rel[l.b].push(['Spouse',l.a]); }
+    else rel[l.b].push(['Claimed father',l.a]);
+  });
+  const ghosts = S.tree.links.some(l=>l.t==='parent'&&l.a==='ambrose'&&l.b==='cornelius') ? {unknown:GHOSTS.unknown} : {};
+  return {people,rel,ghosts};
+}
+let LAY = null, GH = {}, POS = {};
+function refreshLayout(){ const t=treeData(); GH=t.ghosts; LAY=layoutTree(t.people,t.rel,t.ghosts); POS=Object.fromEntries(Object.entries(LAY.pos).filter(([k])=>PEOPLE[k])); }
+const knownRecs = id => PEOPLE[id].recs.filter(r=>S.viewed.includes(r)||pinned(r));
+const HINT_PERSON = {hintOfficial:'julian',h2:'ambrose',h3:'ambrose',h4:'harriet'};
+const visibleHints = () => HINTS.filter(h=>S.tree.people.includes(HINT_PERSON[h.id]));
+const HIDDEN_FACTS = /^(Parents?|Father|Mother|Married|Spouse|Relationship|Claimed father)/i;
+function treePanel(rec){
+  const named = peopleIn(rec); if(!named.length) return '';
+  const inTree = S.tree.people, others = inTree.filter(x=>!named.includes(x));
+  const opt = (x,withLife) => `<option value="${x}">${PEOPLE[x].name}${withLife?` (${PEOPLE[x].life})`:''}</option>`;
+  const sel = (id) => `<select id="${id}"><option value="">Choose a person</option><optgroup label="Named in this record">${named.map(x=>opt(x,false)).join('')}</optgroup>${others.length?`<optgroup label="Already in your tree">${others.map(x=>opt(x,true)).join('')}</optgroup>`:''}</select>`;
+  const done = S.tree.links.filter(l=>l.recs.includes(rec)).length;
+  return `<div class="panel tpanel"><div class="ph"><h2>Build your tree</h2></div><div class="pb"><p class="muted" style="margin:0 0 10px;font-size:13.5px">Read the record, then say who it connects and how. The tree only takes a link this record shows.${done?` ${done} link${done>1?'s':''} from this record already added.`:''}</p>
+    <form class="sform" data-form="link" data-rec="${rec}"><label>Person<select id="lk-a-${rec}" data-lk="a"><option value="">Choose a person</option><optgroup label="Named in this record">${named.map(x=>opt(x,false)).join('')}</optgroup>${others.length?`<optgroup label="Already in your tree">${others.map(x=>opt(x,true)).join('')}</optgroup>`:''}</select></label>
+    <label>How<select id="lk-t-${rec}"><option value="parent">is the parent of</option><option value="spouse">is married to</option><option value="claimed">is claimed to be the parent of</option></select></label>
+    <label>Other person<select id="lk-b-${rec}" data-lk="b"><option value="">Choose a person</option><optgroup label="Named in this record">${named.map(x=>opt(x,false)).join('')}</optgroup>${others.length?`<optgroup label="Already in your tree">${others.map(x=>opt(x,true)).join('')}</optgroup>`:''}</select></label>
+    <button class="bbtn">Add to tree</button></form></div></div>`;
+}
+
 function blTree(){
   const nodes = Object.entries(POS).map(([id,[x,y]])=>{
     const p = PEOPLE[id];
     return `<button class="tnode ${SEX[id]} ${p.tag==='Disputed'?'dis':''} ${S.sel===id?'sel':''}" style="left:${x}px;top:${y}px" data-a="sel" data-v="${id}">
       <span class="ava">${avatar(id)}</span><span style="min-width:0"><b>${p.name}</b><small>${p.life}</small></span>${HINT_OF[id]?LEAF:''}${p.tag?`<span class="flag">${p.tag}</span>`:''}</button>`;}).join('');
-  const ghosts = Object.entries(GHOSTS).map(([id,g])=>`<div class="tnode u" style="left:${LAY.pos[id][0]}px;top:${LAY.pos[id][1]}px;width:200px;opacity:.75;cursor:default"><span class="ava">?</span><span><b>${g.label}</b><small>${g.sub}</small></span></div>`).join('');
+  const ghosts = Object.entries(GH).map(([id,g])=>`<div class="tnode u" style="left:${LAY.pos[id][0]}px;top:${LAY.pos[id][1]}px;width:200px;opacity:.75;cursor:default"><span class="ava">?</span><span><b>${g.label}</b><small>${g.sub}</small></span></div>`).join('');
   const lines = `<svg class="lines" viewBox="0 0 ${LAY.w} ${LAY.h}" aria-hidden="true">${LAY.edges.map(e=>`<path ${e.cls?`class="${e.cls}" `:''}d="${e.d}"/>`).join('')}</svg>`;
   const labels = LAY.labels.map(l=>`<span class="claimlbl" style="left:${l.x}px;top:${l.y}px">${l.t}</span>`).join('');
+  const bare = !S.tree.links.length ? `<div class="treehint"><b>Your tree has four names and no links.</b> Open a record, work out who is related to whom, and add the links the record proves. Search a name to find records.</div>` : '';
   return `<div class="treebar"><div class="wrap">
     <span class="treename">Vane estate ${ic('chev')}</span>
     <div class="seg"><button class="on">Tree</button><button data-a="toastonly" data-msg="Family view isn't available for Professional trees">Family</button><button data-a="toastonly" data-msg="List view is coming soon">List</button></div>
     <div class="tree-tools"><select class="tsearch" data-find="1" aria-label="Find a person"><option value="">Find a person…</option>${Object.keys(POS).map(id=>`<option value="${id}">${PEOPLE[id].name}</option>`).join('')}</select>
     <button class="bbtn sec sm" data-a="toastonly" data-msg="Only the tree owner (R. Ashgrove) can invite people">${ic('share')}Share</button></div></div></div>
-  <div class="canvas-wrap" id="cw"><div class="canvas" style="width:${LAY.w}px;height:${LAY.h}px;transform:scale(${S.tz});transform-origin:0 0">${lines}${ghosts}${nodes}${labels}</div>
+  ${bare}<div class="canvas-wrap" id="cw"><div class="canvas" style="width:${LAY.w}px;height:${LAY.h}px;transform:scale(${S.tz});transform-origin:0 0">${lines}${ghosts}${nodes}${labels}</div>
     ${S.sel?drawer(S.sel):''}
     <div class="zoomctl"><button data-a="tz" data-v="1.1" aria-label="Zoom in">${ic('plus')}</button><button data-a="tz" data-v="0.9" aria-label="Zoom out">${ic('minus')}</button><button data-a="tz" data-v="0" aria-label="Reset zoom">${ic('fit')}</button></div>
   </div>`;
@@ -412,10 +477,10 @@ function blTree(){
 function drawer(id){
   const p = PEOPLE[id];
   return `<aside class="drawer"><div class="dh"><span class="ava">${avatar(id)}</span><div style="flex:1;min-width:0"><h2 style="font-family:var(--f-bl-d);font-weight:400;font-size:20px">${p.name}</h2><span class="muted">${p.life}</span></div><button class="icobtn" data-a="unsel" aria-label="Close">${ic('x')}</button></div>
-  <div class="db"><dl class="kv">${p.facts.slice(0,4).map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join('')}</dl>
+  <div class="db"><dl class="kv">${p.facts.filter(f=>!HIDDEN_FACTS.test(f[0])).slice(0,4).map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join('')}</dl>
   ${HINT_OF[id]?`<button class="lnk" style="text-align:left;display:flex;gap:6px;align-items:center;color:var(--bl-leaf)" data-a="go" data-t="bl" data-v="hints"><span style="width:12px;display:inline-flex">${LEAF}</span>${HINT_OF[id].length} hint${HINT_OF[id].length>1?'s':''} for ${p.name.split(' ')[0]}</button>`:''}
   <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="bbtn sm" data-a="go" data-t="bl" data-v="person/${id}/facts">Profile</button><button class="bbtn sec sm" data-a="searchname" data-v="${p.name.split(' (')[0]}">Search records</button></div>
-  <div><h3 style="margin-bottom:6px">Sources (${p.recs.length})</h3>${p.recs.length?`<ul class="srclist">${p.recs.slice(0,5).map(srcRow).join('')}</ul>`:'<p class="muted" style="margin:0">No sources attached.</p>'}</div></div></aside>`;
+  <div><h3 style="margin-bottom:6px">Sources (${knownRecs(id).length})</h3>${knownRecs(id).length?`<ul class="srclist">${knownRecs(id).slice(0,5).map(srcRow).join('')}</ul>`:'<p class="muted" style="margin:0">None yet. Records you open that name this person appear here.</p>'}</div></div></aside>`;
 }
 
 /* ---- person ---- */
@@ -427,12 +492,14 @@ function srcRow(id){
 }
 function blPerson(id, tab){
   const p = PEOPLE[id];
-  const tabs = [['facts','Facts'],['sources',`Sources (${p.recs.length})`],['gallery','Gallery']];
+  if(!p||!S.tree.people.includes(id)) return `<div class="wrap"><div class="crumbs"><button class="lnk" data-a="go" data-t="bl" data-v="tree">Vane estate</button></div><h1>Not in your tree</h1><p class="muted">This person isn't in your tree yet. Add them from a record that names them.</p></div>`;
+  const kr = knownRecs(id);
+  const tabs = [['facts','Facts'],['sources',`Sources (${kr.length})`],['gallery','Gallery']];
   let body;
-  if(tab==='sources') body = `<div class="panel"><div class="pb">${p.recs.length?`<ul class="srclist">${p.recs.map(srcRow).join('')}</ul>`:'<p class="muted">No sources attached.</p>'}</div></div>`;
-  else if(tab==='gallery'){ const ph = p.recs.filter(x=>REC[x].photo); body = `<div class="panel"><div class="pb">${ph.length?`<div class="lab">${ph.map(x=>`<button data-a="open" data-v="${x}" style="display:flex;flex-direction:column;gap:6px;text-align:left">${photo(PH[x])}<span class="lnk">${REC[x].title}</span></button>`).join('')}</div>`:'<p class="muted" style="margin:0">No photos for this person yet.</p>'}</div></div>`; }
-  else body = `<div class="panel"><div class="ph"><h2>Life events</h2></div><div class="pb"><ul class="timeline">${p.facts.map(([k,v])=>{const y=(v.match(/\b(1[89]\d\d|20\d\d)\b/)||['—'])[0];return `<li><span class="yr">${y}</span><span><span class="ev">${k}</span><br><span class="muted">${v}</span></span></li>`}).join('')}</ul></div></div>`;
-  const fam = (REL[id]||[]).map(([rel,pid])=>`<button class="fam" data-a="go" data-t="bl" data-v="person/${pid}/facts"><span class="ava">${avatar(pid)}</span><span><b>${PEOPLE[pid].name}</b><small>${rel} · ${PEOPLE[pid].life}</small></span></button>`).join('');
+  if(tab==='sources') body = `<div class="panel"><div class="pb">${kr.length?`<ul class="srclist">${kr.map(srcRow).join('')}</ul>`:'<p class="muted">No sources yet. Records you open that name this person appear here.</p>'}</div></div>`;
+  else if(tab==='gallery'){ const ph = kr.filter(x=>REC[x].photo); body = `<div class="panel"><div class="pb">${ph.length?`<div class="lab">${ph.map(x=>`<button data-a="open" data-v="${x}" style="display:flex;flex-direction:column;gap:6px;text-align:left">${photo(PH[x])}<span class="lnk">${REC[x].title}</span></button>`).join('')}</div>`:'<p class="muted" style="margin:0">No photos for this person yet.</p>'}</div></div>`; }
+  else body = `<div class="panel"><div class="ph"><h2>Life events</h2></div><div class="pb"><ul class="timeline">${p.facts.filter(f=>!HIDDEN_FACTS.test(f[0])).map(([k,v])=>{const y=(v.match(/\b(1[89]\d\d|20\d\d)\b/)||['—'])[0];return `<li><span class="yr">${y}</span><span><span class="ev">${k}</span><br><span class="muted">${v}</span></span></li>`}).join('')}</ul></div></div>`;
+  const fam = (treeData().rel[id]||[]).map(([rel,pid])=>`<button class="fam" data-a="go" data-t="bl" data-v="person/${pid}/facts"><span class="ava">${avatar(pid)}</span><span><b>${PEOPLE[pid].name}</b><small>${rel} · ${PEOPLE[pid].life}</small></span></button>`).join('');
   return `<section class="phead"><div class="wrap"><div class="crumbs" style="width:100%;padding:0"><button class="lnk" data-a="go" data-t="bl" data-v="tree">Vane estate</button><span>›</span><span>${p.name}</span></div>
     <span class="big">${avatar(id)}</span><div style="flex:1;min-width:220px"><h1>${p.name}</h1><span class="muted">${p.life}${p.tag?` · <b style="color:var(--warn)">${p.tag}</b>`:''}</span></div>
     <button class="bbtn sec sm" data-a="searchname" data-v="${p.name.split(' (')[0]}">${ic('search')}Search records</button>
@@ -459,6 +526,7 @@ function blRecord(id){
       <div class="vstage"><div class="vinner" style="transform:scale(${S.zoom})">${paperHtml(id,r.render())}</div></div></div>
     <div class="side">
       <div class="panel"><div class="ph"><h2>Record details</h2></div><div class="pb"><table class="idx">${idx.map(([k,v])=>`<tr><th>${k}</th><td>${v}</td></tr>`).join('')}</table></div></div>
+      ${treePanel(id)}
       <div class="panel"><div class="ph"><h2>Source citation</h2></div><div class="pb"><div class="cite">Bloodlines. <i>${COLL[r.kind]}</i> [database online]. Ashby: Bloodlines Ltd, 2026. Original record: ${r.title}, ${r.year}.</div></div></div>
       ${sugg.length?`<div class="panel"><div class="ph"><h2>Suggested records</h2></div><div class="pb"><ul class="srclist">${sugg.map(srcRow).join('')}</ul></div></div>`:''}
       <p class="muted" style="font-size:13px;margin:0">See a mistake in this index? <button class="lnk" data-a="toastonly" data-msg="Thanks. Our team reviews reports within 10 working days.">Report a problem</button></p>
@@ -543,7 +611,7 @@ function blHints(){
   const yours = S.won ? `<div class="hrow"><svg class="leafbig" viewBox="0 0 20 26" style="color:#c48a1a"><path d="M10 1 C 6 9, 2 13, 2 17.5 A 8 8 0 0 0 18 17.5 C 18 13, 14 9, 10 1 Z" fill="currentColor"/></svg><div class="hb"><span class="muted" style="font-size:12.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase">For you</span><h3>You may be related to R. Ashgrove (b. 1702?)</h3><span class="muted" style="font-size:13.5px">From a private member tree · owner hidden</span></div><button class="bbtn sm" data-a="toastonly" data-msg="This tree is private. You need the owner's permission to view it.">Review hint</button></div>` : '';
   return `<div class="wrap"><div class="crumbs"><button class="lnk" data-a="go" data-t="bl" data-v="tree">Vane estate</button><span>›</span><span>Hints</span></div><h1>Hints</h1>
   <p class="muted" style="margin:6px 0 16px">Hints come from record collections and from other members' trees. Member trees can be wrong, or worse.</p>
-  <div class="panel"><div class="pb">${yours}${HINTS.map(h=>`<div class="hrow"><svg class="leafbig" viewBox="0 0 20 26"><path d="M10 1 C 6 9, 2 13, 2 17.5 A 8 8 0 0 0 18 17.5 C 18 13, 14 9, 10 1 Z" fill="currentColor"/></svg>
+  <div class="panel"><div class="pb">${yours}${visibleHints().map(h=>`<div class="hrow"><svg class="leafbig" viewBox="0 0 20 26"><path d="M10 1 C 6 9, 2 13, 2 17.5 A 8 8 0 0 0 18 17.5 C 18 13, 14 9, 10 1 Z" fill="currentColor"/></svg>
     <div class="hb"><span class="muted" style="font-size:12.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase">${forP[h.id]}</span><h3>${h.title}</h3><span class="muted" style="font-size:13.5px">${h.conf} · ${h.src}</span></div>
     <div style="display:flex;gap:8px;flex-wrap:wrap">${h.rec?`<button class="bbtn sm" data-a="open" data-v="${h.rec}">Review hint</button>`:`<button class="bbtn sm" data-a="open" data-v="${h.id}">Review hint</button><button class="bbtn sec sm" data-a="pin" data-v="${h.id}">${pinned(h.id)?'Unsave':'Accept'}</button>`}</div></div>`).join('')}</div></div></div>`;
 }
@@ -551,12 +619,13 @@ function blHints(){
 /* ================= DOC PREVIEW ================= */
 function showPreview(id){
   const r = REC[id], m = $('#modal');
+  if(!S.viewed.includes(id)) S.viewed.push(id);
   const fname = FILES[id] || (r.kind==='DNA' ? r.title.replace(/[^A-Za-z]+/g,'_')+'.html' : r.kind==='Law' ? r.title.replace(/[^A-Za-z0-9]+/g,'_')+'.pdf' : r.kind==='Lab' ? (id.startsWith('sig:')?'Handwriting_':'PhotoLab_')+id.slice(4,12)+'.pdf' : r.title.replace(/[^A-Za-z0-9]+/g,'_').slice(0,40)+'.pdf');
   const ext = fname.split('.').pop().toUpperCase();
   const light = ['DNA','Hint'].includes(r.kind);
   m.innerHTML = `<div class="pv" role="dialog" aria-modal="true" aria-label="${esc(r.title)}"><div class="pvh"><span class="fi" style="background:${ext==='JPG'?'#2d7d46':ext==='HTML'?'#3c5a78':'#c0392b'}">${ext}</span><div class="t"><b>${fname}</b><small>${r.title}</small></div>
     <button class="nbtn ${pinned(id)?'sec':''} sm" data-a="pin" data-v="${id}" data-m="1">${pinned(id)?'Remove from matter':'Save to matter'}</button><button class="nbtn sec sm" data-a="close">Close</button></div>
-    <div class="pvb ${light?'light':''}"><div ${light?'style="font-family:var(--f-bl);display:flex;flex-direction:column;gap:10px"':''}>${paperHtml(id,r.render())}</div></div></div>`;
+    <div class="pvb ${light?'light':''}"><div ${light?'style="font-family:var(--f-bl);display:flex;flex-direction:column;gap:10px"':''}>${paperHtml(id,r.render())}</div>${r.kind==='Letter'?treePanel(id):''}</div></div>`;
   m.hidden = false; m.querySelector('[data-a="close"]').focus();
 }
 function closePreview(){ $('#modal').hidden = true; $('#modal').innerHTML=''; render(); }
@@ -792,6 +861,11 @@ document.addEventListener('submit', e=>{
   e.preventDefault(); const f = e.target;
   if(f.dataset.form==='qsearch'){ S.q={name:'',kw:$('#hq').value,kind:'All'}; S.searched=true; go('search','bl'); }
   if(f.dataset.form==='search'){ S.q={name:$('#sname').value,kw:$('#skw').value,kind:$('#skind').value}; S.searched=true; log(`Searched Bloodlines: "${(S.q.name+' '+S.q.kw).trim()||S.q.kind}"`); save(); render(); }
+  if(f.dataset.form==='link'){
+    const rec=f.dataset.rec, A=f.querySelector('[data-lk=a]').value, B=f.querySelector('[data-lk=b]').value, T=f.querySelector('select:not([data-lk])').value;
+    const res=tryLink(A,T,B,rec); toast(res.msg); if(res.ok){ save(); const m=$('#modal'); if(!m.hidden){ showPreview(rec); } else render(); }
+    return;
+  }
   if(f.dataset.form==='rule'){
     const missing = FIND.filter(x=>S.res[x.id]!==true && !S.ans[x.id]);
     if(missing.length){ $('#rulemsg').textContent = `Answer every finding before filing. Missing: ${missing.map(x=>'Finding '+x.id.slice(1)).join(', ')}.`; $('#rulemsg').style.color='var(--bad)'; return; }

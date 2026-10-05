@@ -7,7 +7,7 @@ const GAME='file://'+path.resolve(__dirname,'..')+'/index.html';
  p.on('pageerror',e=>errs.push(e.message)); const ok=(c,m)=>{console.log(c?'ok  ':'FAIL',m); if(!c)fails++};
  await p.goto(GAME); await p.evaluate(()=>{localStorage.clear();Object.assign(S,FRESH());S.cookie=true;render()});
  const check=(label,args)=>p.evaluate(({args})=>{
-   const L = args ? layoutTree(...args) : LAY, NW=TREE.w, NH=TREE.h, out={};
+   const L = args ? layoutTree(...args) : layoutTree(), NW=TREE.w, NH=TREE.h, out={};
    const people = args?args[0]:PEOPLE, rel=args?args[1]:REL, ghosts=args?args[2]:GHOSTS;
    const ids=Object.keys(L.pos);
    out.unplaced=[...Object.keys(people),...Object.keys(ghosts)].filter(i=>!L.pos[i]);
@@ -39,7 +39,7 @@ const GAME='file://'+path.resolve(__dirname,'..')+'/index.html';
    return {placed:!!L.pos.newkid&&!!L.pos.newmum&&!!L.pos.newkid2, below:L.pos.newkid[1]>L.pos.margaret[1], ov};});
  ok(r.placed&&r.below&&r.ov===0,'adding a spouse and two children to Margaret in the data places them automatically below her');
  // rendering
- await p.evaluate(()=>{go('tree','bl');S.tz=0.55;render()}); await p.waitForTimeout(300);
+ await p.evaluate(()=>{revealAllTree();go('tree','bl');S.tz=0.55;render()}); await p.waitForTimeout(300);
  const info=await p.evaluate(()=>({nodes:document.querySelectorAll('.tnode').length,paths:document.querySelectorAll('svg.lines path').length,labels:document.querySelectorAll('.claimlbl').length,find:document.querySelectorAll('.tsearch option').length}));
  ok(info.nodes===27,'tree renders 26 people plus the unknown-mother placeholder'); ok(info.labels===1,'the claimed link is labelled'); ok(info.find===27,'find-a-person lists everyone');
  await p.evaluate(()=>{S.sel='daphne';render()}); ok(await p.evaluate(()=>document.querySelector('.tnode.dis')!==null),'Daphne is drawn as disputed from her tag');

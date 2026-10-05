@@ -115,10 +115,10 @@ const PEOPLE = {
   eliza:{name:'Eliza Vane (née Marsh)',life:'1861 – 1902',ini:'EV',facts:[['Born','1861, Ashby'],['Married','Ambrose Vane, 1886'],['Died','1902, Ashby']],recs:['birth1861','marr1886','census1891','birth1888']},
   harriet:{name:'Harriet Holloway (née Vane)',life:'1888 – 1960',ini:'HH',facts:[['Born','4 Jun 1888, Vane House'],['Parents','Ambrose Vane and Eliza Marsh'],['Married','Arthur Holloway, 1912'],['Died','1960, Ashby']],recs:['birth1888','census1891','census1911','photo1912']},
   cornelius:{name:'Cornelius Vane',life:'1934 – 2025',ini:'CV',tag:'Deceased',facts:[['Born','2 Mar 1934, Vane House'],['Father','Ambrose Vane'],['Mother','Not recorded'],['Residence','Vane House, 14 Hollow Lane (lifelong)'],['Died','2 Mar 2025, lost at sea, age 91']],recs:['birth1934','licence1972','rolls','will2024','death2025']},
-  thomas:{name:'Thomas Holloway',life:'1920 – 1999',ini:'TH',facts:[['Born','1920, Ashby'],['Parents','Arthur Holloway and Harriet Vane'],['Died','1999, Ashby']],recs:['photo1950']},
+  thomas:{name:'Thomas Holloway',life:'1920 – 1999',ini:'TH',facts:[['Born','1920, Ashby'],['Parents','Arthur Holloway and Harriet Vane'],['Died','1999, Ashby']],recs:['birth1920','photo1950']},
   desmond:{name:'Desmond Vane',life:'1961 – 1994',ini:'DV',facts:[['Born','1961 (per family tree, no source)'],['Father','Cornelius Vane'],['Died','30 Oct 1994, Vane House, age 33']],recs:['death1994','birth1993']},
   daphne:{name:'Daphne Marsh-Pike',life:'1966 – Living',ini:'DM',tag:'Disputed',facts:[['Born','1966, Ashby'],['Mother','Lorna Marsh-Pike'],['Father','Not stated (claims Cornelius Vane)']],recs:['letterDaphne','birth1966','dnaDaphne']},
-  margaret:{name:'Margaret Holloway',life:'1951 – Living',ini:'MH',tag:'Claimant',facts:[['Born','1951, Ashby'],['Father','Thomas Holloway'],['Relationship','Great-granddaughter of Ambrose Vane']],recs:['letterMargaret','dnaMargaret']},
+  margaret:{name:'Margaret Holloway',life:'1951 – Living',ini:'MH',tag:'Claimant',facts:[['Born','1951, Ashby'],['Father','Thomas Holloway'],['Relationship','Great-granddaughter of Ambrose Vane']],recs:['birth1951','letterMargaret','dnaMargaret']},
   julian:{name:'Julian Ambrose Vane',life:'1993 – Living',ini:'JV',tag:'Claimant',facts:[['Born','14 Jan 1993, Vane House'],['Father','Desmond Vane'],['Mother','Not stated'],['Residence','Vane House, 14 Hollow Lane']],recs:['birth1993','licence2019','letterJulian','dnaJulian']}
 };
 
@@ -136,7 +136,7 @@ const PAPER = {};
  ['paper_hospital','hi',['hospital1888']],['paper_diary','lo',['diary1888']],
  ['paper_news_victorian','hi',['news1888','news1889']],['paper_news_1930s','hi',['news1934']],['paper_news_postwar','hi',['photo1962','news1994']],
  ['paper_deed_1934','lo',['trust1934']],
- ['paper_register','hi',['birth1934','death1934','inquest1934','birth1958d','birth1966','birth1993','death1994','death2025']],
+ ['paper_register','hi',['birth1934','death1934','inquest1934','birth1958d','birth1966','birth1993','death1994','death2025','birth1920','birth1951']],
  ['paper_will_modern','lo',['will2024']],['paper_letter','lo',['letterJulian']],['paper_letter_margaret','lo',['letterMargaret']],['paper_letter_daphne','lo',['letterDaphne']],
  ['paper_invoice','hi',['funeral2025']],['paper_harbour','hi',['marine2025']]
 ].forEach(([f,w,ids])=>ids.forEach(i=>PAPER[i]=[f,w]));
@@ -161,21 +161,21 @@ const REC = {
   court1436:{kind:'Court',year:1436,title:'Court roll, Manor of Ashby, 1436',k:'Hugh atte Vane Hollow Lane messuage court roll manor Asgrove Ashgrove clerk',
     render:()=>regDoc('Manor of Ashby · Court Roll','15 Henry VI',[['Court held','Feast of St Michael, 15 Henry VI (29 September 1436)'],['Tenant','Hugh atte Vane, boatman'],['Holding','One messuage and garden in Hollow Lane'],['Rent','Fourpence a year'],['Pledges','Roland Asgrove, clerk; John Tyler'],['Fine','Twelvepence']],'',"Translated from the Latin. Index note: the clerk's name as written, Asgrove, is indexed as Ashgrove.",'','Ashby','Manor of')},
   will1509:{kind:'Will',year:1509,title:'Will of John atte Vane, boatman, 1509',k:'John atte Vane will Hollow Lane Askgrove Ashgrove scrivener Agnes Richard',
-    render:()=>regDoc('Will and Testament','1509/17',[['Testator','John atte Vane, boatman, of Ashby'],['Proved','14 March 1509'],['Bequests','To the church of St Columba, a bushel of barley. To his son Richard, the messuage in Hollow Lane. To his wife Agnes, the residue.'],['Written by','Roland Askgrove, scrivener'],['Witnesses','Sir William, parish priest; R. Askgrove']],'',"Index note: the scrivener's name as written, Askgrove, is indexed as Ashgrove.",'','Ashby','Peculiar of')},
+    render:()=>regDoc('Will and Testament','1509/17',[['Testator','John atte Vane, boatman, of Ashby'],['Recites','The messuage in Hollow Lane that his father, Hugh atte Vane, took of the lord in 1436'],['Proved','14 March 1509'],['Bequests','To the church of St Columba, a bushel of barley. To his son Richard, the messuage in Hollow Lane. To his wife Agnes, the residue.'],['Written by','Roland Askgrove, scrivener'],['Witnesses','Sir William, parish priest; R. Askgrove']],'',"Index note: the scrivener's name as written, Askgrove, is indexed as Ashgrove.",'','Ashby','Peculiar of')},
   burial1544:{kind:'Parish',year:1544,title:'Burial, Richard Vane, 1544',k:'Richard Vane burial St Columba boatman',
     render:()=>regDoc('Burial Register','14',[['Name','Richard Vane, boatman'],['Buried','9 November 1544'],['Parish','St Columba, Ashby']],'',"Entry in the curate's hand. Register kept from 1538 by order of the Vicar General.",'','St Columba, Ashby','Parish of')},
   will1577:{kind:'Will',year:1577,title:'Will of Thomas Vane, cooper, 1577',k:'Thomas Vane will cooper Hollow Lane Ashgrove notary',
-    render:()=>regDoc('Will and Testament','1577/42',[['Testator','Thomas Vane, cooper, of Ashby'],['Proved','3 May 1577'],['Bequests',"To his son John, his cooper's tools and the messuage in Hollow Lane. To his daughters, ten shillings each."],['Written by','Roland Ashgrove, notary public'],['Witnesses','J. Pryor; R. Ashgrove']],'','','','Ashby','Peculiar of')},
+    render:()=>regDoc('Will and Testament','1577/42',[['Testator','Thomas Vane, cooper, of Ashby'],['Recites','The messuage he had from his father, Richard Vane, in 1544'],['Proved','3 May 1577'],['Bequests',"To his son John, his cooper's tools and the messuage in Hollow Lane. To his daughters, ten shillings each."],['Written by','Roland Ashgrove, notary public'],['Witnesses','J. Pryor; R. Ashgrove']],'','','','Ashby','Peculiar of')},
   bapt1550:{kind:'Parish',year:1550,title:'Baptism, John Vane, 1550',k:'John Vane baptism St Columba Thomas',
     render:()=>regDoc('Baptism Register','61',[['Child','John, son of Thomas Vane'],['Baptised','12 September 1550'],['Parish','St Columba, Ashby']],'','','','St Columba, Ashby','Parish of')},
   marr1612:{kind:'Parish',year:1612,title:'Marriage, William Vane and Margaret Dole, 1612',k:'William Vane Margaret Dole marriage St Columba cooper',
-    render:()=>regDoc('Marriage Register','27',[['Groom','William Vane, cooper'],['Bride','Margaret Dole'],['Married','8 October 1612'],['Parish','St Columba, Ashby']],'','Groom signed. Bride made her mark.','','St Columba, Ashby','Parish of')},
+    render:()=>regDoc('Marriage Register','27',[['Groom','William Vane, cooper'],['Father of groom','John Vane, cooper'],['Bride','Margaret Dole'],['Married','8 October 1612'],['Parish','St Columba, Ashby']],'','Groom signed. Bride made her mark.','','St Columba, Ashby','Parish of')},
   bapt1620:{kind:'Parish',year:1620,title:'Baptism, Richard Vane, 1620',k:'Richard Vane baptism St Columba William cooper',
     render:()=>regDoc('Baptism Register','88',[['Child','Richard, son of William Vane, cooper'],['Baptised','21 June 1620'],['Parish','St Columba, Ashby']],'','','','St Columba, Ashby','Parish of')},
   tax1674:{kind:'Tax',year:1674,title:'Hearth tax return, Hollow Lane, 1674',k:'Richard Vane hearth tax Hollow Lane cooper',
     render:()=>regDoc('Hearth Tax Return','1674/9',[['Street','Hollow Lane'],['Householder','Richard Vane, cooper'],['Hearths','2'],['Paid','Two shillings at Lady Day and Michaelmas']],'','','','Ashby','Hundred of')},
   marr1682:{kind:'Parish',year:1682,title:'Marriage, Henry Vane and Susan Penn, 1682',k:'Henry Vane Susan Penn marriage St Columba cooper',
-    render:()=>regDoc('Marriage Register','31',[['Groom','Henry Vane, cooper'],['Bride','Susan Penn'],['Married','19 May 1682'],['Parish','St Columba, Ashby']],'','','','St Columba, Ashby','Parish of')},
+    render:()=>regDoc('Marriage Register','31',[['Groom','Henry Vane, cooper'],['Father of groom','Richard Vane, cooper'],['Bride','Susan Penn'],['Married','19 May 1682'],['Parish','St Columba, Ashby']],'','','','St Columba, Ashby','Parish of')},
   bapt1688:{kind:'Parish',year:1688,title:'Baptism, William Vane, 1688',k:'William Vane baptism St Columba Henry cooper',
     render:()=>regDoc('Baptism Register','104',[['Child','William, son of Henry Vane, cooper, and Susan his wife'],['Baptised','4 March 1688'],['Parish','St Columba, Ashby']],'','','','St Columba, Ashby','Parish of')},
   bapt1720:{kind:'Parish',year:1720,title:'Baptism, John Vane, 1720',k:'John Vane baptism St Columba William Anne cooper',
@@ -186,6 +186,10 @@ const REC = {
     render:()=>`<div class="doc"><h4>Lease · Hollow Lane</h4>${dl([['Lessor','R. Ashgrove, gentleman, of Ashgrove House'],['Lessee','William Vane, cooper'],['Holding','One tenement and yard in Hollow Lane'],['Term','Ninety-nine years'],['Rent','One peppercorn, if demanded']])}
     <div class="sigline"><span>Signed by the lessor:</span>${sig('R. Ashgrove','r')}</div>
     <p class="rn">Cross-reference: Ashgrove estate (1740), file 0001. Restricted to partners.</p></div>`},
+  birth1920:{kind:'Birth',year:1920,title:'Birth registration, Thomas Holloway',k:'Thomas Holloway Arthur Harriet Vane',
+    render:()=>regDoc('Registration of Birth','1920/0108',[['Child','Thomas Holloway'],['Born','7 March 1920, 3 Wharf Row'],['Father',"Arthur Holloway, ship's chandler"],['Mother','Harriet Holloway, formerly Vane'],['Informant','H. Holloway, mother'],['Registered','15 March 1920']],'')},
+  birth1951:{kind:'Birth',year:1951,title:'Birth registration, Margaret Holloway',k:'Margaret Holloway Thomas Joan Ames',
+    render:()=>regDoc('Registration of Birth','1951/0562',[['Child','Margaret Holloway'],['Born','22 July 1951, Ashby Hospital'],['Father','Thomas Holloway, clerk'],['Mother','Joan Holloway, formerly Ames'],['Informant','J. Holloway, mother'],['Registered','30 July 1951']],'')},
   bapt1751:{kind:'Parish',year:1751,title:'Baptism, Samuel Vane, 1751',k:'Samuel Vane baptism St Columba cooper John Martha',
     render:()=>regDoc('Baptism Register','41',[['Child','Samuel, son of John Vane, cooper, and Martha his wife'],['Born','27 February 1751'],['Baptised','3 March 1751'],['Parish','St Columba, Ashby']],'',"Entered in the hand of the Rev. T. Orme.",'','St Columba, Ashby','Parish of')},
   bapt1789:{kind:'Parish',year:1789,title:'Baptism, Thomas Vane, 1789',k:'Thomas Vane baptism St Columba cooper Samuel Sarah',
@@ -440,7 +444,7 @@ const MAIL = {
     <p>Welcome to nights. Your first file is the estate of <b>Cornelius Vane</b>, 91, lost overboard off Ashby Point in March. Body not recovered.</p>
     <p>The will leaves everything to his grandson, <b>Julian Ambrose Vane</b>. His great-niece <b>Margaret Holloway</b> objects. As of this afternoon a third party, <b>Daphne Marsh-Pike</b>, says she is Cornelius's daughter. All three claimants have taken Bloodlines DNA tests.</p>
     <table class="assets"><tr><td>Vane House, 14 Hollow Lane (heritage listed)</td><td>$2,140,000</td></tr><tr><td>Vane Family Trust investments</td><td>$3,880,000</td></tr><tr><td>Cellar contents</td><td>Undisclosed</td></tr><tr><td>Family crypt, Ashby cemetery</td><td>Not valued</td></tr></table>
-    <p>The partners want five findings, each backed by evidence. The ruling form is in the case file. Pin records as you go, then attach them to the findings they prove. You get three filings. After that, Pell takes the file and you take the blame.</p>
+    <p>The partners want five findings, each backed by evidence. The ruling form is in the case file. The tree has four names on it and no links. Find out who is related to whom: open a record, read it, and add the links it proves from the record page. Pin records as you go, then attach them to the findings they prove. You get three filings. After that, Pell takes the file and you take the blame.</p>
     <p>The Nocturnal Accord is in the law library. Read it. If any party turns out not to be strictly human, it decides the matter and the Succession Act doesn't.</p>
     <p>R.A.</p>`},
   m2:{from:'Firm IT',time:'9:30 pm',subj:'Bloodlines: search tips and hints',body:()=>`
