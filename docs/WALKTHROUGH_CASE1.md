@@ -1,91 +1,108 @@
 # Case 1 walkthrough (full spoilers)
 
-This gives away the whole case. For the rules without spoilers, read `GAME_GUIDE.md`.
+This gives away the whole case. For the rules without spoilers, read `GAME_GUIDE.md`. The full timeline is in `CANON_CASE1.md`.
 
 ## The answers
 
 | Finding | Question | Answer |
 |---|---|---|
-| 1 | Who is Julian Ambrose Vane? | Ambrose and Cornelius Vane: one man under three names |
+| 1 | Who is the man now calling himself Julian Ambrose Vane? | Ambrose Vane, who has also lived as Desmond and Cornelius Vane |
 | 2 | Did Cornelius die on 2 March 2025? | No. The death was staged |
-| 3 | Was Desmond Vane real? | No. A paper identity created to give Julian a father |
-| 4 | What is Daphne's claim worth? | Nothing. She cannot be his daughter |
+| 3 | Who died in the Vane House fire of 1 February 1934? | His stepson, Desmond Vane |
+| 4 | What is Daphne's claim worth? | Her father was the real Cornelius, who died in 1976. She takes nothing from this estate |
 | 5 | Who receives the estate? | Margaret Holloway, as issue of the blood, under Accord Art. 4 |
 
 ## What happened
 
-Ambrose Vane, born 9 February 1857, was attacked on the Ashby wharf on 14 February 1888 and turned. He fathered his daughter Harriet, born 4 June 1888, before the turning, since she was conceived the previous September. He has staged his own death twice, in 1934 and in 2025, and each time re-entered the world as his own "son" or "grandson": Cornelius in 1934, then Julian (through an invented father, Desmond) in 1993.
+Ambrose Vane, born 9 February 1857, was attacked on the Ashby wharf on 14 February 1888 and turned. His daughter Harriet, born 4 June 1888, was conceived the previous September, before the turning. She is his only child.
 
-Under the Accord the turned do not have children, a staged death forfeits the property, and forfeited property passes to the "issue of the blood". Harriet is the only child conceived before the turning. Her granddaughter is Margaret.
+A paper life has to age, so about every forty years he hands his life on. He marries a widow with a child, or a child is adopted into the house, and when the child is about thirty he stages his own death and becomes them. Each time, the people who would notice die in the same disaster: his wife and the real heir. The records never say he caused it.
 
-A much older figure, R. Ashgrove, runs through the records and the firm. He is the "tall foreign gentleman" who attacked Ambrose. Case 1 never asks you to prove it.
+| Year | Staged death | Who really died | Who he became |
+|---|---|---|---|
+| 1934 | Fire at Vane House. A body "identified by his signet ring" is buried as Ambrose | Clara (his second wife), Ada Kemp (the housekeeper) and Desmond, Clara's son | Desmond Vane, 30 |
+| 1976 | Car over the cliff at Gull Rock. The driver, "identified by his wristwatch", is buried as Desmond | Irene (Desmond's wife) and Cornelius, her son | Cornelius Vane, 35 |
+| 2025 | Lost at sea from the *Marguerite*. No bodies | Helen (Cornelius's wife) and Julian, her grandson | Julian Ambrose Vane, 32 |
+
+Under the Accord a staged death forfeits the property, and forfeited property goes to the issue of the blood. Harriet's granddaughter is Margaret.
+
+R. Ashgrove, a much older figure, witnesses or prepares the paperwork at every step. Case 1 never asks you to prove what he is.
 
 ## Minimum evidence for each finding
 
-A finding passes with one record from every group listed.
+A finding passes with one record from every group listed, at most four records, and a tree that shows it.
 
-**Finding 1 (self).** A positive photo-lab comparison, plus two more from: the 1934 birth registration of Cornelius, the 1934 trust deed, the 1888 hospital register, or a positive handwriting comparison. The documents together must span more than a century. A lab comparison of the 1889 and 2019 photographs spans 130 years on its own.
-- Use any two of the 1889, 1912, 1962, 1972 and 2019 photographs. Click the scar through the right-hand eyebrow and the mole on the left cheek in both.
-- The 1972 licence is indexed as "Cornelius Vain, b. 1943", so a search for Cornelius Vane misses it. Search *Vain*, *licence* or *Hollow Lane*. The card shows the true date, 02/03/1934.
-- The 1912 wedding caption names only "the bride's father". The bride is Harriet Vane, and her 1888 birth registration names her father as Ambrose. The wedding photo is not listed among Ambrose's sources.
-- Supporting clues the player has to join themselves: Ambrose gives his age as 34 in 1891 but 41 in 1911, and his solicitor gives 64 in 1921. The 1934 trust deed, dated 20 January, provides for "his son Cornelius", who was born on 2 March.
-- The 1875 photograph has the mole but no scar. Thomas Holloway (1950) has the mole only. Frank Tully (1921) has the scar only. Each gives an inconclusive result.
+**Finding 1 (Ambrose).** A positive photo-lab comparison, plus two of: the 1934 trust deed, the 1934 inquest, the 1976 inquest, the 1996 adoption order, the 1888 hospital register, or a positive Vane-hand signature comparison. The set must span more than a century; the 1889 portrait against the 2025 replacement licence spans 136 years on its own.
+- The vampire's face (scar through the eyebrow, mole on the cheek) appears in 1889, 1912 (as "the bride's father"), 1962 (as Desmond), 1979 (as Cornelius) and 2025 (as Julian).
+- The real Desmond (rowing club, 1925) and the real Julian (licence, 2019) have neither mark. Comparing them with any vampire photo is inconclusive. That is the point: the name stayed, the man changed.
+- The signatures "A. Vane", "D. Vane", "C. Vane" and the 2025 "J. Vane" are one hand. The real Julian's 2019 signature is a different hand.
+- The 1979 licence is indexed as "Cornelius Vain, b. 1914". Search *Vain*, *licence* or *Hollow Lane*. The card shows the true date, 02/03/1941.
+- The real Julian's 2019 licence has no conditions. The 2025 replacement says "night driving only".
 
-**Finding 2 (staged).** One of: the harbour report on the *Marguerite*, or the funeral invoice. Plus one of: the 1934 death registration, the 1934 newspaper report, or the 1934 trust deed. The official 2025 death registration and newspaper report do not count; they are what the finding disproves.
-- Search "Marguerite". The harbourmaster notes the boat was moored with neat knots in a gale by a man who had never helmed.
-- The funeral invoice orders an empty coffin with an inside latch and says the firm did the same for the Vane family in 1934.
+**Finding 2 (staged).** The harbour report or the funeral invoice, plus one record of an earlier staged death: the 1934 or 1976 death registration, inquest or newspaper.
+- The harbourmaster notes neat knots and a copperplate log from a man who had never helmed.
+- The funeral invoice orders one deep coffin with an inside latch, "as before" in 1934 and 1976.
 
-**Finding 3 (fabricated).** One of: a nil-return certificate for Desmond's birth, or the electoral rolls. Plus one of: his 1994 death registration, or the 1994 newspaper report. Julian's 1993 birth registration does not count; it names Desmond as father, which is the lie.
-- Search "Desmond". There is no birth record. Type "Desmond Vane" into the search box and press Request nil return.
-- The rolls show one elector at the house in every year. A different Desmond Vane, born 1958 in Marrow Bay to other parents, is a decoy.
+**Finding 3 (Desmond).** The 1934 inquest, plus a record of who Desmond was: his 1903 birth (as Desmond Dunmore), the 1907 deed poll, the 1921 census, or the 1925 rowing photo.
+- The pathologist says the male remains are "a man of about thirty, not of seventy-six". Desmond was 30.
+- A nil return for "Desmond Vane" finds no birth: he was born a Dunmore. The 1905 marriage of Ambrose and Clara says she had a son, Desmond, aged one.
 
-**Finding 4 (not).** The 1888 attack (the hospital register, the 1888 newspaper report or the diary page), Daphne's 1966 birth registration, and Accord Art. 3. Daphne was born 78 years after the turning. Her DNA matches with Margaret come from the Marsh family, not the Vane family, but the DNA report does not count as one of the required records.
+**Finding 4 (the real Cornelius).** Daphne's DNA report, plus Cornelius's 1941 birth (as Cornelius Askew) or the 1948 adoption order, plus a record of the 1976 crash (death registration, inquest or newspaper).
+- Daphne's matches not shared with Margaret are Askews. Cornelius was born an Askew. So her father really was the young Cornelius her mother typed for.
+- He died at Gull Rock in 1976. The man who died in 2025 was not him, and he owned nothing. She takes nothing from this estate.
+- Pryor Legal's line that her match with Margaret "settles the matter" is wrong: that match is on the Marsh side, through her mother.
 
-**Finding 5 (Margaret, Art. 4).** Accord Art. 4, the 1888 attack, and Harriet's 1888 birth registration. Harriet was born less than forty weeks after the attack, so she was conceived before it.
+**Finding 5 (Margaret, Art. 4).** Accord Art. 4, the 1888 attack (hospital register, newspaper or diary) and Harriet's 1888 birth. Harriet was born sixteen weeks after the attack.
 
 ## Grade
 
-One filing is an A, two a B, three a C. A minus sign means a hint from someone else's tree was attached as evidence. To get a clean A, file once with all five findings carrying the sets above and no more than four records each.
+One filing is an A, two a B, three a C. A minus sign means a hint from someone else's tree was attached as evidence.
 
 ## A route through the tree
 
-The tree starts with Cornelius, Julian, Margaret and Daphne. A route that reaches the whole tree by following names:
+The tree starts with Cornelius, Julian, Margaret and Daphne.
 
-1. Search *Cornelius Vane*. The 1934 birth registration names his father, Ambrose Vane, and leaves the mother blank. Link them. A placeholder for the unnamed mother appears.
-2. Search *Ambrose Vane*. The 1857 birth names his parents, Josiah Vane and Hannah Crewe. The 1886 marriage names his wife Eliza Marsh and her father William. The 1888 birth names his daughter Harriet.
-3. Search *Harriet Vane* and *Arthur Holloway*. The 1920 birth of Thomas Holloway names both. The 1951 birth of Margaret names Thomas.
-4. Search *Julian Vane*. The 1993 birth names Desmond Vane as father. Search *Desmond*. The 1994 death names Cornelius as father. There is no birth.
-5. Daphne's letter names Cornelius. Add it as a claimed link.
-6. From Josiah, go back: the 1850 marriage names his father Thomas, and the baptisms and marriages run back through Samuel (born 1751) and ten more Vanes to Hugh atte Vane in a 1436 court roll.
-7. The member-tree hint ("Julian is the grandson of Cornelius") adds a false dashed link and costs a mark. Do not accept it.
+1. Search *Cornelius Vane*. The 1995 marriage names his wife Helen and his "father" Desmond. The 1996 adoption order turns Julian Tate into Julian Ambrose Vane. The 1948 adoption order names Cornelius's birth name, Askew.
+2. Search *Cornelius Askew*: born 1941 to Frank Askew and Irene. Search *Desmond Vane*: the 1946 marriage to Irene Askew, the 1962 ball, and the 1976 crash.
+3. The 1934 trust deed leaves Vane House to Ambrose's "son Desmond". Search *Ambrose Vane*: the 1857 birth, the 1886 and 1905 marriages, the 1888 birth of Harriet, the censuses, and the 1934 fire.
+4. Search *Desmond Dunmore* (named in the 1905 marriage and the 1907 deed poll): born 1903 to Edgar and Clara Dunmore.
+5. Search *Harriet Vane* and *Arthur Holloway* for the Holloway line down to Margaret (see below).
+6. Daphne's letter names Cornelius as a claim. Her DNA (Askew matches) and his Askew birth prove it.
+7. From Josiah, the baptisms and marriages run back through Samuel (born 1751) to Hugh atte Vane in a 1436 court roll.
+8. The member-tree hint ("Julian is the grandson of Cornelius") adds a dashed link the claimant made. Leave it out.
+
+Links to make that are not parent or spouse:
+- **adopted or raised as a stepchild:** Ambrose → Desmond (deed poll), Desmond → Cornelius (1948 order), Cornelius and Helen → Julian (1996 order).
+- **took the identity of:** Ambrose → Desmond, Cornelius and Julian, each proven by a certified comparison between an Ambrose photo and a photo of that name taken after the handover.
 
 ## The Harriet line (Finding 5)
 
 Two links on Margaret's line need two records each.
 
-- **Harriet is Thomas's mother.** Thomas's 1920 birth gives his parents as Arthur Holloway and "Harriet Holloway", with no maiden name. The 1912 wedding photograph records Arthur Holloway marrying Harriet Vane. Attach both.
-- **Thomas is Margaret's father.** Margaret's 1951 birth gives "Thomas Holloway, clerk" and her mother as Joan, formerly Ames. There are two Thomas Holloways: a decoy born 1921 on Fish Street to Edwin and Harriet (formerly Doyle) Holloway, a fisherman. The 1948 marriage of Thomas Holloway, 28, clerk, son of Arthur, to Joan Ames settles it. Attach both.
+- **Harriet is Thomas's mother.** Thomas's 1920 birth gives "Harriet Holloway", no maiden name. The 1912 wedding records Arthur Holloway marrying Harriet Vane. Attach both.
+- **Thomas is Margaret's father.** Margaret's 1951 birth gives "Thomas Holloway, clerk". A decoy Thomas Holloway was born 1921 on Fish Street. The 1948 marriage of Thomas Holloway, 28, clerk, son of Arthur, to Joan Ames settles it. Attach both.
 
 ## What the tree must show before filing
 
-The ruling form does not list these. It shows a neutral summary of the tree, and the missing items appear only in the nudges after a second failed filing. Each finding rests on its own records, so F2 to F4 pass without the identity links.
+The ruling form does not list these; they appear in the nudges after a second failed filing.
 
-- F1: Julian is the same person as Cornelius, and Cornelius is the same person as Ambrose, both proven by certified photo or handwriting comparisons (Vane hand only).
-- F2: "died with no body seen" recorded for Cornelius (harbour report or funeral invoice) and for Ambrose (1934 death registration, inquest or newspaper).
-- F3: Desmond recorded as Julian's father, "has no birth record" from the nil return, and "died with no body seen" from the 1994 death registration or newspaper.
-- F4: the turning on 14 Feb 1888 recorded, Daphne linked to Cornelius as claimed, and her DNA recorded as matching Margaret through Marsh relatives.
-- F5: the proven chain Ambrose, Harriet, Thomas, Margaret, plus the turning event.
+- F1: Ambrose took the identity of Desmond, Cornelius and Julian, each proven.
+- F2: "died with no body seen" for Cornelius, and an earlier death recorded as "buried under another man's name".
+- F3: Desmond recorded as "buried under another man's name" (from the 1934 inquest), and Ambrose proven to have taken his identity.
+- F4: Daphne linked to Cornelius; her Askew matches recorded; Cornelius recorded as "buried under another man's name" (from the 1976 inquest).
+- F5: the proven chain Ambrose, Harriet, Thomas, Margaret, and the turning.
 
-Any unproven link among the people involved fails the finding. Remove it or prove it first.
+Any unproven link among the people involved fails the finding.
 
 ## The Ashgrove trail (optional)
 
-Search *Ashgrove*. Nine records span five centuries: a pledge in the 1436 court roll, scrivener and notary on the 1509 and 1577 wills, a 1620 oil portrait of the Recorder of Ashby "aged 33", a 1740 lease that points to a restricted file, a witness at the 1886 marriage, the 1912 wedding, the 1921 census (completed on Ambrose's behalf) and the 1934 trust. The handwriting examiner matches the 1921 signature to the 1740 lease. None of this is needed for the findings. It sets up the later cases.
+Search *Ashgrove*. He pledges in the 1436 court roll, writes the 1509 and 1577 wills, sits for a 1620 portrait, grants a 1740 lease, and witnesses or prepares every Vane handover: the 1886, 1905 and 1946 marriages, the 1907 deed poll, the 1912 wedding, the 1921 census, the 1934 trust, the 1948 and 1996 adoptions and the 1995 marriage. None of it is needed for the findings.
 
 ## Traps
 
-- **The member-tree hint** is built by the claimant the day after the death.
-- **The 1934 inquest** says "drowning, presumed" and looks like proof for Finding 2. It does not count.
-- **The official 2025 death registration** is the record Finding 2 disproves.
-- **Pryor Legal's email** says Daphne's DNA match with Margaret "settles the matter". It does not.
-- **Attaching too many records**, or records unrelated to a finding, fails the evidence even when the answer is right.
+- **The member-tree hint** was built by the claimant the day after the deaths.
+- **The official 2025 death registration and newspaper** are what Finding 2 disproves.
+- **The 1934 death registration** names Ambrose. Only the inquest says the body was a younger man.
+- **Pryor Legal's email** says Daphne's match with Margaret settles her claim. It is the wrong side of her tree.
+- **"Cornelius faked his death"** is half right. The answer to Finding 1 is the man underneath all three names.
+- **Attaching too many records**, or records unrelated to a finding, fails the evidence.

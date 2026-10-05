@@ -99,8 +99,12 @@ Pacing target: one meaningful update to the player's own tree per case.
 
 ## Case 1 solution (spoilers)
 
-1. Julian, Cornelius and Ambrose are one man. Proved by a certified photo comparison (same scar and mole, 1889 to 2019) plus two more documents spanning the century: a signature comparison, the 1934 birth registered by a dead father, the 1934 deed or the 1888 hospital register.
-2. The 2025 death was staged. The boat was found moored with neat knots, a coffin with an inside latch went to the cellar, and the 1934 death followed the same pattern.
-3. Desmond never existed. There is no birth record (nil-return certificate), he never appears on an electoral roll, and the neighbours never saw a son.
-4. Daphne can't be his daughter. Accord Art. 3 says the turned don't beget children, and her shared matches with Margaret are all on the Marsh side.
-5. Under Accord Art. 4 the estate is forfeit and passes to issue of the blood. Harriet was conceived before the February 1888 turning (hospital record, Eliza's diary), so Margaret inherits.
+The full timeline is in `CANON_CASE1.md`; the answers and evidence are in `WALKTHROUGH_CASE1.md`.
+
+1. The man calling himself Julian is Ambrose Vane, who has also lived as Desmond (from 1934) and Cornelius (from 1976). Proved by certified photo comparisons across the handovers, plus records spanning more than a century.
+2. The 2025 death was staged, by the same method as 1934 and 1976.
+3. The body buried as Ambrose in 1934 was his stepson Desmond, aged 30.
+4. Daphne's father was the real Cornelius (born Askew), who died in 1976. She takes nothing from this estate.
+5. Under Accord Art. 4 the estate is forfeit and passes to issue of the blood. Harriet was conceived before the February 1888 turning, so Margaret inherits.
+
+The pattern the player should see without being told: every forty years, a widow with a child, a disaster, and a survivor who looks about thirty.

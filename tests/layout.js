@@ -14,13 +14,14 @@ const GAME='file://'+path.resolve(__dirname,'..')+'/index.html';
    out.overlaps=[]; for(let i=0;i<ids.length;i++)for(let j=i+1;j<ids.length;j++){const a=L.pos[ids[i]],c=L.pos[ids[j]]; if(Math.abs(a[0]-c[0])<NW+20&&Math.abs(a[1]-c[1])<NH+10) out.overlaps.push(ids[i]+'/'+ids[j]);}
    out.badParent=[]; out.badSpouse=[];
    Object.keys(people).forEach(i=>(rel[i]||[]).forEach(([r,o])=>{ if(!L.pos[o]) return;
-     if((r==='Father'||r==='Mother')&&!(L.pos[o][1]<L.pos[i][1])) out.badParent.push(o+'>'+i);
+     if((r==='Father'||r==='Mother'||r==='Adoptive father'||r==='Adoptive mother')&&!(L.pos[o][1]<L.pos[i][1])) out.badParent.push(o+'>'+i);
      if(r==='Spouse'&&!(L.pos[o][1]===L.pos[i][1]&&Math.abs(L.pos[o][0]-L.pos[i][0])===NW+TREE.couple)) out.badSpouse.push(i+'+'+o); }));
    out.rowsAligned = ids.every(i=>(L.pos[i][1]-TREE.pad)%TREE.pitch===0);
    out.size=[L.w,L.h]; out.edges=L.edges.length;
    return out;},{args});
+ const PEOPLE_N=await p.evaluate(()=>PEOPLE);
  let r=await check('game');
- ok(r.unplaced.length===0,'all '+26+' people and the ghost are placed'+(r.unplaced.length?': '+r.unplaced:''));
+ ok(r.unplaced.length===0,'all '+Object.keys(PEOPLE_N).length+' people are placed'+(r.unplaced.length?': '+r.unplaced:''));
  ok(r.overlaps.length===0,'no overlapping cards'+(r.overlaps.length?': '+r.overlaps:''));
  ok(r.badParent.length===0,'every parent is above their child'+(r.badParent.length?': '+r.badParent:''));
  ok(r.badSpouse.length===0,'every couple sits side by side on one row'+(r.badSpouse.length?': '+r.badSpouse:''));
@@ -41,7 +42,9 @@ const GAME='file://'+path.resolve(__dirname,'..')+'/index.html';
  // rendering
  await p.evaluate(()=>{revealAllTree();go('tree','bl');S.tz=0.55;render()}); await p.waitForTimeout(300);
  const info=await p.evaluate(()=>({nodes:document.querySelectorAll('.tnode').length,paths:document.querySelectorAll('svg.lines path').length,labels:document.querySelectorAll('.claimlbl').length,find:document.querySelectorAll('.tsearch option').length}));
- ok(info.nodes===27,'tree renders 26 people plus the unknown-mother placeholder'); ok(info.labels===1,'the claimed link is labelled'); ok(info.find===27,'find-a-person lists everyone');
+ const n=await p.evaluate(()=>Object.keys(PEOPLE).length);
+ ok(info.nodes===n,'tree renders all '+n+' people'); ok(info.labels===3,'the three adoptions are labelled (a proven father replaces the claimed line)'); ok(info.find===n+1,'find-a-person lists everyone');
+ ok(await p.evaluate(()=>{const A=LAY.pos; return A.harriet[0]<A.desmond[0]===(A.eliza[0]<A.clara[0]);}),'Harriet sits on her mother Eliza\'s side, Desmond on his mother Clara\'s side');
  await p.evaluate(()=>{S.sel='daphne';render()}); ok(await p.evaluate(()=>document.querySelector('.tnode.dis')!==null),'Daphne is drawn as disputed from her tag');
  console.log('page errors:',errs.length?errs:'none'); console.log(fails?'FAILURES: '+fails:'ALL PASS'); await b.close();
 })();

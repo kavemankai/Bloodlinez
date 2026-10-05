@@ -66,7 +66,7 @@ Your tree is your own work. It begins with only the four people named in the bri
 
 1. Search for a name and open a record.
 2. Read it. On the record page, the **Build your tree** panel lists the people the record names.
-3. Choose two people and say how they are related: *is the parent of*, *is married to* or *is claimed to be the parent of*.
+3. Choose two people and say how they are related: *is the parent of*, *adopted or raised as a stepchild*, *is married to*, *is claimed to be the parent of*, *took the identity of* or *is the same person as*.
 4. Press **Add to tree**.
 
 You can put any link on the tree, including one you only suspect. If the record you are reading shows it, the line is solid. If not, the line is dashed and marked **unproven**. Remove a link from the Tree check panel whenever you like. A person you add appears on the tree, and the record often names someone new to search for. That is how the tree grows backwards through the generations.
@@ -75,7 +75,9 @@ The tree checks dates for you and raises flags: a parent too young or already de
 
 Some links need two records together. A birth that names the mother only by her married name proves nothing on its own; her marriage record completes it. Open each record and add the same link from both. Until then the link stays dashed and your links list says **Partly proven**.
 
-Two entries can be the same man. Add **is the same person as** between them. It is proven only after you have certified a photo or handwriting comparison between the two. You can also record an event (when someone was turned, or that no birth was ever registered) from a record that states it.
+Families take people in. Use **adopted or raised as a stepchild** when a record shows a child taken into a household by adoption or by marriage.
+
+A name on paper is not always one person. If one man took over another's identity, add **took the identity of**. If two entries are one man throughout, add **is the same person as**. Either is proven only after you have certified a photo or handwriting comparison between them. Compare pictures from before a change as well as after. You can also record an event (when someone was turned, a death with no body, a body buried under another man's name, a DNA side) from a record that states it.
 
 Your findings depend on the tree. The partners check that it shows what each finding claims, and unproven links among the people involved will fail it. The ruling form shows only a summary of your tree; what is missing is named in the nudges from your second filing.
 

@@ -9,7 +9,7 @@ const {chromium}=require('playwright-core'); const path=require('path'); const R
  const html=fs.readFileSync(ROOT+'/index.html','utf8');
  const refs=[...new Set([...html.matchAll(/assets\/([\w.\-]+\.(?:jpg|webp|png|svg))/g)].map(m=>m[1]))];
  const missing=refs.filter(f=>!fs.existsSync(ROOT+'/assets/'+f)); ok(missing.length===0,'all '+refs.length+' static asset refs exist'+(missing.length?': '+missing:''));
- const dyn=await p.evaluate(()=>[...new Set([...Object.keys(PH).map(k=>PH[k].img),...[...AVATARS].map(i=>'assets/av_'+i+'.jpg'),...Object.values(PAPER).map(x=>'assets/'+x[0]+'.webp'),...Object.keys(PROPS).map(k=>'assets/'+k+'.webp')])]);
+ const dyn=await p.evaluate(()=>[...new Set([...Object.keys(PH).map(k=>PH[k].img).filter(Boolean),...[...AVATARS].map(i=>'assets/av_'+i+'.jpg'),...Object.values(PAPER).map(x=>'assets/'+x[0]+'.webp'),...Object.keys(PROPS).map(k=>'assets/'+k+'.webp')])]);
  const dm=dyn.filter(f=>!fs.existsSync(ROOT+'/'+f)); ok(dm.length===0,'all '+dyn.length+' dynamic asset refs exist'+(dm.length?': '+dm:''));
  // 2. visit every record + tree, check broken images
  await p.evaluate(()=>{S.cookie=true; Object.keys(REC).filter(id=>!REC[id].hidden&&PAGE_KINDS.has(REC[id].kind)).forEach(id=>{go('record/'+id,'bl')}); go('tree','bl'); S.sel='ambrose'; render()});
@@ -28,11 +28,15 @@ const {chromium}=require('playwright-core'); const path=require('path'); const R
    await p.click("[data-a=certify]"); await p.click("[data-a=close]");
    return p.evaluate(([a,b])=>S.reports['cmp:'+[a,b].sort().join('-')],[a,bm]);
  }
- let r=await lab('photo1889','licence2019',['scar','mole'],['scar','mole']); ok(r&&r.ok,'lab: 1889 vs 2019, clicking real scar+mole in both -> POSITIVE');
+ let r=await lab('photo1889','licence2025',['scar','mole'],['scar','mole']); ok(r&&r.ok,'lab: 1889 vs 2025 (Julian after the takeover), clicking real scar+mole in both -> POSITIVE');
+ r=await lab('photo1889','licence1979',['scar','mole'],['scar','mole']); ok(r&&r.ok,'lab: 1889 vs 1979 (Cornelius after the takeover) -> POSITIVE');
+ ok(await p.evaluate(()=>Object.keys(marksOf('licence2019')).length===0&&Object.keys(marksOf('photo1925')).length===0),'the real Julian (2019) and the real Desmond (1925) have no scar or mole');
+ r=await lab('photo1889','licence2019',['scar','mole'],[]); ok(r&&!r.ok,'lab: 1889 vs the real Julian (2019) -> inconclusive');
+ r=await lab('photo1962','photo1925',['scar','mole'],[]); ok(r&&!r.ok,'lab: Desmond 1962 vs Desmond 1925 -> inconclusive (two different men)');
  r=await lab('photo1912','photo1962',['scar','mole'],['scar','mole']); ok(r&&r.ok,'lab: wedding right-face vs 1962 -> POSITIVE');
  r=await lab('photo1889','photo1950',['mole'],['mole']); ok(r&&!r.ok,'lab: vampire vs Thomas (mole only) -> inconclusive');
  r=await lab('photo1889','photo1921',['scar'],['scar']); ok(r&&!r.ok,'lab: vampire vs Tully (scar only) -> inconclusive');
- await p.evaluate(()=>{S.seen=Object.keys(PH);S.lab={a:'photo1889',b:'licence1972',ma:[],mb:[],miss:0};go('matter/lab','net')});
+ await p.evaluate(()=>{S.seen=Object.keys(PH);S.lab={a:'photo1889',b:'licence1979',ma:[],mb:[],miss:0};go('matter/lab','net')});
  await clickMark(0,'photo1889','scar',70,0); await clickMark(0,'photo1889','mole',0,70);
  ok(await p.evaluate(()=>S.lab.miss===2&&S.lab.ma.length===0),'lab: clicks 70px off the marks are misses');
  await clickMark(0,'photo1889','scar',20,-15); ok(await p.evaluate(()=>S.lab.ma.includes('scar')),'lab: click 25px off the scar still counts');
@@ -40,11 +44,13 @@ const {chromium}=require('playwright-core'); const path=require('path'); const R
  const shot=async(name,fn)=>{await p.evaluate(fn); await p.waitForTimeout(350); await p.screenshot({path:path.join(ROOT,'tests','shots',name+'.png')})};
  await shot('tree',()=>{S.cookie=true;go('tree','bl');S.sel='josiah';render();document.getElementById('cw').scrollTop=POS.ambrose[1]-120});
  await shot('mount',()=>{go('record/photo1889','bl')});
- await shot('licence',()=>{go('record/licence1972','bl')});
+ await shot('licence',()=>{go('record/licence1979','bl')});
+ await shot('fire1934',()=>{go('record/inquest1934','bl')});
+ await shot('adopt1996',()=>{go('record/adopt1996','bl')});
  await shot('civil',()=>{go('record/birth1857','bl')});
  await shot('home',()=>{go('home','bl')});
  await shot('search',()=>{S.q={name:'',kw:'',kind:'All'};S.searched=false;go('search','bl')});
- await shot('lab',()=>{S.lab={a:'photo1889',b:'licence2019',ma:['scar','mole'],mb:['scar'],miss:1};go('matter/lab','net')});
+ await shot('lab',()=>{S.lab={a:'photo1889',b:'licence2025',ma:['scar','mole'],mb:['scar'],miss:1};go('matter/lab','net')});
  await shot('court',()=>{go('record/court1436','bl')});
  console.log('failed/404 requests:',bad.length?[...new Set(bad)]:'none','| page errors:',errs.length?errs:'none');
  console.log(fails?'FAILURES: '+fails:'ALL PASS'); await b.close();

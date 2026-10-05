@@ -24,8 +24,8 @@ const ROOT=path.resolve(__dirname,'..'), GAME='file://'+ROOT+'/index.html', OUT=
  });
  // tester B: finds the licence by keyword, makes a wrong link, uses the planted hint
  await tester('bob',async p=>{
-  await search(p,'Cornelius Vane',''); await search(p,'','licence'); await p.evaluate(()=>go('record/licence1972','bl'));
-  await link(p,'ambrose','spouse','cornelius','birth1934');
+  await search(p,'Cornelius Vane',''); await search(p,'','licence'); await p.evaluate(()=>go('record/licence1979','bl'));
+  await link(p,'ambrose','spouse','cornelius','birth1888');
   await p.evaluate(()=>togglePin('hintOfficial')); await file(p);
  });
  const rep=execFileSync('python3',[path.join(ROOT,'scripts','analyse_playtests.py'),OUT]).toString();
@@ -36,7 +36,7 @@ const ROOT=path.resolve(__dirname,'..'), GAME='file://'+ROOT+'/index.html', OUT=
  ok(/\| alice \| [\d.]+ \| 12\.0 \|/.test(sec('Stalls')),'alice\'s 12-minute stall is reported');
  ok(/linked harriet parent thomas \(partly proven\) \| reading Wedding portrait/.test(sec('Stalls')),'the stall says what she did before and after');
  ok(!/\| alice \| [\d.]+ \| 1\.0 \|/.test(sec('Stalls')),'a one-minute gap is not a stall');
- ok(/1 of 2 opened it/.test(sec('The 1972 licence'))&&/\| bob \|.*licence/.test(sec('The 1972 licence')),'bob found the licence via the "licence" search');
+ ok(/1 of 2 opened it/.test(sec('The 1979 licence'))&&/\| bob \|.*licence/.test(sec('The 1979 licence')),'bob found the licence via the "licence" search');
  ok(/\| alice \| 1 \| 1 \| - \|/.test(sec('Joint proof')),'alice completed her joint proof');
  ok(/ambrose spouse cornelius/.test(sec('Wrong links')),'bob\'s wrong link is listed');
  ok(/zebedee quux/.test(sec('Searches that found nothing')),'an empty search is listed');

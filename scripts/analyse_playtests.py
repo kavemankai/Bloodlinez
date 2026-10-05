@@ -5,7 +5,7 @@ Usage: python3 scripts/analyse_playtests.py FOLDER_OR_FILES... > report.md
 
 Reads the JSON files saved by the game's Playtest log and writes a Markdown report:
 per-tester totals, time to each accepted finding, stalls, records nobody opened,
-wrong links, joint proofs, how the 1972 licence was found, flags and filings.
+wrong links, joint proofs, how the 1979 licence was found, flags and filings.
 Standard library only.
 """
 import json, os, re, sys
@@ -126,10 +126,10 @@ def analyse(log, T):
         gap = b['t'] - a['t']
         if gap > STALL_MIN * 60000:
             r['stalls'].append({'at': mins(a['t'] - t0), 'gap': mins(gap), 'before': describe(a, T), 'after': describe(b, T)})
-    # how the 1972 licence was found: the last search before it was first opened
+    # how the 1979 licence was found: the last search before it was first opened
     r['licence'] = None
     for i, e in enumerate(ev):
-        if opened(e) == 'licence1972':
+        if opened(e) == 'licence1979':
             prior = [x for x in ev[:i] if x.get('type') == 'search']
             r['licence'] = {'at': mins(e['t'] - t0),
                             'via': (prior[-1].get('name', '') + ' ' + prior[-1].get('kw', '')).strip() if prior else '(not from a search)'}
@@ -168,7 +168,7 @@ def report(logs):
     out += [table([[nm, s['at'], s['gap'], s['before'], s['after']] for nm, s in stalls], ['Tester', 'At minute', 'Gap (min)', 'Doing before', 'Did next'])] if stalls else ['None.']
     out += ['']
 
-    out += ['## The 1972 licence (index typo)', '']
+    out += ['## The 1979 licence (index typo)', '']
     found = [r for r in R if r['licence']]
     out += [f'{len(found)} of {n} opened it.', '']
     if found:

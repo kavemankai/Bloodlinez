@@ -53,15 +53,19 @@ const HANDS = {
   v:'<path d="M14 42 C 48 50, 96 30, 150 40 M150 40 C 158 41, 160 34, 152 33 C 146 32, 140 44, 156 48"/>',
   e:'<path d="M12 44 C 40 40, 70 46, 100 42"/>',
   m:'<path d="M10 40 L 60 46 M 60 46 L 62 36"/>',
-  r:'<path d="M12 40 C 30 30, 60 52, 90 38 L 120 44"/>'
+  r:'<path d="M12 40 C 30 30, 60 52, 90 38 L 120 44"/>',
+  c:'<path d="M12 46 C 34 36, 52 50, 74 40 C 90 34, 104 46, 118 40"/>',
+  j:'<path d="M12 38 L 128 42 M 128 42 L 134 50"/>',
+  s:'<path d="M10 44 C 30 46, 46 36, 70 44"/>'
 };
 function sig(txt, hand='v'){
   return `<svg class="sig" viewBox="0 0 170 54" aria-label="Signature: ${txt}"><text x="10" y="34">${txt}</text>${HANDS[hand]}</svg>`;
 }
 /* documents carrying a signature: [name as signed, hand]. The handwriting tool compares hands. */
 const SIGNED = {
-  census1891:['A. Vane','v'], trust1934:['A. Vane','v'], birth1934:['A. Vane','v'],
-  licence1972:['C. Vane','v'], birth1993:['C. Vane','v'], death1994:['C. Vane','v'], will2024:['C. Vane','v'], licence2019:['J. Vane','v'],
+  census1891:['A. Vane','v'], trust1934:['A. Vane','v'], marr1905:['A. Vane','v'],
+  marr1946:['D. Vane','v'], licence1979:['C. Vane','v'], marr1995:['C. Vane','v'], will2024:['C. Vane','v'], licence2025:['J. Vane','v'],
+  licence2019:['J. Vane','j'], deedpoll1907:['Clara Vane','c'], birth1993:['S. Tate','s'],
   birth1888:['E. Vane','e'], birth1966:['L. Marsh-Pike','m'],
   marr1886:['A. Vane','v'], deed1740:['R. Ashgrove','r'], census1911:['A. Vane','v'], census1921:['R. Ashgrove','r']
 };
@@ -75,9 +79,11 @@ const PH = {
   photo1912:{year:1912,alt:'Wedding portrait, 1912: groom and bride\'s father',faces:[{tone:'sepia',hair:'flat',era:'victorian',mous:true,jaw:26,nose:'broad',heavy:true},{...VAMP,tone:'sepia'}],who:'Bride\'s father (1912)',vamp:true,offset:120},
   photo1921:{year:1921,alt:'Frank Tully, wharf workers\' union committee, 1921',faces:[{tone:'sepia',hair:'short',era:'victorian',mous:true,jaw:27,nose:'broad',heavy:true,scar:true}],who:'Frank Tully (1921)'},
   photo1950:{year:1950,alt:'Thomas Holloway, 1950',faces:[{tone:'mono',hair:'wave',era:'suit',mole:true,glasses:true,jaw:25}],who:'Thomas Holloway (1950)'},
-  photo1962:{year:1962,alt:'Newspaper photograph of Cornelius Vane, 1962',faces:[{...VAMP,tone:'mono',era:'suit'}],who:'Cornelius Vane (1962)',vamp:true,news:true},
-  licence1972:{year:1972,alt:'Licence photo of Cornelius Vane, 1972',faces:[{...VAMP,tone:'seventies',hair:'long',era:'seventies'}],who:'Cornelius Vane (1972)',vamp:true},
-  licence2019:{year:2019,alt:'Licence photo of Julian Vane, 2019',faces:[{...VAMP,tone:'modern',hair:'short',era:'modern'}],who:'Julian Vane (2019)',vamp:true}
+  photo1925:{year:1925,alt:'Desmond Vane, 21, Ashby Rowing Club, 1925',faces:[{tone:'sepia',hair:'flat',era:'suit',jaw:27,nose:'broad'}],who:'Desmond Vane (1925)'},
+  photo1962:{year:1962,alt:'Newspaper photograph of Desmond Vane, 1962',faces:[{...VAMP,tone:'mono',era:'suit'}],who:'Desmond Vane (1962)',vamp:true,news:true},
+  licence1979:{year:1979,alt:'Licence photo of Cornelius Vane, 1979',faces:[{...VAMP,tone:'seventies',hair:'long',era:'seventies'}],who:'Cornelius Vane (1979)',vamp:true,file:'licence1972'},
+  licence2019:{year:2019,alt:'Licence photo of Julian Vane, 2019',faces:[{tone:'modern',hair:'wave',era:'modern',jaw:22}],who:'Julian Vane (2019)'},
+  licence2025:{year:2025,alt:'Replacement licence photo of Julian Vane, 2025',faces:[{...VAMP,tone:'modern',hair:'short',era:'modern'}],who:'Julian Vane (2025)',vamp:true,file:'licence2019'}
 };
 const IMGS = {
   photo1875:{w:600,h:750,marks:{mole:[240,377]}},
@@ -86,10 +92,10 @@ const IMGS = {
   photo1921:{w:600,h:750,marks:{scar:[363,216]}},
   photo1950:{w:600,h:750,marks:{mole:[233,374]}},
   photo1962:{w:600,h:750,marks:{scar:[407,266],mole:[227,429]}},
-  licence1972:{w:600,h:750,marks:{scar:[408,281],mole:[251,428]}},
-  licence2019:{w:600,h:750,marks:{scar:[383,277],mole:[219,452]}}
+  licence1979:{w:600,h:750,marks:{scar:[408,281],mole:[251,428]}},
+  licence2025:{w:600,h:750,marks:{scar:[383,277],mole:[219,452]}}
 };
-for(const k in IMGS) Object.assign(PH[k],{img:'assets/'+k+'.jpg',hit:40},IMGS[k]);
+for(const k in IMGS) Object.assign(PH[k],{img:'assets/'+(PH[k].file||k)+'.jpg',hit:40},IMGS[k]);
 const PROPS = {
   mount_cabinet:{w:600,h:750,hole:[97,82,406,501]},
   licence_card_1972:{w:1200,h:800,hole:[130,182,329,430]},
@@ -111,15 +117,18 @@ function marksOf(id){
 
 /* ================= PEOPLE ================= */
 const PEOPLE = {
-  ambrose:{name:'Ambrose Vane',life:'1857 – 1934',ini:'AV',facts:[['Born','9 Feb 1857, Vane House'],['Parents','Josiah Vane and Hannah Crewe'],['Married','Eliza Marsh, 1886'],['Occupation','Night clerk, shipping office (1891)'],['Residence','Vane House, 14 Hollow Lane'],['Died','1 Feb 1934, lost at sea, age 76']],recs:['birth1857','census1861','photo1875','census1881','marr1886','photo1889','census1891','birth1888','census1911','census1921','death1934','birth1934']},
+  ambrose:{name:'Ambrose Vane',life:'1857 – 1934',ini:'AV',facts:[['Born','9 Feb 1857, Vane House'],['Parents','Josiah Vane and Hannah Crewe'],['Married','Eliza Marsh, 1886; Clara Dunmore, 1905'],['Occupation','Night clerk, shipping office (1891)'],['Residence','Vane House, 14 Hollow Lane'],['Died','1 Feb 1934, fire at Vane House, age 76']],recs:['birth1857','census1861','photo1875','census1881','marr1886','photo1889','census1891','birth1888','marr1905','census1911','census1921','trust1934','death1934','burial1934']},
   eliza:{name:'Eliza Vane (née Marsh)',life:'1861 – 1902',ini:'EV',facts:[['Born','1861, Ashby'],['Married','Ambrose Vane, 1886'],['Died','1902, Ashby']],recs:['birth1861','marr1886','census1891','birth1888']},
+  clara:{name:'Clara Vane (formerly Dunmore)',life:'1875 – 1934',ini:'CV',facts:[['Born','1875, Ashby'],['Married','Edgar Dunmore; Ambrose Vane, 1905'],['Died','1 Feb 1934, fire at Vane House, age 58']],recs:['birth1903','marr1905','deedpoll1907','census1911','census1921','burial1934']},
   harriet:{name:'Harriet Holloway (née Vane)',life:'1888 – 1960',ini:'HH',facts:[['Born','4 Jun 1888, Vane House'],['Parents','Ambrose Vane and Eliza Marsh'],['Married','Arthur Holloway, 1912'],['Died','1960, Ashby']],recs:['birth1888','census1891','census1911','photo1912']},
-  cornelius:{name:'Cornelius Vane',life:'1934 – 2025',ini:'CV',tag:'Deceased',facts:[['Born','2 Mar 1934, Vane House'],['Father','Ambrose Vane'],['Mother','Not recorded'],['Residence','Vane House, 14 Hollow Lane (lifelong)'],['Died','2 Mar 2025, lost at sea, age 91']],recs:['birth1934','licence1972','rolls','will2024','death2025']},
+  desmond:{name:'Desmond Vane',life:'1903 – 1976',ini:'DV',facts:[['Born','11 Oct 1903, Ashby'],['Residence','Vane House, 14 Hollow Lane'],['Married','Irene Askew, 1946'],['Died','14 Nov 1976, Gull Rock, age 73']],recs:['census1911','census1921','photo1925','trust1934','marr1946','adopt1948','photo1962','death1976']},
+  irene:{name:'Irene Vane (formerly Askew)',life:'1912 – 1976',ini:'IV',facts:[['Born','1912, Ashby'],['Married','Frank Askew; Desmond Vane, 1946'],['Died','14 Nov 1976, Gull Rock, age 64']],recs:['birth1941','marr1946','adopt1948','inquest1976']},
+  cornelius:{name:'Cornelius Vane',life:'1941 – 2025',ini:'CV',tag:'Deceased',facts:[['Born','2 Mar 1941, Ashby'],['Residence','Vane House, 14 Hollow Lane'],['Married','Helen Tate, 1995'],['Died','2 Mar 2025, lost at sea, age 84']],recs:['adopt1948','licence1979','marr1995','adopt1996','rolls','will2024','death2025']},
+  helen:{name:'Helen Vane (formerly Tate)',life:'1950 – 2025',ini:'HV',facts:[['Born','12 Aug 1950, Ashby'],['Married','Mr Tate; Cornelius Vane, 1995'],['Died','2 Mar 2025, lost at sea, age 74']],recs:['marr1995','adopt1996','death2025h']},
   thomas:{name:'Thomas Holloway',life:'1920 – 1999',ini:'TH',facts:[['Born','1920, Ashby'],['Parents','Arthur Holloway and Harriet Vane'],['Died','1999, Ashby']],recs:['birth1920','photo1950']},
-  desmond:{name:'Desmond Vane',life:'1961 – 1994',ini:'DV',facts:[['Born','1961 (per family tree, no source)'],['Father','Cornelius Vane'],['Died','30 Oct 1994, Vane House, age 33']],recs:['death1994','birth1993']},
   daphne:{name:'Daphne Marsh-Pike',life:'1966 – Living',ini:'DM',tag:'Disputed',facts:[['Born','1966, Ashby'],['Mother','Lorna Marsh-Pike'],['Father','Not stated (claims Cornelius Vane)']],recs:['letterDaphne','birth1966','dnaDaphne']},
   margaret:{name:'Margaret Holloway',life:'1951 – Living',ini:'MH',tag:'Claimant',facts:[['Born','1951, Ashby'],['Father','Thomas Holloway'],['Relationship','Great-granddaughter of Ambrose Vane']],recs:['birth1951','letterMargaret','dnaMargaret']},
-  julian:{name:'Julian Ambrose Vane',life:'1993 – Living',ini:'JV',tag:'Claimant',facts:[['Born','14 Jan 1993, Vane House'],['Father','Desmond Vane'],['Mother','Not stated'],['Residence','Vane House, 14 Hollow Lane']],recs:['birth1993','licence2019','letterJulian','dnaJulian']}
+  julian:{name:'Julian Ambrose Vane',life:'1993 – Living',ini:'JV',tag:'Claimant',facts:[['Born','14 Jan 1993, Ashby'],['Residence','Vane House, 14 Hollow Lane']],recs:['adopt1996','licence2019','licence2025','letterJulian','dnaJulian']}
 };
 
 /* ================= RECORDS ================= */
@@ -130,13 +139,13 @@ const clip = (paper, date, head, body, ph) => `<div class="clip"><div class="mas
 const PAPER = {};
 [['paper_parchment','lo',['court1436','will1509','will1577','deed1740']],
  ['paper_parish_1751','lo',['burial1544','bapt1550','marr1612','bapt1620','tax1674','marr1682','bapt1688','bapt1720','bapt1751','bapt1789']],
- ['paper_parish_form','hi',['marr1818','burial1889']],['paper_census_1841','hi',['census1841']],
+ ['paper_parish_form','hi',['marr1818','burial1889','burial1934']],['paper_census_1841','hi',['census1841']],
  ['paper_census','hi',['census1861','census1881','census1891','census1911','census1921']],
- ['paper_civil_1850','hi',['marr1850','birth1857','birth1861','marr1886','birth1888']],
+ ['paper_civil_1850','hi',['marr1850','birth1857','birth1861','marr1886','birth1888','marr1905']],
  ['paper_hospital','hi',['hospital1888']],['paper_diary','lo',['diary1888']],
- ['paper_news_victorian','hi',['news1888','news1889']],['paper_news_1930s','hi',['news1934']],['paper_news_postwar','hi',['photo1962','news1994']],
- ['paper_deed_1934','lo',['trust1934']],
- ['paper_register','hi',['birth1934','death1934','inquest1934','birth1958d','birth1966','birth1993','death1994','death2025','birth1920','birth1951']],
+ ['paper_news_victorian','hi',['news1888','news1889']],['paper_news_1930s','hi',['news1934']],['paper_news_postwar','hi',['photo1962','news1976']],
+ ['paper_deed_1934','lo',['trust1934','deedpoll1907']],
+ ['paper_register','hi',['death1934','inquest1934','birth1958d','birth1966','birth1993','death2025','death2025h','birth1920','birth1951','birth1903','birth1941','marr1946','adopt1948','death1976','inquest1976','marr1995','adopt1996']],
  ['paper_will_modern','lo',['will2024']],['paper_letter','lo',['letterJulian']],['paper_letter_margaret','lo',['letterMargaret']],['paper_letter_daphne','lo',['letterDaphne']],
  ['paper_invoice','hi',['funeral2025']],['paper_harbour','hi',['marine2025']]
 ].forEach(([f,w,ids])=>ids.forEach(i=>PAPER[i]=[f,w]));
@@ -229,31 +238,58 @@ const REC = {
     render:()=>clip('The Ashby Courier','Saturday, 9 March 1889','Death of a worthy shipwright',['Mr Josiah Vane, 65, of Vane House, Hollow Lane, died on Friday after a short illness. He was thirty years at the Quay yard and built the Ashby lifeboat.','He leaves a widow and one son, Mr Ambrose Vane, who has been unwell this past year and was not able to attend the yard\'s tribute.'])},
   birth1861:{kind:'Birth',year:1861,title:'Birth registration, Eliza Marsh',k:'Eliza Marsh William Ann Teale Fish Street',
     render:()=>regDoc('Registration of Birth','1861/0049',[['Child','Eliza Marsh'],['Born','20 January 1861, Fish Street'],['Father','William Marsh, chandler'],['Mother','Ann Marsh, formerly Teale'],['Informant','W. Marsh, father'],['Registered','2 February 1861']],'')},
-  census1911:{kind:'Census',year:1911,title:'1911 Census, Vane House, 14 Hollow Lane',k:'Ambrose Harriet Vane Hollow Lane Vane House Kemp',
+  census1911:{kind:'Census',year:1911,title:'1911 Census, Vane House, 14 Hollow Lane',k:'Ambrose Clara Harriet Desmond Vane Hollow Lane Vane House Kemp stepson',
     render:()=>`<div class="doc"><h4>Census of 1911 · Householder's Schedule</h4><div class="c">District of Ashby · Hollow Lane · 2 April 1911</div>
     <div class="doctable-wrap"><table class="doctable"><tr><th>Name</th><th>Relation</th><th>Age</th><th>Occupation</th></tr>
-    <tr><td>Ambrose Vane</td><td>Head</td><td>41</td><td>Private means</td></tr><tr><td>Harriet Vane</td><td>Daughter</td><td>22</td><td>—</td></tr><tr><td>Ada Kemp</td><td>Servant</td><td>19</td><td>Housemaid</td></tr></table></div>
+    <tr><td>Ambrose Vane</td><td>Head</td><td>41</td><td>Private means</td></tr><tr><td>Clara Vane</td><td>Wife</td><td>36</td><td>—</td></tr><tr><td>Harriet Vane</td><td>Daughter</td><td>22</td><td>—</td></tr><tr><td>Desmond Vane</td><td>Stepson</td><td>7</td><td>Scholar</td></tr><tr><td>Ada Kemp</td><td>Servant</td><td>19</td><td>Housemaid</td></tr></table></div>
     <div class="sigline"><span>Signature of head of household:</span>${sig('A. Vane')}</div>
     <p class="rn">Enumerator's note: Schedule collected after dark by arrangement.</p></div>`},
-  census1921:{kind:'Census',year:1921,title:'1921 Census, Vane House, 14 Hollow Lane',k:'Ambrose Vane Hollow Lane Vane House Kemp Ashgrove',
+  census1921:{kind:'Census',year:1921,title:'1921 Census, Vane House, 14 Hollow Lane',k:'Ambrose Clara Desmond Vane Hollow Lane Vane House Kemp Ashgrove',
     render:()=>`<div class="doc"><h4>Census of 1921 · Householder's Schedule</h4><div class="c">District of Ashby · Hollow Lane · 19 June 1921</div>
     <div class="doctable-wrap"><table class="doctable"><tr><th>Name</th><th>Relation</th><th>Age</th><th>Occupation</th></tr>
-    <tr><td>Ambrose Vane</td><td>Head</td><td>64</td><td>Private means</td></tr><tr><td>Ada Kemp</td><td>Servant</td><td>29</td><td>Housekeeper</td></tr></table></div>
+    <tr><td>Ambrose Vane</td><td>Head</td><td>64</td><td>Private means</td></tr><tr><td>Clara Vane</td><td>Wife</td><td>46</td><td>—</td></tr><tr><td>Desmond Vane</td><td>Stepson</td><td>17</td><td>Articled clerk, Ashgrove &amp; Pell</td></tr><tr><td>Ada Kemp</td><td>Servant</td><td>29</td><td>Housekeeper</td></tr></table></div>
     <div class="sigline"><span>Completed on behalf of the occupier by:</span>${sig('R. Ashgrove','r')}</div>
     <p class="rn">Enumerator's note: The occupier is indisposed by day. Schedule completed by his solicitor, who gave the occupier's age as 64 on his own authority. The occupier was not seen.</p></div>`},
+  birth1903:{kind:'Birth',year:1903,title:'Birth registration, Desmond Dunmore',k:'Desmond Dunmore Edgar Clara Royle Quay Terrace',
+    render:()=>regDoc('Registration of Birth','1903/0781',[['Child','Desmond Dunmore'],['Born','11 October 1903, 6 Quay Terrace, Ashby'],['Father','Edgar Dunmore, second mate, SS Larkspur'],['Mother','Clara Dunmore, formerly Royle'],['Informant','C. Dunmore, mother'],['Registered','19 October 1903']],'')},
+  marr1905:{kind:'Marriage',year:1905,title:'Marriage registration, Ambrose Vane and Clara Dunmore',k:'Ambrose Vane Clara Dunmore Royle widow marriage St Columba Ashgrove',
+    render:()=>regDoc('Registration of Marriage','1905/0233',[['Groom','Ambrose Vane, 48, widower, gentleman, Vane House'],['Bride','Clara Dunmore, 30, widow, 6 Quay Terrace'],['Married','6 May 1905, St Columba\'s, by licence, 8 pm'],['Father of groom','Josiah Vane, shipwright (deceased)'],['Father of bride','Henry Royle, sailmaker'],['Witnesses','R. Ashgrove; H. Vane']],sig('A. Vane'),"Bride's note: the bride's former husband, Edgar Dunmore, was lost with the SS Larkspur, 14 September 1904. One child of that marriage, Desmond, aged one year.",'Signature of groom:','Ashby','District of')},
+  deedpoll1907:{kind:'Deed',year:1907,title:'Deed poll, change of name, Desmond Dunmore',k:'Desmond Dunmore Vane deed poll change of name Clara Ambrose Ashgrove',
+    render:()=>`<div class="doc"><h4>Deed Poll · Change of Name</h4>
+    <p>I, CLARA VANE, formerly Dunmore, of Vane House, 14 Hollow Lane, Ashby, on behalf of my son DESMOND DUNMORE, born 11 October 1903, an infant, renounce the surname Dunmore. He shall be known from this day as DESMOND VANE.</p>
+    <p>Consented to by the infant's stepfather, Ambrose Vane.</p>
+    <div class="sigline"><span>Signed:</span>${sig('Clara Vane','e')}</div>
+    <p class="rn">Enrolled 3 April 1907. Prepared and attested by R. Ashgrove, Ashgrove &amp; Pell.</p></div>`},
+  photo1925:{kind:'Photo',year:1925,title:'Ashby Rowing Club, Desmond Vane, 1925',k:'Desmond Vane rowing club sculls 1925',
+    render:()=>`<div class="photo">${photo(PH.photo1925)}<div class="doc" style="max-width:420px"><p><b>Ashby Rowing Club annual, 1925.</b></p><p>D. Vane, 21, winner of the Coronation Sculls. Photographed on the slipway at noon.</p></div></div>`},
+  burial1934:{kind:'Parish',year:1934,title:'Burials, Vane House fire, 1934',k:'Ambrose Clara Vane Ada Kemp burial St Columba crypt fire',
+    render:()=>regDoc('Burial Register','612–614',[['612','Clara Vane, 58, of Vane House. Buried 6 February 1934'],['613','Ada Kemp, 42, of Vane House. Buried 6 February 1934'],['614','Ambrose Vane, 76, of Vane House. Remains placed in the family crypt, 6 February 1934, at night, at the family\'s request']],'',"Entered in the hand of the Rev. P. Gowan.",'','St Columba, Ashby','Parish of')},
+  birth1941:{kind:'Birth',year:1941,title:'Birth registration, Cornelius Askew',k:'Cornelius Askew Frank Irene Lowe Rope Walk',
+    render:()=>regDoc('Registration of Birth','1941/0302',[['Child','Cornelius Askew'],['Born','2 March 1941, 9 Rope Walk, Ashby'],['Father','Frank Askew, docker'],['Mother','Irene Askew, formerly Lowe'],['Informant','I. Askew, mother'],['Registered','10 March 1941']],'')},
+  marr1946:{kind:'Marriage',year:1946,title:'Marriage registration, Desmond Vane and Irene Askew',k:'Desmond Vane Irene Askew Lowe widow marriage St Columba Ashgrove',
+    render:()=>regDoc('Registration of Marriage','1946/0688',[['Groom','Desmond Vane, 43, bachelor, gentleman, Vane House'],['Bride','Irene Askew, 34, widow, 9 Rope Walk'],['Married','9 November 1946, St Columba\'s, 7:30 pm'],['Father of groom','Ambrose Vane, gentleman (deceased)'],['Father of bride','Albert Lowe, carter'],['Witnesses','R. Ashgrove; M. Lowe']],sig('D. Vane'),'','Signature of groom:','Ashby','District of')},
+  adopt1948:{kind:'Deed',year:1948,title:'Adoption order, Cornelius Askew',k:'Cornelius Askew Vane adoption Desmond Irene Ashgrove',
+    render:()=>regDoc('Adoption Order','48/112',[['Infant','Cornelius Askew, born 2 March 1941'],['Adopters','Desmond Vane and Irene Vane, of Vane House, 14 Hollow Lane'],['Name after adoption','Cornelius Vane'],['Order made','14 June 1948, Ashby County Court']],'',"Court's note: The infant's natural father, Frank Askew, was killed on active service in 1943. The infant's mother is one of the adopters. Solicitor for the adopters: R. Ashgrove.",'','Ashby','County Court,')},
   photo1912:{kind:'Photo',year:1912,title:'Wedding portrait, Holloway–Vane, 1912',k:'Arthur Holloway Harriet Vane wedding St Columba Ashgrove',
     render:()=>`<div class="photo">${photo(PH.photo1912)}<div class="doc" style="max-width:480px"><p><b>Marriage of Arthur Holloway and Harriet Vane, St Columba's, Ashby, 1912.</b></p><p>Evening portrait, taken after the reception at the request of the bride's father. Left: the groom. Right: the bride's father.</p><p>Witness to the marriage: R. Ashgrove, solicitor.</p></div></div>`},
   photo1950:{kind:'Photo',year:1950,title:'Thomas Holloway, Ashby Rowing Club',k:'Thomas Holloway rowing club',
     render:()=>`<div class="photo">${photo(PH.photo1950)}<div class="doc" style="max-width:420px"><p>Thomas Holloway, aged 30, club secretary. Ashby Rowing Club annual, 1950.</p></div></div>`},
-  photo1962:{kind:'Newspaper',year:1962,title:'"Lights burn till dawn at Vane House"',k:'Cornelius Vane ball Vane House Hollow Lane Courier',
+  photo1962:{kind:'Newspaper',year:1962,title:'"Lights burn till dawn at Vane House"',k:'Desmond Irene Cornelius Vane ball Vane House Hollow Lane Courier',
     render:()=>clip('The Ashby Courier','Saturday, 17 March 1962','Lights burn till dawn at Vane House',
-      ['Mr Cornelius Vane, 28, threw open the doors of Vane House on Friday for the first time in a generation. Guests danced until a quarter to six, when the host excused himself.','"He looks the image of his father," remarked one elderly guest, who asked not to be named. "The very image. It gave me quite a turn."'],PH.photo1962)},
+      ['Mr Desmond Vane, 58, threw open the doors of Vane House on Friday for the first time in a generation, with his wife Irene and their son Cornelius, 21. Guests danced until a quarter to six, when the host excused himself.','"He is the image of old Mr Ambrose," remarked one elderly guest, who asked not to be named. "The very image. And him no blood relation at all. It gave me quite a turn."'],PH.photo1962)},
+  death1976:{kind:'Death',year:1976,title:'Death registration, Desmond Vane',k:'Desmond Vane Gull Rock car accident coast road',
+    render:()=>regDoc('Registration of Death','1976/0861',[['Deceased','Desmond Vane'],['Age','73 years'],['Date of death','14 November 1976'],['Place','Coast Road, Gull Rock'],['Cause','Injuries and burns, road accident'],['Identified','By C. Vane, son, from a wristwatch'],['Informant',"Coroner's certificate"],['Registered','22 November 1976']],'',"Registrar's note: One of two deaths in the same accident. See also Irene Vane.")},
+  inquest1976:{kind:'Inquest',year:1976,title:"Coroner's inquest, Gull Rock road accident",k:'Desmond Irene Cornelius Vane Gull Rock inquest coroner car wristwatch pathologist',
+    render:()=>regDoc("Coroner's Inquest",'1976/C-41',[['Deceased','Irene Vane, 64; Desmond Vane, 73'],['Held','19 November 1976, Ashby Courthouse'],['Evidence','The car left the Coast Road at Gull Rock at about 11 pm on 14 November, fell to the rocks and burned. The driver could not be identified by sight.'],['Witness','C. Vane, son. Thrown clear. Walked a mile to the Gull Rock Inn, arriving after midnight.'],['Verdict','Accidental death']],'',"Coroner's note: The pathologist puts the driver's age at between twenty-five and forty. The deceased's son identified a wristwatch as his father's, and the court accepts that identification. Estate represented by Ashgrove &amp; Pell.")},
+  news1976:{kind:'Newspaper',year:1976,title:'"Couple die as car leaves Gull Rock road"',k:'Desmond Irene Cornelius Vane Gull Rock car accident inn',
+    render:()=>clip('The Ashby Courier','Tuesday, 16 November 1976','Couple die as car leaves Gull Rock road',
+      ['Mr Desmond Vane, 73, and his wife Irene, 64, of Vane House, died on Sunday night when their car left the Coast Road at Gull Rock and caught fire on the rocks below.','Their son Cornelius, 35, was thrown clear and walked a mile to the Gull Rock Inn. "He hadn\'t a mark on him," said the landlord, Mr T. Pascoe. "He asked me to turn the lights down. Then he sat by the window till it got light, and left before anyone else was up."'])},
   photo1921:{kind:'Photo',year:1921,title:"Ashby Wharf Workers' Union, committee, 1921",k:'wharf union committee Frank Tully Ashby',
  render:()=>`${photo(PH.photo1921)}<p class="rn">Ashby Wharf Workers' Union, committee portrait, 1921. F. Tully, secretary. Scar from a winch accident, 1917 (union accident book).</p>`},
  birth1958d:{kind:'Birth',year:1958,title:'Birth registration, Desmond Vane (Marrow Bay)',k:'Desmond Vane Harold Ruth Gale Marrow Bay',
  render:()=>regDoc('Registration of Birth','1958/0388',[['Child','Desmond Vane'],['Born','3 September 1958, Marrow Bay Cottage Hospital'],['Father','Harold Vane, carter'],['Mother','Ruth Vane, formerly Gale'],['Informant','R. Vane, mother'],['Registered','12 September 1958']],'','','Signature of informant:','Marrow Bay')},
- inquest1934:{kind:'Inquest',year:1934,title:"Coroner's inquest, Ambrose Vane",k:'Ambrose Vane Corrie inquest coroner steward Lamb drowned',
- render:()=>regDoc("Coroner's Inquest",'1934/C-12',[['Deceased','Ambrose Vane, 76'],['Held','8 February 1934, Ashby Courthouse'],['Witness','W. Lamb, steward, SS Corrie'],['Evidence','Saw the deceased at the starboard rail at about 11 pm. Did not see him go over.'],['Verdict','Drowning, presumed. No suspicious circumstances.']],'',"Coroner's note: Body not recovered. Estate represented by Ashgrove &amp; Pell.")},
+ inquest1934:{kind:'Inquest',year:1934,title:"Coroner's inquest, Vane House fire",k:'Ambrose Clara Desmond Vane Ada Kemp fire inquest coroner ring pathologist',
+ render:()=>regDoc("Coroner's Inquest",'1934/C-12',[['Deceased','Clara Vane, 58; Ada Kemp, 42; Ambrose Vane, 76'],['Held','8 February 1934, Ashby Courthouse'],['Evidence','Fire began in the east wing at about 2 am. An oil lamp was found overturned. The doors of the east wing were locked; the keys were found with the housekeeper.'],['Witness','D. Vane, son. Was staying at Calder; returned after dark on 1 February to find the wing burned out.'],['Verdict','Accidental death']],'',"Coroner's note: The pathologist reports that the male remains are those of a man of about thirty, not of seventy-six. The deceased's son identified the signet ring as his father's, and the court accepts that identification. Estate represented by Ashgrove &amp; Pell.")},
  hospital1888:{kind:'Medical',year:1888,title:'Ashby Hospital admission, Ambrose Vane',k:'Ambrose Vane hospital wharf attack wound',
     render:()=>regDoc('Ashby Hospital · Casualty Register','1888/0219',[['Patient','Ambrose Vane, 31, clerk'],['Admitted','14 February 1888, 2:10 am'],['Injuries','Deep bite wounds to the neck. Laceration through the left eyebrow.'],['Condition','Severe loss of blood. No pulse found at 4 am.'],['Discharged','Self-discharged 14 February, 9:40 pm, against advice']],'',"House surgeon's note: Patient sat up at dusk and asked for the curtains to be closed. Pulse still absent. Wound above the eye closed overnight. I have no explanation and will not be writing one.")},
   news1888:{kind:'Newspaper',year:1888,title:'"Clerk survives savage attack on wharf"',k:'Ambrose Vane wharf attack clerk',
@@ -261,75 +297,77 @@ const REC = {
       ['Mr Ambrose Vane, a night clerk with the shipping office, was set upon at the Ashby wharf in the early hours of Tuesday by an assailant he describes only as "a tall foreign gentleman."','Mr Vane, who lost a great deal of blood, left hospital the same evening. His wife, who is expecting their first child in the summer, said he was "quite himself, only very pale."'])},
   birth1888:{kind:'Birth',year:1888,title:'Birth registration, Harriet Vane',k:'Harriet Vane Ambrose Eliza Holloway',
     render:()=>regDoc('Registration of Birth','1888/0412',[['Child','Harriet Vane'],['Born','4 June 1888, Vane House, Hollow Lane'],['Father','Ambrose Vane, clerk'],['Mother','Eliza Vane, formerly Marsh'],['Informant','E. Vane, mother'],['Registered','11 June 1888']],sig('E. Vane','e'))},
-  death1934:{kind:'Death',year:1934,title:'Death registration, Ambrose Vane',k:'Ambrose Vane Corrie drowned sea',
-    render:()=>regDoc('Registration of Death','1934/0088',[['Deceased','Ambrose Vane'],['Age','76 years'],['Date of death','1 February 1934'],['Place','At sea off Ashby Point, from the steamer SS Corrie'],['Cause','Drowning (presumed)'],['Body','Not recovered'],['Informant',"Harbour Master's report"],['Registered','6 February 1934']],'',"Registrar's note: Deceased went overboard during a night crossing. No witnesses on deck.")},
-  news1934:{kind:'Newspaper',year:1934,title:'"Man lost from the Corrie"',k:'Ambrose Vane Corrie overboard',
-    render:()=>clip('The Ashby Courier','Saturday, 3 February 1934','Man lost from the Corrie',
-      ['Mr Ambrose Vane of Hollow Lane, 76, is presumed drowned after going over the side of the SS Corrie during Thursday night\'s crossing. A steward saw Mr Vane on the rail "looking very well for his age." No cry was heard.','The Corrie\'s master notes that Mr Vane had booked a return passage.'])},
-  trust1934:{kind:'Legal',year:1934,title:'Vane Family Trust deed',k:'Ambrose Cornelius Vane trust deed Ashgrove Pell',
+  death1934:{kind:'Death',year:1934,title:'Death registration, Ambrose Vane',k:'Ambrose Vane fire Vane House Hollow Lane ring',
+    render:()=>regDoc('Registration of Death','1934/0088',[['Deceased','Ambrose Vane'],['Age','76 years'],['Date of death','1 February 1934'],['Place','Vane House, 14 Hollow Lane (fire)'],['Cause','Burns and smoke, accidental'],['Identified','By D. Vane, son, from a signet ring'],['Informant',"Coroner's certificate"],['Registered','9 February 1934']],'',"Registrar's note: One of three deaths in the same fire. See also Clara Vane and Ada Kemp.")},
+  news1934:{kind:'Newspaper',year:1934,title:'"Three die in Hollow Lane fire"',k:'Ambrose Clara Desmond Vane Ada Kemp fire Hollow Lane',
+    render:()=>clip('The Ashby Courier','Saturday, 3 February 1934','Three die in Hollow Lane fire',
+      ['Fire swept the east wing of Vane House in the early hours of Thursday. Mr Ambrose Vane, 76, his wife Clara, 58, and their housekeeper, Miss Ada Kemp, 42, lost their lives.','Mr Desmond Vane, 30, Mrs Vane\'s son by her first marriage, was staying at Calder and learned the news on his return. Neighbours say the household kept late hours. "You never saw the old gentleman by day," said one. "But he looked very well for seventy-six."'])},
+  trust1934:{kind:'Legal',year:1934,title:'Vane Family Trust deed',k:'Ambrose Desmond Cornelius Vane trust deed Ashgrove Pell',
     render:()=>`<div class="doc"><h4>Deed of Trust · The Vane Family Trust</h4>
     <p>Made 20 January 1934 by AMBROSE VANE of Vane House, Ashby (the Settlor).</p>
-    <p>1. The Settlor gives Vane House and his investments to the Trustees, to hold for his son CORNELIUS VANE upon the Settlor's death.</p>
-    <p>2. Should the Settlor die abroad or at sea, the Trustees shall act upon the Harbour Master's report alone.</p>
+    <p>1. The Settlor gives Vane House and his investments to the Trustees, to hold for his son DESMOND VANE upon the Settlor's death.</p>
+    <p>2. Should the Settlor die suddenly, by fire, at sea or otherwise, the Trustees shall act upon the coroner's finding alone and shall require no further proof of identity.</p>
     <div class="sigline"><span>Signed by the Settlor:</span>${sig('A. Vane')}</div>
-    <p class="rn">Prepared by Ashgrove &amp; Pell, Solicitors. Attesting solicitor: R. Ashgrove. Executed after hours. Amended 1993 to add "my grandson Julian" as a beneficiary, signed C. Vane.</p></div>`},
-  birth1934:{kind:'Birth',year:1934,title:'Birth registration, Cornelius Vane',k:'Cornelius Vane Ambrose',
-    render:()=>regDoc('Registration of Birth','1934/0151',[['Child','Cornelius Vane'],['Born','2 March 1934, Vane House, Hollow Lane'],['Father','Ambrose Vane, gentleman'],['Mother','(left blank)'],['Informant','A. Vane, father'],['Registered','9 March 1934']],sig('A. Vane'),"Registrar's note: Informant attended after hours by arrangement.")},
-  rolls:{kind:'Roll',year:2023,title:'Electoral rolls, 14 Hollow Lane, 1903–2025',k:'Ambrose Cornelius Julian Desmond Vane electoral roll Hollow Lane',
+    <p class="rn">Prepared by Ashgrove &amp; Pell, Solicitors. Attesting solicitor: R. Ashgrove. Executed after hours. Varied 14 December 1976: upon the death of Desmond Vane the trust is held for his son Cornelius Vane, on the same terms.</p></div>`},
+  rolls:{kind:'Roll',year:2025,title:'Electoral rolls, 14 Hollow Lane, 1903–2025',k:'Ambrose Clara Desmond Irene Cornelius Helen Julian Vane electoral roll Hollow Lane',
     render:()=>`<div class="doc"><h4>Electoral Rolls · Subdivision of Ashby</h4><div class="c">All enrolled electors at 14 Hollow Lane (Vane House)</div>
-    <div class="doctable-wrap"><table class="doctable"><tr><th>Roll</th><th>Electors at address</th><th>Occupation</th></tr>
-    <tr><td>1903</td><td>Ambrose Vane</td><td>Gentleman</td></tr><tr><td>1919</td><td>Ambrose Vane</td><td>Gentleman</td></tr>
-    <tr><td>1937</td><td>(none: owner a minor)</td><td>—</td></tr><tr><td>1955</td><td>Cornelius Vane</td><td>Gentleman</td></tr>
-    <tr><td>1972</td><td>Cornelius Vane</td><td>Gentleman</td></tr><tr><td>1983</td><td>Cornelius Vane</td><td>Gentleman</td></tr>
-    <tr><td>1990</td><td>Cornelius Vane</td><td>Gentleman</td></tr><tr><td>2013</td><td>Cornelius Vane</td><td>Retired</td></tr>
-    <tr><td>2023</td><td>Cornelius Vane</td><td>Retired</td></tr><tr><td>2025</td><td>Julian Ambrose Vane</td><td>Gentleman</td></tr></table></div>
-    <p class="rn">Enrolment became compulsory for all adults in 1924. One elector at this address in every year on file.</p></div>`},
-  licence1972:{kind:'ID',year:1972,title:'Driver licence, Cornelius Vane',ix:'Driver licence, Cornelius Vain',k:'Cornelius Vain licence Hollow Lane',
-    render:()=>`<div class="licence">${licard(PH.licence1972,'licence_card_1972')}<div class="f"><div class="hd">MOTOR REGISTRY · DRIVER LICENCE · 1972</div>
-    ${dl([['Name','VANE, Cornelius'],['Date of birth','02/03/1934 (age 38)'],['Address','14 Hollow Lane, Ashby'],['Class','C'],['Conditions','N: night driving only (medical, photosensitivity)']])}
+    <div class="doctable-wrap"><table class="doctable"><tr><th>Roll</th><th>Electors at address</th></tr>
+    <tr><td>1903</td><td>Ambrose Vane, gentleman</td></tr><tr><td>1919</td><td>Ambrose Vane; Clara Vane</td></tr><tr><td>1925</td><td>Ambrose Vane; Clara Vane; Desmond Vane</td></tr>
+    <tr><td>1937</td><td>Desmond Vane, gentleman</td></tr><tr><td>1955</td><td>Desmond Vane; Irene Vane</td></tr><tr><td>1962</td><td>Desmond Vane; Irene Vane; Cornelius Vane</td></tr>
+    <tr><td>1972</td><td>Desmond Vane; Irene Vane; Cornelius Vane</td></tr><tr><td>1983</td><td>Cornelius Vane, gentleman</td></tr><tr><td>1997</td><td>Cornelius Vane; Helen Vane</td></tr>
+    <tr><td>2013</td><td>Cornelius Vane, retired; Helen Vane; Julian Ambrose Vane</td></tr><tr><td>2023</td><td>Cornelius Vane, retired; Helen Vane; Julian Ambrose Vane</td></tr><tr><td>2025</td><td>Julian Ambrose Vane, gentleman</td></tr></table></div>
+    <p class="rn">Enrolment became compulsory for all adults in 1924.</p></div>`},
+  licence1979:{kind:'ID',year:1979,title:'Driver licence, Cornelius Vane',ix:'Driver licence, Cornelius Vain',k:'Cornelius Vain licence Hollow Lane',
+    render:()=>`<div class="licence">${licard(PH.licence1979,'licence_card_1972')}<div class="f"><div class="hd">MOTOR REGISTRY · DRIVER LICENCE · 1979</div>
+    ${dl([['Name','VANE, Cornelius'],['Date of birth','02/03/1941 (age 38)'],['Address','14 Hollow Lane, Ashby'],['Class','C'],['Conditions','N: night driving only (medical, photosensitivity)']])}
     <div class="sigline">${sig('C. Vane')}</div></div></div>`},
-  death1994:{kind:'Death',year:1994,title:'Death registration, Desmond Vane',k:'Desmond Vane Cornelius',
-    render:()=>regDoc('Registration of Death','1994/0973',[['Deceased','Desmond Vane'],['Age','33 years'],['Date of death','30 October 1994'],['Place','Vane House, 14 Hollow Lane'],['Cause','Misadventure'],['Disposal','Private cremation on the property'],['Informant','C. Vane, father'],['Registered','2 November 1994']],sig('C. Vane'),"Registrar's note: No birth registration located for deceased. Informant advised he would supply one. Not received.")},
-  news1994:{kind:'Newspaper',year:1994,title:'"Quiet death at Vane House"',k:'Desmond Vane death Hollow Lane',
-    render:()=>clip('The Ashby Courier','Thursday, 3 November 1994','Quiet death at Vane House',
-      ['The death of Mr Desmond Vane, 33, at the family home on Hollow Lane has been registered by his father. No service will be held.','Neighbours expressed surprise. "I didn\'t know he had a son," said Mrs P. Doyle, who has lived opposite Vane House since 1958. "Forty years and I never saw a child go in or out. Never saw a light on before sundown either."'])},
-  birth1993:{kind:'Birth',year:1993,title:'Birth registration, Julian Ambrose Vane',k:'Julian Vane Desmond Cornelius',
-    render:()=>regDoc('Registration of Birth','1993/0046',[['Child','Julian Ambrose Vane'],['Born','14 January 1993, Vane House, Hollow Lane'],['Father','Desmond Vane'],['Mother','Not stated'],['Informant','C. Vane, grandfather'],['Registered','20 January 1993']],sig('C. Vane'),"Registrar's note: Home birth, no midwife. Informant attended after hours by arrangement.")},
+  birth1993:{kind:'Birth',year:1993,title:'Birth registration, Julian Tate',k:'Julian Tate Susan Ashby Hospital',
+    render:()=>regDoc('Registration of Birth','1993/0046',[['Child','Julian Tate'],['Born','14 January 1993, Ashby Hospital'],['Father','Not stated'],['Mother','Susan Tate, shop assistant'],['Informant','S. Tate, mother'],['Registered','20 January 1993']],sig('S. Tate','m'))},
+  marr1995:{kind:'Marriage',year:1995,title:'Marriage registration, Cornelius Vane and Helen Tate',k:'Cornelius Vane Helen Tate Penrose widow marriage register office Ashgrove',
+    render:()=>regDoc('Registration of Marriage','1995/0412',[['Groom','Cornelius Vane, 54, bachelor, retired, Vane House'],['Bride','Helen Tate, 44, widow, 21 Marine Parade'],['Married','3 June 1995, Ashby Register Office, 6 pm'],['Father of groom','Desmond Vane, gentleman (deceased)'],['Father of bride','George Penrose, schoolmaster'],['Witnesses','R. Ashgrove; D. Mortlake']],sig('C. Vane'),'','Signature of groom:','Ashby','District of')},
+  adopt1996:{kind:'Deed',year:1996,title:'Adoption order, Julian Tate',k:'Julian Tate Ambrose Vane adoption Cornelius Helen Ashgrove',
+    render:()=>regDoc('Adoption Order','96/031',[['Infant','Julian Tate, born 14 January 1993'],['Adopters','Cornelius Vane and Helen Vane, of Vane House, 14 Hollow Lane'],['Name after adoption','Julian Ambrose Vane'],['Order made','12 April 1996, Ashby County Court']],'',"Court's note: The infant's mother, Susan Tate, died in 1994. The adopter Helen Vane is the infant's grandmother. The middle name was chosen by the adopting father. Solicitor for the adopters: R. Ashgrove.",'','Ashby','County Court,')},
   birth1966:{kind:'Birth',year:1966,title:'Birth registration, Daphne Marsh-Pike',k:'Daphne Lorna Marsh-Pike',
     render:()=>regDoc('Registration of Birth','1966/0730',[['Child','Daphne Marsh-Pike'],['Born','9 August 1966, Ashby Hospital'],['Father','Not stated'],['Mother','Lorna Marsh-Pike, typist'],['Informant','L. Marsh-Pike, mother'],['Registered','15 August 1966']],sig('L. Marsh-Pike','m'))},
-  licence2019:{kind:'ID',year:2019,title:'Driver licence, Julian Vane',k:'Julian Vane licence',
+  licence2019:{kind:'ID',year:2019,title:'Driver licence, Julian Vane',k:'Julian Vane licence Hollow Lane',
     render:()=>`<div class="licence">${licard(PH.licence2019,'licence_card_2019')}<div class="f"><div class="hd">MOTOR REGISTRY · DRIVER LICENCE · 2019</div>
-    ${dl([['Name','VANE, Julian Ambrose'],['Date of birth','14/01/1993 (age 26)'],['Address','14 Hollow Lane, Ashby'],['Class','C'],['Conditions','N: night driving only (medical, photosensitivity)']])}
+    ${dl([['Name','VANE, Julian Ambrose'],['Date of birth','14/01/1993 (age 26)'],['Address','14 Hollow Lane, Ashby'],['Class','C'],['Conditions','None']])}
+    <div class="sigline">${sig('J. Vane','j')}</div></div></div>`},
+  licence2025:{kind:'ID',year:2025,title:'Replacement driver licence, Julian Vane',k:'Julian Vane licence replacement Hollow Lane',
+    render:()=>`<div class="licence">${licard(PH.licence2025,'licence_card_2019')}<div class="f"><div class="hd">MOTOR REGISTRY · REPLACEMENT LICENCE · 2025</div>
+    ${dl([['Name','VANE, Julian Ambrose'],['Date of birth','14/01/1993 (age 32)'],['Address','14 Hollow Lane, Ashby'],['Class','C'],['Conditions','N: night driving only (medical, photosensitivity)'],['Issued','10 March 2025. Previous licence reported lost at sea.']])}
     <div class="sigline">${sig('J. Vane')}</div></div></div>`},
-  will2024:{kind:'Legal',year:2024,title:'Last will and testament, Cornelius Vane',k:'Cornelius Julian Vane will',
+  will2024:{kind:'Legal',year:2024,title:'Last will and testament, Cornelius Vane',k:'Cornelius Helen Julian Vane will',
     render:()=>`<div class="doc"><h4>Last Will and Testament</h4>
     <p>I, CORNELIUS VANE, of Vane House, 14 Hollow Lane, Ashby, revoke all former wills and declare this to be my last will.</p>
-    <p>1. I give the whole of my estate, including Vane House and its contents (the cellar in particular), to my grandson JULIAN AMBROSE VANE absolutely.</p>
-    <p>2. Should my grandson predecease me, I give the whole of my estate to whichever of my descendants next presents himself.</p>
+    <p>1. I give the whole of my estate, including Vane House and its contents (the cellar in particular), to my wife HELEN VANE for her life, and after her death to my grandson JULIAN AMBROSE VANE absolutely.</p>
+    <p>2. Should both predecease me, I give the whole of my estate to whichever of my descendants next presents himself.</p>
     <p>3. I direct that no person enter the cellar of Vane House before nightfall.</p>
     <div class="sigline"><span>Signed by the testator:</span>${sig('C. Vane')}</div>
     <p class="rn">Witnessed: D. Mortlake, notary, and his clerk. Executed 14 November 2024 at 11:40 pm.</p></div>`},
   death2025:{kind:'Death',year:2025,title:'Death registration, Cornelius Vane',k:'Cornelius Julian Vane Marguerite drowned sea',
-    render:()=>regDoc('Registration of Death','2025/0214',[['Deceased','Cornelius Vane'],['Age','91 years'],['Date of death','2 March 2025'],['Place','At sea off Ashby Point, from the private vessel Marguerite'],['Cause','Drowning (presumed)'],['Body','Not recovered'],['Informant','J. Vane, grandson'],['Registered','4 March 2025']],'',"Registrar's note: Deceased went overboard during a night crossing. Grandson the only other person aboard. Date of death is the deceased's 91st birthday.")},
-  news2025:{kind:'Newspaper',year:2025,title:'"Hollow Lane recluse lost at sea"',k:'Cornelius Julian Vane Marguerite',
-    render:()=>clip('The Ashby Courier','Tuesday, 4 March 2025','Hollow Lane recluse lost at sea',
-      ['Cornelius Vane, 91, is presumed drowned after going overboard from his motor yacht Marguerite off Ashby Point on Sunday night. It was his birthday.','His grandson Julian, the only other person aboard, told the Courier: "Grandfather insisted on taking the helm himself. He always said he wanted to go the way his father did." Mr Vane\'s father Ambrose was lost in the same waters in 1934.'])},
+    render:()=>regDoc('Registration of Death','2025/0214',[['Deceased','Cornelius Vane'],['Age','84 years'],['Date of death','2 March 2025'],['Place','At sea off Ashby Point, from the private vessel Marguerite'],['Cause','Drowning (presumed)'],['Body','Not recovered'],['Informant','J. Vane, grandson'],['Registered','4 March 2025']],'',"Registrar's note: One of two persons lost from the vessel; see also Helen Vane. Grandson the only other person aboard. Date of death is the deceased's 84th birthday.")},
+  death2025h:{kind:'Death',year:2025,title:'Death registration, Helen Vane',k:'Helen Cornelius Julian Vane Marguerite drowned sea',
+    render:()=>regDoc('Registration of Death','2025/0215',[['Deceased','Helen Vane'],['Age','74 years'],['Date of death','2 March 2025'],['Place','At sea off Ashby Point, from the private vessel Marguerite'],['Cause','Drowning (presumed)'],['Body','Not recovered'],['Informant','J. Vane, grandson'],['Registered','4 March 2025']],'',"Registrar's note: One of two persons lost from the vessel; see also Cornelius Vane.")},
+  news2025:{kind:'Newspaper',year:2025,title:'"Hollow Lane couple lost at sea"',k:'Cornelius Helen Julian Vane Marguerite',
+    render:()=>clip('The Ashby Courier','Tuesday, 4 March 2025','Hollow Lane couple lost at sea',
+      ['Cornelius Vane, 84, and his wife Helen, 74, are presumed drowned after going overboard from their motor yacht Marguerite off Ashby Point on Sunday night. It was Mr Vane\'s birthday.','Their grandson Julian, the only other person aboard, brought the boat in alone. "Grandfather insisted on taking the helm himself," he told the Courier. "Gran went to help him."','It is the third tragedy at Vane House in living memory. A fire there killed three in 1934, and Mr Vane\'s parents died when their car left the road at Gull Rock in 1976.'])},
   marine2025:{kind:'Marine',year:2025,title:'Harbour incident report, MY Marguerite',k:'Marguerite harbour Julian Cornelius Vane',
     render:()=>regDoc('Ashby Harbour Authority · Incident Report','HA-25-031',[['Vessel','MY Marguerite, private'],['Reported by','J. Vane (aboard)'],['Reported','3 March 2025, 5:51 am'],['Search','Water police, 3 to 5 March. Nothing recovered.']],'',"Harbourmaster's note: Marguerite was found on her own mooring at 6 am, lines made fast with a bowline and two half hitches. Mr J. Vane says he brought her in alone in the dark, single-handed, in a 25-knot southerly, having never helmed before. Log entry for the night written in a copperplate hand. Mr J. Vane declined to wait for the police and left before sunrise.")},
-  funeral2025:{kind:'Invoice',year:2025,title:'Mortlake & Daughters, funeral invoice',k:'Cornelius Julian Vane funeral memorial Mortlake',
+  funeral2025:{kind:'Invoice',year:2025,title:'Mortlake & Daughters, funeral invoice',k:'Cornelius Helen Julian Vane funeral memorial Mortlake',
     render:()=>`<div class="doc"><h4>Mortlake &amp; Daughters · Funeral Directors</h4><div class="c">Tax invoice 25-0098 · Account: J. Vane, Vane House</div>
     <div class="doctable-wrap"><table class="doctable"><tr><th>Item</th><th>Amount</th></tr>
-    <tr><td>Memorial service, no body, 10:00 pm</td><td>$1,400</td></tr>
+    <tr><td>Memorial service for Mr and Mrs C. Vane, no bodies, 10:00 pm</td><td>$1,400</td></tr>
     <tr><td>Coffin, mahogany, lined, deep</td><td>$6,900</td></tr>
     <tr><td>Delivery of coffin (empty) to Vane House cellar</td><td>$380</td></tr>
     <tr><td>Blackout drapes for chapel, client supplied</td><td>$0</td></tr></table></div>
-    <p class="rn">Note from Mrs Mortlake: Client asked that the coffin be fitted with an inside latch. We have done this before for the Vane family, in 1934.</p></div>`},
+    <p class="rn">Note from Mrs Mortlake: Client asked that the coffin be fitted with an inside latch. We have done this before for the Vane family, in 1934 and in 1976. One coffin only, as before.</p></div>`},
   letterJulian:{kind:'Letter',year:2025,title:'Claim letter, Julian Vane',k:'Julian Vane letter',
     render:()=>`<div class="letter"><p>Dear Sir or Madam,</p><p>I write regarding my grandfather's estate. The will is clear and I don't see why the matter needs an associate's attention at all.</p><p>Grandfather and I were very close. We had the same tastes, the same habits, the same hours. People often said we could have been the same man.</p><p>Neither of the women writing to you understands this family. I would ask that any meeting be arranged after 8 pm. I have a condition.</p><p>Yours,</p><div class="hand">J. Vane</div></div>`},
   letterMargaret:{kind:'Letter',year:2025,title:'Objection letter, Margaret Holloway',k:'Margaret Holloway letter',
-    render:()=>`<div class="letter"><p>To whoever is handling the Vane business,</p><p>I'm the only real family Cornelius had left. My grandmother Harriet was Ambrose Vane's daughter, and I can prove it.</p><p>I've never once seen that boy in daylight. Not at the memorial, which was held at 10 pm. When I was a girl, Uncle Cornelius used to visit Gran at night and he looked about thirty. When Julian turned up last year he looked about thirty too. He has the same little scar through his eyebrow.</p><p>I took one of those DNA tests. You'll see I'm who I say I am. Ask him to take one.</p><p>Margaret Holloway</p></div>`},
+    render:()=>`<div class="letter"><p>To whoever is handling the Vane business,</p><p>I'm the only real family that house has left. My grandmother Harriet was Ambrose Vane's daughter, and I can prove it. Everyone else who lived there married in or was taken in.</p><p>When I was a girl, Uncle Desmond used to visit Gran at night. He looked about thirty. Gran never called him Desmond. She never called him anything.</p><p>I met Helen's grandson twice when he was small, and once at sixteen. A nice, ordinary lad. The man who came to the memorial calling himself Julian has a little scar through his eyebrow. That boy had no scar.</p><p>I took one of those DNA tests. You'll see I'm who I say I am. Ask him to take one.</p><p>Margaret Holloway</p></div>`},
   letterDaphne:{kind:'Letter',year:2025,title:'Claim letter, Daphne Marsh-Pike',k:'Daphne Marsh-Pike Lorna letter',
-    render:()=>`<div class="letter"><p>Dear Ashgrove &amp; Pell,</p><p>My mother, Lorna Marsh-Pike, typed for Mr Cornelius Vane from 1964 to 1967. She always told me he was my father. She said he came to the flat at night and was "a gentleman, but cold."</p><p>I was left off his will, which is no surprise. But a child is a child. I claim my share as his daughter.</p><p>I have taken the Bloodlines DNA test as asked. I share DNA with Mrs Holloway, which I understand proves we are family.</p><p>Daphne Marsh-Pike</p></div>`},
+    render:()=>`<div class="letter"><p>Dear Ashgrove &amp; Pell,</p><p>My mother, Lorna Marsh-Pike, typed for young Mr Cornelius Vane at Vane House from 1964 to 1967. She always told me he was my father. She said he was kind, and frightened of his father.</p><p>I was left off his will, which is no surprise. But a child is a child. I claim my share as his daughter.</p><p>I have taken the Bloodlines DNA test as asked. I share DNA with Mrs Holloway, which I understand proves we are family.</p><p>Daphne Marsh-Pike</p></div>`},
   diary1888:{kind:'Diary',year:1888,title:'Diary page, Eliza Vane, 1888',k:'Eliza Vane diary',
     render:()=>`<div class="diary"><small>From the diary of Eliza Vane. Lent by Margaret Holloway.</small>
     <span>14th Feb, near midnight. A. home at last, after dark. He will not eat. His hands are so cold. The wound over his eye has closed as if it were never there.</span>
@@ -339,11 +377,15 @@ const REC = {
   dnaMargaret:{kind:'DNA',year:2025,title:'DNA kit report, Margaret Holloway',k:'',hidden:true,
     render:()=>`<p>Margaret's kit matches 312 members. Closest: R. Holloway (874 cM), G. Holloway-Teague (231 cM), Daphne Marsh-Pike (96 cM), Ivor Marsh (88 cM).</p>`},
   dnaDaphne:{kind:'DNA',year:2025,title:'DNA kit report, Daphne Marsh-Pike',k:'',hidden:true,
-    render:()=>`<p>Daphne shares 96 cM with Margaret Holloway. Matches they have in common: Ivor Marsh, Ada Marsh-Clery, T. Marsh.</p>`},
+    render:()=>`<p>Daphne shares 96 cM with Margaret Holloway. Matches they have in common: Ivor Marsh, Ada Marsh-Clery, T. Marsh.</p><p>Daphne's closest matches not shared with Margaret: P. Askew-Rhee (412 cM), D. Askew (398 cM), member rope_walk_41 (205 cM).</p>`},
   hintOfficial:{kind:'Hint',year:2025,title:'Member-tree hint: Julian is grandson of Cornelius',k:'',hidden:true,
-    render:()=>`<p>Source: public member tree <b>VaneFamily_Official</b>, owner <b>nightowl_jv</b>. Tree created 3 March 2025. One attached record (the will). No birth record for Desmond Vane attached.</p>`},
+    render:()=>`<p>Source: public member tree <b>VaneFamily_Official</b>, owner <b>nightowl_jv</b>. Tree created 3 March 2025. One attached record (the will). No birth or adoption record for Julian attached.</p>`},
   nilDesmond:{kind:'Certificate',year:2025,title:'Nil-return search certificate, Desmond Vane birth',k:'',hidden:true,
-    render:()=>`<div class="doc"><img class="stamp nil" src="assets/stamp_nil.webp" alt=""><h4>Certificate of Search · Nil Return</h4><p>A search of birth registrations for the districts of Ashby, Port Hollis, Calder and Wenmouth, 1940 to 1994, under the surname VANE and given name DESMOND, found no entry.</p><p>A search under the father's name, Cornelius Vane, found no child registered before 1993.</p><p class="rn">Issued through Bloodlines Professional on behalf of Ashgrove &amp; Pell.</p></div>`},
+    render:()=>`<div class="doc"><img class="stamp nil" src="assets/stamp_nil.webp" alt=""><h4>Certificate of Search · Nil Return</h4><p>A search of birth registrations for the districts of Ashby, Port Hollis, Calder and Wenmouth, 1895 to 1915, under the surname VANE and given name DESMOND, found no entry.</p><p>A search for children registered to Ambrose Vane after 1890 found none.</p><p class="rn">Issued through Bloodlines Professional on behalf of Ashgrove &amp; Pell.</p></div>`},
+  nilCornelius:{kind:'Certificate',year:2025,title:'Nil-return search certificate, Cornelius Vane birth',k:'',hidden:true,
+    render:()=>`<div class="doc"><img class="stamp nil" src="assets/stamp_nil.webp" alt=""><h4>Certificate of Search · Nil Return</h4><p>A search of birth registrations for the districts of Ashby, Port Hollis, Calder and Wenmouth, 1925 to 1960, under the surname VANE and given name CORNELIUS, found no entry.</p><p>A search for children registered to Desmond Vane found none.</p><p class="rn">Issued through Bloodlines Professional on behalf of Ashgrove &amp; Pell.</p></div>`},
+  nilJulian:{kind:'Certificate',year:2025,title:'Nil-return search certificate, Julian Vane birth',k:'',hidden:true,
+    render:()=>`<div class="doc"><img class="stamp nil" src="assets/stamp_nil.webp" alt=""><h4>Certificate of Search · Nil Return</h4><p>A search of birth registrations for the districts of Ashby, Port Hollis, Calder and Wenmouth, 1985 to 2000, under the surname VANE and given name JULIAN, found no entry.</p><p>A search for children registered to Cornelius Vane found none.</p><p class="rn">Issued through Bloodlines Professional on behalf of Ashgrove &amp; Pell.</p></div>`},
   lawSA:{kind:'Law',year:1919,title:'Succession Act 1919, ss 12 and 49',k:'',hidden:true,render:()=>lawHtml('lawSA')},
   lawA1:{kind:'Law',year:1888,title:'Nocturnal Accord, Art. 1 (continuity)',k:'',hidden:true,render:()=>lawHtml('lawA1')},
   lawA2:{kind:'Law',year:1888,title:'Nocturnal Accord, Art. 2 (identity)',k:'',hidden:true,render:()=>lawHtml('lawA2')},
@@ -388,14 +430,14 @@ const HINTS = [
 
 /* ================= FINDINGS ================= */
 const FIND = [
-  {id:'F1',q:'Who is Julian Ambrose Vane?',opts:[['grandson',"Cornelius Vane's grandson, as the will says"],['self','Ambrose and Cornelius Vane: one man under three names'],['impostor','An unrelated impostor after the money'],['desmond','Desmond Vane, who faked his own death in 1994']],ans:'self',
-    nudge:'Identity across names needs three independent documents spanning more than a century (Accord Art. 2). A photograph only counts once the photo lab has certified it. Pair that with records that are not photographs. Signatures can be compared too.'},
+  {id:'F1',q:'Who is the man now calling himself Julian Ambrose Vane?',opts:[['grandson',"Cornelius Vane's adopted grandson, as the will says"],['cornelius','Cornelius Vane, who faked his own death this March'],['ambrose','Ambrose Vane, who has also lived as Desmond and Cornelius Vane'],['impostor','An unrelated impostor after the money']],ans:'ambrose',
+    nudge:'Identity across names needs three independent documents spanning more than a century (Accord Art. 2). A photograph only counts once the photo lab has certified it. Compare faces from before and after each death in the family, not only after. Signatures can be compared too.'},
   {id:'F2',q:'Did Cornelius Vane die on 2 March 2025?',opts:[['drowned','Yes. He went overboard off Ashby Point.'],['staged','No. The death was staged.'],['open','It cannot be determined. Leave it as an open finding.']],ans:'staged',
-    nudge:'Look at what happened to the boat afterwards, and at what was ordered for the memorial. Then look at 1934.'},
-  {id:'F3',q:'Was Desmond Vane a real person?',opts:[['real',"Yes. Cornelius's son, who died in 1994."],['fabricated','No. A paper identity, created to give Julian a father.'],['adopted','A real man, informally adopted, never registered']],ans:'fabricated',
-    nudge:'Look for Desmond anywhere a living adult would leave a mark. Search the birth registers yourself.'},
-  {id:'F4',q:"What is Daphne Marsh-Pike's claim worth?",opts:[['daughter',"She is Cornelius's daughter and takes a child's share"],['not','She cannot be his daughter and takes nothing'],['unproven','Her claim is unproven for now and should be held open']],ans:'not',
-    nudge:'When did Ambrose stop being able to father children? Read Article 3. You need the date he was turned and the date she was born.'},
+    nudge:'Look at what happened to the boat afterwards, and at what was ordered for the memorial. Then look at how this family has died before.'},
+  {id:'F3',q:'Who died in the Vane House fire of 1 February 1934?',opts:[['ambrose','Ambrose Vane, as registered, with his wife and housekeeper'],['desmond','His stepson, Desmond Vane, with his wife and housekeeper'],['stranger','An unknown man, placed there to be found'],['nobody','No man died. The male remains were never his.']],ans:'desmond',
+    nudge:'Read what the pathologist said about the remains. Then work out who in that house was the right age.'},
+  {id:'F4',q:"What is Daphne Marsh-Pike's claim worth?",opts:[['daughter',"She is the deceased's daughter and takes a child's share"],['realcornelius','Her father was the real Cornelius Vane, who died in 1976. She takes nothing from this estate.'],['notvane','She has no tie to the Vanes at all and takes nothing'],['unproven','Her claim is unproven for now and should be held open']],ans:'realcornelius',
+    nudge:"Read the side of Daphne's DNA that Margaret doesn't share. Then find out what Cornelius was called before he was a Vane."},
   {id:'F5',q:'Who receives the estate?',opts:[['julian','Julian Vane, under the 2024 will'],['margaretSA','Margaret Holloway, as next of kin under the Succession Act'],['margaretA4','Margaret Holloway, as issue of the blood, under Accord Art. 4'],['owner','No one. The estate stays with its living owner.'],['registry','The Nocturnal Registry, as forfeit property'],['split','Margaret and Daphne, in equal shares']],ans:'margaretA4',
     nudge:'A staged death does not leave the estate where it was. Read Article 4, then prove the heir\'s line was begotten before the turning.'}
 ];
@@ -403,18 +445,19 @@ const FIND = [
    Each NEED group lists records; the player needs n of them. A finding passes only if every group is met.
    Records in BEARS but in no group are context: they cost nothing. Anything outside BEARS counts against the evidence. */
 const ATTACK = ['hospital1888','news1888','diary1888'];
+const STAGED = ['death1934','inquest1934','news1934','death1976','inquest1976','news1976'];
 const BEARS = {
- F1:['photo1875','birth1857','census1911','census1921','marr1886','photo1889','photo1912','photo1962','licence1972','licence2019','birth1934','trust1934','dnaJulian','hospital1888'],
- F2:['death2025','news2025','marine2025','funeral2025','death1934','news1934','trust1934'],
- F3:['death1994','nilDesmond','rolls','news1994','birth1993'],
- F4:['dnaDaphne','birth1966','lawA3',...ATTACK],
+ F1:['nilJulian','nilCornelius','photo1875','birth1857','census1911','census1921','marr1886','photo1889','photo1912','photo1925','photo1962','licence1979','licence2019','licence2025','trust1934','inquest1934','inquest1976','adopt1996','adopt1948','deedpoll1907','dnaJulian','hospital1888','rolls'],
+ F2:['death2025','death2025h','news2025','marine2025','funeral2025','trust1934',...STAGED],
+ F3:['inquest1934','death1934','news1934','burial1934','birth1903','deedpoll1907','census1921','census1911','photo1925','trust1934','nilDesmond','marr1905'],
+ F4:['nilCornelius','dnaDaphne','birth1966','birth1941','adopt1948','inquest1976','death1976','news1976','letterDaphne'],
  F5:['lawA4','lawA3','birth1888','dnaMargaret',...ATTACK]
 };
 const NEED = {
- F1:[{cmp:true,n:1},{ids:['birth1934','trust1934','hospital1888'],n:2,sig:true}],
- F2:[{ids:['marine2025','funeral2025'],n:1},{ids:['death1934','news1934','trust1934'],n:1}],
- F3:[{ids:['nilDesmond','rolls'],n:1},{ids:['death1994','news1994'],n:1}],
- F4:[{ids:ATTACK,n:1},{ids:['birth1966'],n:1},{ids:['lawA3'],n:1}],
+ F1:[{cmp:true,n:1},{ids:['trust1934','inquest1934','inquest1976','adopt1996','hospital1888'],n:2,sig:true}],
+ F2:[{ids:['marine2025','funeral2025'],n:1},{ids:STAGED,n:1}],
+ F3:[{ids:['inquest1934'],n:1},{ids:['birth1903','deedpoll1907','census1921','photo1925'],n:1}],
+ F4:[{ids:['dnaDaphne'],n:1},{ids:['birth1941','adopt1948'],n:1},{ids:['inquest1976','death1976','news1976'],n:1}],
  F5:[{ids:['lawA4'],n:1},{ids:ATTACK,n:1},{ids:['birth1888'],n:1}]
 };
 const MAX_EV = 4;
@@ -444,8 +487,8 @@ function evidenceOk(F, ev){
 /* ================= MAIL ================= */
 const MAIL = {
   m1:{from:'R. Ashgrove, Senior Partner',time:'10:52 pm',subj:'Vane estate: your first file',body:()=>`
-    <p>Welcome to nights. Your first file is the estate of <b>Cornelius Vane</b>, 91, lost overboard off Ashby Point in March. Body not recovered.</p>
-    <p>The will leaves everything to his grandson, <b>Julian Ambrose Vane</b>. His great-niece <b>Margaret Holloway</b> objects. As of this afternoon a third party, <b>Daphne Marsh-Pike</b>, says she is Cornelius's daughter. All three claimants have taken Bloodlines DNA tests.</p>
+    <p>Welcome to nights. Your first file is the estate of <b>Cornelius Vane</b>, 84, lost overboard off Ashby Point in March with his wife Helen. Neither body was recovered.</p>
+    <p>The will leaves everything to Helen for life, then to his grandson, <b>Julian Ambrose Vane</b>. Helen died with him, so Julian takes all of it. <b>Margaret Holloway</b>, the last of the old Vane blood, objects. As of this afternoon a third party, <b>Daphne Marsh-Pike</b>, says she is Cornelius's daughter. All three claimants have taken Bloodlines DNA tests.</p>
     <table class="assets"><tr><td>Vane House, 14 Hollow Lane (heritage listed)</td><td>$2,140,000</td></tr><tr><td>Vane Family Trust investments</td><td>$3,880,000</td></tr><tr><td>Cellar contents</td><td>Undisclosed</td></tr><tr><td>Family crypt, Ashby cemetery</td><td>Not valued</td></tr></table>
     <p>The partners want five findings, each backed by evidence. The ruling form is in the case file. The tree has four names on it and no links. Find out who is related to whom: open a record, read it, and add the links it proves from the record page. Pin records as you go, then attach them to the findings they prove. You get three filings. After that, Pell takes the file and you take the blame.</p>
     <p>The Nocturnal Accord is in the law library. Read it. If any party turns out not to be strictly human, it decides the matter and the Succession Act doesn't.</p>
@@ -473,12 +516,12 @@ const MAIL = {
     <p>Margaret</p>`,attach:'diary1888'},
   m5:{from:'R. Ashgrove, Senior Partner',time:'just now',subj:'RE: Vane estate',body:()=>`
     <p>Five from five. The Nocturnal Registry collected him at 1 am. He came quietly. They usually do, once they've been photographed enough times.</p>
-    <p>Under Article 4 the whole estate goes to Margaret. Daphne has been told. She took it better than Pryor did.</p>
+    <p>Under Article 4 the whole estate goes to Margaret. Daphne has been told her father was a kind young man who never owned a brick of Vane House. She took it better than Pryor did.</p>
     <p>Your DNA results should be back. Don't read anything into them.</p>
     <p>And don't open file 0001.</p><p>R.A.</p>`},
   m9:{from:'Margaret Holloway',time:'just now',subj:'The cellar',attach:'cellarPhoto',body:()=>`
     <p>Thank you. I mean it. I've never owned anything in my life and now I own a house I'm frightened of.</p>
-    <p>I went down to the cellar with a torch at noon, the way the will said not to. There were four coffins. Three had brass plates: AMBROSE, CORNELIUS, JULIAN. All empty, all with latches on the inside.</p>
+    <p>I went down to the cellar with a torch at noon, the way the will said not to. There were four coffins. Three had brass plates: AMBROSE, DESMOND, CORNELIUS. All empty, all with latches on the inside.</p>
     <p>The fourth was older than the others. Its plate said Ashgrove, in old copperplate script.</p>
     <p>I'm having the cellar bricked up. Should I tell your boss?</p>
     <p>Margaret</p>`},

@@ -16,7 +16,7 @@ PEOPLE.hannah = {name:'Hannah Vane (née Crewe)',life:'1828 – 1901',ini:'HV',f
 PEOPLE.william = {name:'William Marsh',life:'1830 – 1899',ini:'WM',facts:[['Born','1830, Ashby'],['Occupation','Chandler, Fish Street'],['Died','1899, Ashby']],recs:['birth1861','marr1886']};
 PEOPLE.ann = {name:'Ann Marsh (née Teale)',life:'1832 – 1910',ini:'AM',facts:[['Born','1832, Ashby'],['Married','William Marsh'],['Died','1910, Ashby']],recs:['birth1861']};
 PEOPLE.arthur = {name:'Arthur Holloway',life:'1884 – 1951',ini:'AH',facts:[['Born','1884, Ashby'],['Married','Harriet Vane, 1912'],['Occupation',"Ship's chandler"],['Died','1951, Ashby']],recs:['photo1912']};
-const SEX = {v1410:'m',v1445:'m',v1480:'m',v1515:'m',v1550:'m',v1585:'m',v1620:'m',v1655:'m',v1688:'m',v1720:'m',samuel:'m',thomasv:'m',josiah:'m',hannah:'f',william:'m',ann:'f',ambrose:'m',eliza:'f',harriet:'f',arthur:'m',cornelius:'m',thomas:'m',desmond:'m',daphne:'f',margaret:'f',julian:'m'};
+const SEX = {v1410:'m',v1445:'m',v1480:'m',v1515:'m',v1550:'m',v1585:'m',v1620:'m',v1655:'m',v1688:'m',v1720:'m',samuel:'m',thomasv:'m',josiah:'m',hannah:'f',william:'m',ann:'f',ambrose:'m',eliza:'f',clara:'f',harriet:'f',arthur:'m',desmond:'m',irene:'f',cornelius:'m',helen:'f',thomas:'m',daphne:'f',margaret:'f',julian:'m'};
 const REL = {
   v1410:[['Child','v1445']],
   v1445:[['Father','v1410'],['Child','v1480']],
@@ -31,22 +31,25 @@ const REL = {
   samuel:[['Father','v1720'],['Child','thomasv']], thomasv:[['Father','samuel'],['Child','josiah']],
   josiah:[['Father','thomasv'],['Spouse','hannah'],['Child','ambrose']], hannah:[['Spouse','josiah'],['Child','ambrose']],
   william:[['Spouse','ann'],['Child','eliza']], ann:[['Spouse','william'],['Child','eliza']],
-  ambrose:[['Father','josiah'],['Mother','hannah'],['Spouse','eliza'],['Child','harriet'],['Child','cornelius']],
+  ambrose:[['Father','josiah'],['Mother','hannah'],['Spouse','eliza'],['Spouse','clara'],['Child','harriet'],['Adopted child','desmond']],
   eliza:[['Father','william'],['Mother','ann'],['Spouse','ambrose'],['Child','harriet']],
+  clara:[['Spouse','ambrose'],['Child','desmond']],
   harriet:[['Father','ambrose'],['Mother','eliza'],['Spouse','arthur'],['Child','thomas']],
   arthur:[['Spouse','harriet'],['Child','thomas']],
   thomas:[['Mother','harriet'],['Father','arthur'],['Child','margaret']],
   margaret:[['Father','thomas']],
-  cornelius:[['Father','ambrose'],['Child','desmond']],
-  desmond:[['Father','cornelius'],['Child','julian']],
-  julian:[['Father','desmond']],
-  daphne:[['Claimed father','cornelius']]
+  desmond:[['Mother','clara'],['Adoptive father','ambrose'],['Spouse','irene'],['Adopted child','cornelius']],
+  irene:[['Spouse','desmond'],['Child','cornelius']],
+  cornelius:[['Mother','irene'],['Adoptive father','desmond'],['Spouse','helen'],['Adopted child','julian'],['Child','daphne']],
+  helen:[['Spouse','cornelius'],['Adopted child','julian']],
+  julian:[['Adoptive father','cornelius'],['Adoptive mother','helen']],
+  daphne:[['Father','cornelius'],['Claimed father','cornelius']]
 };
 const AVATARS = new Set(['ambrose','ann','arthur','cornelius','daphne','eliza','hannah','harriet','josiah','julian','margaret','samuel','thomas','thomasv','william']);
 const COLTHUMB = {Census:'census',Birth:'birth',Death:'death',Photo:'photos',Newspaper:'newspapers',Roll:'rolls'};
-const PHOTO_OF = {ambrose:'photo1889',cornelius:'licence1972',julian:'licence2019',thomas:'photo1950'};
+const PHOTO_OF = {ambrose:'photo1889',desmond:'photo1925',cornelius:'licence1979',julian:'licence2019',thomas:'photo1950'};
 const HINT_OF = {julian:['hintOfficial'],ambrose:['h2','h3'],harriet:['h4']};
-const COLL = {Court:'Manor of Ashby Court Rolls, 1350–1840',Will:'Probate Wills & Inventories, 1450–1858',Tax:'Hearth & Land Tax Returns, 1662–1830',Art:'Ashby Guildhall Portraits & Prints, 1500–1900',Parish:'Ashby Parish Registers, 1538–1900',Marriage:'Ashby District Marriage Registrations, 1850–2025',Inquest:"Coroner's Inquest Records, 1890–1960",Census:'Ashby Census Returns, 1841–1921',Birth:'Ashby District Birth Registrations, 1850–2025',Death:'Ashby District Death Registrations, 1850–2025',
+const COLL = {Court:'Manor of Ashby Court Rolls, 1350–1840',Will:'Probate Wills & Inventories, 1450–1858',Tax:'Hearth & Land Tax Returns, 1662–1830',Art:'Ashby Guildhall Portraits & Prints, 1500–1900',Parish:'Ashby Parish Registers, 1538–1900',Marriage:'Ashby District Marriage Registrations, 1850–2025',Inquest:"Coroner's Inquest Records, 1890–1990",Deed:'Deeds Poll & Adoption Orders, 1900–2000',Census:'Ashby Census Returns, 1841–1921',Birth:'Ashby District Birth Registrations, 1850–2025',Death:'Ashby District Death Registrations, 1850–2025',
   Photo:'Ashby Studio & Parish Photographs, 1860–1990',Newspaper:'The Ashby Courier Archive, 1871–2025',Roll:'Electoral Rolls, 1903–2025',ID:'Motor Registry Licence Records, 1925–2024',
   Legal:'Probate & Trust Instruments (Professional)',Medical:'Ashby Hospital Registers, 1880–1950',Marine:'Harbour Authority Incident Reports, 1900–2025',Invoice:'Professional Uploads: Funeral & Estate Accounts'};
 const PAGE_KINDS = new Set(Object.keys(COLL));
@@ -81,35 +84,47 @@ const IDX = {
   burial1889:[['Name','Josiah Vane'],['Age','65'],['Buried','12 Mar 1889'],['Parish','St Columba, Ashby']],
   news1889:[['Name','Josiah Vane'],['Publication','The Ashby Courier'],['Date','9 Mar 1889'],['Page','3']],
   birth1861:[['Name','Eliza Marsh'],['Birth date','20 Jan 1861'],['Birth place','Fish Street, Ashby'],['Father','William Marsh'],['Mother','Ann Teale'],['Registration no.','1861/0049']],
-  census1911:[['Name','Ambrose Vane'],['Age','41'],['Occupation','Private means'],['Place','14 Hollow Lane, Ashby']],
-  census1921:[['Name','Ambrose Vane'],['Age','64'],['Occupation','Private means'],['Place','14 Hollow Lane, Ashby']],
+  census1911:[['Name','Ambrose Vane'],['Age','41'],['Household','Ambrose, Clara, Harriet and Desmond Vane; Ada Kemp'],['Place','14 Hollow Lane, Ashby']],
+  census1921:[['Name','Ambrose Vane'],['Age','64'],['Household','Ambrose, Clara and Desmond Vane; Ada Kemp'],['Place','14 Hollow Lane, Ashby']],
+  birth1903:[['Name','Desmond Dunmore'],['Birth date','11 Oct 1903'],['Father','Edgar Dunmore'],['Mother','Clara Royle'],['Registration no.','1903/0781']],
+  marr1905:[['Names','Ambrose Vane; Clara Dunmore'],['Married','6 May 1905'],['Witness','R. Ashgrove'],['Registration no.','1905/0233']],
+  deedpoll1907:[['Former name','Desmond Dunmore'],['New name','Desmond Vane'],['Enrolled','3 Apr 1907'],['Prepared by','Ashgrove & Pell']],
+  photo1925:[['Name','Desmond Vane'],['Photo date','1925'],['Source','Ashby Rowing Club annual']],
+  burial1934:[['Names','Clara Vane; Ada Kemp; Ambrose Vane'],['Buried','6 Feb 1934'],['Parish','St Columba, Ashby']],
+  birth1941:[['Name','Cornelius Askew'],['Birth date','2 Mar 1941'],['Father','Frank Askew'],['Mother','Irene Lowe'],['Registration no.','1941/0302']],
+  marr1946:[['Names','Desmond Vane; Irene Askew'],['Married','9 Nov 1946'],['Witness','R. Ashgrove'],['Registration no.','1946/0688']],
+  adopt1948:[['Child','Cornelius Askew'],['Adopted by','Desmond and Irene Vane'],['New name','Cornelius Vane'],['Order','48/112, 14 Jun 1948']],
+  death1976:[['Name','Desmond Vane'],['Death date','14 Nov 1976'],['Death place','Coast Road, Gull Rock'],['Age at death','73'],['Registration no.','1976/0861']],
+  inquest1976:[['Names','Irene Vane; Desmond Vane'],['Held','19 Nov 1976'],['Verdict','Accidental death'],['Witness','C. Vane']],
+  news1976:[['Names','Desmond Vane; Irene Vane'],['Publication','The Ashby Courier'],['Date','16 Nov 1976'],['Page','1']],
+  marr1995:[['Names','Cornelius Vane; Helen Tate'],['Married','3 Jun 1995'],['Witness','R. Ashgrove'],['Registration no.','1995/0412']],
+  adopt1996:[['Child','Julian Tate'],['Adopted by','Cornelius and Helen Vane'],['New name','Julian Ambrose Vane'],['Order','96/031, 12 Apr 1996']],
+  licence2025:[['Name','Julian Ambrose Vane'],['Birth date','14 Jan 1993'],['Issue year','2025 (replacement)'],['Residence','14 Hollow Lane, Ashby']],
+  death2025h:[['Name','Helen Vane'],['Death date','2 Mar 2025'],['Death place','At sea, off Ashby Point'],['Age at death','74'],['Informant','J. Vane'],['Registration no.','2025/0215']],
   photo1921:[['Name','Frank Tully'],['Photo date','1921'],['Source',"Wharf Workers' Union minute book"]],
   birth1958d:[['Name','Desmond Vane'],['Birth date','3 Sep 1958'],['Birth place','Marrow Bay'],['Father','Harold Vane'],['Mother','Ruth Gale'],['Registration no.','1958/0388']],
-  inquest1934:[['Name','Ambrose Vane'],['Held','8 Feb 1934'],['Verdict','Drowning, presumed'],['Witness','W. Lamb']],
+  inquest1934:[['Names','Clara Vane; Ada Kemp; Ambrose Vane'],['Held','8 Feb 1934'],['Verdict','Accidental death'],['Witness','D. Vane']],
   census1891:[['Name','Ambrose Vane'],['Age','34'],['Estimated birth year','abt 1857'],['Relation to head','Head'],['Spouse','Eliza Vane'],['Child','Harriet Vane'],['Residence','14 Hollow Lane, Ashby'],['Occupation','Night clerk']],
   photo1889:[['Name','Ambrose Vane'],['Photo date','1889'],['Place','Ashby'],['Studio','Halloran & Sons']],
   photo1912:[['Names','Arthur Holloway; Harriet Vane'],['Event','Marriage'],['Event date','1912'],['Place',"St Columba's, Ashby"],['Witness','R. Ashgrove']],
   photo1950:[['Name','Thomas Holloway'],['Photo date','1950'],['Source','Ashby Rowing Club annual']],
-  photo1962:[['Name','Cornelius Vane'],['Publication','The Ashby Courier'],['Date','17 Mar 1962'],['Page','3']],
+  photo1962:[['Names','Desmond, Irene and Cornelius Vane'],['Publication','The Ashby Courier'],['Date','17 Mar 1962'],['Page','3']],
   hospital1888:[['Name','Ambrose Vane'],['Age','31'],['Admission date','14 Feb 1888'],['Discharge date','14 Feb 1888 (self)'],['Hospital','Ashby Hospital']],
   news1888:[['Name','Ambrose Vane'],['Publication','The Ashby Courier'],['Date','16 Feb 1888'],['Page','2']],
   birth1888:[['Name','Harriet Vane'],['Birth date','4 Jun 1888'],['Birth place','Vane House, Ashby'],['Father','Ambrose Vane'],['Mother','Eliza Marsh'],['Registration no.','1888/0412']],
-  death1934:[['Name','Ambrose Vane'],['Death date','1 Feb 1934'],['Death place','At sea, off Ashby Point'],['Age at death','76'],['Registration no.','1934/0088']],
-  news1934:[['Name','Ambrose Vane'],['Publication','The Ashby Courier'],['Date','3 Feb 1934'],['Page','1']],
-  trust1934:[['Settlor','Ambrose Vane'],['Beneficiary','Cornelius Vane'],['Date','20 Jan 1934'],['Prepared by','Ashgrove & Pell']],
-  birth1934:[['Name','Cornelius Vane'],['Birth date','2 Mar 1934'],['Birth place','Vane House, Ashby'],['Father','Ambrose Vane'],['Mother','—'],['Registration no.','1934/0151']],
-  rolls:[['Address','14 Hollow Lane, Ashby'],['Roll years','1903–2025'],['Names on roll','Ambrose Vane; Cornelius Vane; Julian Ambrose Vane']],
-  licence1972:[['Name','Cornelius Vain'],['Birth date','2 Mar 1943'],['Issue year','1972'],['Residence','14 Hollow Lane, Ashby']],
-  death1994:[['Name','Desmond Vane'],['Death date','30 Oct 1994'],['Death place','Vane House, Ashby'],['Age at death','33'],['Father','Cornelius Vane'],['Registration no.','1994/0973']],
-  news1994:[['Name','Desmond Vane'],['Publication','The Ashby Courier'],['Date','3 Nov 1994'],['Page','5']],
-  birth1993:[['Name','Julian Ambrose Vane'],['Birth date','14 Jan 1993'],['Birth place','Vane House, Ashby'],['Father','Desmond Vane'],['Mother','—'],['Registration no.','1993/0046']],
+  death1934:[['Name','Ambrose Vane'],['Death date','1 Feb 1934'],['Death place','Vane House, Ashby (fire)'],['Age at death','76'],['Registration no.','1934/0088']],
+  news1934:[['Names','Ambrose Vane; Clara Vane; Ada Kemp'],['Publication','The Ashby Courier'],['Date','3 Feb 1934'],['Page','1']],
+  trust1934:[['Settlor','Ambrose Vane'],['Beneficiary','Desmond Vane'],['Date','20 Jan 1934'],['Prepared by','Ashgrove & Pell']],
+  rolls:[['Address','14 Hollow Lane, Ashby'],['Roll years','1903–2025'],['Names on roll','Ambrose, Clara, Desmond, Irene, Cornelius, Helen and Julian Vane']],
+  licence1979:[['Name','Cornelius Vain'],['Birth date','2 Mar 1914'],['Issue year','1979'],['Residence','14 Hollow Lane, Ashby']],
+  birth1993:[['Name','Julian Tate'],['Birth date','14 Jan 1993'],['Birth place','Ashby Hospital'],['Father','—'],['Mother','Susan Tate'],['Registration no.','1993/0046']],
   birth1966:[['Name','Daphne Marsh-Pike'],['Birth date','9 Aug 1966'],['Birth place','Ashby Hospital'],['Father','—'],['Mother','Lorna Marsh-Pike'],['Registration no.','1966/0730']],
   licence2019:[['Name','Julian Ambrose Vane'],['Birth date','14 Jan 1993'],['Issue year','2019'],['Residence','14 Hollow Lane, Ashby']],
-  will2024:[['Testator','Cornelius Vane'],['Date','14 Nov 2024'],['Beneficiary','Julian Ambrose Vane'],['Witness','D. Mortlake']],
-  death2025:[['Name','Cornelius Vane'],['Death date','2 Mar 2025'],['Death place','At sea, off Ashby Point'],['Age at death','91'],['Informant','J. Vane'],['Registration no.','2025/0214']],
-  news2025:[['Name','Cornelius Vane'],['Publication','The Ashby Courier'],['Date','4 Mar 2025'],['Page','1']],
+  will2024:[['Testator','Cornelius Vane'],['Date','14 Nov 2024'],['Beneficiaries','Helen Vane; Julian Ambrose Vane'],['Witness','D. Mortlake']],
+  death2025:[['Name','Cornelius Vane'],['Death date','2 Mar 2025'],['Death place','At sea, off Ashby Point'],['Age at death','84'],['Informant','J. Vane'],['Registration no.','2025/0214']],
+  news2025:[['Names','Cornelius Vane; Helen Vane'],['Publication','The Ashby Courier'],['Date','4 Mar 2025'],['Page','1']],
   marine2025:[['Vessel','MY Marguerite'],['Report date','3 Mar 2025'],['Reported by','J. Vane'],['Reference','HA-25-031']],
-  funeral2025:[['Account','J. Vane, Vane House'],['Service','Memorial, no body'],['Date','March 2025'],['Director','Mortlake & Daughters']]
+  funeral2025:[['Account','J. Vane, Vane House'],['Service','Memorial, no bodies'],['Date','March 2025'],['Director','Mortlake & Daughters']]
 };
 const MAIL_DATE = {m1:'Sun 22:52',m0:'Sun 22:40',m2:'Sun 21:30',m3:'Sun 21:02',m10:'Sun 20:15',m4:'Fri 23:58',m11:'Now',m5:'Now',m6:'Now',m7:'Now',m9:'Now',m12:'Now'};
 const FILES = {cellarPhoto:'Cellar_photos.jpg',letterJulian:'Letter_JVane_claim.pdf',letterMargaret:'Letter_MHolloway_objection.pdf',letterDaphne:'Letter_DMarshPike_claim.pdf',diary1888:'EVane_diary_Feb1888.jpg'};
@@ -322,7 +337,7 @@ function kitStage(){ return Math.min(4, 2 + Math.floor(S.pins.length/7)); }
 
 /* ---- tree ---- */
 /* ================= FIELD GUIDE & TRAINING ================= */
-const GUIDE = [{"id": "job", "t": "Your job", "h": "<p>You are a night-shift associate at Ashgrove &amp; Pell, a probate firm. Your file is the estate of <b>Cornelius Vane</b>, lost overboard in March. Three people want the estate. Nobody has shown they are who they say they are.</p>\n<p>The partners want <b>five findings</b>, each one an answer plus the evidence that proves it. You have <b>three filings</b>. A finding is accepted only if the answer is right and the evidence is the right kind. A right answer on thin evidence is turned down the same as a wrong one.</p>\n<p>Nobody will tell you the answers. You work them out from records, and you build a family tree to do it.</p>"}, {"id": "sites", "t": "Your three screens", "h": "<p>The tabs along the top are three different websites.</p>\n<ul><li><b>Bloodlines</b> is a commercial genealogy site. It holds the records, the family tree, DNA results and hints.</li>\n<li><b>A&amp;P Mail</b> is the firm's webmail. The brief, the claimants' letters and replies to your work arrive here.</li>\n<li><b>Matter 2025-0417</b> is the firm's intranet. It holds your evidence, the photo lab, the handwriting examiner, the ruling form and the law library.</li></ul>\n<p>Your progress saves in the browser, so you can close the page and come back.</p>"}, {"id": "tree", "t": "Build the tree", "h": "<p>Your tree starts with four names and no links. It fills in as you prove who is related to whom.</p>\n<ol><li>Search a name on Bloodlines and open a record.</li><li>Read it. The <b>Build your tree</b> panel on the record page lists the people it names.</li><li>Pick two of them, say how they are related, and press <b>Add to tree</b>.</li></ol>\n<p>You can put any link on the tree, including one you only suspect. A link the record in front of you shows is drawn solid. Any other is drawn dashed as <b>unproven</b>. You can remove a link at any time.</p>\n<p>The tree checks dates for you. It flags a parent who was too young or already dead, a marriage that overlaps another, a person alive as two people at once, and anyone who ends up their own ancestor. A flag does not stop you. It tells you something does not add up.</p>\n<p>Two entries can be the same man. Say so with <b>is the same person as</b>. It counts as proven only after you have certified a photo or handwriting comparison between them. You can also record an event, such as a date a person was turned, from a record that states it.</p>\n<p>Your findings rely on the tree. The partners check that it shows what each finding claims, with no unproven links among the people involved. They will not tell you what is missing until your second filing. Records you open also tell you which names to search next.</p>\n<p>Some links need two records. A birth may give a mother only by her married name, and you need her marriage to know who she was before. Open each record and add the same link from both. The link stays dashed, and your links list says <b>Partly proven</b>, until the records together prove it.</p>\n<p>Several people can share a name. Check the dates, addresses and occupations before you decide which one a record means.</p>\n<p>Hints from other people's trees can put a link in your tree. They are claims, not proof. See <b>Hints</b> below.</p>"}, {"id": "search", "t": "Searching", "h": "<p>Search covers names, places and keywords, so try the places and objects in the letters and reports, not just surnames. You can narrow results by collection (births, deaths, censuses, newspapers and so on).</p>\n<p>Most records are not attached to any tree. They only turn up if you search for them.</p>\n<p>If a record should exist and does not, you can ask for a <b>certified nil return</b>. Type the name into the search box and press <b>Request nil return</b>. The certificate says a search found nothing, and it can be saved as evidence.</p>"}, {"id": "read", "t": "Reading a record", "h": "<p>Read the whole record, including the small print.</p>\n<ul><li>Who gave the information? Registers name an <b>informant</b>.</li><li>Who signed it, and when?</li><li>Do the ages, dates and places fit the other records?</li><li>Read the notes at the bottom. Registrars, enumerators and clerks often wrote down what they noticed.</li></ul>\n<p>The index details shown beside a record were typed up by volunteers, and they make mistakes. When the index and the page disagree, the page is right. If a name will not turn up, try a misspelling, a place or a keyword.</p>\n<p>Use the zoom buttons above the record to read fine detail. Every record has a <b>Save to matter</b> button.</p>"}, {"id": "evidence", "t": "Saving evidence", "h": "<p><b>Save to matter</b> puts a record in your evidence register (the Evidence tab of the matter). Save the records you rely on, and nothing you don't.</p>\n<p>On the Ruling tab you attach saved records to each finding. Each finding takes <b>four attachments at most</b>, and attaching records that have nothing to do with it counts against you. Choose what proves the point.</p>"}, {"id": "dna", "t": "DNA results", "h": "<p>The DNA page shows a kit's closest matches and how much DNA each shares, measured in centimorgans (cM). Read <b>who</b> the matches are as well as how much they share. Two people can share the same amount for different reasons.</p>"}, {"id": "lab", "t": "The photo lab", "h": "<p>The photo lab compares two photographs you have opened on Bloodlines. Choose both, then click each permanent mark you can see on the face, such as a scar or a mole. Press <b>Certify comparison</b>.</p>\n<p>A result is positive only when <b>two or more marks</b> match on both photos. One mark is not enough, because a mole can run in a family. A positive result counts as one identifying document.</p>"}, {"id": "hand", "t": "The handwriting examiner", "h": "<p>The handwriting examiner compares the signatures on two documents you have opened. It certifies whether the same hand wrote both. A positive result counts as one identifying document, but only when the hand is the one being identified.</p>"}, {"id": "law", "t": "The law library", "h": "<p>The law library holds the Succession Act and the Nocturnal Accord of 1888. The firm's rule is that if any party turns out not to be strictly human, the Accord decides the matter. Read every article. Save the provisions you rely on, the same way you save a record.</p>"}, {"id": "ruling", "t": "Filing a ruling", "h": "<p>On the Ruling tab, answer each of the five findings and attach your evidence, then file. The partners accept or reject each finding separately.</p>\n<ul><li>Accepted findings lock in.</li><li>After your first filing you only see which findings failed. From the second filing you also get a nudge on each.</li><li>You have <b>three filings</b>. After that the file goes to someone else.</li></ul>\n<p>Your result is graded by filings used: A for one, B for two, C for three. A minus sign means you relied on a hint from someone else's tree.</p>"}, {"id": "hints", "t": "Hints from other trees", "h": "<p>A hint marked with a red drop comes from a public member tree. Anyone can make one, including the people you are investigating. Check who owns the tree and when it was made. Save the record behind a hint, not the hint.</p>"}, {"id": "think", "t": "Rules of thumb", "h": "<ul><li>Dates have to fit. People are not parents before they are born.</li>\n<li>Ask who benefits from a record, and who wrote it.</li>\n<li>A record that should exist and does not is a clue.</li>\n<li>Two matching facts are stronger than one. One matching fact might be chance or family.</li>\n<li>If a person is hard to find in the records, ask why.</li>\n<li>A neat story is not evidence. Records are.</li></ul>"}, {"id": "gloss", "t": "Glossary", "h": "<dl class=\"gloss\"><dt>Matter</dt><dd>A case file at the firm. This one is 2025-0417.</dd>\n<dt>Finding</dt><dd>One question you must answer, with evidence.</dd>\n<dt>Filing</dt><dd>One submission of all your findings to the partners. You get three.</dd>\n<dt>Informant</dt><dd>The person who gave a registrar the details.</dd>\n<dt>Enumerator</dt><dd>The person who collected census forms.</dd>\n<dt>Nil return</dt><dd>A certificate that a search found no record.</dd>\n<dt>Centimorgan (cM)</dt><dd>The unit of shared DNA. More means closer.</dd>\n<dt>Probate</dt><dd>Settling a dead person's estate.</dd>\n<dt>Intestate</dt><dd>Dying without a valid will.</dd>\n<dt>The Accord</dt><dd>The Nocturnal Accord 1888, which governs estates where a party is not strictly human.</dd></dl>"}];
+const GUIDE = [{"id": "job", "t": "Your job", "h": "<p>You are a night-shift associate at Ashgrove &amp; Pell, a probate firm. Your file is the estate of <b>Cornelius Vane</b>, lost overboard in March. Three people want the estate. Nobody has shown they are who they say they are.</p>\n<p>The partners want <b>five findings</b>, each one an answer plus the evidence that proves it. You have <b>three filings</b>. A finding is accepted only if the answer is right and the evidence is the right kind. A right answer on thin evidence is turned down the same as a wrong one.</p>\n<p>Nobody will tell you the answers. You work them out from records, and you build a family tree to do it.</p>"}, {"id": "sites", "t": "Your three screens", "h": "<p>The tabs along the top are three different websites.</p>\n<ul><li><b>Bloodlines</b> is a commercial genealogy site. It holds the records, the family tree, DNA results and hints.</li>\n<li><b>A&amp;P Mail</b> is the firm's webmail. The brief, the claimants' letters and replies to your work arrive here.</li>\n<li><b>Matter 2025-0417</b> is the firm's intranet. It holds your evidence, the photo lab, the handwriting examiner, the ruling form and the law library.</li></ul>\n<p>Your progress saves in the browser, so you can close the page and come back.</p>"}, {"id": "tree", "t": "Build the tree", "h": "<p>Your tree starts with four names and no links. It fills in as you prove who is related to whom.</p>\n<ol><li>Search a name on Bloodlines and open a record.</li><li>Read it. The <b>Build your tree</b> panel on the record page lists the people it names.</li><li>Pick two of them, say how they are related, and press <b>Add to tree</b>.</li></ol>\n<p>You can put any link on the tree, including one you only suspect. A link the record in front of you shows is drawn solid. Any other is drawn dashed as <b>unproven</b>. You can remove a link at any time.</p>\n<p>The tree checks dates for you. It flags a parent who was too young or already dead, a marriage that overlaps another, a person alive as two people at once, and anyone who ends up their own ancestor. A flag does not stop you. It tells you something does not add up.</p>\n<p>Families take people in. Use <b>adopted or raised as a stepchild</b> when a record shows a child taken into a household, by adoption or by marriage.</p>\n<p>A name on paper is not always one person. If one man has taken over another's identity, say so with <b>took the identity of</b>. Use <b>is the same person as</b> when two entries are one man throughout. Either counts as proven only after you have certified a photo or handwriting comparison between them. Compare pictures from before a change as well as after. You can also record an event, such as a date a person was turned, from a record that states it.</p>\n<p>Your findings rely on the tree. The partners check that it shows what each finding claims, with no unproven links among the people involved. They will not tell you what is missing until your second filing. Records you open also tell you which names to search next.</p>\n<p>Some links need two records. A birth may give a mother only by her married name, and you need her marriage to know who she was before. Open each record and add the same link from both. The link stays dashed, and your links list says <b>Partly proven</b>, until the records together prove it.</p>\n<p>Several people can share a name. Check the dates, addresses and occupations before you decide which one a record means.</p>\n<p>Hints from other people's trees can put a link in your tree. They are claims, not proof. See <b>Hints</b> below.</p>"}, {"id": "search", "t": "Searching", "h": "<p>Search covers names, places and keywords, so try the places and objects in the letters and reports, not just surnames. You can narrow results by collection (births, deaths, censuses, newspapers and so on).</p>\n<p>Most records are not attached to any tree. They only turn up if you search for them.</p>\n<p>If a record should exist and does not, you can ask for a <b>certified nil return</b>. Type the name into the search box and press <b>Request nil return</b>. The certificate says a search found nothing, and it can be saved as evidence.</p>"}, {"id": "read", "t": "Reading a record", "h": "<p>Read the whole record, including the small print.</p>\n<ul><li>Who gave the information? Registers name an <b>informant</b>.</li><li>Who signed it, and when?</li><li>Do the ages, dates and places fit the other records?</li><li>Read the notes at the bottom. Registrars, enumerators and clerks often wrote down what they noticed.</li></ul>\n<p>The index details shown beside a record were typed up by volunteers, and they make mistakes. When the index and the page disagree, the page is right. If a name will not turn up, try a misspelling, a place or a keyword.</p>\n<p>Use the zoom buttons above the record to read fine detail. Every record has a <b>Save to matter</b> button.</p>"}, {"id": "evidence", "t": "Saving evidence", "h": "<p><b>Save to matter</b> puts a record in your evidence register (the Evidence tab of the matter). Save the records you rely on, and nothing you don't.</p>\n<p>On the Ruling tab you attach saved records to each finding. Each finding takes <b>four attachments at most</b>, and attaching records that have nothing to do with it counts against you. Choose what proves the point.</p>"}, {"id": "dna", "t": "DNA results", "h": "<p>The DNA page shows a kit's closest matches and how much DNA each shares, measured in centimorgans (cM). Read <b>who</b> the matches are as well as how much they share. Two people can share the same amount for different reasons.</p>"}, {"id": "lab", "t": "The photo lab", "h": "<p>The photo lab compares two photographs you have opened on Bloodlines. Choose both, then click each permanent mark you can see on the face, such as a scar or a mole. Press <b>Certify comparison</b>.</p>\n<p>A result is positive only when <b>two or more marks</b> match on both photos. One mark is not enough, because a mole can run in a family. A positive result counts as one identifying document.</p>"}, {"id": "hand", "t": "The handwriting examiner", "h": "<p>The handwriting examiner compares the signatures on two documents you have opened. It certifies whether the same hand wrote both. A positive result counts as one identifying document, but only when the hand is the one being identified.</p>"}, {"id": "law", "t": "The law library", "h": "<p>The law library holds the Succession Act and the Nocturnal Accord of 1888. The firm's rule is that if any party turns out not to be strictly human, the Accord decides the matter. Read every article. Save the provisions you rely on, the same way you save a record.</p>"}, {"id": "ruling", "t": "Filing a ruling", "h": "<p>On the Ruling tab, answer each of the five findings and attach your evidence, then file. The partners accept or reject each finding separately.</p>\n<ul><li>Accepted findings lock in.</li><li>After your first filing you only see which findings failed. From the second filing you also get a nudge on each.</li><li>You have <b>three filings</b>. After that the file goes to someone else.</li></ul>\n<p>Your result is graded by filings used: A for one, B for two, C for three. A minus sign means you relied on a hint from someone else's tree.</p>"}, {"id": "hints", "t": "Hints from other trees", "h": "<p>A hint marked with a red drop comes from a public member tree. Anyone can make one, including the people you are investigating. Check who owns the tree and when it was made. Save the record behind a hint, not the hint.</p>"}, {"id": "think", "t": "Rules of thumb", "h": "<ul><li>Dates have to fit. People are not parents before they are born.</li>\n<li>Ask who benefits from a record, and who wrote it.</li>\n<li>A record that should exist and does not is a clue.</li>\n<li>Two matching facts are stronger than one. One matching fact might be chance or family.</li>\n<li>If a person is hard to find in the records, ask why.</li>\n<li>A neat story is not evidence. Records are.</li></ul>"}, {"id": "gloss", "t": "Glossary", "h": "<dl class=\"gloss\"><dt>Matter</dt><dd>A case file at the firm. This one is 2025-0417.</dd>\n<dt>Finding</dt><dd>One question you must answer, with evidence.</dd>\n<dt>Filing</dt><dd>One submission of all your findings to the partners. You get three.</dd>\n<dt>Informant</dt><dd>The person who gave a registrar the details.</dd>\n<dt>Enumerator</dt><dd>The person who collected census forms.</dd>\n<dt>Nil return</dt><dd>A certificate that a search found no record.</dd>\n<dt>Centimorgan (cM)</dt><dd>The unit of shared DNA. More means closer.</dd>\n<dt>Probate</dt><dd>Settling a dead person's estate.</dd>\n<dt>Intestate</dt><dd>Dying without a valid will.</dd>\n<dt>The Accord</dt><dd>The Nocturnal Accord 1888, which governs estates where a party is not strictly human.</dd></dl>"}];
 
 const TRAIN = [
  {t:'Read the brief',d:'Open the first email from R. Ashgrove.',done:()=>S.read.includes('m1'),go:['mail','inbox/m1']},
@@ -348,10 +363,10 @@ function showGuide(sec){
 }
 
 /* ---- tree auto layout ----
-   Reads PEOPLE and REL (Father, Mother, Child, Spouse, Claimed father) and works out who goes where.
+   Reads PEOPLE and REL (Father, Mother, Child, Spouse, Claimed father, Adoptive father/mother, Adopted child) and works out who goes where.
    To add someone: give them a PEOPLE entry and a REL entry. No coordinates, no hand-drawn lines.
    GHOSTS are placeholder people who are not in PEOPLE (an unnamed mother). */
-const GHOSTS = {unknown:{label:'Unknown',sub:'Mother of Cornelius',spouse:'ambrose',child:'cornelius'}};
+const GHOSTS = {};
 const TREE = {w:200,h:74,couple:50,sib:50,pitch:146,pad:24};
 function layoutTree(people=PEOPLE, rel=REL, ghosts=GHOSTS, style=null){
   const {w:NW,h:NH,couple:CG,sib:SG,pitch:PITCH,pad:PAD} = TREE;
@@ -363,12 +378,14 @@ function layoutTree(people=PEOPLE, rel=REL, ghosts=GHOSTS, style=null){
   ids.forEach(i=>(rel[i]||[]).forEach(([r,o])=>{
     if(r==='Father'||r==='Mother') addP(i,o,'solid');
     else if(r==='Claimed father') addP(i,o,'claimed');
+    else if(r==='Adoptive father'||r==='Adoptive mother') addP(i,o,'adopt');
     else if(r==='Child') addP(o,i,'solid');
+    else if(r==='Adopted child') addP(o,i,'adopt');
     else if(r==='Spouse') addS(i,o);
   }));
   Object.entries(ghosts).forEach(([g,d])=>{ if(d.spouse) addS(g,d.spouse); if(d.child) addP(d.child,g,'solid'); });
   // children, in the order they are listed on the parent, then any others
-  ids.forEach(i=>(rel[i]||[]).forEach(([r,o])=>{ if(r==='Child'&&kids[o]!==undefined&&!kids[i].includes(o)) kids[i].push(o); }));
+  ids.forEach(i=>(rel[i]||[]).forEach(([r,o])=>{ if((r==='Child'||r==='Adopted child')&&kids[o]!==undefined&&!kids[i].includes(o)) kids[i].push(o); }));
   all.forEach(c=>parents[c].forEach(({id})=>{ if(!kids[id].includes(c)) kids[id].push(c); }));
   // generations: below parents, level with spouses, and ancestors with no parents sit just above their children
   const gen={}; all.forEach(i=>gen[i]=0);
@@ -388,10 +405,11 @@ function layoutTree(people=PEOPLE, rel=REL, ghosts=GHOSTS, style=null){
   const build=p=>{
     seen.add(p);
     const left=spouses[p].filter(s=>ghosts[s]), right=spouses[p].filter(s=>!ghosts[s]&&!seen.has(s));
+    if(!left.length&&right.length>1) left.push(right.shift()); // two marriages: first wife on the left, second on the right
     const row=[...left,p,...right]; row.forEach(r=>seen.add(r));
     const partners=[...left,...right];
     const cs=kids[p].filter(c=>!seen.has(c));
-    const keyOf=c=>{ const o=parents[c].find(x=>x.kind==='solid'&&x.id!==p&&partners.includes(x.id)); return o?o.id:''; };
+    const keyOf=c=>{ const o=parents[c].find(x=>(x.kind==='solid'||x.kind==='adopt')&&x.id!==p&&partners.includes(x.id)); return o?o.id:''; };
     cs.forEach(c=>seen.add(c));
     const order=[...partners,''];
     const kidsSorted=[]; order.forEach(k=>cs.filter(c=>keyOf(c)===k).forEach(c=>kidsSorted.push(c)));
@@ -442,6 +460,13 @@ function layoutTree(people=PEOPLE, rel=REL, ghosts=GHOSTS, style=null){
       edges.push({d:`M${cx(p.id)} ${botY(p.id)} V${mid} H${cx(c)} V${top}`,cls:'dash'+(style?(' '+style('claimed',[p.id],c)):'')});
       labels.push({x:(cx(p.id)+cx(c))/2+6,y:mid-9,t:'claimed, no source'});
     });
+    const ad=parents[c].filter(p=>p.kind==='adopt'&&pos[p.id]).map(p=>p.id);
+    if(ad.length){
+      const pair=ad.length>1&&adjacent(ad[0],ad[1]);
+      let sx,sy; if(pair){ const l=pos[ad[0]][0]<pos[ad[1]][0]?ad[0]:ad[1], r=l===ad[0]?ad[1]:ad[0]; sx=(pos[l][0]+NW+pos[r][0])/2; sy=midY(l); } else { sx=cx(ad[0]); sy=botY(ad[0]); }
+      edges.push({d:`M${sx} ${sy} V${mid+6} H${cx(c)} V${top}`,cls:'adopt'+(style?(' '+style('adopt',ad,c)):'')});
+      labels.push({x:(sx+cx(c))/2+6,y:mid-3,t:'adopted'});
+    }
   });
   return {pos,w:W,h:H,edges,labels,gen};
 }
@@ -451,44 +476,50 @@ function layoutTree(people=PEOPLE, rel=REL, ghosts=GHOSTS, style=null){
 const CLAIMS = [];
 /* recs: each entry is one record that proves the link alone, or an array of records that prove it only together */
 const claim=(t,a,b,recs)=>CLAIMS.push({t,a,b,proofs:recs.map(r=>Array.isArray(r)?r:[r]),recs:[...new Set(recs.flat())]});
-const P_=(a,b,recs)=>claim('parent',a,b,recs), S_=(a,b,recs)=>claim('spouse',a,b,recs), C_=(a,b,recs)=>claim('claimed',a,b,recs);
+const P_=(a,b,recs)=>claim('parent',a,b,recs), S_=(a,b,recs)=>claim('spouse',a,b,recs), C_=(a,b,recs)=>claim('claimed',a,b,recs), A_=(a,b,recs)=>claim('adopt',a,b,recs);
 P_('v1410','v1445',['will1509']); P_('v1445','v1480',['will1509']); P_('v1480','v1515',['will1577']); P_('v1515','v1550',['will1577','bapt1550']);
 P_('v1550','v1585',['marr1612']); P_('v1585','v1620',['bapt1620']); P_('v1620','v1655',['marr1682']); P_('v1655','v1688',['bapt1688']);
 P_('v1688','v1720',['bapt1720']); P_('v1720','samuel',['bapt1751']); P_('samuel','thomasv',['bapt1789']); P_('thomasv','josiah',['marr1850']);
 P_('josiah','ambrose',['birth1857','census1861','census1881','marr1886']); P_('hannah','ambrose',['birth1857','census1861','census1881']);
 P_('william','eliza',['birth1861','marr1886']); P_('ann','eliza',['birth1861']);
 P_('ambrose','harriet',['birth1888','census1891','census1911']); P_('eliza','harriet',['birth1888','census1891']);
-P_('ambrose','cornelius',['birth1934']); P_('harriet','thomas',[['birth1920','photo1912']]); P_('arthur','thomas',['birth1920']); P_('thomas','margaret',[['birth1951','marr1948']]);
-P_('cornelius','desmond',['death1994']); P_('desmond','julian',['birth1993']); C_('cornelius','daphne',['letterDaphne']);
+P_('harriet','thomas',[['birth1920','photo1912']]); P_('arthur','thomas',['birth1920']); P_('thomas','margaret',[['birth1951','marr1948']]);
+S_('ambrose','clara',['marr1905','census1911','census1921']); P_('clara','desmond',['birth1903','deedpoll1907']); A_('ambrose','desmond',['deedpoll1907','census1911','census1921']);
+S_('desmond','irene',['marr1946','photo1962']); P_('irene','cornelius',['birth1941','adopt1948']); A_('desmond','cornelius',['adopt1948','photo1962']);
+S_('cornelius','helen',['marr1995','adopt1996']); A_('cornelius','julian',['adopt1996']); A_('helen','julian',['adopt1996']);
+P_('cornelius','daphne',[['dnaDaphne','birth1941'],['dnaDaphne','adopt1948']]); C_('cornelius','daphne',['letterDaphne']);
 S_('josiah','hannah',['marr1850','census1861','census1881']); S_('ambrose','eliza',['marr1886','census1891']);
 S_('harriet','arthur',['photo1912','birth1920']); S_('william','ann',['birth1861']);
 const STARTERS = ['cornelius','julian','margaret','daphne'];
 const NAMEOF = id => (PEOPLE[id]?PEOPLE[id].name:id).replace(/\s*\(.*\)/,'');
 /* people named in a record, for the Build your tree panel: those in its relationship claims, plus those it names without one */
 const EXTRA_IN = {hospital1888:['ambrose'],news1888:['ambrose','eliza'],diary1888:['eliza','ambrose'],photo1875:['ambrose'],photo1889:['ambrose'],news1889:['josiah','ambrose'],
-  trust1934:['ambrose','cornelius'],death1934:['ambrose'],news1934:['ambrose'],licence1972:['cornelius'],photo1962:['cornelius'],licence2019:['julian'],will2024:['cornelius','julian'],
-  death2025:['cornelius','julian'],news2025:['cornelius','julian'],letterJulian:['julian'],letterMargaret:['margaret','harriet'],birth1966:['daphne'],news1994:['desmond'],
-  nilDesmond:['desmond'],birth1920:['thomas','harriet','arthur'],photo1912:['harriet','arthur'],marr1948:['thomas','arthur'],birth1951:['margaret','thomas'],census1911:['ambrose','harriet'],census1921:['ambrose'],photo1950:['thomas'],birth1888:['ambrose','eliza','harriet'],rolls:['cornelius','julian'],
-  marine2025:['julian','cornelius'],funeral2025:['julian','cornelius'],hintOfficial:['julian','cornelius']};
+  trust1934:['ambrose','desmond','cornelius'],death1934:['ambrose','desmond'],inquest1934:['ambrose','clara','desmond'],news1934:['ambrose','clara','desmond'],burial1934:['ambrose','clara'],
+  photo1925:['desmond'],photo1962:['desmond','irene','cornelius'],death1976:['desmond','cornelius'],inquest1976:['desmond','irene','cornelius'],news1976:['desmond','irene','cornelius'],
+  licence1979:['cornelius'],licence2019:['julian'],licence2025:['julian'],birth1993:['julian'],will2024:['cornelius','helen','julian'],
+  death2025:['cornelius','helen','julian'],death2025h:['helen','cornelius','julian'],news2025:['cornelius','helen','julian'],letterJulian:['julian'],letterMargaret:['margaret','harriet','desmond','helen','julian'],
+  letterDaphne:['daphne','cornelius'],birth1966:['daphne'],dnaDaphne:['daphne','margaret'],nilDesmond:['desmond','ambrose'],nilCornelius:['cornelius','desmond'],nilJulian:['julian','cornelius'],
+  birth1920:['thomas','harriet','arthur'],photo1912:['harriet','arthur'],marr1948:['thomas','arthur'],birth1951:['margaret','thomas'],census1911:['ambrose','clara','harriet','desmond'],census1921:['ambrose','clara','desmond'],
+  photo1950:['thomas'],birth1888:['ambrose','eliza','harriet'],rolls:['ambrose','clara','desmond','irene','cornelius','helen','julian'],
+  marine2025:['julian','cornelius','helen'],funeral2025:['julian','cornelius','helen'],hintOfficial:['julian','cornelius']};
 const peopleIn = rec => { const s=[]; CLAIMS.forEach(c=>{ if(c.proofs.some(set=>set.length===1&&set[0]===rec)) [c.a,c.b].forEach(x=>{ if(!s.includes(x)) s.push(x); }); }); (EXTRA_IN[rec]||[]).forEach(x=>{ if(!s.includes(x)) s.push(x); }); return s; };
-const REL_LABEL = {parent:'is the parent of',spouse:'is married to',same:'is the same person as',claimed:'is claimed to be the parent of'};
+const REL_LABEL = {parent:'is the parent of',adopt:'adopted or raised as a stepchild',spouse:'is married to',claimed:'is claimed to be the parent of',took:'took the identity of',same:'is the same person as'};
 const sameLink = (l,t,a,b) => l.t===t && ((l.a===a&&l.b===b) || ((t==='spouse'||t==='same')&&l.a===b&&l.b===a));
 /* events a record can establish for a person */
 const EVENT_DEFS = {
   hospital1888:[{p:'ambrose',k:'turned',date:'1888-02-14'}], news1888:[{p:'ambrose',k:'turned',date:'1888-02-14'}], diary1888:[{p:'ambrose',k:'turned',date:'1888-02-14'}],
-  nilDesmond:[{p:'desmond',k:'nobirth'}],
-  death1934:[{p:'ambrose',k:'nobody'}], inquest1934:[{p:'ambrose',k:'nobody'}], news1934:[{p:'ambrose',k:'nobody'}],
-  marine2025:[{p:'cornelius',k:'nobody'}], funeral2025:[{p:'cornelius',k:'nobody'}],
-  death1994:[{p:'desmond',k:'nobody'}], news1994:[{p:'desmond',k:'nobody'}],
-  dnaDaphne:[{p:'daphne',k:'marsh'}]
+  inquest1934:[{p:'desmond',k:'misid'}], inquest1976:[{p:'cornelius',k:'misid'}],
+  marine2025:[{p:'cornelius',k:'nobody'},{p:'helen',k:'nobody'}], funeral2025:[{p:'cornelius',k:'nobody'},{p:'helen',k:'nobody'}],
+  death2025:[{p:'cornelius',k:'nobody'}], death2025h:[{p:'helen',k:'nobody'}],
+  dnaDaphne:[{p:'daphne',k:'marsh'},{p:'daphne',k:'askew'}]
 };
-const EVENT_LABEL = {turned:'was attacked and turned',nobirth:'has no birth record',nobody:'died with no body seen',marsh:'shares DNA with Margaret through Marsh relatives'};
+const EVENT_LABEL = {turned:'was attacked and turned',nobody:'died with no body seen',misid:"died, and was buried under another man's name",marsh:'shares DNA with Margaret through Marsh relatives',askew:'has close DNA matches on the Askew side'};
 /* whose photographs and signatures are whose: lets a certified comparison prove two people are one */
-const PHOTO_OWNER = {photo1875:'ambrose',photo1889:'ambrose',photo1912:'ambrose',photo1962:'cornelius',licence1972:'cornelius',licence2019:'julian'};
-const SIGN_OWNER = {'A. Vane':'ambrose','C. Vane':'cornelius','J. Vane':'julian'};
+const PHOTO_OWNER = {photo1875:'ambrose',photo1889:'ambrose',photo1912:'ambrose',photo1925:'desmond',photo1962:'desmond',licence1979:'cornelius',licence2019:'julian',licence2025:'julian'};
+const SIGN_OWNER = {'A. Vane':'ambrose','D. Vane':'desmond','C. Vane':'cornelius','J. Vane':'julian'};
 const docOwner = id => PHOTO_OWNER[id] || (SIGNED[id]?SIGN_OWNER[SIGNED[id][0]]:null) || null;
 function supportedBy(l, rec){
-  if(l.t==='same'){ const r=S.reports[rec]; if(!r||!r.ok) return false; const o=[docOwner(r.a),docOwner(r.b)]; return o[0]&&o[1]&&((o[0]===l.a&&o[1]===l.b)||(o[0]===l.b&&o[1]===l.a)); }
+  if(l.t==='same'||l.t==='took'){ const r=S.reports[rec]; if(!r||!r.ok) return false; const o=[docOwner(r.a),docOwner(r.b)]; return o[0]&&o[1]&&((o[0]===l.a&&o[1]===l.b)||(o[0]===l.b&&o[1]===l.a)); }
   return CLAIMS.some(c=>c.t===l.t && sameLink(c,l.t,l.a,l.b) && c.proofs.some(set=>set.includes(rec) && set.every(r=>r===rec||l.recs.includes(r))));
 }
 const linkStatus = l => l.recs.some(r=>supportedBy(l,r)) ? 'proven' : 'unproven';
@@ -527,8 +558,8 @@ function tryEvent(p,k,rec){
 const DATES = {
   v1410:['1410','1471'],v1445:['1445','1509'],v1480:['1480','1544'],v1515:['1515','1577'],v1550:['1550','1612'],v1585:['1585','1650'],v1620:['1620','1688'],v1655:['1655','1719'],v1688:['1688','1750'],v1720:['1720','1790'],
   samuel:['1751-02-27','1822'],thomasv:['1789-04-04','1858'],josiah:['1824-01-02','1889-03-08'],hannah:['1828-01-15','1901'],william:['1830','1899'],ann:['1832','1910'],
-  ambrose:['1857-02-09','1934-02-01'],eliza:['1861-01-20','1902'],harriet:['1888-06-04','1960'],arthur:['1884','1951'],cornelius:['1934-03-02','2025-03-02'],
-  thomas:['1920-03-07','1999'],margaret:['1951-07-22',null],desmond:['1961','1994-10-30'],daphne:['1966-08-09',null],julian:['1993-01-14',null]
+  ambrose:['1857-02-09','1934-02-01'],eliza:['1861-01-20','1902'],harriet:['1888-06-04','1960'],arthur:['1884','1951'],clara:['1875','1934-02-01'],irene:['1912','1976-11-14'],cornelius:['1941-03-02','2025-03-02'],helen:['1950-08-12','2025-03-02'],
+  thomas:['1920-03-07','1999'],margaret:['1951-07-22',null],desmond:['1903-10-11','1976-11-14'],daphne:['1966-08-09',null],julian:['1993-01-14',null]
 };
 const toNum = s => { const m=String(s).match(/^(\d{4})(?:-(\d{2})-(\d{2}))?$/); if(!m) return null; const y=+m[1]; if(!m[2]) return y+0.5; return y+((+m[2]-1)*30.4375+ +m[3])/365.25; };
 const bornN = id => DATES[id]&&DATES[id][0]?toNum(DATES[id][0]):null;
@@ -609,7 +640,7 @@ function computeFlags(){
 const linkOf = (t,a,b) => S.tree.links.find(l=>sameLink(l,t,a,b));
 function edgeStyle(kind,ps,c){
   const ids=[]; if(kind==='couple'){ const l=linkOf('spouse',ps[0],ps[1]); if(l) ids.push(l.id); }
-  else ps.forEach(p=>{ const l=linkOf(kind==='claimed'?'claimed':'parent',p,c); if(l) ids.push(l.id); });
+  else ps.forEach(p=>{ const l=linkOf(kind==='claimed'?'claimed':kind==='adopt'?'adopt':'parent',p,c); if(l) ids.push(l.id); });
   const st=ids.map(i=>LSTAT[i]).filter(Boolean); const cls=[];
   if(st.some(s=>s.status==='unproven')) cls.push('unp');
   if(st.some(s=>s.worst==='impossible')) cls.push('bad'); else if(st.some(s=>s.worst==='unusual')) cls.push('odd');
@@ -618,20 +649,22 @@ function edgeStyle(kind,ps,c){
 function revealAllTree(){
   S.tree.people = Object.keys(PEOPLE); S.tree.nid = 0; S.tree.links = CLAIMS.map(c=>({id:++S.tree.nid,t:c.t,a:c.a,b:c.b,recs:[...c.proofs[0]]}));
   const mk=(a,b)=>{ const id='cmp:'+[a,b].sort().join('-'); S.reports[id]={a,b,shared:['scar','mole'],ok:true}; REC[id]=cmpRec(id); return id; };
-  S.tree.links.push({id:++S.tree.nid,t:'same',a:'ambrose',b:'cornelius',recs:[mk('photo1889','licence1972')]},{id:++S.tree.nid,t:'same',a:'cornelius',b:'julian',recs:[mk('licence1972','licence2019')]});
-  S.tree.events = [{p:'ambrose',k:'turned',date:'1888-02-14',rec:'hospital1888'},{p:'desmond',k:'nobirth',date:null,rec:'nilDesmond'},{p:'ambrose',k:'nobody',date:null,rec:'death1934'},{p:'cornelius',k:'nobody',date:null,rec:'funeral2025'},{p:'desmond',k:'nobody',date:null,rec:'death1994'},{p:'daphne',k:'marsh',date:null,rec:'dnaDaphne'}];
+  [['desmond','photo1962'],['cornelius','licence1979'],['julian','licence2025']].forEach(([who,ph])=>S.tree.links.push({id:++S.tree.nid,t:'took',a:'ambrose',b:who,recs:[mk('photo1889',ph)]}));
+  S.tree.events = [{p:'ambrose',k:'turned',date:'1888-02-14',rec:'hospital1888'},{p:'desmond',k:'misid',date:null,rec:'inquest1934'},{p:'cornelius',k:'misid',date:null,rec:'inquest1976'},
+    {p:'cornelius',k:'nobody',date:null,rec:'funeral2025'},{p:'helen',k:'nobody',date:null,rec:'death2025h'},{p:'daphne',k:'marsh',date:null,rec:'dnaDaphne'},{p:'daphne',k:'askew',date:null,rec:'dnaDaphne'}];
 }
 function treeData(){
   const people={}, rel={}; S.tree.people.forEach(id=>{ people[id]=PEOPLE[id]; rel[id]=[]; });
   const kids={}; const reaches=(from,to)=>{ const st=[from],seen=new Set(); while(st.length){ const n=st.pop(); if(n===to) return true; if(seen.has(n)) continue; seen.add(n); (kids[n]||[]).forEach(k=>st.push(k)); } return false; };
   S.tree.links.forEach(l=>{
     if(!rel[l.a]||!rel[l.b]) return;
-    if(l.t==='parent'||l.t==='claimed'){ if(l.a===l.b||reaches(l.b,l.a)) return; (kids[l.a]=kids[l.a]||[]).push(l.b); }
+    if(l.t==='parent'||l.t==='claimed'||l.t==='adopt'){ if(l.a===l.b||reaches(l.b,l.a)) return; (kids[l.a]=kids[l.a]||[]).push(l.b); }
     if(l.t==='parent'){ rel[l.b].push([SEX[l.a]==='m'?'Father':'Mother',l.a]); rel[l.a].push(['Child',l.b]); }
     else if(l.t==='spouse'){ rel[l.a].push(['Spouse',l.b]); rel[l.b].push(['Spouse',l.a]); }
     else if(l.t==='claimed'){ rel[l.b].push(['Claimed father',l.a]); }
+    else if(l.t==='adopt'){ rel[l.b].push([SEX[l.a]==='m'?'Adoptive father':'Adoptive mother',l.a]); rel[l.a].push(['Adopted child',l.b]); }
   });
-  const ghosts = S.tree.links.some(l=>l.t==='parent'&&l.a==='ambrose'&&l.b==='cornelius') ? {unknown:GHOSTS.unknown} : {};
+  const ghosts = {};
   return {people,rel,ghosts};
 }
 let LAY = null, GH = {}, POS = {};
@@ -644,7 +677,7 @@ const HIDDEN_FACTS = /^(Parents?|Father|Mother|Married|Spouse|Relationship|Claim
 function evidenceChoices(){ const ids=[...new Set([...S.viewed,...S.pins,...Object.keys(S.reports)])].filter(id=>REC[id]&&!REC[id].hidden||id.startsWith('cmp:')||id.startsWith('sig:')); return ids; }
 const evOptions = sel => `<option value="">No record (just my theory)</option>${evidenceChoices().map(id=>`<option value="${id}" ${id===sel?'selected':''}>${esc(REC[id].title)}</option>`).join('')}`;
 const peopleOpts = (named,others) => `<option value="">Choose a person</option>${named&&named.length?`<optgroup label="Named in this record">${named.map(x=>`<option value="${x}">${NAMEOF(x)}</option>`).join('')}</optgroup>`:''}${others.length?`<optgroup label="${named&&named.length?'Already in your tree':'In your tree'}">${others.map(x=>`<option value="${x}">${NAMEOF(x)} (${PEOPLE[x].life})</option>`).join('')}</optgroup>`:''}`;
-const REL_OPTS = `<option value="parent">is the parent of</option><option value="spouse">is married to</option><option value="same">is the same person as</option><option value="claimed">is claimed to be the parent of</option>`;
+const REL_OPTS = Object.entries(REL_LABEL).map(([k,l])=>`<option value="${k}">${l}</option>`).join('');
 function treePanel(rec){
   const named = peopleIn(rec); const evDefs = EVENT_DEFS[rec]||[];
   if(!named.length && !evDefs.length) return '';
@@ -660,7 +693,7 @@ function treePanel(rec){
     <button class="bbtn">Add to tree</button></form>`:''}${evForm}</div></div>`;
 }
 /* ---- what the tree must show for each finding ---- */
-const INVOLVED = {F1:['julian','cornelius','ambrose'],F2:['cornelius','ambrose'],F3:['desmond','julian','cornelius'],F4:['daphne','cornelius'],F5:['margaret','thomas','harriet','ambrose']};
+const INVOLVED = {F1:['ambrose','desmond','cornelius','julian'],F2:['cornelius','helen'],F3:['desmond','clara','ambrose'],F4:['daphne','cornelius'],F5:['margaret','thomas','harriet','ambrose']};
 function provenConnected(x,y){
   const adj={}; S.tree.links.filter(l=>l.t==='same'&&LSTAT[l.id]&&LSTAT[l.id].status==='proven').forEach(l=>{ (adj[l.a]=adj[l.a]||[]).push(l.b); (adj[l.b]=adj[l.b]||[]).push(l.a); });
   const seen=new Set([x]), st=[x]; while(st.length){ const n=st.pop(); if(n===y) return true; (adj[n]||[]).forEach(m=>{ if(!seen.has(m)){ seen.add(m); st.push(m); } }); } return false;
@@ -669,10 +702,11 @@ const provenLink = (t,x,y) => { const l=linkOf(t,x,y); return !!l && !!LSTAT[l.i
 const hasEvent = (p,k) => S.tree.events.some(e=>e.p===p&&e.k===k);
 function treeChecks(F){
   computeFlags(); const c=[]; const add=(ok,text)=>c.push({ok,text});
-  if(F==='F1'){ add(provenConnected('julian','cornelius'),'A certified comparison proves Julian Vane and Cornelius Vane are one man'); add(provenConnected('cornelius','ambrose'),'A certified comparison proves Cornelius Vane and Ambrose Vane are one man'); }
-  if(F==='F2'){ add(hasEvent('cornelius','nobody'),'Cornelius Vane is recorded as dying with no body seen'); add(hasEvent('ambrose','nobody'),'Ambrose Vane is recorded as dying with no body seen'); }
-  if(F==='F3'){ add(!!linkOf('parent','desmond','julian'),"Desmond Vane is in your tree as Julian's father"); add(hasEvent('desmond','nobirth'),'A certified nil return shows Desmond has no birth record'); add(hasEvent('desmond','nobody'),'Desmond is recorded as dying with no body seen'); }
-  if(F==='F4'){ add(hasEvent('ambrose','turned'),'The date Ambrose was turned is recorded in your tree'); add(hasEvent('daphne','marsh'),"Daphne's DNA is recorded as matching Margaret through Marsh relatives"); add(!!(linkOf('claimed','cornelius','daphne')||linkOf('parent','cornelius','daphne')),'Daphne is linked to Cornelius as his claimed daughter'); }
+  const took = who => provenLink('took','ambrose',who);
+  if(F==='F1'){ add(took('desmond'),'A certified comparison proves Ambrose Vane took the identity of Desmond Vane'); add(took('cornelius'),'A certified comparison proves Ambrose Vane took the identity of Cornelius Vane'); add(took('julian'),'A certified comparison proves Ambrose Vane took the identity of Julian Vane'); }
+  if(F==='F2'){ add(hasEvent('cornelius','nobody'),'Cornelius Vane is recorded as dying with no body seen'); add(hasEvent('desmond','misid')||hasEvent('cornelius','misid'),'An earlier death in the family is recorded as buried under another name'); }
+  if(F==='F3'){ add(hasEvent('desmond','misid'),"Desmond Vane is recorded as dying in 1934 and buried under another man's name"); add(took('desmond'),'A certified comparison proves Ambrose Vane took the identity of Desmond Vane'); }
+  if(F==='F4'){ add(!!(linkOf('parent','cornelius','daphne')||linkOf('claimed','cornelius','daphne')),'Daphne is linked to Cornelius Vane'); add(hasEvent('daphne','askew'),"Daphne's Askew-side DNA matches are recorded"); add(hasEvent('cornelius','misid'),"Cornelius Vane is recorded as dying in 1976 and buried under another man's name"); }
   if(F==='F5'){ add(provenLink('parent','ambrose','harriet')&&provenLink('parent','harriet','thomas')&&provenLink('parent','thomas','margaret'),'Margaret is linked to Ambrose through Thomas and Harriet, every link proven'); add(hasEvent('ambrose','turned'),'The date Ambrose was turned is recorded in your tree'); }
   const inv=INVOLVED[F]; const bad=S.tree.links.filter(l=>(inv.includes(l.a)||inv.includes(l.b))&&LSTAT[l.id]&&LSTAT[l.id].status==='unproven');
   add(bad.length===0, bad.length?`Your tree has ${bad.length} unproven link${bad.length>1?'s':''} among these people. Prove ${bad.length>1?'them':'it'} or remove ${bad.length>1?'them':'it'}`:'No unproven links among these people');
@@ -830,9 +864,8 @@ function blDna(kit){
     ${mrow('R. Holloway','1st cousin','874 cM','Holloway / Vane')}${mrow('G. Holloway-Teague','2nd cousin','231 cM','Holloway / Vane')}${mrow('Daphne Marsh-Pike','3rd cousin','96 cM','Marsh')}${mrow('Ivor Marsh','3rd cousin','88 cM','Marsh')}${mrow('Julian Vane','No match','0 cM','')}</div></div>
     <div class="side">${ethPanel([['England & Wales',61],['Ireland',22],['Scotland',14],['Germanic Europe',3]])}${saveBtn('dnaMargaret')}</div></div>`;
   else if(kit==='daphne') body = `<div class="two"><div class="side"><div class="panel"><div class="ph"><h2>Matches</h2><span class="muted" style="margin-left:auto;font-size:13.5px">188 matches · showing closest</span></div><div class="pb">
-    ${mrow('Daniel Pike','1st cousin','811 cM','')}${mrow('Ivor Marsh','2nd cousin','212 cM','Marsh')}${mrow('Margaret Holloway','3rd cousin','96 cM','Marsh')}</div></div>
-    <div class="panel"><div class="ph"><h2>Shared matches with Margaret Holloway</h2></div><div class="pb"><p style="margin:0 0 8px">Ivor Marsh, Ada Marsh-Clery and T. Marsh.</p>
-    <div class="rtable-wrap"><table class="cmtable"><tr><th>If Cornelius were her father</th><th>Expected relationship</th><th class="n">Typical cM</th><th class="n">Observed</th></tr><tr><td>Margaret Holloway</td><td>Half 1st cousin 1x removed</td><td class="n">57–530</td><td class="n">96</td></tr></table></div>
+    ${mrow('Daniel Pike','1st cousin','811 cM','Pike')}${mrow('P. Askew-Rhee','1st cousin 1x removed','412 cM','Askew')}${mrow('D. Askew','1st cousin 1x removed','398 cM','Askew')}${mrow('Ivor Marsh','2nd cousin','212 cM','Marsh')}${mrow('rope_walk_41','2nd cousin','205 cM','Askew')}${mrow('Margaret Holloway','3rd cousin','96 cM','Marsh')}</div></div>
+    <div class="panel"><div class="ph"><h2>Shared matches with Margaret Holloway</h2></div><div class="pb"><p style="margin:0">Ivor Marsh, Ada Marsh-Clery and T. Marsh. None of Daphne's Askew or Pike matches is shared with Margaret.</p>
 </div></div></div>
     <div class="side">${ethPanel([['England & Wales',72],['Ireland',18],['Scotland',10]])}${saveBtn('dnaDaphne')}</div></div>`;
   else body = S.won ? `<div class="two"><div class="panel"><div class="ph"><h2>Matches</h2><span class="muted" style="margin-left:auto;font-size:13.5px">1 match</span></div><div class="pb">
@@ -1101,7 +1134,8 @@ document.addEventListener('click', e=>{
       const nm = (($('#sname')||{}).value||'').trim(), low = nm.toLowerCase();
       if(!nm){ toast('Enter a name first'); return; }
       plog('nil',{name:nm});
-      if(low.includes('desmond')){ log('Nil return requested: '+nm); showPreview('nilDesmond'); return; }
+      const nilFor = low.includes('desmond')?'nilDesmond':low.includes('cornelius')&&low.includes('vane')?'nilCornelius':low.includes('julian')&&low.includes('vane')?'nilJulian':null;
+      if(nilFor){ log('Nil return requested: '+nm); showPreview(nilFor); return; }
       const words = low.split(/\s+/), has = Object.keys(REC).some(id=>!REC[id].hidden && REC[id].kind==='Birth' && words.every(w=>REC[id].title.toLowerCase().includes(w)));
       toast(has ? 'A birth record exists for that name. No nil return can be issued.' : 'Not certified. The firm only certifies searches for people in this matter.'); return; }
     case 'reset': { const keep={on:S.flags.plog,log:S.plog}; try{localStorage.removeItem('bloodlines-v3')}catch(e){} for(const id in S.reports) delete REC[id]; Object.assign(S, FRESH()); if(keep.on){ S.flags.plog=true; S.plog=keep.log; plog('replay'); } save(); render(); return; }

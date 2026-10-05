@@ -12,7 +12,7 @@ Open `index.html` in a browser. There's nothing to install and no server is need
 
 ## Case 1 in brief
 
-Cornelius Vane, 91, went overboard off Ashby Point. His will leaves everything to his grandson Julian. His great-niece Margaret objects, and a third woman, Daphne, says she's his daughter. You get five findings to prove and three filings to get them past the partners.
+Cornelius Vane, 84, and his wife Helen went overboard off Ashby Point. His will leaves everything to his grandson Julian, who brought the boat home alone. Margaret, the last of the old Vane blood, objects, and a third woman, Daphne, says she's his daughter. The house has buried a family every forty years since 1934. You get five findings to prove and three filings to get them past the partners.
 
 The tools:
 

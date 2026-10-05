@@ -190,3 +190,22 @@ Checks before accepting a photo:
 - JPEG, about 150 KB each. Paper textures 1000 px wide, about 80 KB.
 - Name files as in the tables above. The game keys images by record id.
 - Any photo of a real person from an archive carries a rights and consent problem, even if the sitter is long dead and the caption is fictional. Generate or shoot the faces. Archive material is fine for paper, newsprint and backdrops.
+
+
+## Added for the 2025 canon rewrite
+
+See `CANON_CASE1.md`. The vampire's existing images are reused: `licence1972.jpg` is now Cornelius's 1979 licence, and `licence2019.jpg` is now Julian's 2025 replacement licence. Until the images below exist, the game draws simple placeholder faces for them.
+
+These faces must **not** match the vampire: no scar through the eyebrow, no mole on the cheek, a clearly different face.
+
+| File | What | Era and medium | Prompt notes |
+|---|---|---|---|
+| `photo1925.jpg` (600×750) | Desmond Vane, 21, rowing club | 1925 gelatin silver print, club annual, slipway at noon | Broad-shouldered young man in a rowing jersey, fair hair parted flat, square jaw, broad nose, squinting in sunlight. No scar, no mole. |
+| `licence2019_real.jpg` (600×750) | The real Julian Vane, 26 | 2019 licence photo, flat studio light, plain blue-grey background | Ordinary young man, wavy brown hair, rounder face, slight smile. No scar, no mole. |
+| `photo1968.jpg` (optional) | The real Cornelius Vane, about 27 | Late-1960s colour snapshot | Lean young man, dark curly hair, open collar, outdoors by day. No scar, no mole. |
+| `av_clara.jpg` (256×256) | Clara Vane, about 35 | Edwardian cabinet card, c. 1910 | Composed woman, hair up, high lace collar. |
+| `av_irene.jpg` (256×256) | Irene Vane, about 40 | 1950s studio portrait | Dark waved hair, pearls, wary expression. |
+| `av_helen.jpg` (256×256) | Helen Vane, about 50 | 2000s snapshot, daylight | Grey-blonde bob, cardigan, warm face. |
+| `av_desmond.jpg` (256×256) | Desmond Vane's profile picture | 1962 newspaper halftone crop | Crop from the 1962 photo (the vampire's face), since the profile shows the man as he was last known. |
+
+When the real Julian image arrives, set `PH.licence2019` in `src/data.js` to use it with `marks:{}` so the lab can never find a scar or a mole on it.
