@@ -69,7 +69,13 @@ Your tree is your own work. It begins with only the four people named in the bri
 3. Choose two people and say how they are related: *is the parent of*, *is married to* or *is claimed to be the parent of*.
 4. Press **Add to tree**.
 
-The game takes a link only if that record shows it. If it does not, it says "This record doesn't show that" and tells you nothing more, so a wrong guess costs you nothing but a moment. A person you add appears on the tree, and the record often names someone new to search for. That is how the tree grows backwards through the generations.
+You can put any link on the tree, including one you only suspect. If the record you are reading shows it, the line is solid. If not, the line is dashed and marked **unproven**. Remove a link from the Tree check panel whenever you like. A person you add appears on the tree, and the record often names someone new to search for. That is how the tree grows backwards through the generations.
+
+The tree checks dates for you and raises flags: a parent too young or already dead at the birth, a spouse who overlaps another marriage, one person alive as two at once, a person who becomes their own ancestor, and anyone born after the turning in a way the Nocturnal Accord covers. A flag never blocks a link. It marks something that does not add up, and the badge on the person's card shows the worst one.
+
+Two entries can be the same man. Add **is the same person as** between them. It is proven only after you have certified a photo or handwriting comparison between the two. You can also record an event (when someone was turned, or that no birth was ever registered) from a record that states it.
+
+Your findings depend on the tree. Each finding on the ruling form lists what the tree must show, and unproven links among the people involved will fail it.
 
 Things to know:
 - Some people share a name. Compare the dates before deciding which person a record means.

@@ -11,12 +11,27 @@ const GAME='file://'+path.resolve(__dirname,'..')+'/index.html';
  await ev(()=>go('tree','bl')); await p.waitForTimeout(200);
  ok(await ev(()=>S.tree.people.length===4&&S.tree.links.length===0),'tree starts with the four names and no links');
  ok(await ev(()=>document.querySelectorAll('.tnode').length===4&&document.querySelector('.treehint')!==null),'tree page shows four loose cards and a prompt');
- // 2. wrong and right links
- let r=await ev(()=>tryLink('ambrose','spouse','cornelius','birth1934')); ok(!r.ok,'a link the record does not show is refused: "'+r.msg+'"');
- r=await ev(()=>tryLink('ambrose','parent','cornelius','birth1857')); ok(!r.ok,'a link backed by the wrong record is refused');
- r=await ev(()=>tryLink('ambrose','parent','cornelius','birth1934')); ok(r.ok,'Ambrose parent of Cornelius from the 1934 birth is accepted');
+ // 2. any link is accepted; the record decides solid or unproven
+ let r=await ev(()=>tryLink('ambrose','spouse','cornelius','birth1934')); ok(r.ok&&r.status==='unproven','a link the record does not show is accepted but unproven');
+ r=await ev(()=>tryLink('ambrose','parent','cornelius','birth1857')); ok(r.ok&&r.status==='unproven','a link backed by the wrong record is unproven');
+ await fresh();
+ r=await ev(()=>tryLink('ambrose','parent','cornelius','birth1934')); ok(r.ok&&r.status==='proven','Ambrose parent of Cornelius from the 1934 birth is proven');
  ok(await ev(()=>{refreshLayout();return S.tree.people.includes('ambrose')&&Object.keys(GH).includes('unknown');}),'Ambrose joins the tree, with the unnamed mother as a placeholder');
  r=await ev(()=>tryLink('ambrose','parent','cornelius','birth1934')); ok(!r.ok,'adding the same link again is refused');
+ r=await ev(()=>tryLink('ambrose','parent','ambrose','birth1934')); ok(!r.ok,'linking a person to themselves is refused');
+ // 2b. flags
+ await fresh(); await ev(()=>{tryLink('ambrose','parent','cornelius','birth1934');tryLink('ambrose','same','cornelius','birth1934');refreshLayout()});
+ ok(await ev(()=>FLAGS.some(f=>f.sev==='impossible')),'saying Ambrose is Cornelius flags an impossible date');
+ ok(await ev(()=>LSTAT[S.tree.links.find(l=>l.t==='same').id].status==='unproven'),'a same-person link without a certified report is unproven');
+ await fresh(); await ev(()=>{tryLink('daphne','parent','cornelius','letterDaphne');refreshLayout()});
+ ok(await ev(()=>FLAGS.some(f=>/older|born|age|before/i.test(f.text))||FLAGS.length>0),'an odd parent link raises a flag');
+ await fresh(); await ev(()=>{tryLink('cornelius','parent','ambrose','birth1934');tryLink('ambrose','parent','cornelius','birth1934');refreshLayout()});
+ ok(await ev(()=>FLAGS.some(f=>/own ancestor/.test(f.text))),'two people as each other\'s parent is a loop');
+ await ev(()=>{const l=S.tree.links[0];removeLink(l.id);refreshLayout()}); ok(await ev(()=>S.tree.links.length===1),'a link can be removed');
+ // 2c. findings need the tree
+ await fresh(); ok(await ev(()=>!treeOk('F1')&&!treeOk('F5')),'with an empty tree no finding passes the tree check');
+ await ev(()=>revealAllTree()); ok(await ev(()=>['F1','F2','F3','F4','F5'].every(treeOk)),'the fully built tree passes every tree check');
+ await ev(()=>{const l=S.tree.links.find(l=>l.t==='same');removeLink(l.id);refreshLayout()}); ok(await ev(()=>!treeOk('F1')),'removing an identity link fails Finding 1');
  // 3. discovery is gated
  await fresh(); await ev(()=>tryLink('ambrose','parent','cornelius','birth1934'));
  ok(await ev(()=>knownRecs('ambrose').length===0),'Ambrose has no sources until a record naming him is opened');
@@ -26,16 +41,17 @@ const GAME='file://'+path.resolve(__dirname,'..')+'/index.html';
  await ev(()=>go('person/ambrose/facts','bl')); ok((await p.textContent('#vp')).includes('Not in your tree'),'a person not yet in the tree shows "Not in your tree"');
  // 4. the real form
  await fresh(); await ev(()=>go('record/birth1934','bl'));
- await p.selectOption('#lk-a-birth1934','ambrose'); await p.selectOption('#lk-t-birth1934','parent'); await p.selectOption('#lk-b-birth1934','cornelius');
+ const sel=async(k,v)=>p.selectOption('form[data-form=link] [data-lk='+k+']',v);
+ await sel('a','ambrose'); await sel('t','parent'); await sel('b','cornelius');
  await p.click('form[data-form=link] button'); await p.waitForTimeout(200);
  ok(await ev(()=>S.tree.links.length===1&&S.tree.links[0].a==='ambrose'),'the Build your tree form adds the link');
- await p.selectOption('#lk-a-birth1934','cornelius'); await p.selectOption('#lk-t-birth1934','spouse'); await p.selectOption('#lk-b-birth1934','ambrose');
+ await sel('a','cornelius'); await sel('t','spouse'); await sel('b','ambrose');
  await p.click('form[data-form=link] button'); await p.waitForTimeout(200);
- ok(await ev(()=>S.tree.links.length===1),'a wrong choice in the form adds nothing');
+ ok(await ev(()=>S.tree.links.length===2&&LSTAT[S.tree.links[1].id].status==='unproven'),'a wrong choice in the form is added as unproven');
  // 4b. Daphne's letter opens in a pop-up and still takes a claimed link
  await fresh(); await ev(()=>{go('home','bl');showPreview('letterDaphne')});
  ok(await p.locator('#modal form[data-form=link]').count()===1,'a letter opened from the mail shows the Build your tree form');
- await p.selectOption('#lk-a-letterDaphne','cornelius'); await p.selectOption('#lk-t-letterDaphne','claimed'); await p.selectOption('#lk-b-letterDaphne','daphne');
+ const ms=(k,v)=>p.selectOption('#modal form[data-form=link] [data-lk='+k+']',v); await ms('a','cornelius'); await ms('t','claimed'); await ms('b','daphne');
  await p.click('#modal form[data-form=link] button'); await p.waitForTimeout(200);
  ok(await ev(()=>S.tree.links.some(l=>l.t==='claimed'&&l.a==='cornelius'&&l.b==='daphne')),'Daphne\'s claim goes in as a dashed, claimed link');
  // 5. claim table matches the world

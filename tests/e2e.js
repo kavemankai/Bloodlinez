@@ -26,6 +26,7 @@ const {chromium}=require('playwright-core'); const path=require('path'); const R
  await lab(p,'photo1889','licence2019',['scar','mole'],['scar','mole']);
  const labId='cmp:licence2019-photo1889';
  ok(await p.evaluate(id=>S.reports[id]&&S.reports[id].ok,labId),'B: lab positive on 1889 vs 2019');
+ await p.evaluate(()=>revealAllTree());
  await file(p,ANS,{F1:[labId,'birth1934','trust1934'],F2:['marine2025','death1934'],F3:['nilDesmond','death1994'],F4:['hospital1888','birth1966','lawA3'],F5:['lawA4','news1888','birth1888']});
  ok(await p.evaluate(()=>S.won),'B: full win on first filing');
 

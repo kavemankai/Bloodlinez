@@ -69,13 +69,15 @@ The tree is the player's work, not a map handed to them. It opens with the four 
 
 1. Search a name and open a record.
 2. Read it. The "Build your tree" panel on the record page lists the people it names.
-3. Say how two people are related (parent of, married to, or claimed to be the parent of) and add the link.
-4. The game accepts the link only if that record shows it. A wrong guess gets "This record doesn't show that" with no hint about the right answer.
+3. Say how two people are related (parent of, married to, claimed parent of, or the same person) and add the link.
+4. Any link is accepted. If an attached record shows it, it is drawn solid ("proven"). Otherwise it is dashed ("unproven"). Same-person links are proven only by a certified photo or handwriting report. Events (turned on 14 Feb 1888, no birth registered) come from records that state them.
+4b. `computeFlags()` checks dates and raises flags (impossible, law, unusual, note, good). Flags never block a link.
+4c. `treeOk(F)` ties each finding to the tree: the judge needs the answer, the evidence and the specific proven tree content, with no unproven links among the people involved.
 5. New people appear on the tree, new names turn up in the records, and the player searches those names next.
 
 Records are the only way in. A person's sources list, their hints and the facts on their profile fill in as records are opened. Family facts (parents, marriages) are not shown on a profile at all, only the tree's links.
 
-The member-tree hint from nightowl_jv, when accepted, adds an unproven dashed link from Cornelius to Julian. It is the planted lie and the only way to put a wrong link in the tree.
+The member-tree hint from nightowl_jv, when accepted, adds an unproven dashed link from Cornelius to Julian. It is the planted lie. The player can also add wrong links by hand; they show as unproven and flag.
 
 The data behind this is the `CLAIMS` table in `src/app.js`. Each entry says which records show a relationship. `tests/tree.js` checks every record named in a claim really names both people, that every relationship in `REL` has a record that proves it, and that the whole tree can be reached by searching names alone, starting from the four names.
 

@@ -137,10 +137,11 @@ const LEAF = '<svg class="leaf" viewBox="0 0 20 26" aria-hidden="true"><path d="
 const FRESH = () => ({tab:'mail',hist:{bl:{s:['home'],i:0},mail:{s:['inbox/m1'],i:0},net:{s:['matter/overview'],i:0}},
   navOpen:false,sel:null,zoom:1,tz:1,kit:'julian',cookie:false,mlRead:false,recent:[],
   pins:[],read:['m4'],seen:[],ans:{},ev:{F1:[],F2:[],F3:[],F4:[],F5:[]},res:{},attempts:0,won:false,failed:false,
-  flags:{},reports:{},lab:{a:'',b:'',ma:[],mb:[],miss:0},hw:{a:'',b:''},tree:{people:['cornelius','julian','margaret','daphne'],links:[]},viewed:[],notes:'',log:[],q:{name:'',kw:'',kind:'All'},searched:false});
+  flags:{},reports:{},lab:{a:'',b:'',ma:[],mb:[],miss:0},hw:{a:'',b:''},tree:{people:['cornelius','julian','margaret','daphne'],links:[],events:[],nid:0},viewed:[],notes:'',log:[],q:{name:'',kw:'',kind:'All'},searched:false});
 const S = FRESH();
 const KEEP = ['tab','hist','kit','cookie','recent','pins','read','seen','ans','ev','res','attempts','won','failed','flags','reports','lab','hw','tree','viewed','notes','log','q','searched'];
 try{const s=JSON.parse(localStorage.getItem('bloodlines-v3')||'null'); if(s) KEEP.forEach(k=>{ if(s[k]!==undefined) S[k]=s[k]; });}catch(e){}
+if(!S.tree.events) S.tree.events=[]; if(!S.tree.nid) S.tree.nid=0; S.tree.links.forEach(l=>{ if(!l.id) l.id=++S.tree.nid; });
 function save(){try{const o={};KEEP.forEach(k=>o[k]=S[k]);localStorage.setItem('bloodlines-v3',JSON.stringify(o))}catch(e){}}
 for(const id in S.reports) REC[id] = id.startsWith('sig:') ? sigRec(id) : cmpRec(id);
 
@@ -171,7 +172,7 @@ function visit(t,r){
 }
 function togglePin(id){
   const was = pinned(id);
-  if(id==='hintOfficial'){ S.tree.links = S.tree.links.filter(l=>!(l.t==='claimed'&&l.recs.includes('hintOfficial'))); if(!was&&S.tree.people.includes('cornelius')&&S.tree.people.includes('julian')) S.tree.links.push({t:'claimed',a:'cornelius',b:'julian',recs:['hintOfficial']}); }
+  if(id==='hintOfficial'){ S.tree.links = S.tree.links.filter(l=>!(l.t==='claimed'&&l.recs.includes('hintOfficial'))); if(!was&&S.tree.people.includes('cornelius')&&S.tree.people.includes('julian')) S.tree.links.push({id:++S.tree.nid,t:'claimed',a:'cornelius',b:'julian',recs:['hintOfficial']}); }
   S.pins = was ? S.pins.filter(x=>x!==id) : [...S.pins, id];
   log(`${was?'Removed':'Added'} evidence: ${REC[id].title}`);
   toast(was ? 'Removed from matter 2025-0417' : 'Saved to matter 2025-0417');
@@ -297,13 +298,13 @@ function kitStage(){ return Math.min(4, 2 + Math.floor(S.pins.length/7)); }
 
 /* ---- tree ---- */
 /* ================= FIELD GUIDE & TRAINING ================= */
-const GUIDE = [{"id": "job", "t": "Your job", "h": "<p>You are a night-shift associate at Ashgrove &amp; Pell, a probate firm. Your file is the estate of <b>Cornelius Vane</b>, lost overboard in March. Three people want the estate. Nobody has shown they are who they say they are.</p>\n<p>The partners want <b>five findings</b>, each one an answer plus the evidence that proves it. You have <b>three filings</b>. A finding is accepted only if the answer is right and the evidence is the right kind. A right answer on thin evidence is turned down the same as a wrong one.</p>\n<p>Nobody will tell you the answers. You work them out from records, and you build a family tree to do it.</p>"}, {"id": "sites", "t": "Your three screens", "h": "<p>The tabs along the top are three different websites.</p>\n<ul><li><b>Bloodlines</b> is a commercial genealogy site. It holds the records, the family tree, DNA results and hints.</li>\n<li><b>A&amp;P Mail</b> is the firm's webmail. The brief, the claimants' letters and replies to your work arrive here.</li>\n<li><b>Matter 2025-0417</b> is the firm's intranet. It holds your evidence, the photo lab, the handwriting examiner, the ruling form and the law library.</li></ul>\n<p>Your progress saves in the browser, so you can close the page and come back.</p>"}, {"id": "tree", "t": "Build the tree", "h": "<p>Your tree starts with four names and no links. It fills in as you prove who is related to whom.</p>\n<ol><li>Search a name on Bloodlines and open a record.</li><li>Read it. The <b>Build your tree</b> panel on the record page lists the people it names.</li><li>Pick two of them, say how they are related, and press <b>Add to tree</b>.</li></ol>\n<p>The tree only takes a link that the record in front of you shows. If you guess, you get \"This record doesn't show that\" and nothing else. Records you open also tell you which names to search next.</p>\n<p>Several people can share a name. Check the dates before you decide which one a record means.</p>\n<p>Hints from other people's trees can put a link in your tree. They are claims, not proof. See <b>Hints</b> below.</p>"}, {"id": "search", "t": "Searching", "h": "<p>Search covers names, places and keywords, so try the places and objects in the letters and reports, not just surnames. You can narrow results by collection (births, deaths, censuses, newspapers and so on).</p>\n<p>Most records are not attached to any tree. They only turn up if you search for them.</p>\n<p>If a record should exist and does not, you can ask for a <b>certified nil return</b>. Type the name into the search box and press <b>Request nil return</b>. The certificate says a search found nothing, and it can be saved as evidence.</p>"}, {"id": "read", "t": "Reading a record", "h": "<p>Read the whole record, including the small print.</p>\n<ul><li>Who gave the information? Registers name an <b>informant</b>.</li><li>Who signed it, and when?</li><li>Do the ages, dates and places fit the other records?</li><li>Read the notes at the bottom. Registrars, enumerators and clerks often wrote down what they noticed.</li></ul>\n<p>Use the zoom buttons above the record to read fine detail. Every record has a <b>Save to matter</b> button.</p>"}, {"id": "evidence", "t": "Saving evidence", "h": "<p><b>Save to matter</b> puts a record in your evidence register (the Evidence tab of the matter). Save the records you rely on, and nothing you don't.</p>\n<p>On the Ruling tab you attach saved records to each finding. Each finding takes <b>four attachments at most</b>, and attaching records that have nothing to do with it counts against you. Choose what proves the point.</p>"}, {"id": "dna", "t": "DNA results", "h": "<p>The DNA page shows a kit's closest matches and how much DNA each shares, measured in centimorgans (cM). Read <b>who</b> the matches are as well as how much they share. Two people can share the same amount for different reasons.</p>"}, {"id": "lab", "t": "The photo lab", "h": "<p>The photo lab compares two photographs you have opened on Bloodlines. Choose both, then click each permanent mark you can see on the face, such as a scar or a mole. Press <b>Certify comparison</b>.</p>\n<p>A result is positive only when <b>two or more marks</b> match on both photos. One mark is not enough, because a mole can run in a family. A positive result counts as one identifying document.</p>"}, {"id": "hand", "t": "The handwriting examiner", "h": "<p>The handwriting examiner compares the signatures on two documents you have opened. It certifies whether the same hand wrote both. A positive result counts as one identifying document, but only when the hand is the one being identified.</p>"}, {"id": "law", "t": "The law library", "h": "<p>The law library holds the Succession Act and the Nocturnal Accord of 1888. The firm's rule is that if any party turns out not to be strictly human, the Accord decides the matter. Read every article. Save the provisions you rely on, the same way you save a record.</p>"}, {"id": "ruling", "t": "Filing a ruling", "h": "<p>On the Ruling tab, answer each of the five findings and attach your evidence, then file. The partners accept or reject each finding separately.</p>\n<ul><li>Accepted findings lock in.</li><li>After your first filing you only see which findings failed. From the second filing you also get a nudge on each.</li><li>You have <b>three filings</b>. After that the file goes to someone else.</li></ul>\n<p>Your result is graded by filings used: A for one, B for two, C for three. A minus sign means you relied on a hint from someone else's tree.</p>"}, {"id": "hints", "t": "Hints from other trees", "h": "<p>A hint marked with a red drop comes from a public member tree. Anyone can make one, including the people you are investigating. Check who owns the tree and when it was made. Save the record behind a hint, not the hint.</p>"}, {"id": "think", "t": "Rules of thumb", "h": "<ul><li>Dates have to fit. People are not parents before they are born.</li>\n<li>Ask who benefits from a record, and who wrote it.</li>\n<li>A record that should exist and does not is a clue.</li>\n<li>Two matching facts are stronger than one. One matching fact might be chance or family.</li>\n<li>If a person is hard to find in the records, ask why.</li>\n<li>A neat story is not evidence. Records are.</li></ul>"}, {"id": "gloss", "t": "Glossary", "h": "<dl class=\"gloss\"><dt>Matter</dt><dd>A case file at the firm. This one is 2025-0417.</dd>\n<dt>Finding</dt><dd>One question you must answer, with evidence.</dd>\n<dt>Filing</dt><dd>One submission of all your findings to the partners. You get three.</dd>\n<dt>Informant</dt><dd>The person who gave a registrar the details.</dd>\n<dt>Enumerator</dt><dd>The person who collected census forms.</dd>\n<dt>Nil return</dt><dd>A certificate that a search found no record.</dd>\n<dt>Centimorgan (cM)</dt><dd>The unit of shared DNA. More means closer.</dd>\n<dt>Probate</dt><dd>Settling a dead person's estate.</dd>\n<dt>Intestate</dt><dd>Dying without a valid will.</dd>\n<dt>The Accord</dt><dd>The Nocturnal Accord 1888, which governs estates where a party is not strictly human.</dd></dl>"}];
+const GUIDE = [{"id": "job", "t": "Your job", "h": "<p>You are a night-shift associate at Ashgrove &amp; Pell, a probate firm. Your file is the estate of <b>Cornelius Vane</b>, lost overboard in March. Three people want the estate. Nobody has shown they are who they say they are.</p>\n<p>The partners want <b>five findings</b>, each one an answer plus the evidence that proves it. You have <b>three filings</b>. A finding is accepted only if the answer is right and the evidence is the right kind. A right answer on thin evidence is turned down the same as a wrong one.</p>\n<p>Nobody will tell you the answers. You work them out from records, and you build a family tree to do it.</p>"}, {"id": "sites", "t": "Your three screens", "h": "<p>The tabs along the top are three different websites.</p>\n<ul><li><b>Bloodlines</b> is a commercial genealogy site. It holds the records, the family tree, DNA results and hints.</li>\n<li><b>A&amp;P Mail</b> is the firm's webmail. The brief, the claimants' letters and replies to your work arrive here.</li>\n<li><b>Matter 2025-0417</b> is the firm's intranet. It holds your evidence, the photo lab, the handwriting examiner, the ruling form and the law library.</li></ul>\n<p>Your progress saves in the browser, so you can close the page and come back.</p>"}, {"id": "tree", "t": "Build the tree", "h": "<p>Your tree starts with four names and no links. It fills in as you prove who is related to whom.</p>\n<ol><li>Search a name on Bloodlines and open a record.</li><li>Read it. The <b>Build your tree</b> panel on the record page lists the people it names.</li><li>Pick two of them, say how they are related, and press <b>Add to tree</b>.</li></ol>\n<p>You can put any link on the tree, including one you only suspect. A link the record in front of you shows is drawn solid. Any other is drawn dashed as <b>unproven</b>. You can remove a link at any time.</p>\n<p>The tree checks dates for you. It flags a parent who was too young or already dead, a marriage that overlaps another, a person alive as two people at once, and anyone who ends up their own ancestor. A flag does not stop you. It tells you something does not add up.</p>\n<p>Two entries can be the same man. Say so with <b>is the same person as</b>. It counts as proven only after you have certified a photo or handwriting comparison between them. You can also record an event, such as a date a person was turned, from a record that states it.</p>\n<p>Your findings rely on the tree. Under each finding on the ruling form, a list shows what the tree must contain. Unproven links among the people involved will fail a finding. Records you open also tell you which names to search next.</p>\n<p>Several people can share a name. Check the dates before you decide which one a record means.</p>\n<p>Hints from other people's trees can put a link in your tree. They are claims, not proof. See <b>Hints</b> below.</p>"}, {"id": "search", "t": "Searching", "h": "<p>Search covers names, places and keywords, so try the places and objects in the letters and reports, not just surnames. You can narrow results by collection (births, deaths, censuses, newspapers and so on).</p>\n<p>Most records are not attached to any tree. They only turn up if you search for them.</p>\n<p>If a record should exist and does not, you can ask for a <b>certified nil return</b>. Type the name into the search box and press <b>Request nil return</b>. The certificate says a search found nothing, and it can be saved as evidence.</p>"}, {"id": "read", "t": "Reading a record", "h": "<p>Read the whole record, including the small print.</p>\n<ul><li>Who gave the information? Registers name an <b>informant</b>.</li><li>Who signed it, and when?</li><li>Do the ages, dates and places fit the other records?</li><li>Read the notes at the bottom. Registrars, enumerators and clerks often wrote down what they noticed.</li></ul>\n<p>Use the zoom buttons above the record to read fine detail. Every record has a <b>Save to matter</b> button.</p>"}, {"id": "evidence", "t": "Saving evidence", "h": "<p><b>Save to matter</b> puts a record in your evidence register (the Evidence tab of the matter). Save the records you rely on, and nothing you don't.</p>\n<p>On the Ruling tab you attach saved records to each finding. Each finding takes <b>four attachments at most</b>, and attaching records that have nothing to do with it counts against you. Choose what proves the point.</p>"}, {"id": "dna", "t": "DNA results", "h": "<p>The DNA page shows a kit's closest matches and how much DNA each shares, measured in centimorgans (cM). Read <b>who</b> the matches are as well as how much they share. Two people can share the same amount for different reasons.</p>"}, {"id": "lab", "t": "The photo lab", "h": "<p>The photo lab compares two photographs you have opened on Bloodlines. Choose both, then click each permanent mark you can see on the face, such as a scar or a mole. Press <b>Certify comparison</b>.</p>\n<p>A result is positive only when <b>two or more marks</b> match on both photos. One mark is not enough, because a mole can run in a family. A positive result counts as one identifying document.</p>"}, {"id": "hand", "t": "The handwriting examiner", "h": "<p>The handwriting examiner compares the signatures on two documents you have opened. It certifies whether the same hand wrote both. A positive result counts as one identifying document, but only when the hand is the one being identified.</p>"}, {"id": "law", "t": "The law library", "h": "<p>The law library holds the Succession Act and the Nocturnal Accord of 1888. The firm's rule is that if any party turns out not to be strictly human, the Accord decides the matter. Read every article. Save the provisions you rely on, the same way you save a record.</p>"}, {"id": "ruling", "t": "Filing a ruling", "h": "<p>On the Ruling tab, answer each of the five findings and attach your evidence, then file. The partners accept or reject each finding separately.</p>\n<ul><li>Accepted findings lock in.</li><li>After your first filing you only see which findings failed. From the second filing you also get a nudge on each.</li><li>You have <b>three filings</b>. After that the file goes to someone else.</li></ul>\n<p>Your result is graded by filings used: A for one, B for two, C for three. A minus sign means you relied on a hint from someone else's tree.</p>"}, {"id": "hints", "t": "Hints from other trees", "h": "<p>A hint marked with a red drop comes from a public member tree. Anyone can make one, including the people you are investigating. Check who owns the tree and when it was made. Save the record behind a hint, not the hint.</p>"}, {"id": "think", "t": "Rules of thumb", "h": "<ul><li>Dates have to fit. People are not parents before they are born.</li>\n<li>Ask who benefits from a record, and who wrote it.</li>\n<li>A record that should exist and does not is a clue.</li>\n<li>Two matching facts are stronger than one. One matching fact might be chance or family.</li>\n<li>If a person is hard to find in the records, ask why.</li>\n<li>A neat story is not evidence. Records are.</li></ul>"}, {"id": "gloss", "t": "Glossary", "h": "<dl class=\"gloss\"><dt>Matter</dt><dd>A case file at the firm. This one is 2025-0417.</dd>\n<dt>Finding</dt><dd>One question you must answer, with evidence.</dd>\n<dt>Filing</dt><dd>One submission of all your findings to the partners. You get three.</dd>\n<dt>Informant</dt><dd>The person who gave a registrar the details.</dd>\n<dt>Enumerator</dt><dd>The person who collected census forms.</dd>\n<dt>Nil return</dt><dd>A certificate that a search found no record.</dd>\n<dt>Centimorgan (cM)</dt><dd>The unit of shared DNA. More means closer.</dd>\n<dt>Probate</dt><dd>Settling a dead person's estate.</dd>\n<dt>Intestate</dt><dd>Dying without a valid will.</dd>\n<dt>The Accord</dt><dd>The Nocturnal Accord 1888, which governs estates where a party is not strictly human.</dd></dl>"}];
 
 const TRAIN = [
  {t:'Read the brief',d:'Open the first email from R. Ashgrove.',done:()=>S.read.includes('m1'),go:['mail','inbox/m1']},
  {t:'Search for a name',d:'Try one of the four names in the brief.',done:()=>!!S.flags.t_search,go:['bl','search']},
  {t:'Open a record',d:'Read it. Who made it, and who does it name?',done:()=>S.viewed.length>0,go:['bl','search']},
- {t:'Add your first link to the tree',d:'Use the Build your tree panel on a record page.',done:()=>S.tree.links.length>0,go:['bl','tree']},
+ {t:'Add your first link to the tree',d:'Use the Build your tree panel on a record page. A link the record shows is drawn solid; any other is dashed.',done:()=>S.tree.links.length>0,go:['bl','tree']},
  {t:'Save a record to the matter',d:'Use Save to matter on a record you would rely on.',done:()=>S.pins.length>0,go:['bl','search']},
  {t:'Certify a photo comparison',d:'Open two photographs first, then use the photo lab.',done:()=>Object.keys(S.reports).some(k=>k.startsWith('cmp:')),go:['net','matter/lab']},
  {t:'Cite a provision from the law library',d:'Read the articles, then cite the ones you rely on.',done:()=>S.pins.some(p=>p.startsWith('law')),go:['net','law']},
@@ -328,7 +329,7 @@ function showGuide(sec){
    GHOSTS are placeholder people who are not in PEOPLE (an unnamed mother). */
 const GHOSTS = {unknown:{label:'Unknown',sub:'Mother of Cornelius',spouse:'ambrose',child:'cornelius'}};
 const TREE = {w:200,h:74,couple:50,sib:50,pitch:146,pad:24};
-function layoutTree(people=PEOPLE, rel=REL, ghosts=GHOSTS){
+function layoutTree(people=PEOPLE, rel=REL, ghosts=GHOSTS, style=null){
   const {w:NW,h:NH,couple:CG,sib:SG,pitch:PITCH,pad:PAD} = TREE;
   const ids = Object.keys(people), all = [...ids, ...Object.keys(ghosts)];
   const parents={}, spouses={}, kids={};
@@ -400,7 +401,7 @@ function layoutTree(people=PEOPLE, rel=REL, ghosts=GHOSTS){
   const W=Math.max(...Object.values(pos).map(p=>p[0]+NW))+PAD, H=Math.max(...Object.values(pos).map(p=>p[1]+NH))+PAD+30;
   // connectors
   const edges=[], cx=id=>pos[id][0]+NW/2, midY=id=>pos[id][1]+NH/2, botY=id=>pos[id][1]+NH;
-  rows.forEach(row=>{ for(let i=0;i<row.length-1;i++){ const a=pos[row[i]],b=pos[row[i+1]]; if(a[1]===b[1]) edges.push({d:`M${a[0]+NW} ${a[1]+NH/2} H${b[0]}`,cls:''}); } });
+  rows.forEach(row=>{ for(let i=0;i<row.length-1;i++){ const a=pos[row[i]],b=pos[row[i+1]]; if(a[1]===b[1]) edges.push({d:`M${a[0]+NW} ${a[1]+NH/2} H${b[0]}`,cls:style?style('couple',[row[i],row[i+1]],null):''}); } });
   const adjacent=(a,b)=>rows.some(r=>{ const i=r.indexOf(a),j=r.indexOf(b); return i>=0&&j>=0&&Math.abs(i-j)===1; });
   const labels=[];
   all.forEach(c=>{ if(!pos[c]) return;
@@ -411,10 +412,10 @@ function layoutTree(people=PEOPLE, rel=REL, ghosts=GHOSTS){
       const pair=solid.length>1&&adjacent(solid[0],solid[1]);
       if(pair){ const l=pos[solid[0]][0]<pos[solid[1]][0]?solid[0]:solid[1], r=l===solid[0]?solid[1]:solid[0]; sx=(pos[l][0]+NW+pos[r][0])/2; sy=midY(l); }
       else { sx=cx(solid[0]); sy=botY(solid[0]); }
-      edges.push({d:`M${sx} ${sy} V${mid} H${cx(c)} V${top}`,cls:''});
+      edges.push({d:`M${sx} ${sy} V${mid} H${cx(c)} V${top}`,cls:style?style('child',solid,c):''});
     }
     parents[c].filter(p=>p.kind==='claimed'&&pos[p.id]).forEach(p=>{
-      edges.push({d:`M${cx(p.id)} ${botY(p.id)} V${mid} H${cx(c)} V${top}`,cls:'dash'});
+      edges.push({d:`M${cx(p.id)} ${botY(p.id)} V${mid} H${cx(c)} V${top}`,cls:'dash'+(style?(' '+style('claimed',[p.id],c)):'')});
       labels.push({x:(cx(p.id)+cx(c))/2+6,y:mid-9,t:'claimed, no source'});
     });
   });
@@ -436,66 +437,244 @@ P_('cornelius','desmond',['death1994']); P_('desmond','julian',['birth1993']); C
 S_('josiah','hannah',['marr1850','census1861','census1881']); S_('ambrose','eliza',['marr1886','census1891']);
 S_('harriet','arthur',['photo1912','birth1920']); S_('william','ann',['birth1861']);
 const STARTERS = ['cornelius','julian','margaret','daphne'];
-const peopleIn = rec => { const s=[]; CLAIMS.forEach(c=>{ if(c.recs.includes(rec)) [c.a,c.b].forEach(x=>{ if(!s.includes(x)) s.push(x); }); }); return s; };
-const REL_LABEL = {parent:'is the parent of',spouse:'is married to',claimed:'is claimed to be the parent of'};
-const sameLink = (l,t,a,b) => l.t===t && ((l.a===a&&l.b===b) || (t==='spouse'&&l.a===b&&l.b===a));
+const NAMEOF = id => (PEOPLE[id]?PEOPLE[id].name:id).replace(/\s*\(.*\)/,'');
+/* people named in a record, for the Build your tree panel: those in its relationship claims, plus those it names without one */
+const EXTRA_IN = {hospital1888:['ambrose'],news1888:['ambrose','eliza'],diary1888:['eliza','ambrose'],photo1875:['ambrose'],photo1889:['ambrose'],news1889:['josiah','ambrose'],
+  trust1934:['ambrose','cornelius'],death1934:['ambrose'],news1934:['ambrose'],licence1972:['cornelius'],photo1962:['cornelius'],licence2019:['julian'],will2024:['cornelius','julian'],
+  death2025:['cornelius','julian'],news2025:['cornelius','julian'],letterJulian:['julian'],letterMargaret:['margaret','harriet'],birth1966:['daphne'],news1994:['desmond'],
+  nilDesmond:['desmond'],census1911:['ambrose','harriet'],census1921:['ambrose'],photo1950:['thomas'],birth1888:['ambrose','eliza','harriet'],rolls:['cornelius','julian'],
+  marine2025:['julian','cornelius'],funeral2025:['julian','cornelius'],hintOfficial:['julian','cornelius']};
+const peopleIn = rec => { const s=[]; CLAIMS.forEach(c=>{ if(c.recs.includes(rec)) [c.a,c.b].forEach(x=>{ if(!s.includes(x)) s.push(x); }); }); (EXTRA_IN[rec]||[]).forEach(x=>{ if(!s.includes(x)) s.push(x); }); return s; };
+const REL_LABEL = {parent:'is the parent of',spouse:'is married to',same:'is the same person as',claimed:'is claimed to be the parent of'};
+const sameLink = (l,t,a,b) => l.t===t && ((l.a===a&&l.b===b) || ((t==='spouse'||t==='same')&&l.a===b&&l.b===a));
+/* events a record can establish for a person */
+const EVENT_DEFS = {
+  hospital1888:[{p:'ambrose',k:'turned',date:'1888-02-14'}], news1888:[{p:'ambrose',k:'turned',date:'1888-02-14'}], diary1888:[{p:'ambrose',k:'turned',date:'1888-02-14'}],
+  nilDesmond:[{p:'desmond',k:'nobirth'}]
+};
+const EVENT_LABEL = {turned:'was attacked and turned',nobirth:'has no birth record'};
+/* whose photographs and signatures are whose: lets a certified comparison prove two people are one */
+const PHOTO_OWNER = {photo1875:'ambrose',photo1889:'ambrose',photo1912:'ambrose',photo1962:'cornelius',licence1972:'cornelius',licence2019:'julian'};
+const SIGN_OWNER = {'A. Vane':'ambrose','C. Vane':'cornelius','J. Vane':'julian'};
+const docOwner = id => PHOTO_OWNER[id] || (SIGNED[id]?SIGN_OWNER[SIGNED[id][0]]:null) || null;
+function supportedBy(l, rec){
+  if(l.t==='same'){ const r=S.reports[rec]; if(!r||!r.ok) return false; const o=[docOwner(r.a),docOwner(r.b)]; return o[0]&&o[1]&&((o[0]===l.a&&o[1]===l.b)||(o[0]===l.b&&o[1]===l.a)); }
+  return CLAIMS.some(c=>c.t===l.t && c.recs.includes(rec) && sameLink(c,l.t,l.a,l.b));
+}
+const linkStatus = l => l.recs.some(r=>supportedBy(l,r)) ? 'proven' : 'unproven';
 function tryLink(a,t,b,rec){
   if(!a||!b||a===b) return {ok:false,msg:'Choose two different people.'};
-  const c = CLAIMS.find(c=>c.t===t && c.recs.includes(rec) && sameLink(c,t,a,b));
-  if(!c) return {ok:false,msg:"This record doesn't show that."};
+  if(!PEOPLE[a]||!PEOPLE[b]) return {ok:false,msg:'Choose two people.'};
   const have = S.tree.links.find(l=>sameLink(l,t,a,b));
-  if(have){ if(!have.recs.includes(rec)){ have.recs.push(rec); log(`Added a source to a link: ${PEOPLE[a].name} and ${PEOPLE[b].name}`); return {ok:true,msg:'Already in your tree. Added this record as a second source.'}; } return {ok:false,msg:'Already in your tree.'}; }
+  if(have){
+    if(rec && !have.recs.includes(rec)){ have.recs.push(rec); const st=linkStatus(have); log(`Added a source to a link: ${NAMEOF(a)} and ${NAMEOF(b)}`); return {ok:true,link:have,status:st,msg:st==='proven'?'Already in your tree. That record proves it.':'Already in your tree. That record does not prove it.'}; }
+    return {ok:false,msg:'Already in your tree.'};
+  }
   [a,b].forEach(x=>{ if(!S.tree.people.includes(x)) S.tree.people.push(x); });
-  S.tree.links.push({t,a,b,recs:[rec]});
-  log(`Added to tree: ${PEOPLE[a].name} ${REL_LABEL[t]} ${PEOPLE[b].name}`);
-  return {ok:true,msg:`Added to your tree: ${PEOPLE[a].name} ${REL_LABEL[t]} ${PEOPLE[b].name}.`};
+  const l = {id:++S.tree.nid,t,a,b,recs:rec?[rec]:[]}; S.tree.links.push(l);
+  const st = linkStatus(l);
+  log(`Added to tree${st==='proven'?'':' (unproven)'}: ${NAMEOF(a)} ${REL_LABEL[t]} ${NAMEOF(b)}`);
+  refreshLayout();
+  const fl = FLAGS.filter(f=>f.links.includes(l.id)&&f.sev!=='note'&&f.sev!=='good');
+  let msg = st==='proven' ? `Added to your tree: ${NAMEOF(a)} ${REL_LABEL[t]} ${NAMEOF(b)}.` : `Added, but no record you attached shows it. It is drawn as unproven.`;
+  if(fl.length) msg += ' Check the dates: '+fl[0].text;
+  return {ok:true,link:l,status:st,msg,flags:fl};
 }
-function revealAllTree(){ S.tree.people = Object.keys(PEOPLE); S.tree.links = CLAIMS.map(c=>({t:c.t,a:c.a,b:c.b,recs:[c.recs[0]]})); }
+function removeLink(id){ const l=S.tree.links.find(x=>x.id===id); if(!l) return false; S.tree.links=S.tree.links.filter(x=>x.id!==id);
+  if(l.recs.includes('hintOfficial') && pinned('hintOfficial')) S.pins=S.pins.filter(x=>x!=='hintOfficial');
+  log(`Removed from tree: ${NAMEOF(l.a)} ${REL_LABEL[l.t]} ${NAMEOF(l.b)}`); return true; }
+function tryEvent(p,k,rec){
+  const def=(EVENT_DEFS[rec]||[]).find(e=>e.p===p&&e.k===k);
+  if(!def) return {ok:false,msg:"This record doesn't give that."};
+  if(S.tree.events.some(e=>e.p===p&&e.k===k)) return {ok:false,msg:'Already in your tree.'};
+  if(!S.tree.people.includes(p)) S.tree.people.push(p);
+  S.tree.events.push({p,k,date:def.date||null,rec}); log(`Recorded: ${NAMEOF(p)} ${EVENT_LABEL[k]}`); refreshLayout();
+  return {ok:true,msg:`Recorded in your tree: ${NAMEOF(p)} ${EVENT_LABEL[k]}${def.date?' on '+new Date(def.date+'T12:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}):''}.`};
+}
+/* exact dates where the records give them, years otherwise */
+const DATES = {
+  v1410:['1410','1471'],v1445:['1445','1509'],v1480:['1480','1544'],v1515:['1515','1577'],v1550:['1550','1612'],v1585:['1585','1650'],v1620:['1620','1688'],v1655:['1655','1719'],v1688:['1688','1750'],v1720:['1720','1790'],
+  samuel:['1751-02-27','1822'],thomasv:['1789-04-04','1858'],josiah:['1824-01-02','1889-03-08'],hannah:['1828-01-15','1901'],william:['1830','1899'],ann:['1832','1910'],
+  ambrose:['1857-02-09','1934-02-01'],eliza:['1861-01-20','1902'],harriet:['1888-06-04','1960'],arthur:['1884','1951'],cornelius:['1934-03-02','2025-03-02'],
+  thomas:['1920-03-07','1999'],margaret:['1951-07-22',null],desmond:['1961','1994-10-30'],daphne:['1966-08-09',null],julian:['1993-01-14',null]
+};
+const toNum = s => { const m=String(s).match(/^(\d{4})(?:-(\d{2})-(\d{2}))?$/); if(!m) return null; const y=+m[1]; if(!m[2]) return y+0.5; return y+((+m[2]-1)*30.4375+ +m[3])/365.25; };
+const bornN = id => DATES[id]&&DATES[id][0]?toNum(DATES[id][0]):null;
+const diedN = id => DATES[id]&&DATES[id][1]?toNum(DATES[id][1]):null;
+const NOW_N = 2026.75;
+const yr = n => Math.floor(n);
+const SEVRANK = {impossible:4,law:3,unusual:2,note:1,good:0};
+let FLAGS = [], LSTAT = {};
+function clusterOf(){ // identity clusters from every "same person" link, proven or not
+  const par={}; const f=x=>par[x]===undefined||par[x]===x?(par[x]=x):(par[x]=f(par[x]));
+  S.tree.links.filter(l=>l.t==='same').forEach(l=>{ par[f(l.a)]=f(l.b); });
+  const cl={}; S.tree.people.forEach(p=>{ const r=f(p); (cl[r]=cl[r]||[]).push(p); });
+  const of={}; Object.values(cl).forEach(m=>m.forEach(p=>of[p]=m)); return of;
+}
+function computeFlags(){
+  const flags=[]; const L=S.tree.links, cl=clusterOf();
+  const push=(sev,text,links,people)=>flags.push({sev,text,links:links||[],people:people||[]});
+  const earliest = m => Math.min(...m.map(bornN).filter(x=>x!==null));
+  const turned = S.tree.events.filter(e=>e.k==='turned').map(e=>({m:cl[e.p]||[e.p],n:toNum(e.date)}));
+  L.filter(l=>l.t==='parent'||l.t==='claimed').forEach(l=>{
+    const P=l.a, C=l.b, cb=bornN(C); if(cb===null) return;
+    const sex=SEX[P]==='f'?'mother':'father';
+    const members = cl[P]||[P];
+    const own=bornN(P), merged = members.length>1 ? earliest(members) : own;
+    const check=(pb,viaMerge)=>{
+      if(pb===null||!isFinite(pb)) return;
+      const age=cb-pb, who = viaMerge?`If ${NAMEOF(P)} is ${members.filter(x=>x!==P).map(NAMEOF).join(' and ')} (born ${yr(pb)}), he`:NAMEOF(P);
+      if(viaMerge&&age<=0.05) return;
+      if(age<=0.05) push('impossible',`${NAMEOF(P)} (born ${yr(pb)}) can't be the parent of ${NAMEOF(C)} (born ${yr(cb)}): the parent was not born first.`,[l.id],[P,C]);
+      else if(age<13) push('impossible',`${who} would have been only ${Math.floor(age)} when ${NAMEOF(C)} was born.`,[l.id],[P,C]);
+      else if(sex==='mother'&&age>50) push('impossible',`${who} would have been ${Math.floor(age)} when ${NAMEOF(C)} was born.`,[l.id],[P,C]);
+      else if(sex==='father'&&age>80) push('impossible',`${who} would have been ${Math.floor(age)} when ${NAMEOF(C)} was born.`,[l.id],[P,C]);
+      else if(sex==='father'&&age>65) push('unusual',`${who} would have been ${Math.floor(age)} when ${NAMEOF(C)} was born.`,[l.id],[P,C]);
+    };
+    check(own,false); if(members.length>1&&merged<own-1) check(merged,true);
+    const pd=diedN(P);
+    if(pd!==null){ const gap=cb-pd;
+      if(gap>0.05){ if(sex==='mother') push('impossible',`${NAMEOF(P)} died in ${yr(pd)}, before ${NAMEOF(C)} was born in ${yr(cb)}.`,[l.id],[P,C]);
+        else if(gap>0.85) push('impossible',`${NAMEOF(P)} died ${Math.round(gap)} year${Math.round(gap)>1?'s':''} before ${NAMEOF(C)} was born.`,[l.id],[P,C]);
+        else push('note',`${NAMEOF(C)} was born ${Math.max(1,Math.round(gap*365))} days after ${NAMEOF(P)} died.`,[l.id],[P,C]); } }
+    // law: a child born long after a turning cannot be his issue
+    turned.forEach(t=>{ if(!t.m.includes(P)) return;
+      const weeks=(cb-t.n)*52.18;
+      if(weeks>40) push('law',`${NAMEOF(C)} was born ${Math.round(cb-t.n)} years after the turning. Under Accord Art. 3 a child born more than forty weeks after cannot be his issue.`,[l.id],[P,C]);
+      else push('good',`${NAMEOF(C)} was born ${weeks<0?'before':'within forty weeks of'} the turning: begotten before it, so the issue of the blood (Accord Art. 3).`,[l.id],[P,C]); });
+  });
+  L.filter(l=>l.t==='spouse').forEach(l=>{
+    const a1=bornN(l.a),b1=bornN(l.b); if(a1===null||b1===null) return;
+    const da=diedN(l.a)??NOW_N, db=diedN(l.b)??NOW_N;
+    if(Math.min(da,db)<Math.max(a1,b1)) push('impossible',`${NAMEOF(l.a)} and ${NAMEOF(l.b)} were never alive at the same time.`,[l.id],[l.a,l.b]);
+    else if(Math.abs(a1-b1)>40) push('unusual',`${NAMEOF(l.a)} and ${NAMEOF(l.b)} were born ${Math.round(Math.abs(a1-b1))} years apart.`,[l.id],[l.a,l.b]);
+  });
+  L.filter(l=>l.t==='same').forEach(l=>{
+    const a1=bornN(l.a),b1=bornN(l.b); if(a1===null||b1===null) return;
+    const da=diedN(l.a)??NOW_N, db=diedN(l.b)??NOW_N;
+    const overlap=Math.min(da,db)-Math.max(a1,b1);
+    if(overlap>1) push('unusual',`If ${NAMEOF(l.a)} is ${NAMEOF(l.b)}, he was alive as two people at once for ${Math.round(overlap)} years.`,[l.id],[l.a,l.b]);
+    else { const first=a1<b1?l.a:l.b, second=first===l.a?l.b:l.a; const gap=bornN(second)-(diedN(first)??9999);
+      if(gap>=-0.05&&gap<1) push('note',`${NAMEOF(second)}'s life begins ${Math.max(1,Math.round(gap*365))} days after ${NAMEOF(first)}'s ends.`,[l.id],[l.a,l.b]); }
+  });
+  // two fathers or two mothers
+  S.tree.people.forEach(c=>{ const ps=L.filter(l=>l.t==='parent'&&l.b===c).map(l=>l.a);
+    ['f','m'].forEach(s=>{ const same=ps.filter(p=>SEX[p]===s); if(same.length>1) push('unusual',`${NAMEOF(c)} has ${same.length} ${s==='m'?'fathers':'mothers'} in your tree.`,L.filter(l=>l.t==='parent'&&l.b===c&&SEX[l.a]===s).map(l=>l.id),[c,...same]); }); });
+  // loops: someone their own ancestor, counting identity links
+  const rep=p=>(cl[p]||[p])[0], kids={};
+  L.filter(l=>l.t==='parent').forEach(l=>{ (kids[rep(l.a)]=kids[rep(l.a)]||[]).push({to:rep(l.b),id:l.id}); });
+  const seen=new Set(), stack=new Set(); const loopIds=new Set();
+  const dfs=(n,path,nodes)=>{ if(stack.has(n)){ const i=nodes.indexOf(n); path.slice(i).forEach(e=>loopIds.add(e)); return; } if(seen.has(n)) return; seen.add(n); stack.add(n);
+    (kids[n]||[]).forEach(e=>{ dfs(e.to,[...path,e.id],[...nodes,n]); }); stack.delete(n); };
+  Object.keys(kids).forEach(n=>dfs(n,[],[]));
+  if(loopIds.size){ const ids=[...loopIds]; const ppl=[...new Set(ids.flatMap(i=>{const l=L.find(x=>x.id===i);return l?[l.a,l.b]:[];}))];
+    push('impossible',`Someone in your tree would be their own ancestor: ${ppl.slice(0,3).map(NAMEOF).join(', ')}${ppl.length>3?' and others':''}.`,ids,ppl); }
+  FLAGS = flags.sort((x,y)=>SEVRANK[y.sev]-SEVRANK[x.sev]);
+  LSTAT = {}; L.forEach(l=>{ const fs=FLAGS.filter(f=>f.links.includes(l.id)); LSTAT[l.id]={status:linkStatus(l),worst:fs.length?fs[0].sev:null}; });
+}
+const linkOf = (t,a,b) => S.tree.links.find(l=>sameLink(l,t,a,b));
+function edgeStyle(kind,ps,c){
+  const ids=[]; if(kind==='couple'){ const l=linkOf('spouse',ps[0],ps[1]); if(l) ids.push(l.id); }
+  else ps.forEach(p=>{ const l=linkOf(kind==='claimed'?'claimed':'parent',p,c); if(l) ids.push(l.id); });
+  const st=ids.map(i=>LSTAT[i]).filter(Boolean); const cls=[];
+  if(st.some(s=>s.status==='unproven')) cls.push('unp');
+  if(st.some(s=>s.worst==='impossible'||s.worst==='law')) cls.push('bad'); else if(st.some(s=>s.worst==='unusual')) cls.push('odd');
+  return cls.join(' ');
+}
+function revealAllTree(){
+  S.tree.people = Object.keys(PEOPLE); S.tree.nid = 0; S.tree.links = CLAIMS.map(c=>({id:++S.tree.nid,t:c.t,a:c.a,b:c.b,recs:[c.recs[0]]}));
+  const mk=(a,b)=>{ const id='cmp:'+[a,b].sort().join('-'); S.reports[id]={a,b,shared:['scar','mole'],ok:true}; REC[id]=cmpRec(id); return id; };
+  S.tree.links.push({id:++S.tree.nid,t:'same',a:'ambrose',b:'cornelius',recs:[mk('photo1889','licence1972')]},{id:++S.tree.nid,t:'same',a:'cornelius',b:'julian',recs:[mk('licence1972','licence2019')]});
+  S.tree.events = [{p:'ambrose',k:'turned',date:'1888-02-14',rec:'hospital1888'},{p:'desmond',k:'nobirth',date:null,rec:'nilDesmond'}];
+}
 function treeData(){
   const people={}, rel={}; S.tree.people.forEach(id=>{ people[id]=PEOPLE[id]; rel[id]=[]; });
+  const kids={}; const reaches=(from,to)=>{ const st=[from],seen=new Set(); while(st.length){ const n=st.pop(); if(n===to) return true; if(seen.has(n)) continue; seen.add(n); (kids[n]||[]).forEach(k=>st.push(k)); } return false; };
   S.tree.links.forEach(l=>{
     if(!rel[l.a]||!rel[l.b]) return;
+    if(l.t==='parent'||l.t==='claimed'){ if(l.a===l.b||reaches(l.b,l.a)) return; (kids[l.a]=kids[l.a]||[]).push(l.b); }
     if(l.t==='parent'){ rel[l.b].push([SEX[l.a]==='m'?'Father':'Mother',l.a]); rel[l.a].push(['Child',l.b]); }
     else if(l.t==='spouse'){ rel[l.a].push(['Spouse',l.b]); rel[l.b].push(['Spouse',l.a]); }
-    else rel[l.b].push(['Claimed father',l.a]);
+    else if(l.t==='claimed'){ rel[l.b].push(['Claimed father',l.a]); }
   });
   const ghosts = S.tree.links.some(l=>l.t==='parent'&&l.a==='ambrose'&&l.b==='cornelius') ? {unknown:GHOSTS.unknown} : {};
   return {people,rel,ghosts};
 }
 let LAY = null, GH = {}, POS = {};
-function refreshLayout(){ const t=treeData(); GH=t.ghosts; LAY=layoutTree(t.people,t.rel,t.ghosts); POS=Object.fromEntries(Object.entries(LAY.pos).filter(([k])=>PEOPLE[k])); }
+function refreshLayout(){ computeFlags(); const t=treeData(); GH=t.ghosts; LAY=layoutTree(t.people,t.rel,t.ghosts,edgeStyle); POS=Object.fromEntries(Object.entries(LAY.pos).filter(([k])=>PEOPLE[k])); }
 const knownRecs = id => PEOPLE[id].recs.filter(r=>S.viewed.includes(r)||pinned(r));
 const HINT_PERSON = {hintOfficial:'julian',h2:'ambrose',h3:'ambrose',h4:'harriet'};
 const visibleHints = () => HINTS.filter(h=>S.tree.people.includes(HINT_PERSON[h.id]));
 const HIDDEN_FACTS = /^(Parents?|Father|Mother|Married|Spouse|Relationship|Claimed father)/i;
+/* evidence a player can cite for a link: any record opened, anything saved, any certified report */
+function evidenceChoices(){ const ids=[...new Set([...S.viewed,...S.pins,...Object.keys(S.reports)])].filter(id=>REC[id]&&!REC[id].hidden||id.startsWith('cmp:')||id.startsWith('sig:')); return ids; }
+const evOptions = sel => `<option value="">No record (just my theory)</option>${evidenceChoices().map(id=>`<option value="${id}" ${id===sel?'selected':''}>${esc(REC[id].title)}</option>`).join('')}`;
+const peopleOpts = (named,others) => `<option value="">Choose a person</option>${named&&named.length?`<optgroup label="Named in this record">${named.map(x=>`<option value="${x}">${NAMEOF(x)}</option>`).join('')}</optgroup>`:''}${others.length?`<optgroup label="${named&&named.length?'Already in your tree':'In your tree'}">${others.map(x=>`<option value="${x}">${NAMEOF(x)} (${PEOPLE[x].life})</option>`).join('')}</optgroup>`:''}`;
+const REL_OPTS = `<option value="parent">is the parent of</option><option value="spouse">is married to</option><option value="same">is the same person as</option><option value="claimed">is claimed to be the parent of</option>`;
 function treePanel(rec){
-  const named = peopleIn(rec); if(!named.length) return '';
-  const inTree = S.tree.people, others = inTree.filter(x=>!named.includes(x));
-  const opt = (x,withLife) => `<option value="${x}">${PEOPLE[x].name}${withLife?` (${PEOPLE[x].life})`:''}</option>`;
-  const sel = (id) => `<select id="${id}"><option value="">Choose a person</option><optgroup label="Named in this record">${named.map(x=>opt(x,false)).join('')}</optgroup>${others.length?`<optgroup label="Already in your tree">${others.map(x=>opt(x,true)).join('')}</optgroup>`:''}</select>`;
+  const named = peopleIn(rec); const evDefs = EVENT_DEFS[rec]||[];
+  if(!named.length && !evDefs.length) return '';
+  const tp = S.tree.people, others = tp.filter(x=>!named.includes(x));
   const done = S.tree.links.filter(l=>l.recs.includes(rec)).length;
-  return `<div class="panel tpanel"><div class="ph"><h2>Build your tree</h2></div><div class="pb"><p class="muted" style="margin:0 0 10px;font-size:13.5px">Read the record, then say who it connects and how. The tree only takes a link this record shows.${done?` ${done} link${done>1?'s':''} from this record already added.`:''}</p>
-    <form class="sform" data-form="link" data-rec="${rec}"><label>Person<select id="lk-a-${rec}" data-lk="a"><option value="">Choose a person</option><optgroup label="Named in this record">${named.map(x=>opt(x,false)).join('')}</optgroup>${others.length?`<optgroup label="Already in your tree">${others.map(x=>opt(x,true)).join('')}</optgroup>`:''}</select></label>
-    <label>How<select id="lk-t-${rec}"><option value="parent">is the parent of</option><option value="spouse">is married to</option><option value="claimed">is claimed to be the parent of</option></select></label>
-    <label>Other person<select id="lk-b-${rec}" data-lk="b"><option value="">Choose a person</option><optgroup label="Named in this record">${named.map(x=>opt(x,false)).join('')}</optgroup>${others.length?`<optgroup label="Already in your tree">${others.map(x=>opt(x,true)).join('')}</optgroup>`:''}</select></label>
-    <button class="bbtn">Add to tree</button></form></div></div>`;
+  const evForm = evDefs.length ? `<form class="sform" data-form="event" data-rec="${rec}" style="margin-top:14px;padding-top:12px;border-top:1px dashed var(--bl-line)"><label>Record an event for<select data-ev="p"><option value="">Choose a person</option>${[...new Set(evDefs.map(e=>e.p))].map(x=>`<option value="${x}">${NAMEOF(x)}</option>`).join('')}</select></label>
+    <label>What happened<select data-ev="k"><option value="turned">${EVENT_LABEL.turned}</option><option value="nobirth">${EVENT_LABEL.nobirth}</option></select></label><button class="bbtn sec">Record event</button></form>` : '';
+  return `<div class="panel tpanel"><div class="ph"><h2>Build your tree</h2></div><div class="pb"><p class="muted" style="margin:0 0 10px;font-size:13.5px">Say who this record connects and how. You can put any link on the tree. One this record shows is drawn solid; any other is drawn as unproven, and the tree will flag dates that don't work.${done?` ${done} link${done>1?'s':''} from this record already added.`:''}</p>
+    ${named.length||tp.length?`<form class="sform" data-form="link" data-rec="${rec}"><label>Person<select data-lk="a">${peopleOpts(named,others)}</select></label>
+    <label>How<select data-lk="t">${REL_OPTS}</select></label>
+    <label>Other person<select data-lk="b">${peopleOpts(named,others)}</select></label>
+    <button class="bbtn">Add to tree</button></form>`:''}${evForm}</div></div>`;
 }
+/* ---- what the tree must show for each finding ---- */
+const INVOLVED = {F1:['julian','cornelius','ambrose'],F2:['cornelius','ambrose'],F3:['desmond','julian','cornelius'],F4:['daphne','cornelius','ambrose'],F5:['margaret','thomas','harriet','ambrose']};
+function provenConnected(x,y){
+  const adj={}; S.tree.links.filter(l=>l.t==='same'&&LSTAT[l.id]&&LSTAT[l.id].status==='proven').forEach(l=>{ (adj[l.a]=adj[l.a]||[]).push(l.b); (adj[l.b]=adj[l.b]||[]).push(l.a); });
+  const seen=new Set([x]), st=[x]; while(st.length){ const n=st.pop(); if(n===y) return true; (adj[n]||[]).forEach(m=>{ if(!seen.has(m)){ seen.add(m); st.push(m); } }); } return false;
+}
+const provenLink = (t,x,y) => { const l=linkOf(t,x,y); return !!l && !!LSTAT[l.id] && LSTAT[l.id].status==='proven'; };
+const hasEvent = (p,k) => S.tree.events.some(e=>e.p===p&&e.k===k);
+function treeChecks(F){
+  computeFlags(); const c=[]; const add=(ok,text)=>c.push({ok,text});
+  if(F==='F1'){ add(provenConnected('julian','cornelius'),'A certified comparison proves Julian Vane and Cornelius Vane are one man'); add(provenConnected('cornelius','ambrose'),'A certified comparison proves Cornelius Vane and Ambrose Vane are one man'); }
+  if(F==='F2'){ add(provenConnected('cornelius','ambrose'),'Your tree proves Cornelius Vane is Ambrose Vane, who was registered dead in 1934'); }
+  if(F==='F3'){ add(!!linkOf('parent','desmond','julian'),"Desmond Vane is in your tree as Julian's father"); add(hasEvent('desmond','nobirth'),'A certified nil return shows Desmond has no birth record'); }
+  if(F==='F4'){ add(hasEvent('ambrose','turned'),'The date Ambrose was turned is recorded in your tree'); add(provenConnected('cornelius','ambrose'),'Cornelius is proven to be Ambrose'); add(!!(linkOf('claimed','cornelius','daphne')||linkOf('parent','cornelius','daphne')),'Daphne is linked to Cornelius as his claimed daughter'); }
+  if(F==='F5'){ add(provenLink('parent','ambrose','harriet')&&provenLink('parent','harriet','thomas')&&provenLink('parent','thomas','margaret'),'Margaret is linked to Ambrose through Thomas and Harriet, every link proven'); add(hasEvent('ambrose','turned'),'The date Ambrose was turned is recorded in your tree'); }
+  const inv=INVOLVED[F]; const bad=S.tree.links.filter(l=>(inv.includes(l.a)||inv.includes(l.b))&&LSTAT[l.id]&&LSTAT[l.id].status==='unproven');
+  add(bad.length===0, bad.length?`Your tree has ${bad.length} unproven link${bad.length>1?'s':''} among these people. Prove ${bad.length>1?'them':'it'} or remove ${bad.length>1?'them':'it'}`:'No unproven links among these people');
+  return c;
+}
+const treeOk = F => treeChecks(F).every(x=>x.ok);
 
 function blTree(){
+  const pf={}; FLAGS.filter(f=>f.sev!=='good'&&f.sev!=='note').forEach(f=>[...new Set(f.people)].forEach(p=>{ (pf[p]=pf[p]||[]).push(f.text); }));
   const nodes = Object.entries(POS).map(([id,[x,y]])=>{
     const p = PEOPLE[id];
     return `<button class="tnode ${SEX[id]} ${p.tag==='Disputed'?'dis':''} ${S.sel===id?'sel':''}" style="left:${x}px;top:${y}px" data-a="sel" data-v="${id}">
-      <span class="ava">${avatar(id)}</span><span style="min-width:0"><b>${p.name}</b><small>${p.life}</small></span>${HINT_OF[id]?LEAF:''}${p.tag?`<span class="flag">${p.tag}</span>`:''}</button>`;}).join('');
+      <span class="ava">${avatar(id)}</span><span style="min-width:0"><b>${p.name}</b><small>${p.life}</small></span>${HINT_OF[id]?LEAF:''}${p.tag?`<span class="flag">${p.tag}</span>`:''}${pf[id]?`<span class="tflag" title="${esc(pf[id].join(' '))}">⚠ ${pf[id].length}</span>`:''}</button>`;}).join('');
   const ghosts = Object.entries(GH).map(([id,g])=>`<div class="tnode u" style="left:${LAY.pos[id][0]}px;top:${LAY.pos[id][1]}px;width:200px;opacity:.75;cursor:default"><span class="ava">?</span><span><b>${g.label}</b><small>${g.sub}</small></span></div>`).join('');
-  const lines = `<svg class="lines" viewBox="0 0 ${LAY.w} ${LAY.h}" aria-hidden="true">${LAY.edges.map(e=>`<path ${e.cls?`class="${e.cls}" `:''}d="${e.d}"/>`).join('')}</svg>`;
+  const arcs = S.tree.links.filter(l=>l.t==='same'&&LAY.pos[l.a]&&LAY.pos[l.b]).map(l=>{ const A=LAY.pos[l.a],B=LAY.pos[l.b], ax=A[0],ay=A[1]+TREE.h/2,bx=B[0],by=B[1]+TREE.h/2, off=Math.max(60,Math.abs(ay-by)*0.12+60), mx=Math.min(ax,bx)-off;
+    return `<path class="idl ${LSTAT[l.id]&&LSTAT[l.id].status==='unproven'?'unp':''}" d="M${ax} ${ay} C ${mx} ${ay}, ${mx} ${by}, ${bx} ${by}"/>`; }).join('');
+  const lines = `<svg class="lines" viewBox="0 0 ${LAY.w} ${LAY.h}" aria-hidden="true">${LAY.edges.map(e=>`<path ${e.cls?`class="${e.cls}" `:''}d="${e.d}"/>`).join('')}${arcs}</svg>`;
   const labels = LAY.labels.map(l=>`<span class="claimlbl" style="left:${l.x}px;top:${l.y}px">${l.t}</span>`).join('');
-  const bare = !S.tree.links.length ? `<div class="treehint"><b>Your tree has four names and no links.</b> Open a record, work out who is related to whom, and add the links the record proves. Search a name to find records.</div>` : '';
+  const nflag = FLAGS.filter(f=>f.sev!=='good'&&f.sev!=='note').length, nunp = S.tree.links.filter(l=>LSTAT[l.id]&&LSTAT[l.id].status==='unproven').length;
+  const ICON={impossible:'⛔',unusual:'⚠',note:'ℹ',law:'§',good:'✓'};
+  const linkRows = [...S.tree.links].reverse().map(l=>{ const st=LSTAT[l.id]||{}; const src=l.recs.length?l.recs.map(r=>esc(REC[r]?REC[r].title:r)).join('; '):'no record';
+    return `<li class="${st.status}"><span class="lt"><b>${NAMEOF(l.a)}</b> ${REL_LABEL[l.t]} <b>${NAMEOF(l.b)}</b><small>${st.status==='proven'?'Proven by':'Not shown by'}: ${src}</small></span><button class="lnk" data-a="unlink" data-v="${l.id}">Remove</button></li>`; }).join('');
+  const evRows = S.tree.events.map(e=>`<li class="proven"><span class="lt"><b>${NAMEOF(e.p)}</b> ${EVENT_LABEL[e.k]}${e.date?' on '+new Date(e.date+'T12:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}):''}<small>Proven by: ${esc(REC[e.rec]?REC[e.rec].title:e.rec)}</small></span></li>`).join('');
+  const tp = S.tree.people;
+  const check = `<details class="tcheck" ${S.flags.tcClosed?'':'open'}><summary data-a="tcheck">Tree check: ${nflag} flag${nflag===1?'':'s'}, ${nunp} unproven link${nunp===1?'':'s'}</summary>
+    <div class="tcgrid"><div><h3>Link two people</h3><p class="muted" style="margin:0 0 8px;font-size:13px">You can put any link on the tree. Pick a record that shows it, or none. A link no record shows is drawn dashed. The tree flags dates that don't work.</p>
+      <form class="sform" data-form="link"><label>Person<select data-lk="a">${peopleOpts(null,tp)}</select></label><label>How<select data-lk="t">${REL_OPTS}</select></label><label>Other person<select data-lk="b">${peopleOpts(null,tp)}</select></label>
+      <label>Shown by<select data-lk="ev">${evOptions('')}</select></label><button class="bbtn">Add to tree</button></form></div>
+      <div><h3>Flags</h3>${FLAGS.length?`<ul class="flags">${FLAGS.map(f=>`<li class="${f.sev}"><span class="fi" aria-hidden="true">${ICON[f.sev]}</span><span>${esc(f.text)}</span></li>`).join('')}</ul>`:'<p class="muted" style="margin:0;font-size:13.5px">Nothing flagged. The dates in your tree work so far.</p>'}</div>
+      <div><h3>Your links</h3>${linkRows||evRows?`<ul class="lks">${evRows}${linkRows}</ul>`:'<p class="muted" style="margin:0;font-size:13.5px">No links yet.</p>'}</div></div></details>`;
+  const bare = !S.tree.links.length ? `<div class="treehint"><b>Your tree has four names and no links.</b> Open a record, work out who is related to whom, and add the links from the record page, or use the form below. Search a name to find records.</div>` : '';
   return `<div class="treebar"><div class="wrap">
     <span class="treename">Vane estate ${ic('chev')}</span>
     <div class="seg"><button class="on">Tree</button><button data-a="toastonly" data-msg="Family view isn't available for Professional trees">Family</button><button data-a="toastonly" data-msg="List view is coming soon">List</button></div>
     <div class="tree-tools"><select class="tsearch" data-find="1" aria-label="Find a person"><option value="">Find a person…</option>${Object.keys(POS).map(id=>`<option value="${id}">${PEOPLE[id].name}</option>`).join('')}</select>
     <button class="bbtn sec sm" data-a="toastonly" data-msg="Only the tree owner (R. Ashgrove) can invite people">${ic('share')}Share</button></div></div></div>
-  ${bare}<div class="canvas-wrap" id="cw"><div class="canvas" style="width:${LAY.w}px;height:${LAY.h}px;transform:scale(${S.tz});transform-origin:0 0">${lines}${ghosts}${nodes}${labels}</div>
+  ${bare}${check}<div class="canvas-wrap" id="cw"><div class="canvas" style="width:${LAY.w}px;height:${LAY.h}px;transform:scale(${S.tz});transform-origin:0 0">${lines}${ghosts}${nodes}${labels}</div>
     ${S.sel?drawer(S.sel):''}
     <div class="zoomctl"><button data-a="tz" data-v="1.1" aria-label="Zoom in">${ic('plus')}</button><button data-a="tz" data-v="0.9" aria-label="Zoom out">${ic('minus')}</button><button data-a="tz" data-v="0" aria-label="Reset zoom">${ic('fit')}</button></div>
   </div>`;
@@ -651,7 +830,7 @@ function showPreview(id){
   const light = ['DNA','Hint'].includes(r.kind);
   m.innerHTML = `<div class="pv" role="dialog" aria-modal="true" aria-label="${esc(r.title)}"><div class="pvh"><span class="fi" style="background:${ext==='JPG'?'#2d7d46':ext==='HTML'?'#3c5a78':'#c0392b'}">${ext}</span><div class="t"><b>${fname}</b><small>${r.title}</small></div>
     <button class="nbtn ${pinned(id)?'sec':''} sm" data-a="pin" data-v="${id}" data-m="1">${pinned(id)?'Remove from matter':'Save to matter'}</button><button class="nbtn sec sm" data-a="close">Close</button></div>
-    <div class="pvb ${light?'light':''}"><div ${light?'style="font-family:var(--f-bl);display:flex;flex-direction:column;gap:10px"':''}>${paperHtml(id,r.render())}</div>${r.kind==='Letter'?treePanel(id):''}</div></div>`;
+    <div class="pvb ${light?'light':''}"><div ${light?'style="font-family:var(--f-bl);display:flex;flex-direction:column;gap:10px"':''}>${paperHtml(id,r.render())}</div>${r.kind==='Letter'||r.kind==='Certificate'?treePanel(id):''}</div></div>`;
   m.hidden = false; m.querySelector('[data-a="close"]').focus();
 }
 function closePreview(){ $('#modal').hidden = true; $('#modal').innerHTML=''; render(); }
@@ -791,6 +970,7 @@ function ruleView(){
     <form data-form="rule" style="display:flex;flex-direction:column;gap:12px">
     ${FIND.map((f,i)=>{ const r = S.res[f.id], locked = r===true||done;
       return `<fieldset class="finding ${r===true?'ok':r===false?'no':''}"><div class="fhead"><span class="n">FINDING ${i+1}</span><legend>${f.q}</legend>${r===true?'<span class="pill green">Accepted</span>':r===false?'<span class="pill red">Not accepted</span>':''}</div>
+      <ul class="tchk" aria-label="What your tree must show">${treeChecks(f.id).map(x=>`<li class="${x.ok?'ok':'no'}"><span aria-hidden="true">${x.ok?'✓':'○'}</span>${esc(x.text)}</li>`).join('')}</ul>
       ${r===false&&S.attempts>=2?`<p class="nudge">${f.nudge}${S.flags['hint_'+f.id]?' Also: you attached a hint from a member tree. The claimant built that tree.':''}</p>`:''}
       ${f.opts.map(([v,l])=>`<label class="opt"><input type="radio" name="${f.id}" id="${f.id}-${v}" value="${v}" ${S.ans[f.id]===v?'checked':''} ${locked?'disabled':''}><span>${l}</span></label>`).join('')}
       <div style="font-size:12px;font-weight:600;color:var(--nt-muted);text-transform:uppercase;letter-spacing:.05em;margin-top:4px">Supporting evidence · ${(S.ev[f.id]||[]).filter(pinned).length} attached · 4 at most${f.id==='F1'?' · needs 3 documents':''}</div>
@@ -806,7 +986,7 @@ function judge(){
     if(S.res[f.id]===true) return;
     const ev = (S.ev[f.id]||[]).filter(pinned), hint = ev.includes('hintOfficial');
     if(hint){ S.flags['hint_'+f.id]=true; S.flags.usedHint=true; }
-    const ok = S.ans[f.id]===f.ans && evidenceOk(f.id, ev) && !hint;
+    const ok = S.ans[f.id]===f.ans && evidenceOk(f.id, ev) && treeOk(f.id) && !hint;
     S.res[f.id] = ok; if(!ok) all = false;
   });
   S.attempts++;
@@ -862,6 +1042,8 @@ document.addEventListener('click', e=>{
     case 'guide': showGuide(S.flags.guideSec&&S.flags.t_guide&&v===undefined?S.flags.guideSec:'job'); return;
     case 'guidesec': showGuide(v); return;
     case 'training': S.flags.hideTraining = v==='hide'; save(); render(); return;
+    case 'unlink': removeLink(+v); save(); render(); return;
+    case 'tcheck': S.flags.tcClosed = !S.flags.tcClosed; save(); render(); return;
     case 'sigcert': {
       const H=S.hw, id='sig:'+[H.a,H.b].sort().join('-'), ok=SIGNED[H.a][1]===SIGNED[H.b][1];
       S.reports[id]={a:H.a,b:H.b,ok}; REC[id]=sigRec(id);
@@ -890,8 +1072,16 @@ document.addEventListener('submit', e=>{
   if(f.dataset.form==='qsearch'){ S.q={name:'',kw:$('#hq').value,kind:'All'}; S.searched=true; S.flags.t_search=true; go('search','bl'); }
   if(f.dataset.form==='search'){ S.q={name:$('#sname').value,kw:$('#skw').value,kind:$('#skind').value}; S.searched=true; S.flags.t_search=true; log(`Searched Bloodlines: "${(S.q.name+' '+S.q.kw).trim()||S.q.kind}"`); save(); render(); }
   if(f.dataset.form==='link'){
-    const rec=f.dataset.rec, A=f.querySelector('[data-lk=a]').value, B=f.querySelector('[data-lk=b]').value, T=f.querySelector('select:not([data-lk])').value;
-    const res=tryLink(A,T,B,rec); toast(res.msg); if(res.ok){ save(); const m=$('#modal'); if(!m.hidden){ showPreview(rec); } else render(); }
+    const A=f.querySelector('[data-lk=a]').value, B=f.querySelector('[data-lk=b]').value, T=f.querySelector('[data-lk=t]').value;
+    const evEl=f.querySelector('[data-lk=ev]'), rec=f.dataset.rec || (evEl?evEl.value:'');
+    const res=tryLink(A,T,B,rec); toast(res.msg);
+    if(res.ok){ save(); if(f.dataset.rec && !$('#modal').hidden) showPreview(f.dataset.rec); else render(); }
+    return;
+  }
+  if(f.dataset.form==='event'){
+    const P=f.querySelector('[data-ev=p]').value, K=f.querySelector('[data-ev=k]').value;
+    const res=P?tryEvent(P,K,f.dataset.rec):{ok:false,msg:'Choose a person.'}; toast(res.msg);
+    if(res.ok){ save(); if(!$('#modal').hidden) showPreview(f.dataset.rec); else render(); }
     return;
   }
   if(f.dataset.form==='rule'){

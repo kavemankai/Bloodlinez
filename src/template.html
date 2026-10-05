@@ -536,6 +536,26 @@ textarea#notes{width:100%;min-height:240px;border:1px solid #c5ccd2;border-radiu
 .gbody p{margin:0 0 12px}.gbody ul,.gbody ol{margin:0 0 12px;padding-left:22px;display:flex;flex-direction:column;gap:6px}
 .gloss{display:grid;grid-template-columns:150px 1fr;gap:8px 16px;margin:0}.gloss dt{font-weight:700}.gloss dd{margin:0}
 @media (max-width:760px){.gwrap{grid-template-columns:1fr}.gnav{flex-direction:row;flex-wrap:wrap;position:static}.gloss{grid-template-columns:1fr}}
+.treebar+.tcheck,.treehint+.tcheck{margin:0}
+.tcheck{background:#fff;border-bottom:1px solid var(--bl-line)}
+.tcheck>summary{cursor:pointer;padding:10px 24px;font-weight:600;font-size:14px;list-style:none}
+.tcheck>summary::before{content:'▸ ';color:var(--bl-brand)}.tcheck[open]>summary::before{content:'▾ '}
+.tcgrid{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:20px;padding:6px 24px 18px;max-height:340px;overflow:auto}
+.tcgrid h3{font-size:14px;margin:0 0 6px}
+.tcgrid .sform{display:flex;flex-direction:column;gap:8px}.tcgrid select{width:100%}
+.flags,.lks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px;font-size:13.5px}
+.flags li{display:flex;gap:8px;line-height:1.4}.flags .fi{flex:none;width:18px;text-align:center}
+.flags .impossible{color:#8a1c2b}.flags .law{color:#5a3a8a}.flags .unusual{color:#8a5a00}.flags .good{color:#2d7d46}.flags .note{color:var(--bl-muted)}
+.lks li{display:flex;gap:8px;align-items:flex-start;justify-content:space-between;line-height:1.35}.lks small{display:block;color:var(--bl-muted);font-size:12px}
+.lks li.unproven .lt b{font-weight:600}.lks li.unproven{border-left:3px dashed #aaa;padding-left:8px}
+.tflag{position:absolute;top:-8px;left:-6px;background:#fff0f0;border:1px solid #e0a3a3;color:#8a1c2b;border-radius:9px;font-size:10.5px;font-weight:700;padding:1px 6px;z-index:2}
+.canvas svg.lines path.unp{stroke-dasharray:4 4;stroke:#a09a92}
+.canvas svg.lines path.bad{stroke:#c0392b;stroke-width:2.4}
+.canvas svg.lines path.odd{stroke:#c98a1a;stroke-width:2.2}
+.canvas svg.lines path.idl{stroke:#8a1c2b;stroke-width:2.4;stroke-dasharray:2 5;stroke-linecap:round}
+@media (max-width:900px){.tcgrid{grid-template-columns:1fr}}
+.tchk{list-style:none;margin:2px 0 6px;padding:8px 12px;background:#f1f4f6;border-radius:6px;display:flex;flex-direction:column;gap:4px;font-size:13px}
+.tchk li{display:flex;gap:8px}.tchk li.ok{color:#2d7d46}.tchk li.no{color:var(--nt-muted)}.tchk li span{width:14px;text-align:center;flex:none}
 </style>
 
 <div class="app">
