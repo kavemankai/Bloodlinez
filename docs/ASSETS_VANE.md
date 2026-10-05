@@ -10,6 +10,7 @@ Every picture and document has to look like it was made by the process that exis
 
 | Years | Medium | What it looks like | Used here |
 |---|---|---|---|
+| 1500–1700 | Oil portrait on panel | A gentleman's formal portrait. Dark ground, glazed flesh tones, a white ruff or lace collar, an inscription with the sitter's age on the back. Darkened varnish and fine cracks. | Roland Ashgrove, 1620 |
 | 1750–1830 | Silhouette | Black profile, cut from paper or painted on cream card or glass, fine hair detail picked out, oval frame. No colour, no shading, no eyes visible. | Samuel Vane, about 1790 |
 | 1800–1840 | Oil portrait by a travelling painter | Provincial and slightly naive. Stiff pose, flat features, dark brown ground, cracked varnish, a prop that names the trade. Gilt frame. | Thomas Vane, about 1818 |
 | 1839–1860 | Daguerreotype | A polished silver plate in a hinged case, brass mat and velvet. Mirror-like sheen that flips between positive and negative with the angle. Left and right reversed. Hand-tinted pink cheeks. Small. | Josiah Vane, about 1851 |
@@ -24,6 +25,8 @@ Documents follow the same rule. Handwriting, paper and printing change with the 
 
 | Years | Writing and printing |
 |---|---|
+| 1350–1580 | Court rolls, wills and notarial documents written in secretary hand with abbreviations, in iron-gall ink on sewn parchment membranes or on paper. Court rolls were in Latin and the game shows a translation. |
+| 1538–1789 | Parish registers in ink, a curate's hand, no printed columns until the 1750s. |
 | 1751–1789 | Round hand in iron-gall ink, brown with a halo where it has bled. Long s. Hand-ruled lines on laid paper with faint chain lines. No printed columns. |
 | 1754–1840 | Printed parish register pages with ruled columns, entries in ink. People who couldn't write signed with an X. |
 | 1841 on | Printed census schedules, filled in ink. Ages in 1841 are rounded down to the nearest five. |
@@ -72,6 +75,7 @@ Each of these is a record in the game. All need the vampire's marks unless noted
 | `photo1962.jpg` | 17 Mar 1962 | Newspaper halftone on newsprint | Cornelius, "28", host at his ball. Dinner suit, bow tie. | Coarse dot screen (about 85 lpi), black and white, press-flash overexposure. Face large and centred. |
 | `licence1972.jpg` | 1972 | Colour print, licence office | Cornelius, "38". | Orange-magenta dye shift, flat frontal flash, pale blue-grey wall, soft. Hair over the ears, sideburns, wide collar. |
 | `licence2019.jpg` | 2019 | Digital | Julian, "26". | Grey backdrop, harsh front flash, no smile, short hair. Sharp, so the scar is easy to see. |
+| `portrait1620.jpg` | 1620 | Oil on panel, Ashby Guildhall | Roland Ashgrove, Recorder of Ashby, "aetat. 33". The ancient vampire. Not on the lab. | Formal three-quarter portrait, dark brown ground, black doublet, white falling collar, long dark hair, a composed face with a faint patient look. Looks about 33 and has no scar or mole. Darkened varnish, fine cracks, gilt slip frame. |
 | `photo1921.jpg` | 1921 | Gelatin silver print | Frank Tully, secretary of the Wharf Workers' Union. Not the vampire. | Committee portrait, white border, slight curl. Heavy-set, moustache, scar through the eyebrow from a winch accident, no mole. The scarred decoy. |
 | `photo1950.jpg` | 1950 | Black-and-white club print | Thomas Holloway, 30, club secretary. Not the vampire. | Glasses, wavy hair, blazer. Mole in the same cheek position as the vampire's, no scar. The mole-only decoy. |
 
@@ -84,7 +88,7 @@ Notes:
 
 ## 3. Portraits and avatars (256×256)
 
-Everyone on the tree gets a portrait in the medium of their era. The pre-photographic ones are objects, not photographs, and should look like an old painting or cutting, not a sepia filter. Crop each to a face-centred square; for the silhouette, daguerreotype and oil portrait keep the oval or frame edge visible in the crop so the medium reads.
+Everyone on the tree from Samuel Vane down gets a portrait in the medium of their era. The ten Vanes before him (1410 to 1720) get initials only; nobody painted a boatman or a cooper. The pre-photographic ones are objects, not photographs, and should look like an old painting or cutting, not a sepia filter. Crop each to a face-centred square; for the silhouette, daguerreotype and oil portrait keep the oval or frame edge visible in the crop so the medium reads.
 
 | File | Person | Date and age | Medium | Notes |
 |---|---|---|---|---|
@@ -112,7 +116,8 @@ Documents stay as live HTML text. These are the textures and props behind them. 
 
 | File | Used by | Period look |
 |---|---|---|
-| `paper_parish_1751.jpg` | `bapt1751`, `bapt1789` | Hand-ruled laid paper with chain lines and a faint watermark, iron-gall ink gone brown with halos. Round hand, long s. Foxing, one stitched edge. No printed columns. |
+| `paper_parchment.jpg` | `court1436`, `will1509`, `will1577`, `deed1740` | Aged parchment or heavy paper, written in secretary hand with abbreviations, iron-gall ink gone brown, a sewn edge on the court roll. Wax seal on the 1740 lease. |
+| `paper_parish_1751.jpg` | `burial1544`, `bapt1550`, `marr1612`, `bapt1620`, `tax1674`, `marr1682`, `bapt1688`, `bapt1720`, `bapt1751`, `bapt1789` | Hand-ruled laid paper with chain lines and a faint watermark, iron-gall ink gone brown with halos. Round hand, long s. Foxing, one stitched edge. No printed columns. |
 | `paper_parish_form.jpg` | `marr1818`, `burial1889` | Printed register page with ruled columns, entries in ink. For the marriage page the bride's mark is an X. Mid-brown aged paper. |
 | `paper_census_1841.jpg` | `census1841` | Thin printed schedule, folded, enumerator's pencil ticks in the margin. |
 | `paper_census.jpg` | `census1861`, `census1881`, `census1891`, `census1911`, `census1921` | Printed schedule filled in ink. The 1911 and 1921 sheets are larger, landscape, and signed by the head of household. |

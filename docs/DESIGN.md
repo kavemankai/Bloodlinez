@@ -25,13 +25,32 @@ Three filings per case. Accepted findings lock in. The grade depends on filings 
 
 ## Depth of the archive
 
-The Vane line runs back five generations, to Samuel Vane (b. 1751). Records go back with it: parish baptisms and marriages from 1751, civil births and marriages from 1850, censuses from 1841. The 57 records in the game are not evidence for the findings. Most of them are there so the archive feels like it goes further back than the case needs.
+The Vane line runs back fifteen generations, to Hugh atte Vane (born about 1410). The oldest record is a 1436 manor court roll for a messuage in Hollow Lane. Before the parish registers start in 1538, the records are court rolls and wills. After that they are baptisms, marriages and tax returns, then the censuses from 1841 and civil registration from 1850. There are 70 records in all and most are there so the archive feels older than the case needs.
 
-Three old records are tells. The 1911 census enumerator thinks the 54-year-old head looks about 35. The 1921 census is completed by R. Ashgrove, who gave the occupier's age on his own authority. R. Ashgrove also witnesses the 1886 marriage. He appears across 1886, 1912, 1921 and 1934, which sets up the 1740 file.
+The Vanes are mortal and ordinary: boatmen, then coopers, then a shipwright. Ambrose was an ordinary clerk until 14 February 1888. Keep it that way, because the Case 1 answer depends on it.
 
-The 1875 photo of Ambrose at 18 has the mole and no scar. It shows he aged normally until the 1888 attack and that the scar is acquired. Feed that into the two-marks rule.
+The 1875 photo of Ambrose at 18 has the mole and no scar. It shows he aged normally until the attack and that the scar is acquired.
 
-Ages are consistent across all documents: Ambrose was born 9 February 1857, so he was 31 at the 1888 hospital admission, 34 at the 1891 census and 76 at his 1934 death. Keep to that when adding records.
+Ages are consistent across all documents. Ambrose was born 9 February 1857, so he was 31 at the 1888 hospital admission, 34 at the 1891 census and 76 at his 1934 death. Keep to that when adding records.
+
+## The oldest one (spoilers, not solved in Case 1)
+
+R. Ashgrove is older than the oldest record in the tree. He is the "tall foreign gentleman" who attacked Ambrose in 1888, and the senior partner who has run the Vane family's legal affairs ever since. Case 1 never says so. The player can find the trail, but no finding depends on it.
+
+The trail, in order of age:
+
+- 1436: Roland Asgrove, clerk, stands pledge for Hugh atte Vane in the Ashby court roll.
+- 1509: Roland Askgrove, scrivener, writes John atte Vane's will.
+- 1577: Roland Ashgrove, notary, writes Thomas Vane's will.
+- 1620: an oil portrait of Roland Ashgrove, Recorder of Ashby, "aged 33". The painting is in the Guildhall.
+- 1740: R. Ashgrove, gentleman, of Ashgrove House, leases a Hollow Lane tenement to William Vane. The record cross-refers to Ashgrove estate (1740), file 0001, which is restricted to partners.
+- 1886, 1912, 1921, 1934: R. Ashgrove witnesses the Vane marriage, the Holloway wedding, completes Ambrose's census and attests the trust.
+
+The name drifts in spelling (Asgrove, Askgrove, Ashgrove). Each index entry carries a note normalising it, so a search for "Ashgrove" finds all nine.
+
+The handwriting examiner matches Ashgrove's signature on the 1921 census to his signature on the 1740 lease. That is a positive result but it does not count as identity evidence in Finding 1, because the hand is not the Vanes' hand.
+
+The Vane line is his tenants. What binds them to him is the 1740 estate file, which later cases open.
 
 ## Case 1 rules worth keeping across cases
 

@@ -62,7 +62,7 @@ const SIGNED = {
   census1891:['A. Vane','v'], trust1934:['A. Vane','v'], birth1934:['A. Vane','v'],
   licence1972:['C. Vane','v'], birth1993:['C. Vane','v'], death1994:['C. Vane','v'], will2024:['C. Vane','v'], licence2019:['J. Vane','v'],
   birth1888:['E. Vane','e'], birth1966:['L. Marsh-Pike','m'],
-  marr1886:['A. Vane','v'], census1911:['A. Vane','v'], census1921:['R. Ashgrove','r']
+  marr1886:['A. Vane','v'], deed1740:['R. Ashgrove','r'], census1911:['A. Vane','v'], census1921:['R. Ashgrove','r']
 };
 const MARKS_FACE = {scar:[74,49], mole:[46.5,74]};
 const MARK_NAME = {scar:'Scar through the left eyebrow', mole:'Mole on the lower cheek'};
@@ -114,6 +114,34 @@ const REC = {
     <p class="rn">Enumerator's note: Head of household not at home during the day. Returned after dusk to collect schedule. Curtains drawn throughout.</p></div>`},
   photo1889:{kind:'Photo',year:1889,title:'Studio portrait, Ambrose Vane',k:'Ambrose Vane portrait Halloran',
     render:()=>`<div class="photo">${photo(PH.photo1889)}<div class="doc" style="max-width:420px"><p><b>Halloran &amp; Sons, Photographic Studio, Ashby.</b></p><p>Pencilled on reverse: "A.V., aged 32. Taken by lamplight at the sitter's request. 1889."</p></div></div>`},
+  court1436:{kind:'Court',year:1436,title:'Court roll, Manor of Ashby, 1436',k:'Hugh atte Vane Hollow Lane messuage court roll manor Asgrove Ashgrove clerk',
+    render:()=>regDoc('Manor of Ashby · Court Roll','15 Henry VI',[['Court held','Feast of St Michael, 15 Henry VI (29 September 1436)'],['Tenant','Hugh atte Vane, boatman'],['Holding','One messuage and garden in Hollow Lane'],['Rent','Fourpence a year'],['Pledges','Roland Asgrove, clerk; John Tyler'],['Fine','Twelvepence']],'',"Translated from the Latin. Index note: the clerk's name as written, Asgrove, is indexed as Ashgrove.",'','Ashby','Manor of')},
+  will1509:{kind:'Will',year:1509,title:'Will of John atte Vane, boatman, 1509',k:'John atte Vane will Hollow Lane Askgrove Ashgrove scrivener Agnes Richard',
+    render:()=>regDoc('Will and Testament','1509/17',[['Testator','John atte Vane, boatman, of Ashby'],['Proved','14 March 1509'],['Bequests','To the church of St Columba, a bushel of barley. To his son Richard, the messuage in Hollow Lane. To his wife Agnes, the residue.'],['Written by','Roland Askgrove, scrivener'],['Witnesses','Sir William, parish priest; R. Askgrove']],'',"Index note: the scrivener's name as written, Askgrove, is indexed as Ashgrove.",'','Ashby','Peculiar of')},
+  burial1544:{kind:'Parish',year:1544,title:'Burial, Richard Vane, 1544',k:'Richard Vane burial St Columba boatman',
+    render:()=>regDoc('Burial Register','14',[['Name','Richard Vane, boatman'],['Buried','9 November 1544'],['Parish','St Columba, Ashby']],'',"Entry in the curate's hand. Register kept from 1538 by order of the Vicar General.",'','St Columba, Ashby','Parish of')},
+  will1577:{kind:'Will',year:1577,title:'Will of Thomas Vane, cooper, 1577',k:'Thomas Vane will cooper Hollow Lane Ashgrove notary',
+    render:()=>regDoc('Will and Testament','1577/42',[['Testator','Thomas Vane, cooper, of Ashby'],['Proved','3 May 1577'],['Bequests',"To his son John, his cooper's tools and the messuage in Hollow Lane. To his daughters, ten shillings each."],['Written by','Roland Ashgrove, notary public'],['Witnesses','J. Pryor; R. Ashgrove']],'','','','Ashby','Peculiar of')},
+  bapt1550:{kind:'Parish',year:1550,title:'Baptism, John Vane, 1550',k:'John Vane baptism St Columba Thomas',
+    render:()=>regDoc('Baptism Register','61',[['Child','John, son of Thomas Vane'],['Baptised','12 September 1550'],['Parish','St Columba, Ashby']],'','','','St Columba, Ashby','Parish of')},
+  marr1612:{kind:'Parish',year:1612,title:'Marriage, William Vane and Margaret Dole, 1612',k:'William Vane Margaret Dole marriage St Columba cooper',
+    render:()=>regDoc('Marriage Register','27',[['Groom','William Vane, cooper'],['Bride','Margaret Dole'],['Married','8 October 1612'],['Parish','St Columba, Ashby']],'','Groom signed. Bride made her mark.','','St Columba, Ashby','Parish of')},
+  bapt1620:{kind:'Parish',year:1620,title:'Baptism, Richard Vane, 1620',k:'Richard Vane baptism St Columba William cooper',
+    render:()=>regDoc('Baptism Register','88',[['Child','Richard, son of William Vane, cooper'],['Baptised','21 June 1620'],['Parish','St Columba, Ashby']],'','','','St Columba, Ashby','Parish of')},
+  tax1674:{kind:'Tax',year:1674,title:'Hearth tax return, Hollow Lane, 1674',k:'Richard Vane hearth tax Hollow Lane cooper',
+    render:()=>regDoc('Hearth Tax Return','1674/9',[['Street','Hollow Lane'],['Householder','Richard Vane, cooper'],['Hearths','2'],['Paid','Two shillings at Lady Day and Michaelmas']],'','','','Ashby','Hundred of')},
+  marr1682:{kind:'Parish',year:1682,title:'Marriage, Henry Vane and Susan Penn, 1682',k:'Henry Vane Susan Penn marriage St Columba cooper',
+    render:()=>regDoc('Marriage Register','31',[['Groom','Henry Vane, cooper'],['Bride','Susan Penn'],['Married','19 May 1682'],['Parish','St Columba, Ashby']],'','','','St Columba, Ashby','Parish of')},
+  bapt1688:{kind:'Parish',year:1688,title:'Baptism, William Vane, 1688',k:'William Vane baptism St Columba Henry cooper',
+    render:()=>regDoc('Baptism Register','104',[['Child','William, son of Henry Vane, cooper, and Susan his wife'],['Baptised','4 March 1688'],['Parish','St Columba, Ashby']],'','','','St Columba, Ashby','Parish of')},
+  bapt1720:{kind:'Parish',year:1720,title:'Baptism, John Vane, 1720',k:'John Vane baptism St Columba William Anne cooper',
+    render:()=>regDoc('Baptism Register','17',[['Child','John, son of William Vane, cooper, and Anne his wife'],['Baptised','10 April 1720'],['Parish','St Columba, Ashby']],'','','','St Columba, Ashby','Parish of')},
+  portrait1620:{kind:'Art',year:1620,title:'Portrait of Roland Ashgrove, Recorder of Ashby, 1620',k:'Roland Ashgrove portrait Recorder Ashby Guildhall oil painting',
+    render:()=>`${photo({alt:'Oil portrait of Roland Ashgrove, 1620',faces:[{tone:'sepia',hair:'long',era:'victorian',jaw:25}]})}<p class="rn">Oil on panel, Ashby Guildhall collection. Inscribed on the reverse: "R. ASHGROVE, RECORDER, AETAT. 33, 1620."</p>`},
+  deed1740:{kind:'Legal',year:1740,title:'Lease of a tenement in Hollow Lane, 1740',k:'William Vane cooper lease Hollow Lane Ashgrove House Ashgrove estate',
+    render:()=>`<div class="doc"><h4>Lease · Hollow Lane</h4>${dl([['Lessor','R. Ashgrove, gentleman, of Ashgrove House'],['Lessee','William Vane, cooper'],['Holding','One tenement and yard in Hollow Lane'],['Term','Ninety-nine years'],['Rent','One peppercorn, if demanded']])}
+    <div class="sigline"><span>Signed by the lessor:</span>${sig('R. Ashgrove','r')}</div>
+    <p class="rn">Cross-reference: Ashgrove estate (1740), file 0001. Restricted to partners.</p></div>`},
   bapt1751:{kind:'Parish',year:1751,title:'Baptism, Samuel Vane, 1751',k:'Samuel Vane baptism St Columba cooper John Martha',
     render:()=>regDoc('Baptism Register','41',[['Child','Samuel, son of John Vane, cooper, and Martha his wife'],['Born','27 February 1751'],['Baptised','3 March 1751'],['Parish','St Columba, Ashby']],'',"Entered in the hand of the Rev. T. Orme.",'','St Columba, Ashby','Parish of')},
   bapt1789:{kind:'Parish',year:1789,title:'Baptism, Thomas Vane, 1789',k:'Thomas Vane baptism St Columba cooper Samuel Sarah',
@@ -340,7 +368,7 @@ const NEED = {
 };
 const MAX_EV = 4;
 const goodLab = id => id.startsWith('cmp:') && S.reports[id] && S.reports[id].ok;
-const goodHand = id => id.startsWith('sig:') && S.reports[id] && S.reports[id].ok;
+const goodHand = id => id.startsWith('sig:') && S.reports[id] && S.reports[id].ok && SIGNED[S.reports[id].a][1]==='v';
 const inGroup = (id,g) => g.cmp ? goodLab(id) : g.ids.includes(id) || (g.sig && goodHand(id));
 function relevant(id,F){ return id.startsWith('cmp:') || (F==='F1' && id.startsWith('sig:')) || BEARS[F].includes(id); }
 /* years covered by the counted documents; a lab report covers the years of both its photos */

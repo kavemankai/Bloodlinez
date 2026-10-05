@@ -42,7 +42,11 @@ Shared block. It is repeated inside each prompt, so you don't paste it separatel
 
 > Attach vane_sheet.png. A modern driver licence photo of the man in the reference, head and shoulders, plain light grey backdrop, harsh direct front flash, sharp digital capture, no smile, short neat dark hair, dark crew-neck top. Looks about 32. Marks, as they appear in the picture: pale scar cutting through the eyebrow on the RIGHT side of the picture; small dark mole low on the cheek on the LEFT side of the picture. Both very clear. No card, no text. Portrait 2:3.
 
-## 2. The decoys (no reference sheet)
+## 2. The decoys and the Ashgrove portrait (no reference sheet)
+
+### `portrait1620.jpg` — Roland Ashgrove, 1620
+
+> A genuine 1620 English oil portrait on panel of a man who looks about 33, a town recorder, three-quarter length against a dark brown ground. Black doublet, white falling collar, long dark hair to the shoulders, a composed and patient face with a faint closed-mouth smile, one hand resting on a rolled document. Warm glazed flesh tones, visible craquelure, darkened varnish, a gilt slip frame. No scar and no mole. No text. Portrait 2:3.
 
 ### `photo1950.jpg` — Thomas Holloway, 1950
 
@@ -101,6 +105,10 @@ Pre-photographic portraits are made objects, so ask for the object, not a filter
 ## 4. Paper by era
 
 None of these may contain readable text or the game's own content. Ask for "illegible, blurred marks only where writing would be". Do each as a flat top-down scan with no table edge or hands.
+
+### `paper_parchment.jpg`
+
+> A flat top-down scan of an aged parchment sheet from the 1400s to 1700s, creamy brown and slightly translucent, a sewn edge on the left, a few lines of illegible secretary-hand writing in brown iron-gall ink with abbreviation marks, a small red wax seal at the lower edge. No readable words. Portrait 2:3.
 
 ### `paper_parish_1751.jpg`
 
