@@ -15,3 +15,5 @@ CHROME=/path/to/chromium node tests/layout.js   # family-tree auto layout: no ov
 `CHROME` is optional if Playwright has a browser installed. `assets.js` writes screenshots to `tests/shots/` (git-ignored). The Google Fonts request fails in a sandbox with no network; that is expected.
 
 `tree.js` also covers unproven links, date flags, loops, link removal and `treeOk` for each finding.
+
+`records.js` checks the hardened reveal path: the 1972 licence index typo, the unnamed father in the 1912 wedding photo, the 1911 census age, and the trust deed date. Each should need two records joined, never one record read.

@@ -111,7 +111,7 @@ function marksOf(id){
 
 /* ================= PEOPLE ================= */
 const PEOPLE = {
-  ambrose:{name:'Ambrose Vane',life:'1857 – 1934',ini:'AV',facts:[['Born','9 Feb 1857, Vane House'],['Parents','Josiah Vane and Hannah Crewe'],['Married','Eliza Marsh, 1886'],['Occupation','Night clerk, shipping office (1891)'],['Residence','Vane House, 14 Hollow Lane'],['Died','1 Feb 1934, lost at sea, age 76']],recs:['birth1857','census1861','photo1875','census1881','marr1886','photo1889','census1891','birth1888','census1911','photo1912','census1921','death1934','birth1934']},
+  ambrose:{name:'Ambrose Vane',life:'1857 – 1934',ini:'AV',facts:[['Born','9 Feb 1857, Vane House'],['Parents','Josiah Vane and Hannah Crewe'],['Married','Eliza Marsh, 1886'],['Occupation','Night clerk, shipping office (1891)'],['Residence','Vane House, 14 Hollow Lane'],['Died','1 Feb 1934, lost at sea, age 76']],recs:['birth1857','census1861','photo1875','census1881','marr1886','photo1889','census1891','birth1888','census1911','census1921','death1934','birth1934']},
   eliza:{name:'Eliza Vane (née Marsh)',life:'1861 – 1902',ini:'EV',facts:[['Born','1861, Ashby'],['Married','Ambrose Vane, 1886'],['Died','1902, Ashby']],recs:['birth1861','marr1886','census1891','birth1888']},
   harriet:{name:'Harriet Holloway (née Vane)',life:'1888 – 1960',ini:'HH',facts:[['Born','4 Jun 1888, Vane House'],['Parents','Ambrose Vane and Eliza Marsh'],['Married','Arthur Holloway, 1912'],['Died','1960, Ashby']],recs:['birth1888','census1891','census1911','photo1912']},
   cornelius:{name:'Cornelius Vane',life:'1934 – 2025',ini:'CV',tag:'Deceased',facts:[['Born','2 Mar 1934, Vane House'],['Father','Ambrose Vane'],['Mother','Not recorded'],['Residence','Vane House, 14 Hollow Lane (lifelong)'],['Died','2 Mar 2025, lost at sea, age 91']],recs:['birth1934','licence1972','rolls','will2024','death2025']},
@@ -228,17 +228,17 @@ const REC = {
   census1911:{kind:'Census',year:1911,title:'1911 Census, Vane House, 14 Hollow Lane',k:'Ambrose Harriet Vane Hollow Lane Vane House Kemp',
     render:()=>`<div class="doc"><h4>Census of 1911 · Householder's Schedule</h4><div class="c">District of Ashby · Hollow Lane · 2 April 1911</div>
     <div class="doctable-wrap"><table class="doctable"><tr><th>Name</th><th>Relation</th><th>Age</th><th>Occupation</th></tr>
-    <tr><td>Ambrose Vane</td><td>Head</td><td>54</td><td>Private means</td></tr><tr><td>Harriet Vane</td><td>Daughter</td><td>22</td><td>—</td></tr><tr><td>Ada Kemp</td><td>Servant</td><td>19</td><td>Housemaid</td></tr></table></div>
+    <tr><td>Ambrose Vane</td><td>Head</td><td>41</td><td>Private means</td></tr><tr><td>Harriet Vane</td><td>Daughter</td><td>22</td><td>—</td></tr><tr><td>Ada Kemp</td><td>Servant</td><td>19</td><td>Housemaid</td></tr></table></div>
     <div class="sigline"><span>Signature of head of household:</span>${sig('A. Vane')}</div>
-    <p class="rn">Enumerator's note: The head of household gives his age as 54. In my opinion he is not past thirty-five. Schedule collected after dark by arrangement.</p></div>`},
+    <p class="rn">Enumerator's note: Schedule collected after dark by arrangement.</p></div>`},
   census1921:{kind:'Census',year:1921,title:'1921 Census, Vane House, 14 Hollow Lane',k:'Ambrose Vane Hollow Lane Vane House Kemp Ashgrove',
     render:()=>`<div class="doc"><h4>Census of 1921 · Householder's Schedule</h4><div class="c">District of Ashby · Hollow Lane · 19 June 1921</div>
     <div class="doctable-wrap"><table class="doctable"><tr><th>Name</th><th>Relation</th><th>Age</th><th>Occupation</th></tr>
     <tr><td>Ambrose Vane</td><td>Head</td><td>64</td><td>Private means</td></tr><tr><td>Ada Kemp</td><td>Servant</td><td>29</td><td>Housekeeper</td></tr></table></div>
     <div class="sigline"><span>Completed on behalf of the occupier by:</span>${sig('R. Ashgrove','r')}</div>
     <p class="rn">Enumerator's note: The occupier is indisposed by day. Schedule completed by his solicitor, who gave the occupier's age as 64 on his own authority. The occupier was not seen.</p></div>`},
-  photo1912:{kind:'Photo',year:1912,title:'Wedding portrait, Holloway–Vane, 1912',k:'Arthur Holloway Harriet Vane wedding Ambrose St Columba Ashgrove',
-    render:()=>`<div class="photo">${photo(PH.photo1912)}<div class="doc" style="max-width:480px"><p><b>Marriage of Arthur Holloway and Harriet Vane, St Columba's, Ashby, 1912.</b></p><p>Evening portrait, taken after the reception at the request of the bride's father. Left: the groom. Right: the bride's father, Mr A. Vane.</p><p>Witness to the marriage: R. Ashgrove, solicitor.</p></div></div>`},
+  photo1912:{kind:'Photo',year:1912,title:'Wedding portrait, Holloway–Vane, 1912',k:'Arthur Holloway Harriet Vane wedding St Columba Ashgrove',
+    render:()=>`<div class="photo">${photo(PH.photo1912)}<div class="doc" style="max-width:480px"><p><b>Marriage of Arthur Holloway and Harriet Vane, St Columba's, Ashby, 1912.</b></p><p>Evening portrait, taken after the reception at the request of the bride's father. Left: the groom. Right: the bride's father.</p><p>Witness to the marriage: R. Ashgrove, solicitor.</p></div></div>`},
   photo1950:{kind:'Photo',year:1950,title:'Thomas Holloway, Ashby Rowing Club',k:'Thomas Holloway rowing club',
     render:()=>`<div class="photo">${photo(PH.photo1950)}<div class="doc" style="max-width:420px"><p>Thomas Holloway, aged 30, club secretary. Ashby Rowing Club annual, 1950.</p></div></div>`},
   photo1962:{kind:'Newspaper',year:1962,title:'"Lights burn till dawn at Vane House"',k:'Cornelius Vane ball Vane House Hollow Lane Courier',
@@ -266,8 +266,7 @@ const REC = {
     render:()=>`<div class="doc"><h4>Deed of Trust · The Vane Family Trust</h4>
     <p>Made 20 January 1934 by AMBROSE VANE of Vane House, Ashby (the Settlor).</p>
     <p>1. The Settlor gives Vane House and his investments to the Trustees, to hold for his son CORNELIUS VANE upon the Settlor's death.</p>
-    <p>2. The Settlor declares that his son is not yet born but will be shortly.</p>
-    <p>3. Should the Settlor be lost at sea, the Trustees shall not wait for a body.</p>
+    <p>2. Should the Settlor die abroad or at sea, the Trustees shall act upon the Harbour Master's report alone.</p>
     <div class="sigline"><span>Signed by the Settlor:</span>${sig('A. Vane')}</div>
     <p class="rn">Prepared by Ashgrove &amp; Pell, Solicitors. Attesting solicitor: R. Ashgrove. Executed after hours. Amended 1993 to add "my grandson Julian" as a beneficiary, signed C. Vane.</p></div>`},
   birth1934:{kind:'Birth',year:1934,title:'Birth registration, Cornelius Vane',k:'Cornelius Vane Ambrose',
@@ -281,7 +280,7 @@ const REC = {
     <tr><td>1990</td><td>Cornelius Vane</td><td>Gentleman</td></tr><tr><td>2013</td><td>Cornelius Vane</td><td>Retired</td></tr>
     <tr><td>2023</td><td>Cornelius Vane</td><td>Retired</td></tr><tr><td>2025</td><td>Julian Ambrose Vane</td><td>Gentleman</td></tr></table></div>
     <p class="rn">Enrolment became compulsory for all adults in 1924. One elector at this address in every year on file.</p></div>`},
-  licence1972:{kind:'ID',year:1972,title:'Driver licence, Cornelius Vane',k:'Cornelius Vane licence',
+  licence1972:{kind:'ID',year:1972,title:'Driver licence, Cornelius Vane',ix:'Driver licence, Cornelius Vain',k:'Cornelius Vain licence Hollow Lane',
     render:()=>`<div class="licence">${licard(PH.licence1972,'licence_card_1972')}<div class="f"><div class="hd">MOTOR REGISTRY · DRIVER LICENCE · 1972</div>
     ${dl([['Name','VANE, Cornelius'],['Date of birth','02/03/1934 (age 38)'],['Address','14 Hollow Lane, Ashby'],['Class','C'],['Conditions','N: night driving only (medical, photosensitivity)']])}
     <div class="sigline">${sig('C. Vane')}</div></div></div>`},

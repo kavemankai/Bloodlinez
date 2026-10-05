@@ -26,6 +26,9 @@ A finding passes with one record from every group listed.
 
 **Finding 1 (self).** A positive photo-lab comparison, plus two more from: the 1934 birth registration of Cornelius, the 1934 trust deed, the 1888 hospital register, or a positive handwriting comparison. The documents together must span more than a century. A lab comparison of the 1889 and 2019 photographs spans 130 years on its own.
 - Use any two of the 1889, 1912, 1962, 1972 and 2019 photographs. Click the scar through the right-hand eyebrow and the mole on the left cheek in both.
+- The 1972 licence is indexed as "Cornelius Vain, b. 1943", so a search for Cornelius Vane misses it. Search *Vain*, *licence* or *Hollow Lane*. The card shows the true date, 02/03/1934.
+- The 1912 wedding caption names only "the bride's father". The bride is Harriet Vane, and her 1888 birth registration names her father as Ambrose. The wedding photo is not listed among Ambrose's sources.
+- Supporting clues the player has to join themselves: Ambrose gives his age as 34 in 1891 but 41 in 1911, and his solicitor gives 64 in 1921. The 1934 trust deed, dated 20 January, provides for "his son Cornelius", who was born on 2 March.
 - The 1875 photograph has the mole but no scar. Thomas Holloway (1950) has the mole only. Frank Tully (1921) has the scar only. Each gives an inconclusive result.
 
 **Finding 2 (staged).** One of: the harbour report on the *Marguerite*, or the funeral invoice. Plus one of: the 1934 death registration, the 1934 newspaper report, or the 1934 trust deed. The official 2025 death registration and newspaper report do not count; they are what the finding disproves.
