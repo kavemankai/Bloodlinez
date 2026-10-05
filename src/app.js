@@ -1,9 +1,18 @@
 /* ================= EXTRA DATA ================= */
+PEOPLE.samuel = {name:'Samuel Vane',life:'1751 – 1822',ini:'SV',facts:[['Born','27 Feb 1751, Ashby'],['Father','John Vane'],['Occupation','Cooper'],['Died','1822, Ashby']],recs:['bapt1751']};
+PEOPLE.thomasv = {name:'Thomas Vane',life:'1789 – 1858',ini:'TV',facts:[['Born','4 Apr 1789, Ashby'],['Married','Mary Cutler, 1818'],['Occupation','Cooper'],['Died','1858, Vane House']],recs:['bapt1789','marr1818','census1841']};
+PEOPLE.josiah = {name:'Josiah Vane',life:'1824 – 1889',ini:'JV',facts:[['Born','2 Jan 1824, Vane House'],['Married','Hannah Crewe, 1850'],['Occupation','Shipwright'],['Died','8 Mar 1889, Vane House']],recs:['census1841','marr1850','census1861','census1881','burial1889','news1889']};
+PEOPLE.hannah = {name:'Hannah Vane (née Crewe)',life:'1828 – 1901',ini:'HV',facts:[['Born','15 Jan 1828, Ashby'],['Married','Josiah Vane, 1850'],['Died','1901, Vane House']],recs:['marr1850','birth1857','census1861','census1881']};
+PEOPLE.william = {name:'William Marsh',life:'1830 – 1899',ini:'WM',facts:[['Born','1830, Ashby'],['Occupation','Chandler, Fish Street'],['Died','1899, Ashby']],recs:['birth1861','marr1886']};
+PEOPLE.ann = {name:'Ann Marsh (née Teale)',life:'1832 – 1910',ini:'AM',facts:[['Born','1832, Ashby'],['Married','William Marsh'],['Died','1910, Ashby']],recs:['birth1861']};
 PEOPLE.arthur = {name:'Arthur Holloway',life:'1884 – 1951',ini:'AH',facts:[['Born','1884, Ashby'],['Married','Harriet Vane, 1912'],['Occupation',"Ship's chandler"],['Died','1951, Ashby']],recs:['photo1912']};
-const SEX = {ambrose:'m',eliza:'f',harriet:'f',arthur:'m',cornelius:'m',thomas:'m',desmond:'m',daphne:'f',margaret:'f',julian:'m'};
+const SEX = {samuel:'m',thomasv:'m',josiah:'m',hannah:'f',william:'m',ann:'f',ambrose:'m',eliza:'f',harriet:'f',arthur:'m',cornelius:'m',thomas:'m',desmond:'m',daphne:'f',margaret:'f',julian:'m'};
 const REL = {
-  ambrose:[['Spouse','eliza'],['Child','harriet'],['Child','cornelius']],
-  eliza:[['Spouse','ambrose'],['Child','harriet']],
+  samuel:[['Child','thomasv']], thomasv:[['Father','samuel'],['Child','josiah']],
+  josiah:[['Father','thomasv'],['Spouse','hannah'],['Child','ambrose']], hannah:[['Spouse','josiah'],['Child','ambrose']],
+  william:[['Spouse','ann'],['Child','eliza']], ann:[['Spouse','william'],['Child','eliza']],
+  ambrose:[['Father','josiah'],['Mother','hannah'],['Spouse','eliza'],['Child','harriet'],['Child','cornelius']],
+  eliza:[['Father','william'],['Mother','ann'],['Spouse','ambrose'],['Child','harriet']],
   harriet:[['Father','ambrose'],['Mother','eliza'],['Spouse','arthur'],['Child','thomas']],
   arthur:[['Spouse','harriet'],['Child','thomas']],
   thomas:[['Mother','harriet'],['Father','arthur'],['Child','margaret']],
@@ -15,11 +24,26 @@ const REL = {
 };
 const PHOTO_OF = {ambrose:'photo1889',cornelius:'licence1972',julian:'licence2019',thomas:'photo1950'};
 const HINT_OF = {julian:['hintOfficial'],ambrose:['h2','h3'],harriet:['h4']};
-const COLL = {Inquest:"Coroner's Inquest Records, 1890–1960",Census:'Ashby Census Returns, 1841–1921',Birth:'Ashby District Birth Registrations, 1850–2025',Death:'Ashby District Death Registrations, 1850–2025',
+const COLL = {Parish:'Ashby Parish Registers, 1700–1900',Marriage:'Ashby District Marriage Registrations, 1850–2025',Inquest:"Coroner's Inquest Records, 1890–1960",Census:'Ashby Census Returns, 1841–1921',Birth:'Ashby District Birth Registrations, 1850–2025',Death:'Ashby District Death Registrations, 1850–2025',
   Photo:'Ashby Studio & Parish Photographs, 1860–1990',Newspaper:'The Ashby Courier Archive, 1871–2025',Roll:'Electoral Rolls, 1903–2025',ID:'Motor Registry Licence Records, 1925–2024',
   Legal:'Probate & Trust Instruments (Professional)',Medical:'Ashby Hospital Registers, 1880–1950',Marine:'Harbour Authority Incident Reports, 1900–2025',Invoice:'Professional Uploads: Funeral & Estate Accounts'};
 const PAGE_KINDS = new Set(Object.keys(COLL));
 const IDX = {
+  bapt1751:[['Name','Samuel Vane'],['Baptised','3 Mar 1751'],['Father','John Vane'],['Parish','St Columba, Ashby']],
+  bapt1789:[['Name','Thomas Vane'],['Baptised','12 Apr 1789'],['Father','Samuel Vane'],['Parish','St Columba, Ashby']],
+  marr1818:[['Names','Thomas Vane; Mary Cutler'],['Married','21 Sep 1818'],['Parish','St Columba, Ashby']],
+  census1841:[['Name','Thomas Vane'],['Age','50'],['Household','Thomas, Mary and Josiah Vane'],['Place','Hollow Lane, Ashby']],
+  marr1850:[['Names','Josiah Vane; Hannah Crewe'],['Married','4 Nov 1850'],['Registration no.','1850/0214']],
+  birth1857:[['Name','Ambrose Vane'],['Birth date','9 Feb 1857'],['Birth place','Vane House, Ashby'],['Father','Josiah Vane'],['Mother','Hannah Crewe'],['Registration no.','1857/0066']],
+  census1861:[['Name','Ambrose Vane'],['Age','4'],['Household','Josiah, Hannah, Mary and Ambrose Vane'],['Place','Hollow Lane, Ashby']],
+  photo1875:[['Name','Ambrose Vane'],['Photo date','1875'],['Place','Ashby'],['Studio','Halloran & Sons']],
+  census1881:[['Name','Ambrose Vane'],['Age','24'],['Occupation','Clerk'],['Place','Hollow Lane, Ashby']],
+  marr1886:[['Names','Ambrose Vane; Eliza Marsh'],['Married','12 Jun 1886'],['Witness','R. Ashgrove'],['Registration no.','1886/0301']],
+  burial1889:[['Name','Josiah Vane'],['Age','65'],['Buried','12 Mar 1889'],['Parish','St Columba, Ashby']],
+  news1889:[['Name','Josiah Vane'],['Publication','The Ashby Courier'],['Date','9 Mar 1889'],['Page','3']],
+  birth1861:[['Name','Eliza Marsh'],['Birth date','20 Jan 1861'],['Birth place','Fish Street, Ashby'],['Father','William Marsh'],['Mother','Ann Teale'],['Registration no.','1861/0049']],
+  census1911:[['Name','Ambrose Vane'],['Age','54'],['Occupation','Private means'],['Place','14 Hollow Lane, Ashby']],
+  census1921:[['Name','Ambrose Vane'],['Age','64'],['Occupation','Private means'],['Place','14 Hollow Lane, Ashby']],
   photo1921:[['Name','Frank Tully'],['Photo date','1921'],['Source',"Wharf Workers' Union minute book"]],
   birth1958d:[['Name','Desmond Vane'],['Birth date','3 Sep 1958'],['Birth place','Marrow Bay'],['Father','Harold Vane'],['Mother','Ruth Gale'],['Registration no.','1958/0388']],
   inquest1934:[['Name','Ambrose Vane'],['Held','8 Feb 1934'],['Verdict','Drowning, presumed'],['Witness','W. Lamb']],
@@ -213,7 +237,7 @@ function blHome(){
   return `<section class="hero"><div class="wrap"><div class="greet"><h1>${greet}, Ashgrove &amp; Pell</h1><p class="muted" style="margin:6px 0 0">Professional account · 1 active tree · 4 DNA kits</p></div>
     <form class="qsearch" data-form="qsearch"><input id="hq" placeholder="Search names, places or keywords" aria-label="Search records"><button class="bbtn sm">${ic('search')}Search</button></form></div></section>
   <div class="wrap"><div class="tiles">
-    <div class="panel tile pb" style="padding:18px"><span class="tiny">Your trees</span><h2>Vane estate</h2><p class="muted" style="margin:0">10 people · ${HINTS.length} hints · last edited by R. Ashgrove</p>
+    <div class="panel tile pb" style="padding:18px"><span class="tiny">Your trees</span><h2>Vane estate</h2><p class="muted" style="margin:0">${Object.keys(PEOPLE).length} people · ${HINTS.length} hints · last edited by R. Ashgrove</p>
       <div style="display:flex;gap:6px">${['ambrose','cornelius','julian','margaret'].map(p=>`<span class="fam" style="width:auto;padding:0"><span class="ava">${avatar(p)}</span></span>`).join('')}</div>
       <div><button class="bbtn sm" data-a="go" data-t="bl" data-v="tree">${ic('tree')}View tree</button></div></div>
     <div class="panel tile" style="padding:18px"><span class="tiny">DNA</span><h2>${S.won?'Your results are in':'Your kit is processing'}</h2><p class="muted" style="margin:0">${S.won?'You have 1 new DNA match.':`Lab stage ${kitStage()} of 4. Claimant kits for Vane estate are ready to review.`}</p><div><button class="bbtn sec sm" data-a="go" data-t="bl" data-v="dna/${S.won?'you':'julian'}">See DNA matches</button></div></div>
@@ -231,25 +255,27 @@ function blHome(){
 function kitStage(){ return Math.min(4, 2 + Math.floor(S.pins.length/7)); }
 
 /* ---- tree ---- */
-const POS = {ambrose:[250,24],eliza:[500,24],cornelius:[40,170],harriet:[470,170],arthur:[720,170],desmond:[40,316],daphne:[250,316],thomas:[595,316],julian:[40,462],margaret:[595,462]};
+const POS = {samuel:[250,24],thomasv:[250,170],josiah:[250,316],hannah:[30,316],william:[500,316],ann:[720,316],
+  ambrose:[250,462],eliza:[500,462],cornelius:[40,608],harriet:[470,608],arthur:[720,608],desmond:[40,754],daphne:[250,754],thomas:[595,754],julian:[40,900],margaret:[595,900]};
 function blTree(){
   const nodes = Object.entries(POS).map(([id,[x,y]])=>{
     const p = PEOPLE[id];
     return `<button class="tnode ${SEX[id]} ${id==='daphne'?'dis':''} ${S.sel===id?'sel':''}" style="left:${x}px;top:${y}px" data-a="sel" data-v="${id}">
       <span class="ava">${avatar(id)}</span><span style="min-width:0"><b>${p.name}</b><small>${p.life}</small></span>${HINT_OF[id]?LEAF:''}${p.tag?`<span class="flag">${p.tag}</span>`:''}</button>`;}).join('');
-  const lines = `<svg class="lines" viewBox="0 0 940 560" preserveAspectRatio="xMinYMin meet" aria-hidden="true">
-    <path d="M220 61 H250"/><path d="M450 61 H500"/><path d="M670 207 H720"/>
+  const lines = `<svg class="lines" viewBox="0 0 940 1058" preserveAspectRatio="xMinYMin meet" aria-hidden="true">
+    <path d="M350 98 V170"/><path d="M350 244 V316"/><path d="M230 353 H250"/><path d="M350 390 V462"/><path d="M700 353 H720"/><path d="M600 390 V462"/>
+    <g transform="translate(0,438)"><path d="M220 61 H250"/><path d="M450 61 H500"/><path d="M670 207 H720"/>
     <path d="M235 61 V135 H140 V170"/><path d="M475 61 V135 H570 V170"/><path d="M695 207 V316"/>
     <path d="M140 244 V316"/><path d="M140 390 V462"/><path d="M695 390 V462"/>
-    <path class="dash" d="M240 207 H350 V316"/></svg>`;
-  const unknown = `<div class="tnode u" style="left:20px;top:24px;width:200px;opacity:.75;cursor:default"><span class="ava">?</span><span><b>Unknown</b><small>Mother of Cornelius</small></span></div>`;
+    <path class="dash" d="M240 207 H350 V316"/></g></svg>`;
+  const unknown = `<div class="tnode u" style="left:20px;top:462px;width:200px;opacity:.75;cursor:default"><span class="ava">?</span><span><b>Unknown</b><small>Mother of Cornelius</small></span></div>`;
   return `<div class="treebar"><div class="wrap">
     <span class="treename">Vane estate ${ic('chev')}</span>
     <div class="seg"><button class="on">Tree</button><button data-a="toastonly" data-msg="Family view isn't available for Professional trees">Family</button><button data-a="toastonly" data-msg="List view is coming soon">List</button></div>
     <div class="tree-tools"><select class="tsearch" data-find="1" aria-label="Find a person"><option value="">Find a person…</option>${Object.keys(POS).map(id=>`<option value="${id}">${PEOPLE[id].name}</option>`).join('')}</select>
     <button class="bbtn sec sm" data-a="toastonly" data-msg="Only the tree owner (R. Ashgrove) can invite people">${ic('share')}Share</button></div></div></div>
   <div class="canvas-wrap" id="cw"><div class="canvas" style="transform:scale(${S.tz});transform-origin:0 0">${lines}${unknown}${nodes}
-    <span class="claimlbl" style="left:262px;top:198px">claimed, no source</span></div>
+    <span class="claimlbl" style="left:262px;top:636px">claimed, no source</span></div>
     ${S.sel?drawer(S.sel):''}
     <div class="zoomctl"><button data-a="tz" data-v="1.1" aria-label="Zoom in">${ic('plus')}</button><button data-a="tz" data-v="0.9" aria-label="Zoom out">${ic('minus')}</button><button data-a="tz" data-v="0" aria-label="Reset zoom">${ic('fit')}</button></div>
   </div>`;

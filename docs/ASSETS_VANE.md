@@ -35,6 +35,7 @@ Each of these is a record in the game. All need the vampire's marks unless noted
 
 | File | Record | Date | Who and where | Look |
 |---|---|---|---|---|
+| `photo1875.jpg` | Studio portrait, Ambrose Vane, aged 18 | 1875 | Ambrose before he was turned, at noon. Pencilled on the back: "Ambrose, 18, for Mother. Taken at noon." | Cabinet card, sepia, daylight from a window, painted backdrop. Same face as the reference but visibly younger (about 18, softer jaw). Has the mole and no scar. This is the only photo where he looks his real age. |
 | `photo1889.jpg` | Studio portrait, Ambrose Vane | 1889 | Ambrose alone, aged "32". Halloran & Sons, Ashby. Pencilled on the back: "taken by lamplight at the sitter's request." | Cabinet card from a studio. Albumen print, sepia, painted backdrop, posing stand. High stiff collar, dark frock coat, side parting, oiled hair. Warm lamp from the left. Soft focus at the edges. |
 | `photo1912.jpg` | Wedding portrait, Holloway–Vane | 1912 | Two men, half-length. Left: Arthur Holloway, groom (heavier build, moustache, broad nose, flat hair). Right: Ambrose, "the bride's father", still looking about 33. St Columba's, taken in the evening after the reception. | Landscape, 1200×750. Gelatin silver print, sepia-grey, a little contrast loss. Morning dress for the groom, frock coat for Ambrose. Interior flash or electric studio light, hard shadows on the wall. The point of the image: the older-looking groom is plainly the same age as, or older than, the man who is supposed to be his father-in-law. |
 | `photo1962.jpg` | Newspaper: "Lights burn till dawn at Vane House" | 17 March 1962 | Cornelius, 28 by the caption, host at his ball. Dinner suit, bow tie. | Newspaper halftone, black and white, coarse dot screen (about 85 lpi). A flash-lit event shot, slightly overexposed. Crop of a bigger group photo is fine, but his face must be centred and large. Print on newsprint paper texture. |
@@ -85,6 +86,7 @@ Fill this in once the six photos exist. The click test in `app.js` takes one poi
 
 | Photo | Scar (x, y) | Mole (x, y) |
 |---|---|---|
+| `photo1875.jpg` | none | |
 | `photo1889.jpg` | | |
 | `photo1912.jpg` (right face) | | |
 | `photo1962.jpg` | | |

@@ -23,6 +23,16 @@ The supernatural material has to create legal problems, not just flavour. Each c
 
 Three filings per case. Accepted findings lock in. The grade depends on filings used and on whether you relied on a planted hint.
 
+## Depth of the archive
+
+The Vane line runs back five generations, to Samuel Vane (b. 1751). Records go back with it: parish baptisms and marriages from 1751, civil births and marriages from 1850, censuses from 1841. The 57 records in the game are not evidence for the findings. Most of them are there so the archive feels like it goes further back than the case needs.
+
+Three old records are tells. The 1911 census enumerator thinks the 54-year-old head looks about 35. The 1921 census is completed by R. Ashgrove, who gave the occupier's age on his own authority. R. Ashgrove also witnesses the 1886 marriage. He appears across 1886, 1912, 1921 and 1934, which sets up the 1740 file.
+
+The 1875 photo of Ambrose at 18 has the mole and no scar. It shows he aged normally until the 1888 attack and that the scar is acquired. Feed that into the two-marks rule.
+
+Ages are consistent across all documents: Ambrose was born 9 February 1857, so he was 31 at the 1888 hospital admission, 34 at the 1891 census and 76 at his 1934 death. Keep to that when adding records.
+
 ## Case 1 rules worth keeping across cases
 
 - DNA amount alone is rarely decisive. Which side of the tree the shared matches sit on often is.

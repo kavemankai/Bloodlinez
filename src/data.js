@@ -51,7 +51,8 @@ function photo(p, attrs=''){
 const HANDS = {
   v:'<path d="M14 42 C 48 50, 96 30, 150 40 M150 40 C 158 41, 160 34, 152 33 C 146 32, 140 44, 156 48"/>',
   e:'<path d="M12 44 C 40 40, 70 46, 100 42"/>',
-  m:'<path d="M10 40 L 60 46 M 60 46 L 62 36"/>'
+  m:'<path d="M10 40 L 60 46 M 60 46 L 62 36"/>',
+  r:'<path d="M12 40 C 30 30, 60 52, 90 38 L 120 44"/>'
 };
 function sig(txt, hand='v'){
   return `<svg class="sig" viewBox="0 0 170 54" aria-label="Signature: ${txt}"><text x="10" y="34">${txt}</text>${HANDS[hand]}</svg>`;
@@ -60,13 +61,15 @@ function sig(txt, hand='v'){
 const SIGNED = {
   census1891:['A. Vane','v'], trust1934:['A. Vane','v'], birth1934:['A. Vane','v'],
   licence1972:['C. Vane','v'], birth1993:['C. Vane','v'], death1994:['C. Vane','v'], will2024:['C. Vane','v'], licence2019:['J. Vane','v'],
-  birth1888:['E. Vane','e'], birth1966:['L. Marsh-Pike','m']
+  birth1888:['E. Vane','e'], birth1966:['L. Marsh-Pike','m'],
+  marr1886:['A. Vane','v'], census1911:['A. Vane','v'], census1921:['R. Ashgrove','r']
 };
 const MARKS_FACE = {scar:[74,49], mole:[46.5,74]};
 const MARK_NAME = {scar:'Scar through the left eyebrow', mole:'Mole on the lower cheek'};
 
 /* ================= PHOTOS ================= */
 const PH = {
+  photo1875:{year:1875,alt:'Studio portrait of Ambrose Vane aged 18, 1875',faces:[{tone:'sepia',hair:'part',era:'victorian',mole:true,jaw:23}],who:'Ambrose Vane (1875)'},
   photo1889:{year:1889,alt:'Studio portrait of Ambrose Vane, 1889',faces:[{...VAMP,tone:'sepia'}],who:'Ambrose Vane (1889)',vamp:true},
   photo1912:{year:1912,alt:'Wedding portrait, 1912: groom and bride\'s father',faces:[{tone:'sepia',hair:'flat',era:'victorian',mous:true,jaw:26,nose:'broad',heavy:true},{...VAMP,tone:'sepia'}],who:'Bride\'s father (1912)',vamp:true,offset:120},
   photo1921:{year:1921,alt:'Frank Tully, wharf workers\' union committee, 1921',faces:[{tone:'sepia',hair:'short',era:'victorian',mous:true,jaw:27,nose:'broad',heavy:true,scar:true}],who:'Frank Tully (1921)'},
@@ -84,9 +87,9 @@ function marksOf(id){
 
 /* ================= PEOPLE ================= */
 const PEOPLE = {
-  ambrose:{name:'Ambrose Vane',life:'1857 – 1934',ini:'AV',facts:[['Born','c. 1857, Ashby'],['Married','Eliza Marsh, 1886'],['Occupation','Night clerk, shipping office (1891)'],['Residence','Vane House, 14 Hollow Lane'],['Died','1 Feb 1934, lost at sea, age 76']],recs:['photo1889','census1891','birth1888','photo1912','death1934','birth1934']},
-  eliza:{name:'Eliza Vane (née Marsh)',life:'1861 – 1902',ini:'EV',facts:[['Born','1861, Ashby'],['Married','Ambrose Vane, 1886'],['Died','1902, Ashby']],recs:['census1891','birth1888']},
-  harriet:{name:'Harriet Holloway (née Vane)',life:'1888 – 1960',ini:'HH',facts:[['Born','4 Jun 1888, Vane House'],['Parents','Ambrose Vane and Eliza Marsh'],['Married','Arthur Holloway, 1912'],['Died','1960, Ashby']],recs:['birth1888','census1891','photo1912']},
+  ambrose:{name:'Ambrose Vane',life:'1857 – 1934',ini:'AV',facts:[['Born','9 Feb 1857, Vane House'],['Parents','Josiah Vane and Hannah Crewe'],['Married','Eliza Marsh, 1886'],['Occupation','Night clerk, shipping office (1891)'],['Residence','Vane House, 14 Hollow Lane'],['Died','1 Feb 1934, lost at sea, age 76']],recs:['birth1857','census1861','photo1875','census1881','marr1886','photo1889','census1891','birth1888','census1911','photo1912','census1921','death1934','birth1934']},
+  eliza:{name:'Eliza Vane (née Marsh)',life:'1861 – 1902',ini:'EV',facts:[['Born','1861, Ashby'],['Married','Ambrose Vane, 1886'],['Died','1902, Ashby']],recs:['birth1861','marr1886','census1891','birth1888']},
+  harriet:{name:'Harriet Holloway (née Vane)',life:'1888 – 1960',ini:'HH',facts:[['Born','4 Jun 1888, Vane House'],['Parents','Ambrose Vane and Eliza Marsh'],['Married','Arthur Holloway, 1912'],['Died','1960, Ashby']],recs:['birth1888','census1891','census1911','photo1912']},
   cornelius:{name:'Cornelius Vane',life:'1934 – 2025',ini:'CV',tag:'Deceased',facts:[['Born','2 Mar 1934, Vane House'],['Father','Ambrose Vane'],['Mother','Not recorded'],['Residence','Vane House, 14 Hollow Lane (lifelong)'],['Died','2 Mar 2025, lost at sea, age 91']],recs:['birth1934','licence1972','rolls','will2024','death2025']},
   thomas:{name:'Thomas Holloway',life:'1920 – 1999',ini:'TH',facts:[['Born','1920, Ashby'],['Parents','Arthur Holloway and Harriet Vane'],['Died','1999, Ashby']],recs:['photo1950']},
   desmond:{name:'Desmond Vane',life:'1961 – 1994',ini:'DV',facts:[['Born','1961 (per family tree, no source)'],['Father','Cornelius Vane'],['Died','30 Oct 1994, Vane House, age 33']],recs:['death1994','birth1993']},
@@ -97,7 +100,7 @@ const PEOPLE = {
 
 /* ================= RECORDS ================= */
 const dl = rows => `<dl>${rows.map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join('')}</dl>`;
-const regDoc = (head, no, rows, sigTxt, note, sigLabel='Signature of informant:', dist='Ashby') => `<div class="doc"><h4>${head}</h4><div class="c">District of ${dist} · No. ${no}</div>${dl(rows)}${sigTxt?`<div class="sigline"><span>${sigLabel}</span>${sigTxt}</div>`:''}${note?`<p class="rn">${note}</p>`:''}</div>`;
+const regDoc = (head, no, rows, sigTxt, note, sigLabel='Signature of informant:', dist='Ashby', pre='District of') => `<div class="doc"><h4>${head}</h4><div class="c">${pre} ${dist} · No. ${no}</div>${dl(rows)}${sigTxt?`<div class="sigline"><span>${sigLabel}</span>${sigTxt}</div>`:''}${note?`<p class="rn">${note}</p>`:''}</div>`;
 const clip = (paper, date, head, body, ph) => `<div class="clip"><div class="mast"><span>${paper}</span><span>${date}</span></div><h4>${head}</h4>${ph?photo(ph):''}${body.map(p=>`<p>${p}</p>`).join('')}</div>`;
 
 const REC = {
@@ -111,6 +114,53 @@ const REC = {
     <p class="rn">Enumerator's note: Head of household not at home during the day. Returned after dusk to collect schedule. Curtains drawn throughout.</p></div>`},
   photo1889:{kind:'Photo',year:1889,title:'Studio portrait, Ambrose Vane',k:'Ambrose Vane portrait Halloran',
     render:()=>`<div class="photo">${photo(PH.photo1889)}<div class="doc" style="max-width:420px"><p><b>Halloran &amp; Sons, Photographic Studio, Ashby.</b></p><p>Pencilled on reverse: "A.V., aged 32. Taken by lamplight at the sitter's request. 1889."</p></div></div>`},
+  bapt1751:{kind:'Parish',year:1751,title:'Baptism, Samuel Vane, 1751',k:'Samuel Vane baptism St Columba cooper John Martha',
+    render:()=>regDoc('Baptism Register','41',[['Child','Samuel, son of John Vane, cooper, and Martha his wife'],['Born','27 February 1751'],['Baptised','3 March 1751'],['Parish','St Columba, Ashby']],'',"Entered in the hand of the Rev. T. Orme.",'','St Columba, Ashby','Parish of')},
+  bapt1789:{kind:'Parish',year:1789,title:'Baptism, Thomas Vane, 1789',k:'Thomas Vane baptism St Columba cooper Samuel Sarah',
+    render:()=>regDoc('Baptism Register','208',[['Child','Thomas, son of Samuel Vane, cooper, and Sarah his wife'],['Born','4 April 1789'],['Baptised','12 April 1789'],['Parish','St Columba, Ashby']],'',"Sponsors: John Vane, grandfather; Mary Teale.",'','St Columba, Ashby','Parish of')},
+  marr1818:{kind:'Parish',year:1818,title:'Marriage, Thomas Vane and Mary Cutler, 1818',k:'Thomas Vane Mary Cutler marriage St Columba cooper',
+    render:()=>regDoc('Marriage Register','112',[['Groom','Thomas Vane, cooper, 29, bachelor'],['Bride','Mary Cutler, 24, spinster'],['Married','21 September 1818'],['Witnesses','Samuel Vane; Jane Cutler'],['Parish','St Columba, Ashby']],'',"Groom signed. Bride made her mark.",'','St Columba, Ashby','Parish of')},
+  census1841:{kind:'Census',year:1841,title:'1841 Census, Vane House, Hollow Lane',k:'Thomas Mary Josiah Vane Hollow Lane Vane House cooper',
+    render:()=>`<div class="doc"><h4>Census of 1841 · Householder's Schedule</h4><div class="c">District of Ashby · Hollow Lane · 6 June 1841</div>
+    <div class="doctable-wrap"><table class="doctable"><tr><th>Name</th><th>Age</th><th>Occupation</th><th>Born in county</th></tr>
+    <tr><td>Thomas Vane</td><td>50</td><td>Cooper</td><td>Y</td></tr><tr><td>Mary Vane</td><td>45</td><td>—</td><td>Y</td></tr><tr><td>Josiah Vane</td><td>15</td><td>Shipwright's apprentice</td><td>Y</td></tr></table></div>
+    <p class="rn">Printed note: ages of persons over 15 are rounded down to the nearest five years.</p></div>`},
+  marr1850:{kind:'Marriage',year:1850,title:'Marriage registration, Josiah Vane and Hannah Crewe',k:'Josiah Vane Hannah Crewe marriage shipwright',
+    render:()=>regDoc('Registration of Marriage','1850/0214',[['Groom','Josiah Vane, 26, shipwright, Vane House'],['Bride','Hannah Crewe, 22, spinster, Quay Row'],['Married','4 November 1850, St Columba\'s'],['Father of groom','Thomas Vane, cooper'],['Father of bride','Daniel Crewe, rigger'],['Witnesses','T. Vane; M. Crewe']],'','')},
+  birth1857:{kind:'Birth',year:1857,title:'Birth registration, Ambrose Vane',k:'Ambrose Vane Josiah Hannah Crewe Vane House',
+    render:()=>regDoc('Registration of Birth','1857/0066',[['Child','Ambrose Vane'],['Born','9 February 1857, Vane House, Hollow Lane'],['Father','Josiah Vane, shipwright'],['Mother','Hannah Vane, formerly Crewe'],['Informant','H. Vane, mother'],['Registered','18 February 1857']],'')},
+  census1861:{kind:'Census',year:1861,title:'1861 Census, Vane House, Hollow Lane',k:'Josiah Hannah Ambrose Mary Vane Hollow Lane Vane House shipwright',
+    render:()=>`<div class="doc"><h4>Census of 1861 · Householder's Schedule</h4><div class="c">District of Ashby · Hollow Lane · 7 April 1861</div>
+    <div class="doctable-wrap"><table class="doctable"><tr><th>Name</th><th>Relation</th><th>Age</th><th>Occupation</th></tr>
+    <tr><td>Josiah Vane</td><td>Head</td><td>37</td><td>Shipwright</td></tr><tr><td>Hannah Vane</td><td>Wife</td><td>33</td><td>—</td></tr>
+    <tr><td>Mary Vane</td><td>Mother, widow</td><td>67</td><td>Annuitant</td></tr><tr><td>Ambrose Vane</td><td>Son</td><td>4</td><td>—</td></tr></table></div></div>`},
+  photo1875:{kind:'Photo',year:1875,title:'Studio portrait, Ambrose Vane, aged 18',k:'Ambrose Vane portrait Halloran youth',
+    render:()=>`${photo(PH.photo1875)}<p class="rn">Halloran &amp; Sons, Photographic Studio, Ashby. Pencilled on reverse: "Ambrose, 18, for Mother. Taken at noon. 1875."</p>`},
+  census1881:{kind:'Census',year:1881,title:'1881 Census, Vane House, Hollow Lane',k:'Josiah Hannah Ambrose Vane Hollow Lane Vane House clerk',
+    render:()=>`<div class="doc"><h4>Census of 1881 · Householder's Schedule</h4><div class="c">District of Ashby · Hollow Lane · 3 April 1881</div>
+    <div class="doctable-wrap"><table class="doctable"><tr><th>Name</th><th>Relation</th><th>Age</th><th>Occupation</th></tr>
+    <tr><td>Josiah Vane</td><td>Head</td><td>57</td><td>Shipwright</td></tr><tr><td>Hannah Vane</td><td>Wife</td><td>53</td><td>—</td></tr>
+    <tr><td>Ambrose Vane</td><td>Son</td><td>24</td><td>Clerk, shipping office</td></tr></table></div></div>`},
+  marr1886:{kind:'Marriage',year:1886,title:'Marriage registration, Ambrose Vane and Eliza Marsh',k:'Ambrose Vane Eliza Marsh marriage St Columba Ashgrove',
+    render:()=>regDoc('Registration of Marriage','1886/0301',[['Groom','Ambrose Vane, 29, clerk, Vane House'],['Bride','Eliza Marsh, 25, spinster, Fish Street'],['Married','12 June 1886, St Columba\'s'],['Father of groom','Josiah Vane, shipwright'],['Father of bride','William Marsh, chandler'],['Witnesses','W. Marsh; R. Ashgrove']],sig('A. Vane'),'','Signature of groom:','Ashby','District of')},
+  burial1889:{kind:'Parish',year:1889,title:'Burial, Josiah Vane, 1889',k:'Josiah Vane burial St Columba shipwright Ambrose',
+    render:()=>regDoc('Burial Register','73',[['Name','Josiah Vane, shipwright'],['Age','65'],['Died','8 March 1889, Vane House'],['Buried','12 March 1889, St Columba\'s']],'',"Vicar's note: Burial at dusk at the family's request. The widow attended. The son stood apart from the other mourners and left before the committal. He looked unwell.",'','St Columba, Ashby','Parish of')},
+  news1889:{kind:'Newspaper',year:1889,title:'"Death of a worthy shipwright"',k:'Josiah Vane shipwright obituary Ashby Courier Ambrose',
+    render:()=>clip('The Ashby Courier','Saturday, 9 March 1889','Death of a worthy shipwright',['Mr Josiah Vane, 65, of Vane House, Hollow Lane, died on Friday after a short illness. He was thirty years at the Quay yard and built the Ashby lifeboat.','He leaves a widow and one son, Mr Ambrose Vane, who has been unwell this past year and was not able to attend the yard\'s tribute.'])},
+  birth1861:{kind:'Birth',year:1861,title:'Birth registration, Eliza Marsh',k:'Eliza Marsh William Ann Teale Fish Street',
+    render:()=>regDoc('Registration of Birth','1861/0049',[['Child','Eliza Marsh'],['Born','20 January 1861, Fish Street'],['Father','William Marsh, chandler'],['Mother','Ann Marsh, formerly Teale'],['Informant','W. Marsh, father'],['Registered','2 February 1861']],'')},
+  census1911:{kind:'Census',year:1911,title:'1911 Census, Vane House, 14 Hollow Lane',k:'Ambrose Harriet Vane Hollow Lane Vane House Kemp',
+    render:()=>`<div class="doc"><h4>Census of 1911 · Householder's Schedule</h4><div class="c">District of Ashby · Hollow Lane · 2 April 1911</div>
+    <div class="doctable-wrap"><table class="doctable"><tr><th>Name</th><th>Relation</th><th>Age</th><th>Occupation</th></tr>
+    <tr><td>Ambrose Vane</td><td>Head</td><td>54</td><td>Private means</td></tr><tr><td>Harriet Vane</td><td>Daughter</td><td>22</td><td>—</td></tr><tr><td>Ada Kemp</td><td>Servant</td><td>19</td><td>Housemaid</td></tr></table></div>
+    <div class="sigline"><span>Signature of head of household:</span>${sig('A. Vane')}</div>
+    <p class="rn">Enumerator's note: The head of household gives his age as 54. In my opinion he is not past thirty-five. Schedule collected after dark by arrangement.</p></div>`},
+  census1921:{kind:'Census',year:1921,title:'1921 Census, Vane House, 14 Hollow Lane',k:'Ambrose Vane Hollow Lane Vane House Kemp Ashgrove',
+    render:()=>`<div class="doc"><h4>Census of 1921 · Householder's Schedule</h4><div class="c">District of Ashby · Hollow Lane · 19 June 1921</div>
+    <div class="doctable-wrap"><table class="doctable"><tr><th>Name</th><th>Relation</th><th>Age</th><th>Occupation</th></tr>
+    <tr><td>Ambrose Vane</td><td>Head</td><td>64</td><td>Private means</td></tr><tr><td>Ada Kemp</td><td>Servant</td><td>29</td><td>Housekeeper</td></tr></table></div>
+    <div class="sigline"><span>Completed on behalf of the occupier by:</span>${sig('R. Ashgrove','r')}</div>
+    <p class="rn">Enumerator's note: The occupier is indisposed by day. Schedule completed by his solicitor, who gave the occupier's age as 64 on his own authority. The occupier was not seen.</p></div>`},
   photo1912:{kind:'Photo',year:1912,title:'Wedding portrait, Holloway–Vane, 1912',k:'Arthur Holloway Harriet Vane wedding Ambrose St Columba Ashgrove',
     render:()=>`<div class="photo">${photo(PH.photo1912)}<div class="doc" style="max-width:480px"><p><b>Marriage of Arthur Holloway and Harriet Vane, St Columba's, Ashby, 1912.</b></p><p>Evening portrait, taken after the reception at the request of the bride's father. Left: the groom. Right: the bride's father, Mr A. Vane.</p><p>Witness to the marriage: R. Ashgrove, solicitor.</p></div></div>`},
   photo1950:{kind:'Photo',year:1950,title:'Thomas Holloway, Ashby Rowing Club',k:'Thomas Holloway rowing club',
@@ -275,7 +325,7 @@ const FIND = [
    Records in BEARS but in no group are context: they cost nothing. Anything outside BEARS counts against the evidence. */
 const ATTACK = ['hospital1888','news1888','diary1888'];
 const BEARS = {
- F1:['photo1889','photo1912','photo1962','licence1972','licence2019','birth1934','trust1934','dnaJulian','hospital1888'],
+ F1:['photo1875','birth1857','census1911','census1921','marr1886','photo1889','photo1912','photo1962','licence1972','licence2019','birth1934','trust1934','dnaJulian','hospital1888'],
  F2:['death2025','news2025','marine2025','funeral2025','death1934','news1934','trust1934'],
  F3:['death1994','nilDesmond','rolls','news1994','birth1993'],
  F4:['dnaDaphne','birth1966','lawA3',...ATTACK],
