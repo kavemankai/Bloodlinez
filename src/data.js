@@ -332,8 +332,8 @@ const REC = {
     render:()=>`<div class="letter"><p>Dear Ashgrove &amp; Pell,</p><p>My mother, Lorna Marsh-Pike, typed for Mr Cornelius Vane from 1964 to 1967. She always told me he was my father. She said he came to the flat at night and was "a gentleman, but cold."</p><p>I was left off his will, which is no surprise. But a child is a child. I claim my share as his daughter.</p><p>I have taken the Bloodlines DNA test as asked. I share DNA with Mrs Holloway, which I understand proves we are family.</p><p>Daphne Marsh-Pike</p></div>`},
   diary1888:{kind:'Diary',year:1888,title:'Diary page, Eliza Vane, 1888',k:'Eliza Vane diary',
     render:()=>`<div class="diary"><small>From the diary of Eliza Vane. Lent by Margaret Holloway.</small>
-    <span>16th Feb. A. home at last, after dark. He will not eat. His hands are so cold. The wound over his eye has closed as if it were never there.</span>
-    <span>I have not told him yet that I am four months gone with child. I think I shall wait until he is himself again.</span></div>`},
+    <span>14th Feb, near midnight. A. home at last, after dark. He will not eat. His hands are so cold. The wound over his eye has closed as if it were never there.</span>
+    <span>I have not told him yet that I am five months gone with child. I think I shall wait until he is himself again.</span></div>`},
   dnaJulian:{kind:'DNA',year:2025,title:'DNA kit report, Julian Vane',k:'',hidden:true,
     render:()=>`<div class="alert"><b>Lab notice.</b> Sample returned no viable cellular activity. Kit re-run twice with the same result. Matches: 0 of 21,406,118 tested members. Ethnicity: could not be estimated.</div><p class="sub" style="margin-top:12px">Every living person who has tested with Bloodlines shares DNA with at least one other member.</p>`},
   dnaMargaret:{kind:'DNA',year:2025,title:'DNA kit report, Margaret Holloway',k:'',hidden:true,

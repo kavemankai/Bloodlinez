@@ -81,8 +81,8 @@ With fixes 1 to 4 in place I'd expect a careful player to need two filings and a
 
 ## Content errors found while reading
 
-- **Diary vs hospital register.** The register says Ambrose self-discharged on the evening of 14 Feb 1888. The diary entry is dated 16 Feb and says "A. home at last". Change the diary to the 14th or 15th.
-- **Pregnancy dates.** The diary says Eliza is "four months gone" in mid-February. Harriet was born 4 June, so she would be about five months along. Change "four months" to "five".
+- **(Fixed)** **Diary vs hospital register.** The register says Ambrose self-discharged on the evening of 14 Feb 1888. The diary entry is dated 16 Feb and says "A. home at last". Change the diary to the 14th or 15th.
+- **(Fixed)** **Pregnancy dates.** The diary says Eliza is "four months gone" in mid-February. Harriet was born 4 June, so she would be about five months along. Change "four months" to "five".
 - **Registered before found.** The harbour report logs the incident at 5:51 am on 3 March and says the boat was "found on her own mooring at 6 am". Either move the report to after 6 am or say the harbourmaster found her at 5:30.
 - **Weekdays are right.** I checked all dated newspapers (16 Feb 1888, 17 Mar 1962, 3 Feb 1934, 3 Nov 1994, 4 Mar 2025). Each matches its weekday. Keep that standard.
 
