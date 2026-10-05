@@ -16,6 +16,15 @@ Fixed on every photo of him:
 - **Build (proposed):** lean, narrow jaw, straight nose, dark hair, heavy-lidded eyes, very pale skin. In the period photos the pallor reads as a lighter face against a darker backdrop.
 - **Expression:** neutral to slightly amused. He never smiles with teeth.
 
+**Reference sheet:** `docs/reference/vane_sheet.png` (full body left, chest-up close-up right). It shows the scar and mole on the correct sides. Use the close-up as the face reference for every other photo.
+
+How it was made, so you can repeat or extend it:
+
+- The model was `gpt_image_2_5` at 16:9, medium quality, one image. The first two attempts (low quality) put the mole on the wrong cheek and the scar above the brow instead of through it, so I discarded them.
+- The model mixes up the subject's left and right. Describing the marks "as they appear in the picture" worked better, and the result still came out mirrored. I flipped each panel horizontally afterwards. Check the side on every new image and flip if needed.
+- The clothes are neutral modern dark wool. The sheet fixes the face only. Period clothes and styling come in each photo's own prompt.
+- The mole is small. In low-quality output it nearly disappears, so use medium quality or better for any photo where the lab needs to find it.
+
 Both marks must survive the worst photo in the set. The 1962 newspaper halftone and the 1972 faded licence will lose small detail, so draw the scar a little bolder in those two.
 
 Compose each face so the marks land close to where the placeholder art puts them. In the 120×150 placeholder cell the scar is at (74, 49) and the mole at (46.5, 74). On a 600×750 photo with the face centred, that is about (370, 245) and (232, 370). Keep within 40 px of that if you can. If you can't, record the real positions (section 5).
