@@ -23,3 +23,5 @@ CHROME=/path/to/chromium node tests/layout.js   # family-tree auto layout: no ov
 `analyse.js` plays two simulated testers, exports their logs, runs `scripts/analyse_playtests.py` on them and checks the report (stalls, the licence search, joint proof, wrong links, empty searches, the planted hint, unopened records). The logs and report land in `tests/shots/playtests/`.
 
 `gate.js` encrypts the page the way the Pages workflow does and checks that nothing is written without a password, the file holds no game text, a wrong password is refused, the right one opens the game with images, `?playtest=1` still works, and a reload opens straight in.
+
+`blind.js` checks the blind harness for AI testers (`scripts/blind/play.js`): it shows numbered controls and visible text, never source or stored data, and saves screenshots and the playtest log.
