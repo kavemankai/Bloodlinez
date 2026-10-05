@@ -8,7 +8,8 @@ Find out whether Case 1 works for people who didn't make it: whether they finish
 
 ## Setup
 
-1. Make sure the game is live on GitHub Pages (Settings › Pages › Source: GitHub Actions; it publishes on every push to `main`). Send testers the Pages address with `?playtest=1` on the end.
+1. Make sure the game is live on GitHub Pages (Settings › Pages › Source: GitHub Actions; it publishes on every push to `main`). The page is password-protected with the `PLAYTEST_PASSWORD` repository secret. Send testers the Pages address with `?playtest=1` on the end, and the password in a separate message.
+   The repo itself is public and includes the walkthrough. Don't link testers to GitHub.
 2. Send `TESTER_BRIEF.md` with the link.
 3. If you can watch (in person or by screen share), stay quiet. Write down the time and what they said whenever they stall, laugh, swear or ask a question. Answer only "what would you try?".
 

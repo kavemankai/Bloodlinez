@@ -10,7 +10,7 @@ You work the night shift at a probate firm. A rich man has drowned and three peo
 
 1. Use a laptop or desktop with Chrome, Edge, Firefox or Safari. A phone works but is harder.
 2. Set aside about 90 minutes. You can stop and come back; the game saves in your browser.
-3. Open the game at the link you were sent.
+3. Open the game at the link you were sent and enter the password you were given. Your browser remembers it after that.
 4. Turn on the log. In the game, open the **Matter 2025-0417** tab, go to **Overview**, and press **Start recording** in the Playtest log box. (If your link ends in `?playtest=1` it is already on.)
 
 The log records what you search, open, link and file, with times. It stays on your computer until you send it. It records nothing outside the game.

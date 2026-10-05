@@ -30,10 +30,15 @@ jobs:
           python-version: '3.12'
       - name: Build
         run: python3 build.py
-      - name: Collect the playable files
+      - name: Encrypt the page with the playtest password
+        env:
+          PLAYTEST_PASSWORD: ${{ secrets.PLAYTEST_PASSWORD }}
+        run: |
+          pip install --quiet cryptography
+          python3 scripts/encrypt_page.py index.html _site/index.html
+      - name: Collect the images
         run: |
           mkdir -p _site/assets
-          cp index.html _site/
           find assets -maxdepth 1 -type f \( -name '*.webp' -o -name '*.jpg' -o -name '*.png' -o -name '*.svg' \) -exec cp {} _site/assets/ \;
           touch _site/.nojekyll
           ls _site _site/assets | head -100

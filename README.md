@@ -45,7 +45,7 @@ python3 build.py --artifact   # writes dist/artifact.html for claude.ai artifact
 
 ## Playtesting
 
-- **Where testers play.** `.github/workflows/pages.yml` publishes the game (index.html and images only, no docs) to GitHub Pages on every push to `main`. One-time setup: Settings › Pages › Source: **GitHub Actions**. Send testers the Pages address with `?playtest=1` on the end.
+- **Where testers play.** `.github/workflows/pages.yml` publishes the game (index.html and images only, no docs) to GitHub Pages on every push to `main`. The page is encrypted with a password (`scripts/encrypt_page.py`, AES-256-GCM); visitors must enter it, and it is remembered on their device. One-time setup: Settings › Pages › Source: **GitHub Actions**, and Settings › Secrets and variables › Actions › **New repository secret** named `PLAYTEST_PASSWORD`. Without the secret the workflow refuses to publish. Images are not encrypted, and this repo is public, so the password keeps out casual visitors, not someone who reads the repo. Send testers the Pages address with `?playtest=1` on the end, and the password separately.
 - **What to send them.** `docs/playtest/TESTER_BRIEF.md`. Run the session with `docs/playtest/FACILITATOR.md`, which has the post-play questions.
 - **The log.** Testers press **Save log file** under Matter 2025-0417 › Overview. The JSON file holds a summary plus every search, record opened, link, flag and filing with a timestamp.
 - **The report.** Put the files in one folder and run `python3 scripts/analyse_playtests.py that-folder/ > report.md`. It covers time to each finding, stalls with what came before and after, records nobody opened, wrong links, joint proofs, how the 1972 licence was found, empty searches, flags and tool use.

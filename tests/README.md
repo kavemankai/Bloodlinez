@@ -21,3 +21,5 @@ CHROME=/path/to/chromium node tests/layout.js   # family-tree auto layout: no ov
 `playtest.js` checks that turning flags ask a question until Article 3 is cited and never state the conclusion, and that the playtest log is off by default, records a session, exports a JSON file, and survives a reload and a replay.
 
 `analyse.js` plays two simulated testers, exports their logs, runs `scripts/analyse_playtests.py` on them and checks the report (stalls, the licence search, joint proof, wrong links, empty searches, the planted hint, unopened records). The logs and report land in `tests/shots/playtests/`.
+
+`gate.js` encrypts the page the way the Pages workflow does and checks that nothing is written without a password, the file holds no game text, a wrong password is refused, the right one opens the game with images, `?playtest=1` still works, and a reload opens straight in.
