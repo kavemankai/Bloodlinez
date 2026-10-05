@@ -48,9 +48,20 @@ function photo(p, attrs=''){
   <rect width="${w}" height="150" fill="url(#${id})"/>${p.faces.map((f,i)=>faceG(f,i*120)).join('')}
   ${p.faces[0].tone==='sepia'?`<rect width="${w}" height="150" fill="#6b4a1f" opacity=".12"/>`:''}${halftone}</svg>`;
 }
-function sig(txt, flourish=true){
-  return `<svg class="sig" viewBox="0 0 170 54" aria-label="Signature: ${txt}"><text x="10" y="34">${txt}</text>${flourish?'<path d="M14 42 C 48 50, 96 30, 150 40 M150 40 C 158 41, 160 34, 152 33 C 146 32, 140 44, 156 48"/>':''}</svg>`;
+const HANDS = {
+  v:'<path d="M14 42 C 48 50, 96 30, 150 40 M150 40 C 158 41, 160 34, 152 33 C 146 32, 140 44, 156 48"/>',
+  e:'<path d="M12 44 C 40 40, 70 46, 100 42"/>',
+  m:'<path d="M10 40 L 60 46 M 60 46 L 62 36"/>'
+};
+function sig(txt, hand='v'){
+  return `<svg class="sig" viewBox="0 0 170 54" aria-label="Signature: ${txt}"><text x="10" y="34">${txt}</text>${HANDS[hand]}</svg>`;
 }
+/* documents carrying a signature: [name as signed, hand]. The handwriting tool compares hands. */
+const SIGNED = {
+  census1891:['A. Vane','v'], trust1934:['A. Vane','v'], birth1934:['A. Vane','v'],
+  licence1972:['C. Vane','v'], birth1993:['C. Vane','v'], death1994:['C. Vane','v'], will2024:['C. Vane','v'], licence2019:['J. Vane','v'],
+  birth1888:['E. Vane','e'], birth1966:['L. Marsh-Pike','m']
+};
 const MARKS_FACE = {scar:[74,49], mole:[46.5,74]};
 const MARK_NAME = {scar:'Scar through the left eyebrow', mole:'Mole on the lower cheek'};
 
@@ -58,6 +69,7 @@ const MARK_NAME = {scar:'Scar through the left eyebrow', mole:'Mole on the lower
 const PH = {
   photo1889:{year:1889,alt:'Studio portrait of Ambrose Vane, 1889',faces:[{...VAMP,tone:'sepia'}],who:'Ambrose Vane (1889)',vamp:true},
   photo1912:{year:1912,alt:'Wedding portrait, 1912: groom and bride\'s father',faces:[{tone:'sepia',hair:'flat',era:'victorian',mous:true,jaw:26,nose:'broad',heavy:true},{...VAMP,tone:'sepia'}],who:'Bride\'s father (1912)',vamp:true,offset:120},
+  photo1921:{year:1921,alt:'Frank Tully, wharf workers\' union committee, 1921',faces:[{tone:'sepia',hair:'short',era:'victorian',mous:true,jaw:27,nose:'broad',heavy:true,scar:true}],who:'Frank Tully (1921)'},
   photo1950:{year:1950,alt:'Thomas Holloway, 1950',faces:[{tone:'mono',hair:'wave',era:'suit',mole:true,glasses:true,jaw:25}],who:'Thomas Holloway (1950)'},
   photo1962:{year:1962,alt:'Newspaper photograph of Cornelius Vane, 1962',faces:[{...VAMP,tone:'mono',era:'suit'}],who:'Cornelius Vane (1962)',vamp:true,news:true},
   licence1972:{year:1972,alt:'Licence photo of Cornelius Vane, 1972',faces:[{...VAMP,tone:'seventies',hair:'long',era:'seventies'}],who:'Cornelius Vane (1972)',vamp:true},
@@ -85,7 +97,7 @@ const PEOPLE = {
 
 /* ================= RECORDS ================= */
 const dl = rows => `<dl>${rows.map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join('')}</dl>`;
-const regDoc = (head, no, rows, sigTxt, note, sigLabel='Signature of informant:') => `<div class="doc"><h4>${head}</h4><div class="c">District of Ashby · No. ${no}</div>${dl(rows)}${sigTxt?`<div class="sigline"><span>${sigLabel}</span>${sigTxt}</div>`:''}${note?`<p class="rn">${note}</p>`:''}</div>`;
+const regDoc = (head, no, rows, sigTxt, note, sigLabel='Signature of informant:', dist='Ashby') => `<div class="doc"><h4>${head}</h4><div class="c">District of ${dist} · No. ${no}</div>${dl(rows)}${sigTxt?`<div class="sigline"><span>${sigLabel}</span>${sigTxt}</div>`:''}${note?`<p class="rn">${note}</p>`:''}</div>`;
 const clip = (paper, date, head, body, ph) => `<div class="clip"><div class="mast"><span>${paper}</span><span>${date}</span></div><h4>${head}</h4>${ph?photo(ph):''}${body.map(p=>`<p>${p}</p>`).join('')}</div>`;
 
 const REC = {
@@ -106,13 +118,19 @@ const REC = {
   photo1962:{kind:'Newspaper',year:1962,title:'"Lights burn till dawn at Vane House"',k:'Cornelius Vane ball Vane House Hollow Lane Courier',
     render:()=>clip('The Ashby Courier','Saturday, 17 March 1962','Lights burn till dawn at Vane House',
       ['Mr Cornelius Vane, 28, threw open the doors of Vane House on Friday for the first time in a generation. Guests danced until a quarter to six, when the host excused himself.','"He looks the image of his father," remarked one elderly guest, who asked not to be named. "The very image. It gave me quite a turn."'],PH.photo1962)},
-  hospital1888:{kind:'Medical',year:1888,title:'Ashby Hospital admission, Ambrose Vane',k:'Ambrose Vane hospital wharf attack wound',
+  photo1921:{kind:'Photo',year:1921,title:"Ashby Wharf Workers' Union, committee, 1921",k:'wharf union committee Frank Tully Ashby',
+ render:()=>`${photo(PH.photo1921)}<p class="rn">Ashby Wharf Workers' Union, committee portrait, 1921. F. Tully, secretary. Scar from a winch accident, 1917 (union accident book).</p>`},
+ birth1958d:{kind:'Birth',year:1958,title:'Birth registration, Desmond Vane (Marrow Bay)',k:'Desmond Vane Harold Ruth Gale Marrow Bay',
+ render:()=>regDoc('Registration of Birth','1958/0388',[['Child','Desmond Vane'],['Born','3 September 1958, Marrow Bay Cottage Hospital'],['Father','Harold Vane, carter'],['Mother','Ruth Vane, formerly Gale'],['Informant','R. Vane, mother'],['Registered','12 September 1958']],'','','Signature of informant:','Marrow Bay')},
+ inquest1934:{kind:'Inquest',year:1934,title:"Coroner's inquest, Ambrose Vane",k:'Ambrose Vane Corrie inquest coroner steward Lamb drowned',
+ render:()=>regDoc("Coroner's Inquest",'1934/C-12',[['Deceased','Ambrose Vane, 76'],['Held','8 February 1934, Ashby Courthouse'],['Witness','W. Lamb, steward, SS Corrie'],['Evidence','Saw the deceased at the starboard rail at about 11 pm. Did not see him go over.'],['Verdict','Drowning, presumed. No suspicious circumstances.']],'',"Coroner's note: Body not recovered. Estate represented by Ashgrove &amp; Pell.")},
+ hospital1888:{kind:'Medical',year:1888,title:'Ashby Hospital admission, Ambrose Vane',k:'Ambrose Vane hospital wharf attack wound',
     render:()=>regDoc('Ashby Hospital · Casualty Register','1888/0219',[['Patient','Ambrose Vane, 31, clerk'],['Admitted','14 February 1888, 2:10 am'],['Injuries','Deep bite wounds to the neck. Laceration through the left eyebrow.'],['Condition','Severe loss of blood. No pulse found at 4 am.'],['Discharged','Self-discharged 14 February, 9:40 pm, against advice']],'',"House surgeon's note: Patient sat up at dusk and asked for the curtains to be closed. Pulse still absent. Wound above the eye closed overnight. I have no explanation and will not be writing one.")},
   news1888:{kind:'Newspaper',year:1888,title:'"Clerk survives savage attack on wharf"',k:'Ambrose Vane wharf attack clerk',
     render:()=>clip('The Ashby Courier','Thursday, 16 February 1888','Clerk survives savage attack on wharf',
       ['Mr Ambrose Vane, a night clerk with the shipping office, was set upon at the Ashby wharf in the early hours of Tuesday by an assailant he describes only as "a tall foreign gentleman."','Mr Vane, who lost a great deal of blood, left hospital the same evening. His wife, who is expecting their first child in the summer, said he was "quite himself, only very pale."'])},
   birth1888:{kind:'Birth',year:1888,title:'Birth registration, Harriet Vane',k:'Harriet Vane Ambrose Eliza Holloway',
-    render:()=>regDoc('Registration of Birth','1888/0412',[['Child','Harriet Vane'],['Born','4 June 1888, Vane House, Hollow Lane'],['Father','Ambrose Vane, clerk'],['Mother','Eliza Vane, formerly Marsh'],['Informant','E. Vane, mother'],['Registered','11 June 1888']],`<svg class="sig" viewBox="0 0 170 54"><text x="10" y="36" style="font-size:28px">Eliza Vane</text></svg>`)},
+    render:()=>regDoc('Registration of Birth','1888/0412',[['Child','Harriet Vane'],['Born','4 June 1888, Vane House, Hollow Lane'],['Father','Ambrose Vane, clerk'],['Mother','Eliza Vane, formerly Marsh'],['Informant','E. Vane, mother'],['Registered','11 June 1888']],sig('E. Vane','e'))},
   death1934:{kind:'Death',year:1934,title:'Death registration, Ambrose Vane',k:'Ambrose Vane Corrie drowned sea',
     render:()=>regDoc('Registration of Death','1934/0088',[['Deceased','Ambrose Vane'],['Age','76 years'],['Date of death','1 February 1934'],['Place','At sea off Ashby Point, from the steamer SS Corrie'],['Cause','Drowning (presumed)'],['Body','Not recovered'],['Informant',"Harbour Master's report"],['Registered','6 February 1934']],'',"Registrar's note: Deceased went overboard during a night crossing. No witnesses on deck.")},
   news1934:{kind:'Newspaper',year:1934,title:'"Man lost from the Corrie"',k:'Ambrose Vane Corrie overboard',
@@ -149,7 +167,7 @@ const REC = {
   birth1993:{kind:'Birth',year:1993,title:'Birth registration, Julian Ambrose Vane',k:'Julian Vane Desmond Cornelius',
     render:()=>regDoc('Registration of Birth','1993/0046',[['Child','Julian Ambrose Vane'],['Born','14 January 1993, Vane House, Hollow Lane'],['Father','Desmond Vane'],['Mother','Not stated'],['Informant','C. Vane, grandfather'],['Registered','20 January 1993']],sig('C. Vane'),"Registrar's note: Home birth, no midwife. Informant attended after hours by arrangement.")},
   birth1966:{kind:'Birth',year:1966,title:'Birth registration, Daphne Marsh-Pike',k:'Daphne Lorna Marsh-Pike',
-    render:()=>regDoc('Registration of Birth','1966/0730',[['Child','Daphne Marsh-Pike'],['Born','9 August 1966, Ashby Hospital'],['Father','Not stated'],['Mother','Lorna Marsh-Pike, typist'],['Informant','L. Marsh-Pike, mother'],['Registered','15 August 1966']],`<svg class="sig" viewBox="0 0 170 54"><text x="10" y="36" style="font-size:26px">L. Marsh-Pike</text></svg>`)},
+    render:()=>regDoc('Registration of Birth','1966/0730',[['Child','Daphne Marsh-Pike'],['Born','9 August 1966, Ashby Hospital'],['Father','Not stated'],['Mother','Lorna Marsh-Pike, typist'],['Informant','L. Marsh-Pike, mother'],['Registered','15 August 1966']],sig('L. Marsh-Pike','m'))},
   licence2019:{kind:'ID',year:2019,title:'Driver licence, Julian Vane',k:'Julian Vane licence',
     render:()=>`<div class="licence"><div class="ph">${photo(PH.licence2019)}</div><div class="f"><div class="hd">MOTOR REGISTRY · DRIVER LICENCE · 2019</div>
     ${dl([['Name','VANE, Julian Ambrose'],['Date of birth','14/01/1993 (age 26)'],['Address','14 Hollow Lane, Ashby'],['Class','C'],['Conditions','N: night driving only (medical, photosensitivity)']])}
@@ -190,11 +208,11 @@ const REC = {
   dnaJulian:{kind:'DNA',year:2025,title:'DNA kit report, Julian Vane',k:'',hidden:true,
     render:()=>`<div class="alert"><b>Lab notice.</b> Sample returned no viable cellular activity. Kit re-run twice with the same result. Matches: 0 of 21,406,118 tested members. Ethnicity: could not be estimated.</div><p class="sub" style="margin-top:12px">Every living person who has tested with Bloodlines shares DNA with at least one other member.</p>`},
   dnaMargaret:{kind:'DNA',year:2025,title:'DNA kit report, Margaret Holloway',k:'',hidden:true,
-    render:()=>`<p>Margaret's kit matches 312 members on both the Holloway side and the Marsh side, as expected for a granddaughter of Harriet Vane and great-granddaughter of Eliza Marsh. The pattern fits Harriet being a biological child of Ambrose and Eliza.</p>`},
+    render:()=>`<p>Margaret's kit matches 312 members. Closest: R. Holloway (874 cM), G. Holloway-Teague (231 cM), Daphne Marsh-Pike (96 cM), Ivor Marsh (88 cM).</p>`},
   dnaDaphne:{kind:'DNA',year:2025,title:'DNA kit report, Daphne Marsh-Pike',k:'',hidden:true,
-    render:()=>`<p>Daphne shares 96 cM with Margaret Holloway. Every shared match between them sits on the Marsh side of Margaret's tree (descendants of Eliza Marsh's brothers). None sit on the Vane or Holloway side.</p><p>Daphne and Margaret are related through the Marsh family, not through Ambrose or Cornelius Vane.</p>`},
+    render:()=>`<p>Daphne shares 96 cM with Margaret Holloway. Matches they have in common: Ivor Marsh, Ada Marsh-Clery, T. Marsh.</p>`},
   hintOfficial:{kind:'Hint',year:2025,title:'Member-tree hint: Julian is grandson of Cornelius',k:'',hidden:true,
-    render:()=>`<p>Source: public member tree <b>VaneFamily_Official</b>, owner <b>nightowl_jv</b>. Tree created 3 March 2025, the day after Cornelius Vane's death. One attached record (the will). No birth record for Desmond Vane attached.</p>`},
+    render:()=>`<p>Source: public member tree <b>VaneFamily_Official</b>, owner <b>nightowl_jv</b>. Tree created 3 March 2025. One attached record (the will). No birth record for Desmond Vane attached.</p>`},
   nilDesmond:{kind:'Certificate',year:2025,title:'Nil-return search certificate, Desmond Vane birth',k:'',hidden:true,
     render:()=>`<div class="doc"><h4>Certificate of Search · Nil Return</h4><p>A search of birth registrations for the districts of Ashby, Port Hollis, Calder and Wenmouth, 1940 to 1994, under the surname VANE and given name DESMOND, found no entry.</p><p>A search under the father's name, Cornelius Vane, found no child registered before 1993.</p><p class="rn">Issued through Bloodlines Professional on behalf of Ashgrove &amp; Pell.</p></div>`},
   lawSA:{kind:'Law',year:1919,title:'Succession Act 1919, ss 12 and 49',k:'',hidden:true,render:()=>lawHtml('lawSA')},
@@ -216,7 +234,8 @@ const LAW = [
     '2. No inheritance arises from a death that has not occurred. A turned person who is registered as dead is not dead for the purposes of succession.']},
   {id:'lawA2',cite:'Nocturnal Accord 1888 · Art. 2',title:'Proof of identity across names',body:[
     '1. Where it is alleged that two or more named persons are one turned person, the allegation is proved by three independent identifying documents showing the same person across more than one century.',
-    '2. A photograph counts as an identifying document only where a permanent mark can be seen on it. A certified photo-lab comparison counts as one document.']},
+    '2. A photograph counts as an identifying document only where a permanent mark can be seen on it. A certified photo-lab comparison counts as one document.',
+ '3. A certified handwriting comparison of two signed documents counts as one document.']},
   {id:'lawA3',cite:'Nocturnal Accord 1888 · Art. 3',title:'Issue',body:[
     '1. The turned do not beget children. No person born more than forty weeks after a man\'s turning may be his issue.',
     '2. A child born within forty weeks after the turning is deemed begotten before it, and is the issue of the blood.',
@@ -241,7 +260,7 @@ const HINTS = [
 /* ================= FINDINGS ================= */
 const FIND = [
   {id:'F1',q:'Who is Julian Ambrose Vane?',opts:[['grandson',"Cornelius Vane's grandson, as the will says"],['self','Ambrose and Cornelius Vane: one man under three names'],['impostor','An unrelated impostor after the money'],['desmond','Desmond Vane, who faked his own death in 1994']],ans:'self',
-    nudge:'Identity across names needs three independent documents spanning more than a century (Accord Art. 2). A photograph only counts once the photo lab has certified it. Pair that with records that are not photographs.'},
+    nudge:'Identity across names needs three independent documents spanning more than a century (Accord Art. 2). A photograph only counts once the photo lab has certified it. Pair that with records that are not photographs. Signatures can be compared too.'},
   {id:'F2',q:'Did Cornelius Vane die on 2 March 2025?',opts:[['drowned','Yes. He went overboard off Ashby Point.'],['staged','No. The death was staged.'],['open','It cannot be determined. Leave it as an open finding.']],ans:'staged',
     nudge:'Look at what happened to the boat afterwards, and at what was ordered for the memorial. Then look at 1934.'},
   {id:'F3',q:'Was Desmond Vane a real person?',opts:[['real',"Yes. Cornelius's son, who died in 1994."],['fabricated','No. A paper identity, created to give Julian a father.'],['adopted','A real man, informally adopted, never registered']],ans:'fabricated',
@@ -263,7 +282,7 @@ const BEARS = {
  F5:['lawA4','lawA3','birth1888','dnaMargaret',...ATTACK]
 };
 const NEED = {
- F1:[{cmp:true,n:1},{ids:['birth1934','trust1934','hospital1888'],n:2}],
+ F1:[{cmp:true,n:1},{ids:['birth1934','trust1934','hospital1888'],n:2,sig:true}],
  F2:[{ids:['marine2025','funeral2025'],n:1},{ids:['death1934','news1934','trust1934'],n:1}],
  F3:[{ids:['nilDesmond','rolls'],n:1},{ids:['death1994','news1994'],n:1}],
  F4:[{ids:ATTACK,n:1},{ids:['birth1966'],n:1},{ids:['lawA3'],n:1}],
@@ -271,11 +290,13 @@ const NEED = {
 };
 const MAX_EV = 4;
 const goodLab = id => id.startsWith('cmp:') && S.reports[id] && S.reports[id].ok;
-const inGroup = (id,g) => g.cmp ? goodLab(id) : g.ids.includes(id);
-function relevant(id,F){ return id.startsWith('cmp:') || BEARS[F].includes(id); }
+const goodHand = id => id.startsWith('sig:') && S.reports[id] && S.reports[id].ok;
+const inGroup = (id,g) => g.cmp ? goodLab(id) : g.ids.includes(id) || (g.sig && goodHand(id));
+function relevant(id,F){ return id.startsWith('cmp:') || (F==='F1' && id.startsWith('sig:')) || BEARS[F].includes(id); }
 /* years covered by the counted documents; a lab report covers the years of both its photos */
 function yearsOf(id){
  if(id.startsWith('cmp:')){ const r=S.reports[id]; return [PH[r.a].year, PH[r.b].year]; }
+ if(id.startsWith('sig:')){ const r=S.reports[id]; return [REC[r.a].year, REC[r.b].year]; }
  return [REC[id].year];
 }
 function evidenceOk(F, ev){

@@ -15,11 +15,14 @@ const REL = {
 };
 const PHOTO_OF = {ambrose:'photo1889',cornelius:'licence1972',julian:'licence2019',thomas:'photo1950'};
 const HINT_OF = {julian:['hintOfficial'],ambrose:['h2','h3'],harriet:['h4']};
-const COLL = {Census:'Ashby Census Returns, 1841–1921',Birth:'Ashby District Birth Registrations, 1850–2025',Death:'Ashby District Death Registrations, 1850–2025',
+const COLL = {Inquest:"Coroner's Inquest Records, 1890–1960",Census:'Ashby Census Returns, 1841–1921',Birth:'Ashby District Birth Registrations, 1850–2025',Death:'Ashby District Death Registrations, 1850–2025',
   Photo:'Ashby Studio & Parish Photographs, 1860–1990',Newspaper:'The Ashby Courier Archive, 1871–2025',Roll:'Electoral Rolls, 1903–2025',ID:'Motor Registry Licence Records, 1925–2024',
   Legal:'Probate & Trust Instruments (Professional)',Medical:'Ashby Hospital Registers, 1880–1950',Marine:'Harbour Authority Incident Reports, 1900–2025',Invoice:'Professional Uploads: Funeral & Estate Accounts'};
 const PAGE_KINDS = new Set(Object.keys(COLL));
 const IDX = {
+  photo1921:[['Name','Frank Tully'],['Photo date','1921'],['Source',"Wharf Workers' Union minute book"]],
+  birth1958d:[['Name','Desmond Vane'],['Birth date','3 Sep 1958'],['Birth place','Marrow Bay'],['Father','Harold Vane'],['Mother','Ruth Gale'],['Registration no.','1958/0388']],
+  inquest1934:[['Name','Ambrose Vane'],['Held','8 Feb 1934'],['Verdict','Drowning, presumed'],['Witness','W. Lamb']],
   census1891:[['Name','Ambrose Vane'],['Age','34'],['Estimated birth year','abt 1857'],['Relation to head','Head'],['Spouse','Eliza Vane'],['Child','Harriet Vane'],['Residence','14 Hollow Lane, Ashby'],['Occupation','Night clerk']],
   photo1889:[['Name','Ambrose Vane'],['Photo date','1889'],['Place','Ashby'],['Studio','Halloran & Sons']],
   photo1912:[['Names','Arthur Holloway; A. Vane'],['Event','Marriage'],['Event date','1912'],['Place',"St Columba's, Ashby"],['Witness','R. Ashgrove']],
@@ -73,12 +76,12 @@ const LEAF = '<svg class="leaf" viewBox="0 0 20 26" aria-hidden="true"><path d="
 const FRESH = () => ({tab:'mail',hist:{bl:{s:['home'],i:0},mail:{s:['inbox/m1'],i:0},net:{s:['matter/overview'],i:0}},
   navOpen:false,sel:null,zoom:1,tz:1,kit:'julian',cookie:false,mlRead:false,recent:[],
   pins:[],read:['m4'],seen:[],ans:{},ev:{F1:[],F2:[],F3:[],F4:[],F5:[]},res:{},attempts:0,won:false,failed:false,
-  flags:{},reports:{},lab:{a:'',b:'',ma:[],mb:[],miss:0},notes:'',log:[],q:{name:'',kw:'',kind:'All'},searched:false});
+  flags:{},reports:{},lab:{a:'',b:'',ma:[],mb:[],miss:0},hw:{a:'',b:''},notes:'',log:[],q:{name:'',kw:'',kind:'All'},searched:false});
 const S = FRESH();
-const KEEP = ['tab','hist','kit','cookie','recent','pins','read','seen','ans','ev','res','attempts','won','failed','flags','reports','lab','notes','log','q','searched'];
+const KEEP = ['tab','hist','kit','cookie','recent','pins','read','seen','ans','ev','res','attempts','won','failed','flags','reports','lab','hw','notes','log','q','searched'];
 try{const s=JSON.parse(localStorage.getItem('bloodlines-v3')||'null'); if(s) KEEP.forEach(k=>{ if(s[k]!==undefined) S[k]=s[k]; });}catch(e){}
 function save(){try{const o={};KEEP.forEach(k=>o[k]=S[k]);localStorage.setItem('bloodlines-v3',JSON.stringify(o))}catch(e){}}
-for(const id in S.reports) REC[id] = cmpRec(id);
+for(const id in S.reports) REC[id] = id.startsWith('sig:') ? sigRec(id) : cmpRec(id);
 
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -98,7 +101,7 @@ function go(r, t){
 function visit(t,r){
   if(t==='bl' && r.startsWith('record/')){
     const id = r.slice(7);
-    if(PH[id] && !S.seen.includes(id)) S.seen.push(id);
+    if((PH[id]||SIGNED[id]) && !S.seen.includes(id)) S.seen.push(id);
     S.recent = [id, ...S.recent.filter(x=>x!==id)].slice(0,4);
     if((id==='hospital1888'||id==='news1888') && !S.flags.diary){ S.flags.diary = true; setTimeout(()=>toast('New mail from Margaret Holloway'),600); }
   }
@@ -318,12 +321,12 @@ function blSearch(){
   const shown = all.filter(id=>S.q.kind==='All'||REC[id].kind===S.q.kind);
   const counts = {}; all.forEach(id=>counts[REC[id].kind]=(counts[REC[id].kind]||0)+1);
   const qtext = (S.q.name+' '+S.q.kw).toLowerCase();
-  const nil = S.searched && qtext.includes('desmond') && (S.q.kind==='All'||S.q.kind==='Birth');
   const left = `<div class="panel"><div class="ph"><h2>Search all records</h2></div><div class="pb"><form class="sform" data-form="search">
     <label>Name<input id="sname" value="${esc(S.q.name)}" placeholder="First and last name"></label>
     <label>Keyword or place<input id="skw" value="${esc(S.q.kw)}" placeholder="e.g. Hollow Lane, Marguerite"></label>
     <label>Record type<select id="skind">${kinds.map(k=>`<option value="${k}" ${S.q.kind===k?'selected':''}>${k==='All'?'All record types':COLL[k].split(',')[0]}</option>`).join('')}</select></label>
     <div style="display:flex;gap:8px"><button class="bbtn">${ic('search')}Search</button><button type="button" class="bbtn sec" data-a="clearsearch">Clear</button></div></form></div></div>
+    <div class="panel"><div class="ph"><h2>Certified nil return</h2></div><div class="pb"><p class="muted" style="margin:0 0 10px;font-size:13.5px">Professional accounts can ask for a certificate that no birth registration exists for the name in the box above.</p><button type="button" class="bbtn sec sm" data-a="nilreq">Request nil return</button></div></div>
     ${S.searched&&all.length?`<div class="panel"><div class="ph"><h2>Filter by collection</h2></div><div class="pb facets"><button class="${S.q.kind==='All'?'on':''}" data-a="facet" data-v="All">All results<span>${all.length}</span></button>${Object.entries(counts).map(([k,n])=>`<button class="${S.q.kind===k?'on':''}" data-a="facet" data-v="${k}">${COLL[k].split(',')[0]}<span>${n}</span></button>`).join('')}</div></div>`:''}`;
   let right;
   if(!S.searched){
@@ -331,7 +334,7 @@ function blSearch(){
     right = `<div class="panel"><div class="ph"><h2>Featured collections for Ashby</h2></div><div class="pb"><div class="rtable-wrap"><table class="rtable"><tr><th>Collection</th><th>Indexed for your tree</th></tr>${Object.keys(COLL).map(k=>`<tr><td><button class="nm lnk" data-a="facetall" data-v="${k}">${COLL[k]}</button></td><td>${ck[k]||0} records</td></tr>`).join('')}</table></div></div></div>
     <p class="muted" style="font-size:13.5px">Tip: most records aren't attached to any tree. Search by place or keyword as well as by name.</p>`;
   } else {
-    right = `${nil?`<div class="callout"><p><b>No birth registration found for Desmond Vane.</b> We searched Ashby and three neighbouring districts, 1940–1994. Professional accounts can request a certified nil return.</p><button class="bbtn sm" data-a="open" data-v="nilDesmond">Get nil-return certificate</button></div>`:''}
+    right = `
     <div class="panel"><div class="ph" style="flex-wrap:wrap"><h2 style="flex:1">${shown.length?`Results 1–${shown.length} of ${shown.length}`:'No results'}</h2><span class="muted" style="font-size:13.5px">Sorted by: Event year</span></div>
     ${shown.length?`<div class="rtable-wrap"><table class="rtable"><tr><th>Record</th><th>Details</th><th>Year</th><th></th></tr>${shown.map(id=>{const r=REC[id],ix=IDX[id]||[];return `<tr><td><button class="nm lnk" data-a="open" data-v="${id}">${r.title}</button><small>${COLL[r.kind]}</small></td><td>${ix.slice(1,3).map(([k,v])=>`<small><b style="color:var(--bl-ink);font-weight:500">${k}:</b> ${v}</small>`).join('')}</td><td>${r.year}</td><td>${pinned(id)?'<span class="saved">In matter</span>':''}</td></tr>`;}).join('')}</table></div>`:`<div class="pb"><p class="muted" style="margin:0">Nothing matches every word. Try fewer words, or a place or keyword instead of a name.</p></div>`}</div>`;
   }
@@ -365,9 +368,9 @@ function blDna(kit){
     <div class="side">${ethPanel([['England & Wales',61],['Ireland',22],['Scotland',14],['Germanic Europe',3]])}${saveBtn('dnaMargaret')}</div></div>`;
   else if(kit==='daphne') body = `<div class="two"><div class="side"><div class="panel"><div class="ph"><h2>Matches</h2><span class="muted" style="margin-left:auto;font-size:13.5px">188 matches · showing closest</span></div><div class="pb">
     ${mrow('Daniel Pike','1st cousin','811 cM','')}${mrow('Ivor Marsh','2nd cousin','212 cM','Marsh')}${mrow('Margaret Holloway','3rd cousin','96 cM','Marsh')}</div></div>
-    <div class="panel"><div class="ph"><h2>Shared matches with Margaret Holloway</h2></div><div class="pb"><p style="margin:0 0 8px">Ivor Marsh, Ada Marsh-Clery and T. Marsh. All three sit on Margaret's Marsh side. None sit on her Holloway or Vane side.</p>
+    <div class="panel"><div class="ph"><h2>Shared matches with Margaret Holloway</h2></div><div class="pb"><p style="margin:0 0 8px">Ivor Marsh, Ada Marsh-Clery and T. Marsh.</p>
     <div class="rtable-wrap"><table class="cmtable"><tr><th>If Cornelius were her father</th><th>Expected relationship</th><th class="n">Typical cM</th><th class="n">Observed</th></tr><tr><td>Margaret Holloway</td><td>Half 1st cousin 1x removed</td><td class="n">57–530</td><td class="n">96</td></tr></table></div>
-    <p class="muted" style="font-size:13.5px;margin:8px 0 0">The amount alone fits either story. Which side the shared matches sit on doesn't.</p></div></div></div>
+</div></div></div>
     <div class="side">${ethPanel([['England & Wales',72],['Ireland',18],['Scotland',10]])}${saveBtn('dnaDaphne')}</div></div>`;
   else body = S.won ? `<div class="two"><div class="panel"><div class="ph"><h2>Matches</h2><span class="muted" style="margin-left:auto;font-size:13.5px">1 match</span></div><div class="pb">
     ${mrow('Julian Vane','Distant cousin · match flagged: unusual','9 cM','')}<p class="muted" style="font-size:13.5px;margin:10px 0 0">Most members have hundreds of matches. Further matches for this kit are withheld at the account owner's request. Account owner: Ashgrove &amp; Pell.</p></div></div>
@@ -393,7 +396,7 @@ function blHints(){
 /* ================= DOC PREVIEW ================= */
 function showPreview(id){
   const r = REC[id], m = $('#modal');
-  const fname = FILES[id] || (r.kind==='DNA' ? r.title.replace(/[^A-Za-z]+/g,'_')+'.html' : r.kind==='Law' ? r.title.replace(/[^A-Za-z0-9]+/g,'_')+'.pdf' : r.kind==='Lab' ? 'PhotoLab_'+id.slice(4)+'.pdf' : r.title.replace(/[^A-Za-z0-9]+/g,'_').slice(0,40)+'.pdf');
+  const fname = FILES[id] || (r.kind==='DNA' ? r.title.replace(/[^A-Za-z]+/g,'_')+'.html' : r.kind==='Law' ? r.title.replace(/[^A-Za-z0-9]+/g,'_')+'.pdf' : r.kind==='Lab' ? (id.startsWith('sig:')?'Handwriting_':'PhotoLab_')+id.slice(4,12)+'.pdf' : r.title.replace(/[^A-Za-z0-9]+/g,'_').slice(0,40)+'.pdf');
   const ext = fname.split('.').pop().toUpperCase();
   const light = ['DNA','Hint'].includes(r.kind);
   m.innerHTML = `<div class="pv" role="dialog" aria-modal="true" aria-label="${esc(r.title)}"><div class="pvh"><span class="fi" style="background:${ext==='JPG'?'#2d7d46':ext==='HTML'?'#3c5a78':'#c0392b'}">${ext}</span><div class="t"><b>${fname}</b><small>${r.title}</small></div>
@@ -446,8 +449,8 @@ function lawPage(){
 }
 function matterPage(sub){
   const status = S.won ? '<span class="pill green">Closed · ruling accepted</span>' : S.failed ? '<span class="pill red">Reassigned to D. Pell</span>' : '<span class="pill amber">Open · associate review</span>';
-  const tabs = [['overview','Overview'],['evidence',`Evidence (${S.pins.length})`],['lab','Photo lab'],['ruling','Ruling'],['notes','Notes']];
-  const body = {overview:mOverview,evidence:mEvidence,lab:labView,ruling:ruleView,notes:()=>`<div class="box"><div class="bh"><h2>Working notes</h2><span style="color:var(--nt-muted);font-size:13px">Saved automatically</span></div><div class="bb"><textarea id="notes" placeholder="Private to you.">${esc(S.notes)}</textarea></div></div>`}[sub]();
+  const tabs = [['overview','Overview'],['evidence',`Evidence (${S.pins.length})`],['lab','Photo lab'],['hand','Handwriting'],['ruling','Ruling'],['notes','Notes']];
+  const body = {overview:mOverview,evidence:mEvidence,lab:labView,hand:handView,ruling:ruleView,notes:()=>`<div class="box"><div class="bh"><h2>Working notes</h2><span style="color:var(--nt-muted);font-size:13px">Saved automatically</span></div><div class="bb"><textarea id="notes" placeholder="Private to you.">${esc(S.notes)}</textarea></div></div>`}[sub]();
   return `<div class="crumbs" style="color:var(--nt-muted);padding:0;display:flex;gap:6px"><button class="lnk" data-a="go" data-t="net" data-v="matter/overview">Matters</button><span>›</span><span>Probate</span><span>›</span><span>2025-0417</span></div>
   <div class="mhd"><div><h1>Estate of Cornelius Vane</h1><div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">${status}<span class="pill">Probate · contested</span></div></div></div>
   <div class="meta"><div><small>Matter</small><b>2025-0417</b></div><div><small>Responsible partner</small><b>R. Ashgrove</b></div><div><small>Assigned</small><b>Associate (nights)</b></div><div><small>Registry</small><b>Ashby Probate Registry</b></div><div><small>Filings used</small><b>${S.attempts} of 3</b></div></div>
@@ -465,14 +468,14 @@ function mOverview(){
       <tr><td>Cellar contents</td><td>Do not enter before nightfall (will, cl. 3)</td><td class="num">Undisclosed</td></tr><tr><td>Family crypt, Ashby cemetery</td><td>—</td><td class="num">Not valued</td></tr></table></div></div>
   </div><div style="display:flex;flex-direction:column;gap:18px">
     <div class="box"><div class="bh"><h2>Tasks</h2></div><div class="bb" style="display:flex;flex-direction:column;gap:8px;font-size:14px">
-      <span>${S.pins.length>=8?'☑':'☐'} Gather evidence (8+ items)</span><span>${Object.keys(S.reports).some(k=>S.reports[k].ok)?'☑':'☐'} Certify a photo comparison</span><span>${S.pins.some(p=>p.startsWith('law'))?'☑':'☐'} Cite applicable law</span><span>${S.won?'☑':'☐'} File a ruling the partners accept</span></div></div>
+      <span>${S.pins.length>=8?'☑':'☐'} Gather evidence (8+ items)</span><span>${Object.keys(S.reports).some(k=>k.startsWith('cmp:')&&S.reports[k].ok)?'☑':'☐'} Certify a photo comparison</span><span>${S.pins.some(p=>p.startsWith('law'))?'☑':'☐'} Cite applicable law</span><span>${S.won?'☑':'☐'} File a ruling the partners accept</span></div></div>
     <div class="box"><div class="bh"><h2>Activity</h2></div><div class="bb">${S.log.length?`<ul class="log">${S.log.slice(0,10).map(l=>`<li><time>${l.t}</time><span>${esc(l.msg)}</span></li>`).join('')}</ul>`:'<p style="margin:0;color:var(--nt-muted)">No activity yet.</p>'}</div></div>
   </div></div>`;
 }
 function srcLabel(id){
   const r = REC[id];
   if(PAGE_KINDS.has(r.kind)) return 'Bloodlines · '+COLL[r.kind].split(',')[0];
-  return {Law:'Law library',DNA:'Bloodlines DNA',Lab:'Photo lab',Letter:'Email attachment',Diary:'Email attachment',Hint:'Bloodlines member tree',Certificate:'Bloodlines Professional'}[r.kind]||'—';
+  return r.kind==='Lab'&&id.startsWith('sig:') ? 'Handwriting examiner' : {Law:'Law library',DNA:'Bloodlines DNA',Lab:'Photo lab',Letter:'Email attachment',Diary:'Email attachment',Hint:'Bloodlines member tree',Certificate:'Bloodlines Professional'}[r.kind]||'—';
 }
 function mEvidence(){
   if(!S.pins.length) return `<div class="empty">No evidence yet. Use "Save to matter" on Bloodlines records, DNA reports, email attachments and law library provisions.</div>`;
@@ -508,6 +511,28 @@ function cmpRec(id){
     <p class="rn">${r.ok?'Two independent permanent marks match. Counts as one identifying document under Accord Art. 2.':'Fewer than two shared permanent marks. A single mark, like a mole, can run in families. Not admissible as identification.'}</p></div>`};
 }
 
+function sigRec(id){
+  const r = S.reports[id], A = SIGNED[r.a], B = SIGNED[r.b];
+  return {kind:'Lab',year:2025,title:`Handwriting: ${A[0]} (${REC[r.a].year}) vs ${B[0]} (${REC[r.b].year})`,k:'',hidden:true,
+    render:()=>`<div class="doc"><h4>Certified Handwriting Comparison</h4><div class="c">Ashgrove &amp; Pell document examiner · Ref ${id.slice(4,12).toUpperCase()}</div>
+    <div class="lab" style="gap:12px">${sig(A[0],A[1])}${sig(B[0],B[1])}</div>
+    ${dl([['Document A',REC[r.a].title+', '+REC[r.a].year],['Document B',REC[r.b].title+', '+REC[r.b].year],['Result',r.ok?'POSITIVE: same hand':'NEGATIVE: different hands']])}
+    <p class="rn">${r.ok?'Letter forms, pen lifts and terminal flourish agree. Counts as one identifying document under Accord Art. 2.3.':'Letter forms and flourish differ. Not admissible as identification.'}</p></div>`};
+}
+function handView(){
+  const avail = Object.keys(SIGNED).filter(id=>S.seen.includes(id)||pinned(id));
+  const H = S.hw;
+  const pane = side => { const id = H[side];
+    return `<div class="labpane"><label for="hw-${side}" style="font-size:12px;font-weight:600;color:var(--nt-muted);text-transform:uppercase;letter-spacing:.05em">Document ${side.toUpperCase()}</label>
+      <select id="hw-${side}" data-hw-select="${side}"><option value="">Choose a signed document…</option>${avail.map(p=>`<option value="${p}" ${id===p?'selected':''}>${REC[p].title} (${REC[p].year})</option>`).join('')}</select>
+      ${id?`<div class="doc" style="padding:14px">${sig(SIGNED[id][0],SIGNED[id][1])}</div>`:'<div class="empty">No document selected.</div>'}</div>`; };
+  const both = H.a && H.b && H.a!==H.b;
+  return `<div class="box"><div class="bh"><h2>Handwriting</h2></div><div class="bb" style="display:flex;flex-direction:column;gap:14px"><p style="margin:0;color:var(--nt-muted)">Choose two signed documents you've viewed on Bloodlines. The examiner certifies whether the same hand wrote both. A positive result counts as one identifying document.</p>
+    ${avail.length<2?'<div class="note">View at least two signed documents on Bloodlines first. Registrations, licences, deeds and the census are signed.</div>':''}
+    <div class="lab">${pane('a')}${pane('b')}</div>
+    ${both?`<div><button class="nbtn" data-a="sigcert">Certify comparison</button></div>`:''}</div></div>`;
+}
+
 /* ---- ruling ---- */
 function ruleView(){
   const done = S.won||S.failed;
@@ -517,7 +542,7 @@ function ruleView(){
     <form data-form="rule" style="display:flex;flex-direction:column;gap:12px">
     ${FIND.map((f,i)=>{ const r = S.res[f.id], locked = r===true||done;
       return `<fieldset class="finding ${r===true?'ok':r===false?'no':''}"><div class="fhead"><span class="n">FINDING ${i+1}</span><legend>${f.q}</legend>${r===true?'<span class="pill green">Accepted</span>':r===false?'<span class="pill red">Not accepted</span>':''}</div>
-      ${r===false?`<p class="nudge">${f.nudge}${S.flags['hint_'+f.id]?' Also: you attached a hint from a member tree. The claimant built that tree.':''}</p>`:''}
+      ${r===false&&S.attempts>=2?`<p class="nudge">${f.nudge}${S.flags['hint_'+f.id]?' Also: you attached a hint from a member tree. The claimant built that tree.':''}</p>`:''}
       ${f.opts.map(([v,l])=>`<label class="opt"><input type="radio" name="${f.id}" id="${f.id}-${v}" value="${v}" ${S.ans[f.id]===v?'checked':''} ${locked?'disabled':''}><span>${l}</span></label>`).join('')}
       <div style="font-size:12px;font-weight:600;color:var(--nt-muted);text-transform:uppercase;letter-spacing:.05em;margin-top:4px">Supporting evidence · ${(S.ev[f.id]||[]).filter(pinned).length} attached · 4 at most${f.id==='F1'?' · needs 3 documents':''}</div>
       ${S.pins.length?`<div class="chips">${S.pins.map(p=>`<button type="button" class="chip" data-a="ev" data-f="${f.id}" data-v="${p}" aria-pressed="${(S.ev[f.id]||[]).includes(p)}" ${locked?'disabled':''}>${REC[p].title}</button>`).join('')}</div>`:'<p style="font-size:13px;margin:0;color:var(--nt-muted)">Add evidence to the matter first. It will appear here.</p>'}
@@ -585,12 +610,24 @@ document.addEventListener('click', e=>{
       S.reports[id]={a:L.a,b:L.b,shared,ok}; REC[id]=cmpRec(id);
       if(!pinned(id)){ S.pins.push(id); log('Photo lab certified: '+REC[id].title+(ok?' (positive)':' (inconclusive)')); }
       save(); render(); showPreview(id); return; }
+    case 'sigcert': {
+      const H=S.hw, id='sig:'+[H.a,H.b].sort().join('-'), ok=SIGNED[H.a][1]===SIGNED[H.b][1];
+      S.reports[id]={a:H.a,b:H.b,ok}; REC[id]=sigRec(id);
+      if(!pinned(id)){ S.pins.push(id); log('Handwriting certified: '+REC[id].title+(ok?' (positive)':' (negative)')); }
+      save(); render(); showPreview(id); return; }
+    case 'nilreq': {
+      const nm = (($('#sname')||{}).value||'').trim(), low = nm.toLowerCase();
+      if(!nm){ toast('Enter a name first'); return; }
+      if(low.includes('desmond')){ log('Nil return requested: '+nm); showPreview('nilDesmond'); return; }
+      const words = low.split(/\s+/), has = Object.keys(REC).some(id=>!REC[id].hidden && REC[id].kind==='Birth' && words.every(w=>REC[id].title.toLowerCase().includes(w)));
+      toast(has ? 'A birth record exists for that name. No nil return can be issued.' : 'Not certified. The firm only certifies searches for people in this matter.'); return; }
     case 'reset': try{localStorage.removeItem('bloodlines-v3')}catch(e){} for(const id in S.reports) delete REC[id]; Object.assign(S, FRESH()); render(); return;
   }
 });
 document.addEventListener('change', e=>{
   const t = e.target;
   if(t.dataset.labSelect){ const s=t.dataset.labSelect; S.lab[s]=t.value; if(s==='a') S.lab.ma=[]; else S.lab.mb=[]; S.lab.miss=0; save(); render(); }
+  else if(t.dataset.hwSelect){ S.hw[t.dataset.hwSelect]=t.value; save(); render(); }
   else if(t.dataset.kit){ go('dna/'+t.value,'bl'); }
   else if(t.dataset.find){ if(t.value){ S.sel=t.value; render(); } }
   else if(t.type==='radio' && /^F\d$/.test(t.name)){ S.ans[t.name]=t.value; save(); }

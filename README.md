@@ -16,9 +16,9 @@ The tools:
 
 - **Bloodlines** (genealogy site): a family tree, record pages with an image viewer and index, search with collection filters, DNA matches for four kits, and member-tree hints. Some hints are planted by the people you're investigating.
 - **A&P Mail**: case briefings, claimant letters, attachments, and emails that react to what you find.
-- **A&P Intranet**: the matter page (parties, assets, evidence register, activity log), a photo lab that certifies identity by matching scars and moles, the ruling form, and a law library holding the Succession Act and the Nocturnal Accord 1888.
+- **A&P Intranet**: the matter page (parties, assets, evidence register, activity log), a photo lab that certifies identity by matching scars and moles, a handwriting examiner that compares signatures, the ruling form, and a law library holding the Succession Act and the Nocturnal Accord 1888.
 
-Each finding needs the right answer plus the evidence that actually proves it. A right answer with thin evidence is rejected the same way as a wrong one.
+Each finding needs the right answer plus the evidence that actually proves it, with at most four items attached. A right answer with thin evidence, or with irrelevant records attached, is rejected the same way as a wrong one. Nudges appear from the second filing.
 
 ## Repo layout
 

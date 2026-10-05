@@ -40,7 +40,7 @@ Pacing target: one meaningful update to the player's own tree per case.
 
 ## Case 1 solution (spoilers)
 
-1. Julian, Cornelius and Ambrose are one man. Proved by photos showing the same scar and mole from 1889 to 2019, matching signature flourishes, and a dead father registering a birth.
+1. Julian, Cornelius and Ambrose are one man. Proved by a certified photo comparison (same scar and mole, 1889 to 2019) plus two more documents spanning the century: a signature comparison, the 1934 birth registered by a dead father, the 1934 deed or the 1888 hospital register.
 2. The 2025 death was staged. The boat was found moored with neat knots, a coffin with an inside latch went to the cellar, and the 1934 death followed the same pattern.
 3. Desmond never existed. There is no birth record (nil-return certificate), he never appears on an electoral roll, and the neighbours never saw a son.
 4. Daphne can't be his daughter. Accord Art. 3 says the turned don't beget children, and her shared matches with Margaret are all on the Marsh side.
