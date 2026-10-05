@@ -43,6 +43,10 @@ python3 build.py              # writes index.html
 python3 build.py --artifact   # writes dist/artifact.html for claude.ai artifacts
 ```
 
+## Playtesting
+
+Send testers the game with `?playtest=1` on the address, or ask them to press **Start recording** under Matter 2025-0417 › Overview. The log stays in the browser. **Save log file** downloads a JSON file with a summary (minutes played, searches, records opened, links tried and proven, flags shown, filings) plus every event with a timestamp. Replaying the case keeps the log and marks the replay.
+
 ## Status
 
 Prototype. The Case 1 art is in and wired: period photos with real scar and mole positions in the photo lab, portraits, era paper behind documents, stamps, mounts and branding. `build.py --artifact` writes a single file with no images, so use the normal build for the full game. The next priority is a second case built on a different creature's legal rules.

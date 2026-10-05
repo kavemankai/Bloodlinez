@@ -71,7 +71,7 @@ Your tree is your own work. It begins with only the four people named in the bri
 
 You can put any link on the tree, including one you only suspect. If the record you are reading shows it, the line is solid. If not, the line is dashed and marked **unproven**. Remove a link from the Tree check panel whenever you like. A person you add appears on the tree, and the record often names someone new to search for. That is how the tree grows backwards through the generations.
 
-The tree checks dates for you and raises flags: a parent too young or already dead at the birth, a spouse who overlaps another marriage, one person alive as two at once, a person who becomes their own ancestor, and anyone born after the turning in a way the Nocturnal Accord covers. A flag never blocks a link. It marks something that does not add up, and the badge on the person's card shows the worst one.
+The tree checks dates for you and raises flags: a parent too young or already dead at the birth, a spouse who overlaps another marriage, one person alive as two at once, a person who becomes their own ancestor, and how long after a turning a child was born. Turning flags ask a question ("Does that matter?") until you have cited the article they rest on, and even then they only point at it; the conclusion is yours to draw. A flag never blocks a link. It marks something that does not add up, and the badge on the person's card shows the worst one.
 
 Some links need two records together. A birth that names the mother only by her married name proves nothing on its own; her marriage record completes it. Open each record and add the same link from both. Until then the link stays dashed and your links list says **Partly proven**.
 
@@ -149,6 +149,10 @@ New mail arrives as you progress. Some of it is a nudge, some is information, so
 - Two matching facts are stronger than one. One might be chance or family.
 - If a person is hard to find in the records, ask why.
 - A neat story is not evidence. Records are.
+
+## Playtest log
+
+If you are playtesting, open **Matter 2025-0417 › Overview** and press **Start recording** in the Playtest log box, or open the game with `?playtest=1` at the end of the address. The log records your searches, the records you open, your links, the flags you see and your filings, with times. It stays on your device. When you finish, press **Save log file** and send the file to the designer.
 
 ## If you are stuck
 

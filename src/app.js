@@ -139,10 +139,12 @@ const LEAF = '<svg class="leaf" viewBox="0 0 20 26" aria-hidden="true"><path d="
 const FRESH = () => ({tab:'mail',hist:{bl:{s:['home'],i:0},mail:{s:['inbox/m1'],i:0},net:{s:['matter/overview'],i:0}},
   navOpen:false,sel:null,zoom:1,tz:1,kit:'julian',cookie:false,mlRead:false,recent:[],
   pins:[],read:['m4'],seen:[],ans:{},ev:{F1:[],F2:[],F3:[],F4:[],F5:[]},res:{},attempts:0,won:false,failed:false,
-  flags:{},reports:{},lab:{a:'',b:'',ma:[],mb:[],miss:0},hw:{a:'',b:''},tree:{people:['cornelius','julian','margaret','daphne'],links:[],events:[],nid:0},viewed:[],notes:'',log:[],q:{name:'',kw:'',kind:'All'},searched:false});
+  flags:{},reports:{},lab:{a:'',b:'',ma:[],mb:[],miss:0},hw:{a:'',b:''},tree:{people:['cornelius','julian','margaret','daphne'],links:[],events:[],nid:0},viewed:[],notes:'',log:[],plog:[],q:{name:'',kw:'',kind:'All'},searched:false});
 const S = FRESH();
-const KEEP = ['tab','hist','kit','cookie','recent','pins','read','seen','ans','ev','res','attempts','won','failed','flags','reports','lab','hw','tree','viewed','notes','log','q','searched'];
+const KEEP = ['tab','hist','kit','cookie','recent','pins','read','seen','ans','ev','res','attempts','won','failed','flags','reports','lab','hw','tree','viewed','notes','log','plog','q','searched'];
 try{const s=JSON.parse(localStorage.getItem('bloodlines-v3')||'null'); if(s) KEEP.forEach(k=>{ if(s[k]!==undefined) S[k]=s[k]; });}catch(e){}
+if(!S.plog) S.plog=[];
+if(/[?&]playtest=1\b/.test(location.search) && !S.flags.plog){ S.flags.plog=true; S.plog.push({t:Date.now(),type:'start'}); }
 if(!S.tree.events) S.tree.events=[]; if(!S.tree.nid) S.tree.nid=0; S.tree.links.forEach(l=>{ if(!l.id) l.id=++S.tree.nid; });
 function save(){try{const o={};KEEP.forEach(k=>o[k]=S[k]);localStorage.setItem('bloodlines-v3',JSON.stringify(o))}catch(e){}}
 for(const id in S.reports) REC[id] = id.startsWith('sig:') ? sigRec(id) : cmpRec(id);
@@ -157,7 +159,22 @@ function log(msg){ S.log.unshift({t:now(),msg}); S.log = S.log.slice(0,40); }
 let toastT;
 function toast(msg){ const t=$('#toast'); t.textContent=msg; t.hidden=false; clearTimeout(toastT); toastT=setTimeout(()=>t.hidden=true,2600); }
 
+/* playtest log: opt-in, every player action with a timestamp, exported as a file */
+function plog(type,data){ if(!S.flags||!S.flags.plog) return; S.plog.push({t:Date.now(),type,...(data||{})}); if(S.plog.length>20000) S.plog.splice(0,S.plog.length-20000); }
+function plogSummary(){
+  const L=S.plog, c=k=>L.filter(e=>e.type===k).length, t0=L.length?L[0].t:Date.now(), t1=L.length?L[L.length-1].t:t0;
+  return {events:L.length,minutes:Math.round((t1-t0)/600)/100,searches:c('search'),recordsOpened:new Set(L.filter(e=>e.type==='view'&&/^record\//.test(e.route||'')).map(e=>e.route)).size,
+    linksTried:c('link'),linksProven:L.filter(e=>e.type==='link'&&e.status==='proven').length,flagsShown:c('flag'),labRuns:c('lab'),handRuns:c('hand'),nilReturns:c('nil'),filings:L.filter(e=>e.type==='filing').map(e=>e.accepted),won:S.won,failed:S.failed};
+}
+function plogExport(){
+  const out={game:'Bloodlinez',case:1,exported:new Date().toISOString(),started:S.plog.length?new Date(S.plog[0].t).toISOString():null,userAgent:navigator.userAgent,summary:plogSummary(),
+    tree:{people:S.tree.people.length,links:S.tree.links.map(l=>({a:l.a,t:l.t,b:l.b,recs:l.recs,status:LSTAT[l.id]?LSTAT[l.id].status:null})),events:S.tree.events},events:S.plog};
+  const blob=new Blob([JSON.stringify(out,null,1)],{type:'application/json'}), a=document.createElement('a');
+  a.href=URL.createObjectURL(blob); a.download=`bloodlinez-playtest-${new Date().toISOString().slice(0,16).replace(/[:T]/g,'-')}.json`; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  return out;
+}
 function go(r, t){
+  plog('view',{site:t||S.tab,route:r});
   t = t||S.tab; S.tab = t; const h = S.hist[t];
   if(h.s[h.i]!==r){ h.s = h.s.slice(0,h.i+1); h.s.push(r); h.i = h.s.length-1; }
   S.navOpen=false; S.zoom=1; visit(t,r); save(); render(); $('#vp').scrollTop = 0;
@@ -173,7 +190,7 @@ function visit(t,r){
   if(t==='mail' && r.startsWith('inbox/')){ const id=r.slice(6); if(!S.read.includes(id)) S.read.push(id); }
 }
 function togglePin(id){
-  const was = pinned(id);
+  const was = pinned(id); plog(was?'unpin':'pin',{id});
   if(id==='hintOfficial'){ S.tree.links = S.tree.links.filter(l=>!(l.t==='claimed'&&l.recs.includes('hintOfficial'))); if(!was&&S.tree.people.includes('cornelius')&&S.tree.people.includes('julian')) S.tree.links.push({id:++S.tree.nid,t:'claimed',a:'cornelius',b:'julian',recs:['hintOfficial']}); }
   S.pins = was ? S.pins.filter(x=>x!==id) : [...S.pins, id];
   log(`${was?'Removed':'Added'} evidence: ${REC[id].title}`);
@@ -548,10 +565,11 @@ function computeFlags(){
         else if(gap>0.85) push('impossible',`${NAMEOF(P)} died ${Math.round(gap)} year${Math.round(gap)>1?'s':''} before ${NAMEOF(C)} was born.`,[l.id],[P,C]);
         else push('note',`${NAMEOF(C)} was born ${Math.max(1,Math.round(gap*365))} days after ${NAMEOF(P)} died.`,[l.id],[P,C]); } }
     // law: a child born long after a turning cannot be his issue
+    // the turning: state the gap as a question; name the article only once the player has cited it, and never give the conclusion
     turned.forEach(t=>{ if(!t.m.includes(P)) return;
-      const weeks=(cb-t.n)*52.18;
-      if(weeks>40) push('law',`${NAMEOF(C)} was born ${Math.round(cb-t.n)} years after the turning. Under Accord Art. 3 a child born more than forty weeks after cannot be his issue.`,[l.id],[P,C]);
-      else push('good',`${NAMEOF(C)} was born ${weeks<0?'before':'within forty weeks of'} the turning: begotten before it, so the issue of the blood (Accord Art. 3).`,[l.id],[P,C]); });
+      const weeks=(cb-t.n)*52.18, cited=pinned('lawA3'), who=NAMEOF(t.m[0]);
+      const gap = weeks<0 ? `before ${who} was turned` : weeks<=52 ? `${Math.round(weeks)} weeks after ${who} was turned` : `${Math.round(cb-t.n)} years after ${who} was turned`;
+      push(cited?'law':'note', `${NAMEOF(C)} was born ${gap}. ${cited?'Article 3 of the Accord bears on this.':'Does that matter?'}`,[l.id],[P,C]); });
   });
   L.filter(l=>l.t==='spouse').forEach(l=>{
     const a1=bornN(l.a),b1=bornN(l.b); if(a1===null||b1===null) return;
@@ -580,6 +598,7 @@ function computeFlags(){
   if(loopIds.size){ const ids=[...loopIds]; const ppl=[...new Set(ids.flatMap(i=>{const l=L.find(x=>x.id===i);return l?[l.a,l.b]:[];}))];
     push('impossible',`Someone in your tree would be their own ancestor: ${ppl.slice(0,3).map(NAMEOF).join(', ')}${ppl.length>3?' and others':''}.`,ids,ppl); }
   FLAGS = flags.sort((x,y)=>SEVRANK[y.sev]-SEVRANK[x.sev]);
+  if(S.flags.plog){ const seen=new Set(S.flags.plogFlags||[]); FLAGS.forEach(f=>{ if(!seen.has(f.text)){ seen.add(f.text); plog('flag',{sev:f.sev,text:f.text}); } }); S.flags.plogFlags=[...seen]; }
   LSTAT = {}; L.forEach(l=>{ const fs=FLAGS.filter(f=>f.links.includes(l.id)); LSTAT[l.id]={status:linkStatus(l),worst:fs.length?fs[0].sev:null}; });
 }
 const linkOf = (t,a,b) => S.tree.links.find(l=>sameLink(l,t,a,b));
@@ -588,7 +607,7 @@ function edgeStyle(kind,ps,c){
   else ps.forEach(p=>{ const l=linkOf(kind==='claimed'?'claimed':'parent',p,c); if(l) ids.push(l.id); });
   const st=ids.map(i=>LSTAT[i]).filter(Boolean); const cls=[];
   if(st.some(s=>s.status==='unproven')) cls.push('unp');
-  if(st.some(s=>s.worst==='impossible'||s.worst==='law')) cls.push('bad'); else if(st.some(s=>s.worst==='unusual')) cls.push('odd');
+  if(st.some(s=>s.worst==='impossible')) cls.push('bad'); else if(st.some(s=>s.worst==='unusual')) cls.push('odd');
   return cls.join(' ');
 }
 function revealAllTree(){
@@ -834,6 +853,7 @@ function blHints(){
 
 /* ================= DOC PREVIEW ================= */
 function showPreview(id){
+  plog('preview',{id});
   const r = REC[id], m = $('#modal');
   if(!S.viewed.includes(id)) S.viewed.push(id);
   const fname = FILES[id] || (r.kind==='DNA' ? r.title.replace(/[^A-Za-z]+/g,'_')+'.html' : r.kind==='Law' ? r.title.replace(/[^A-Za-z0-9]+/g,'_')+'.pdf' : r.kind==='Lab' ? (id.startsWith('sig:')?'Handwriting_':'PhotoLab_')+id.slice(4,12)+'.pdf' : r.title.replace(/[^A-Za-z0-9]+/g,'_').slice(0,40)+'.pdf');
@@ -896,6 +916,11 @@ function matterPage(sub){
   <div class="meta"><div><small>Matter</small><b>2025-0417</b></div><div><small>Responsible partner</small><b>R. Ashgrove</b></div><div><small>Assigned</small><b>Associate (nights)</b></div><div><small>Registry</small><b>Ashby Probate Registry</b></div><div><small>Filings used</small><b>${S.attempts} of 3</b></div></div>
   <div class="mtabs">${tabs.map(([k,l])=>`<button class="${sub===k?'on':''}" data-a="go" data-t="net" data-v="matter/${k}">${l}</button>`).join('')}</div>${body}`;
 }
+function plogBox(){
+  const on=!!S.flags.plog, n=S.plog.length;
+  return `<div class="box"><div class="bh"><h2>Playtest log</h2><span style="color:var(--nt-muted);font-size:13px">${on?'Recording':'Off'} · ${n} event${n===1?'':'s'}</span></div><div class="bb"><p style="margin:0 0 10px;font-size:13.5px;color:var(--nt-muted)">For playtesters. Records your searches, records opened, links, flags and filings with times, on this device only. Nothing is sent anywhere. Save the file when you finish and send it to the designer.</p>
+    <div style="display:flex;gap:14px;flex-wrap:wrap">${on?`<button class="lnk" data-a="plog" data-v="off">Stop recording</button>`:`<button class="lnk" data-a="plog" data-v="on">Start recording</button>`}${n?`<button class="lnk" data-a="plog" data-v="export">Save log file</button><button class="lnk" data-a="plog" data-v="clear">Clear log</button>`:''}</div></div></div>`;
+}
 function mOverview(){
   return `<div class="cols2"><div style="display:flex;flex-direction:column;gap:18px">
     <div class="box"><div class="bh"><h2>Parties</h2></div><div class="ttable-wrap"><table class="ttable"><tr><th>Name</th><th>Role</th><th>Represented by</th><th>DNA kit</th></tr>
@@ -908,6 +933,7 @@ function mOverview(){
       <tr><td>Cellar contents</td><td>Do not enter before nightfall (will, cl. 3)</td><td class="num">Undisclosed</td></tr><tr><td>Family crypt, Ashby cemetery</td><td>—</td><td class="num">Not valued</td></tr></table></div></div>
   </div><div style="display:flex;flex-direction:column;gap:18px">
     ${trainingBox()}
+    ${plogBox()}
     <div class="box"><div class="bh"><h2>Activity</h2></div><div class="bb">${S.log.length?`<ul class="log">${S.log.slice(0,10).map(l=>`<li><time>${l.t}</time><span>${esc(l.msg)}</span></li>`).join('')}</ul>`:'<p style="margin:0;color:var(--nt-muted)">No activity yet.</p>'}</div></div>
   </div></div>`;
 }
@@ -1004,6 +1030,7 @@ function judge(){
     S.res[f.id] = ok; if(!ok) all = false;
   });
   S.attempts++;
+  plog('filing',{attempt:S.attempts,answers:{...S.ans},evidence:JSON.parse(JSON.stringify(S.ev)),results:{...S.res},accepted:Object.values(S.res).filter(Boolean).length});
   log(`Ruling filed (${S.attempts} of 3): ${Object.values(S.res).filter(Boolean).length} of 5 findings accepted`);
   if(all){ S.won = true; }
   else if(S.attempts>=3){ S.failed = true; }
@@ -1051,25 +1078,29 @@ document.addEventListener('click', e=>{
     case 'certify': {
       const L=S.lab, shared=L.ma.filter(m=>L.mb.includes(m)), id='cmp:'+[L.a,L.b].sort().join('-'), ok=shared.length>=2;
       S.reports[id]={a:L.a,b:L.b,shared,ok}; REC[id]=cmpRec(id);
+      plog('lab',{a:L.a,b:L.b,marksA:L.ma,marksB:L.mb,misses:L.miss,ok});
       if(!pinned(id)){ S.pins.push(id); log('Photo lab certified: '+REC[id].title+(ok?' (positive)':' (inconclusive)')); }
       save(); render(); showPreview(id); return; }
-    case 'guide': showGuide(S.flags.guideSec&&S.flags.t_guide&&v===undefined?S.flags.guideSec:'job'); return;
+    case 'guide': plog('guide',{}); showGuide(S.flags.guideSec&&S.flags.t_guide&&v===undefined?S.flags.guideSec:'job'); return;
     case 'guidesec': showGuide(v); return;
     case 'training': S.flags.hideTraining = v==='hide'; save(); render(); return;
-    case 'unlink': removeLink(+v); save(); render(); return;
+    case 'unlink': plog('unlink',{id:+v}); removeLink(+v); save(); render(); return;
     case 'tcheck': S.flags.tcClosed = !S.flags.tcClosed; save(); render(); return;
     case 'sigcert': {
       const H=S.hw, id='sig:'+[H.a,H.b].sort().join('-'), ok=SIGNED[H.a][1]===SIGNED[H.b][1];
       S.reports[id]={a:H.a,b:H.b,ok}; REC[id]=sigRec(id);
+      plog('hand',{a:H.a,b:H.b,ok});
       if(!pinned(id)){ S.pins.push(id); log('Handwriting certified: '+REC[id].title+(ok?' (positive)':' (negative)')); }
       save(); render(); showPreview(id); return; }
     case 'nilreq': {
       const nm = (($('#sname')||{}).value||'').trim(), low = nm.toLowerCase();
       if(!nm){ toast('Enter a name first'); return; }
+      plog('nil',{name:nm});
       if(low.includes('desmond')){ log('Nil return requested: '+nm); showPreview('nilDesmond'); return; }
       const words = low.split(/\s+/), has = Object.keys(REC).some(id=>!REC[id].hidden && REC[id].kind==='Birth' && words.every(w=>REC[id].title.toLowerCase().includes(w)));
       toast(has ? 'A birth record exists for that name. No nil return can be issued.' : 'Not certified. The firm only certifies searches for people in this matter.'); return; }
-    case 'reset': try{localStorage.removeItem('bloodlines-v3')}catch(e){} for(const id in S.reports) delete REC[id]; Object.assign(S, FRESH()); render(); return;
+    case 'reset': { const keep={on:S.flags.plog,log:S.plog}; try{localStorage.removeItem('bloodlines-v3')}catch(e){} for(const id in S.reports) delete REC[id]; Object.assign(S, FRESH()); if(keep.on){ S.flags.plog=true; S.plog=keep.log; plog('replay'); } save(); render(); return; }
+    case 'plog': if(v==='on'){ S.flags.plog=true; plog('start'); } else if(v==='off'){ plog('stop'); S.flags.plog=false; } else if(v==='export'){ plogExport(); toast('Playtest log saved'); } else if(v==='clear'){ S.plog=[]; if(S.flags.plog) plog('start'); } save(); render(); return;
   }
 });
 document.addEventListener('change', e=>{
@@ -1083,18 +1114,18 @@ document.addEventListener('change', e=>{
 document.addEventListener('input', e=>{ if(e.target.id==='notes'){ S.notes=e.target.value; save(); }});
 document.addEventListener('submit', e=>{
   e.preventDefault(); const f = e.target;
-  if(f.dataset.form==='qsearch'){ S.q={name:'',kw:$('#hq').value,kind:'All'}; S.searched=true; S.flags.t_search=true; go('search','bl'); }
-  if(f.dataset.form==='search'){ S.q={name:$('#sname').value,kw:$('#skw').value,kind:$('#skind').value}; S.searched=true; S.flags.t_search=true; log(`Searched Bloodlines: "${(S.q.name+' '+S.q.kw).trim()||S.q.kind}"`); save(); render(); }
+  if(f.dataset.form==='qsearch'){ S.q={name:'',kw:$('#hq').value,kind:'All'}; S.searched=true; S.flags.t_search=true; plog('search',{name:'',kw:S.q.kw,kind:'All',results:results().length}); go('search','bl'); }
+  if(f.dataset.form==='search'){ S.q={name:$('#sname').value,kw:$('#skw').value,kind:$('#skind').value}; S.searched=true; S.flags.t_search=true; plog('search',{name:S.q.name,kw:S.q.kw,kind:S.q.kind,results:results().length}); log(`Searched Bloodlines: "${(S.q.name+' '+S.q.kw).trim()||S.q.kind}"`); save(); render(); }
   if(f.dataset.form==='link'){
     const A=f.querySelector('[data-lk=a]').value, B=f.querySelector('[data-lk=b]').value, T=f.querySelector('[data-lk=t]').value;
     const evEl=f.querySelector('[data-lk=ev]'), rec=f.dataset.rec || (evEl?evEl.value:'');
-    const res=tryLink(A,T,B,rec); toast(res.msg);
+    const res=tryLink(A,T,B,rec); toast(res.msg); plog('link',{a:A,t:T,b:B,rec,ok:res.ok,status:res.status||null,partial:res.link?linkPartial(res.link):false,msg:res.msg});
     if(res.ok){ save(); if(f.dataset.rec && !$('#modal').hidden) showPreview(f.dataset.rec); else render(); }
     return;
   }
   if(f.dataset.form==='event'){
     const P=f.querySelector('[data-ev=p]').value, K=f.querySelector('[data-ev=k]').value;
-    const res=P?tryEvent(P,K,f.dataset.rec):{ok:false,msg:'Choose a person.'}; toast(res.msg);
+    const res=P?tryEvent(P,K,f.dataset.rec):{ok:false,msg:'Choose a person.'}; toast(res.msg); plog('event',{p:P,k:K,rec:f.dataset.rec,ok:res.ok});
     if(res.ok){ save(); if(!$('#modal').hidden) showPreview(f.dataset.rec); else render(); }
     return;
   }
