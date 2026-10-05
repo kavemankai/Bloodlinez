@@ -169,9 +169,14 @@ function plogSummary(){
 function plogExport(){
   const out={game:'Bloodlinez',case:1,exported:new Date().toISOString(),started:S.plog.length?new Date(S.plog[0].t).toISOString():null,userAgent:navigator.userAgent,summary:plogSummary(),
     tree:{people:S.tree.people.length,links:S.tree.links.map(l=>({a:l.a,t:l.t,b:l.b,recs:l.recs,status:LSTAT[l.id]?LSTAT[l.id].status:null})),events:S.tree.events},events:S.plog};
-  const blob=new Blob([JSON.stringify(out,null,1)],{type:'application/json'}), a=document.createElement('a');
-  a.href=URL.createObjectURL(blob); a.download=`bloodlinez-playtest-${new Date().toISOString().slice(0,16).replace(/[:T]/g,'-')}.json`; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);
-  return out;
+  const name=`bloodlinez-playtest-${new Date().toISOString().slice(0,16).replace(/[:T]/g,'-')}.json`, text=JSON.stringify(out,null,1);
+  if(window.claude && window.claude.use){ /* inside the claude.ai viewer: plain downloads are blocked, so ask the viewer through the downloads capability */
+    window.claude.use('downloads').then(d=>{ if(!d){ toast('Saving files is not available in this view'); return; }
+      d.save({filename:name,data:text}).then(()=>toast('Playtest log saved'),e=>{ if(e&&e.code!=='declined') toast('Could not save the log here'); }); });
+    return out; }
+  const blob=new Blob([text],{type:'application/json'}), a=document.createElement('a');
+  a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  toast('Playtest log saved'); return out;
 }
 function go(r, t){
   plog('view',{site:t||S.tab,route:r});
@@ -1100,7 +1105,7 @@ document.addEventListener('click', e=>{
       const words = low.split(/\s+/), has = Object.keys(REC).some(id=>!REC[id].hidden && REC[id].kind==='Birth' && words.every(w=>REC[id].title.toLowerCase().includes(w)));
       toast(has ? 'A birth record exists for that name. No nil return can be issued.' : 'Not certified. The firm only certifies searches for people in this matter.'); return; }
     case 'reset': { const keep={on:S.flags.plog,log:S.plog}; try{localStorage.removeItem('bloodlines-v3')}catch(e){} for(const id in S.reports) delete REC[id]; Object.assign(S, FRESH()); if(keep.on){ S.flags.plog=true; S.plog=keep.log; plog('replay'); } save(); render(); return; }
-    case 'plog': if(v==='on'){ S.flags.plog=true; plog('start'); } else if(v==='off'){ plog('stop'); S.flags.plog=false; } else if(v==='export'){ plogExport(); toast('Playtest log saved'); } else if(v==='clear'){ S.plog=[]; if(S.flags.plog) plog('start'); } save(); render(); return;
+    case 'plog': if(v==='on'){ S.flags.plog=true; plog('start'); } else if(v==='off'){ plog('stop'); S.flags.plog=false; } else if(v==='export'){ plogExport(); } else if(v==='clear'){ S.plog=[]; if(S.flags.plog) plog('start'); } save(); render(); return;
   }
 });
 document.addEventListener('change', e=>{
