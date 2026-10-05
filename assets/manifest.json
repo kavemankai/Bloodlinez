@@ -3,7 +3,7 @@
   "file": "ap_crest.webp",
   "width": 512,
   "height": 512,
-  "bytes": 19132,
+  "bytes": 18286,
   "master": "ap_crest.webp",
   "prompt": "ONE separate game asset for Bloodlinez named ap_crest.svg. A flat law-firm crest: a plain shield with the letters A and P joined in a serif monogram, navy and gold on transparent background. Simple enough to read at 24 px. Square. No collage or captions. Flat vector-style crisp simple geometric mark, two solid ink colors only, no gradient, no shadows, no mockup, real transparent alpha background.",
   "masked": true
@@ -76,7 +76,7 @@
   "file": "av_margaret.jpg",
   "width": 256,
   "height": 256,
-  "bytes": 15832,
+  "bytes": 15872,
   "master": "av_margaret.png",
   "prompt": "A recent digital colour photograph of a woman in her seventies: Margaret, tired and kind, short grey hair, cardigan, daylight from a window, lived-in face with natural wrinkles, no retouching. Head and shoulders, face centred, plain home background slightly out of focus. No text. Square."
  },
@@ -364,7 +364,7 @@
   "file": "paper_news_postwar.jpg",
   "width": 1000,
   "height": 1500,
-  "bytes": 83674,
+  "bytes": 183661,
   "master": "paper_news_postwar.png",
   "prompt": "ONE separate game texture for Bloodlinez named paper_news_postwar.jpg. A flat top-down scan of a mid-century newspaper page with no readable words: columns of grey texture, a coarse halftone dot pattern in a blank photo area, grey newsprint with uneven ink. Portrait 2:3. This is a document background underneath readable HTML evidence text. Keep the central majority pale with ample open space. Writing must be abstract tiny illegible marks with NO readable words, NO invented clue text, NO names or numbers. For newspaper layouts use pale grey blocks and extremely faint abstract ink columns to suggest type without readable characters. Subtle true-to-period material, no excessive distressing. Perfectly flat orthogonal scan, page fills canvas, no desk, hands or exterior props."
  },

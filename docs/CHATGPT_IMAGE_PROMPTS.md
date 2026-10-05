@@ -248,7 +248,7 @@ Ask for a plain white background and an empty centre, then remove the background
 
 ### `ashgrove_plate.jpg`
 
-> A close-up photograph of a tarnished brass coffin name plate engraved in copperplate script with the single word ASHGROVE, with a date line below it that is worn and illegible. Raking light, dark oak behind it, shallow depth of field. Landscape 3:2.
+> A close-up photograph of a tarnished brass coffin name plate engraved in copperplate script with the single word Ashgrove, with a date line below it that is worn and illegible. Raking light, dark oak behind it, shallow depth of field. Landscape 3:2.
 
 ## After generating
 

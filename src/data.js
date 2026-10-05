@@ -466,7 +466,7 @@ const MAIL = {
   m9:{from:'Margaret Holloway',time:'just now',subj:'The cellar',attach:'cellarPhoto',body:()=>`
     <p>Thank you. I mean it. I've never owned anything in my life and now I own a house I'm frightened of.</p>
     <p>I went down to the cellar with a torch at noon, the way the will said not to. There were four coffins. Three had brass plates: AMBROSE, CORNELIUS, JULIAN. All empty, all with latches on the inside.</p>
-    <p>The fourth was older than the others. Its plate said ASHGROVE.</p>
+    <p>The fourth was older than the others. Its plate said Ashgrove, in old copperplate script.</p>
     <p>I'm having the cellar bricked up. Should I tell your boss?</p>
     <p>Margaret</p>`},
   m6:{from:'Bloodlines',time:'just now',subj:'Your DNA results are ready',body:()=>`<p>Good news! Your DNA results are in. Open DNA, then Your kit, to see your matches and ethnicity estimate.</p>`},

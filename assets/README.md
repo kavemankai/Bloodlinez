@@ -6,4 +6,6 @@ Portraits are 600 × 750; the wedding image is 1200 × 750. Avatars are 256 × 2
 
 The art is wired into the game. Photo-lab mark positions are in `src/data.js` (`IMGS`) and in `docs/ASSETS_VANE.md`. The frames, mounts, cards, stamps, crest and logo were masked to transparent WebP; `props.json` holds the size and photo-window position of each. Document text is rendered by the game over the paper textures.
 
+The Margaret avatar was regenerated to look early seventies, the postwar newsprint's two photo boxes were blanked, and the crest's glare was painted out.
+
 Desmond has no portrait, as specified in the brief. Arthur, Ambrose, Cornelius, and Julian avatars are cropped from their corresponding evidence photographs.

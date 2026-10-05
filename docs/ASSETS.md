@@ -35,7 +35,7 @@ Documents stay as HTML text. These go behind them:
 ## 5. Story payoffs (later)
 
 - `cellar_coffins.jpg`: Margaret's torch-lit phone photo of four coffins, for her end-of-case email
-- `ashgrove_plate.jpg`: close-up of the ASHGROVE brass plate
+- `ashgrove_plate.jpg`: close-up of the Ashgrove brass plate (copperplate script)
 
 ## Specs
 
