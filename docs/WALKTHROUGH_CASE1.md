@@ -59,6 +59,13 @@ The tree starts with Cornelius, Julian, Margaret and Daphne. A route that reache
 6. From Josiah, go back: the 1850 marriage names his father Thomas, and the baptisms and marriages run back through Samuel (born 1751) and ten more Vanes to Hugh atte Vane in a 1436 court roll.
 7. The member-tree hint ("Julian is the grandson of Cornelius") adds a false dashed link and costs a mark. Do not accept it.
 
+## The Harriet line (Finding 5)
+
+Two links on Margaret's line need two records each.
+
+- **Harriet is Thomas's mother.** Thomas's 1920 birth gives his parents as Arthur Holloway and "Harriet Holloway", with no maiden name. The 1912 wedding photograph records Arthur Holloway marrying Harriet Vane. Attach both.
+- **Thomas is Margaret's father.** Margaret's 1951 birth gives "Thomas Holloway, clerk" and her mother as Joan, formerly Ames. There are two Thomas Holloways: a decoy born 1921 on Fish Street to Edwin and Harriet (formerly Doyle) Holloway, a fisherman. The 1948 marriage of Thomas Holloway, 28, clerk, son of Arthur, to Joan Ames settles it. Attach both.
+
 ## What the tree must show before filing
 
 The ruling form does not list these. It shows a neutral summary of the tree, and the missing items appear only in the nudges after a second failed filing. Each finding rests on its own records, so F2 to F4 pass without the identity links.

@@ -187,7 +187,11 @@ const REC = {
     <div class="sigline"><span>Signed by the lessor:</span>${sig('R. Ashgrove','r')}</div>
     <p class="rn">Cross-reference: Ashgrove estate (1740), file 0001. Restricted to partners.</p></div>`},
   birth1920:{kind:'Birth',year:1920,title:'Birth registration, Thomas Holloway',k:'Thomas Holloway Arthur Harriet Vane',
-    render:()=>regDoc('Registration of Birth','1920/0108',[['Child','Thomas Holloway'],['Born','7 March 1920, 3 Wharf Row'],['Father',"Arthur Holloway, ship's chandler"],['Mother','Harriet Holloway, formerly Vane'],['Informant','H. Holloway, mother'],['Registered','15 March 1920']],'')},
+    render:()=>regDoc('Registration of Birth','1920/0108',[['Child','Thomas Holloway'],['Born','7 March 1920, 3 Wharf Row'],['Father',"Arthur Holloway, ship's chandler"],['Mother','Harriet Holloway'],['Informant','H. Holloway, mother'],['Registered','15 March 1920']],'')},
+  birth1921d:{kind:'Birth',year:1921,title:'Birth registration, Thomas Holloway (Fish Street)',k:'Thomas Holloway Edwin Harriet Doyle Fish Street',
+    render:()=>regDoc('Registration of Birth','1921/0233',[['Child','Thomas Holloway'],['Born','19 May 1921, 11 Fish Street'],['Father','Edwin Holloway, fisherman'],['Mother','Harriet Holloway, formerly Doyle'],['Informant','E. Holloway, father'],['Registered','26 May 1921']],'')},
+  marr1948:{kind:'Marriage',year:1948,title:'Marriage registration, Thomas Holloway and Joan Ames',k:'Thomas Holloway Joan Ames marriage Arthur Walter register office',
+    render:()=>regDoc('Registration of Marriage','1948/0517',[['Groom','Thomas Holloway, 28, clerk, 3 Wharf Row'],['Bride','Joan Ames, 24, typist, Mill Lane'],['Married','2 October 1948, Ashby Register Office'],['Father of groom',"Arthur Holloway, ship's chandler"],['Father of bride','Walter Ames, printer'],['Witnesses','A. Holloway; M. Ames']],sig('T. Holloway'),'','Signature of groom:','Ashby','District of')},
   birth1951:{kind:'Birth',year:1951,title:'Birth registration, Margaret Holloway',k:'Margaret Holloway Thomas Joan Ames',
     render:()=>regDoc('Registration of Birth','1951/0562',[['Child','Margaret Holloway'],['Born','22 July 1951, Ashby Hospital'],['Father','Thomas Holloway, clerk'],['Mother','Joan Holloway, formerly Ames'],['Informant','J. Holloway, mother'],['Registered','30 July 1951']],'')},
   bapt1751:{kind:'Parish',year:1751,title:'Baptism, Samuel Vane, 1751',k:'Samuel Vane baptism St Columba cooper John Martha',

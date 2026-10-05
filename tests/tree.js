@@ -46,6 +46,18 @@ const GAME='file://'+path.resolve(__dirname,'..')+'/index.html';
  ok(await p.locator('ul.tchk li').count()===0,'after one failed filing, the tree requirements stay hidden');
  await p.click('form[data-form=rule] button.nbtn'); await p.waitForTimeout(150);
  ok(await p.locator('ul.tchk li').count()>=5,'after the second failed filing, each finding lists what its tree is missing');
+ // 2f. joint proof: the Harriet line needs records joined
+ await fresh();
+ r=await ev(()=>tryLink('harriet','parent','thomas','birth1920')); ok(r.ok&&r.status==='unproven'&&/does not prove it alone/.test(r.msg),'Thomas\'s birth alone only partly proves Harriet is his mother');
+ ok(await ev(()=>linkPartial(S.tree.links[0])),'the link is marked partly proven');
+ r=await ev(()=>tryLink('harriet','parent','thomas','photo1912')); ok(r.ok&&r.status==='proven','adding the 1912 wedding completes the proof');
+ r=await ev(()=>tryLink('thomas','parent','margaret','birth1951')); ok(r.status==='unproven','Margaret\'s birth alone does not prove which Thomas is her father');
+ r=await ev(()=>tryLink('thomas','parent','margaret','marr1948')); ok(r.status==='proven','the 1948 marriage (clerk, son of Arthur, bride Joan Ames) completes it');
+ r=await ev(()=>tryLink('thomas','parent','margaret','birth1921d')); ok(await ev(()=>LSTAT[S.tree.links.find(l=>l.a==='thomas'&&l.b==='margaret').id].status==='proven'),'attaching the decoy record does not break a proven link');
+ await fresh(); r=await ev(()=>tryLink('harriet','parent','thomas','birth1921d')); ok(r.status==='unproven'&&!(await ev(()=>linkPartial(S.tree.links[0]))),'the Fish Street Thomas does not even partly prove it');
+ ok(await ev(()=>{S.q={name:'Thomas Holloway',kw:'',kind:'All'};const R=results();return R.includes('birth1920')&&R.includes('birth1921d');}),'searching Thomas Holloway finds two of them');
+ ok(await ev(()=>!peopleIn('marr1948').includes('margaret')&&!peopleIn('birth1920').includes('ambrose')),'a record only offers the people it names');
+ ok(await ev(()=>{const d=document.createElement('div');d.innerHTML=REC.birth1920.render();return !/Vane/.test(d.textContent)}),'Thomas\'s birth no longer gives his mother\'s maiden name');
  // 3. discovery is gated
  await fresh(); await ev(()=>tryLink('ambrose','parent','cornelius','birth1934'));
  ok(await ev(()=>knownRecs('ambrose').length===0),'Ambrose has no sources until a record naming him is opened');
@@ -77,14 +89,15 @@ const GAME='file://'+path.resolve(__dirname,'..')+'/index.html';
    // does each record's text name both people?
    const bad=[]; const txt=id=>{const d=document.createElement('div');d.innerHTML=REC[id].render();return d.textContent.replace(/\s+/g,' ')};
    const named=(id,pid)=>{const n=PEOPLE[pid].name.replace(/\s*\(.*\)/,''); const first=n.split(' ')[0]; const T=txt(id); return T.includes(first)||T.includes(first[0]+'. '+n.split(' ').slice(-1)[0]); };
-   CLAIMS.forEach(c=>c.recs.forEach(r=>{ if(!REC[r]) bad.push('no record '+r); else [c.a,c.b].forEach(x=>{ if(!named(r,x)) bad.push(r+' does not name '+x); }); }));
+   CLAIMS.forEach(c=>c.proofs.forEach(set=>{ set.forEach(r=>{ if(!REC[r]) bad.push('no record '+r); else if(!named(r,c.a)&&!named(r,c.b)) bad.push(r+' names neither '+c.a+' nor '+c.b); });
+     if(set.every(r=>REC[r])) [c.a,c.b].forEach(x=>{ if(!set.some(r=>named(r,x))) bad.push(set.join('+')+' does not name '+x); }); }));
    return {missing,extra,bad,n:CLAIMS.length};});
  ok(audit.missing.length===0,'every relationship in the data has a record that proves it'+(audit.missing.length?': '+audit.missing:''));
  ok(audit.extra.length===0,'no record claims a relationship that is not in the data'+(audit.extra.length?': '+audit.extra:''));
  ok(audit.bad.length===0,'every record behind a link actually names both people ('+audit.n+' links checked)'+(audit.bad.length?': '+audit.bad.slice(0,6):''));
  // 6. a player can walk the whole tree
- await fresh(); const walk=await ev(()=>{ let added=0; CLAIMS.forEach(c=>{ if(tryLink(c.a,c.t,c.b,c.recs[0]).ok) added++; }); return {added,people:S.tree.people.length,links:S.tree.links.length,n:CLAIMS.length}; });
- ok(walk.people===26&&walk.links===walk.n,'following the records links all 26 people ('+walk.links+' links)');
+ await fresh(); const walk=await ev(()=>{ let added=0; CLAIMS.forEach(c=>{ c.proofs[0].forEach(r=>{ if(tryLink(c.a,c.t,c.b,r).ok) added++; }); }); return {added,people:S.tree.people.length,links:S.tree.links.length,n:CLAIMS.length}; });
+ ok(walk.people===26&&walk.links===walk.n&&(await ev(()=>{refreshLayout();return S.tree.links.every(l=>LSTAT[l.id].status==='proven')})),'following the records links all 26 people ('+walk.links+' links)');
  await ev(()=>{refreshLayout()}); ok(await ev(()=>{const L=LAY,NW=TREE.w;const ids=Object.keys(L.pos);for(let i=0;i<ids.length;i++)for(let j=i+1;j<ids.length;j++){const a=L.pos[ids[i]],c=L.pos[ids[j]];if(Math.abs(a[0]-c[0])<NW+20&&Math.abs(a[1]-c[1])<TREE.h+10)return false;}return true;}),'the player-built tree lays out with no overlaps');
  // 6b. only the search box: can the whole tree be reached starting from the four names?
  await fresh(); const crawl=await ev(()=>{ let rounds=0, changed=true; while(changed&&rounds<60){ changed=false; rounds++; [...S.tree.people].forEach(id=>{ const nm=PEOPLE[id].name.replace(/\s*\(.*\)/,'').split(' ').filter(w=>w.length>2); S.q={name:nm.join(' '),kw:'',kind:'All'}; results().forEach(rid=>{ CLAIMS.forEach(c=>{ if(c.recs.includes(rid)&&(S.tree.people.includes(c.a)||S.tree.people.includes(c.b))){ if(tryLink(c.a,c.t,c.b,rid).ok) changed=true; } }); }); }); } return {people:S.tree.people.length,rounds,missing:Object.keys(PEOPLE).filter(i=>!S.tree.people.includes(i))}; });

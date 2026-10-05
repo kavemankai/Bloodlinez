@@ -73,6 +73,8 @@ You can put any link on the tree, including one you only suspect. If the record 
 
 The tree checks dates for you and raises flags: a parent too young or already dead at the birth, a spouse who overlaps another marriage, one person alive as two at once, a person who becomes their own ancestor, and anyone born after the turning in a way the Nocturnal Accord covers. A flag never blocks a link. It marks something that does not add up, and the badge on the person's card shows the worst one.
 
+Some links need two records together. A birth that names the mother only by her married name proves nothing on its own; her marriage record completes it. Open each record and add the same link from both. Until then the link stays dashed and your links list says **Partly proven**.
+
 Two entries can be the same man. Add **is the same person as** between them. It is proven only after you have certified a photo or handwriting comparison between the two. You can also record an event (when someone was turned, or that no birth was ever registered) from a record that states it.
 
 Your findings depend on the tree. The partners check that it shows what each finding claims, and unproven links among the people involved will fail it. The ruling form shows only a summary of your tree; what is missing is named in the nudges from your second filing.
