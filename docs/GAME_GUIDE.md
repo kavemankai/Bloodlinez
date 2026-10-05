@@ -75,7 +75,9 @@ The tree checks dates for you and raises flags: a parent too young or already de
 
 Two entries can be the same man. Add **is the same person as** between them. It is proven only after you have certified a photo or handwriting comparison between the two. You can also record an event (when someone was turned, or that no birth was ever registered) from a record that states it.
 
-Your findings depend on the tree. Each finding on the ruling form lists what the tree must show, and unproven links among the people involved will fail it.
+Your findings depend on the tree. The partners check that it shows what each finding claims, and unproven links among the people involved will fail it. The ruling form shows only a summary of your tree; what is missing is named in the nudges from your second filing.
+
+Events are recorded from the record page: *was attacked and turned*, *has no birth record*, *died with no body seen*, *shares DNA with Margaret through Marsh relatives*. The event form is on every record that names people, and it accepts only what that record states.
 
 Things to know:
 - Some people share a name. Compare the dates before deciding which person a record means.

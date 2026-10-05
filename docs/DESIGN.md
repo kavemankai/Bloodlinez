@@ -72,7 +72,7 @@ The tree is the player's work, not a map handed to them. It opens with the four 
 3. Say how two people are related (parent of, married to, claimed parent of, or the same person) and add the link.
 4. Any link is accepted. If an attached record shows it, it is drawn solid ("proven"). Otherwise it is dashed ("unproven"). Same-person links are proven only by a certified photo or handwriting report. Events (turned on 14 Feb 1888, no birth registered) come from records that state them.
 4b. `computeFlags()` checks dates and raises flags (impossible, law, unusual, note, good). Flags never block a link.
-4c. `treeOk(F)` ties each finding to the tree: the judge needs the answer, the evidence and the specific proven tree content, with no unproven links among the people involved.
+4c. `treeOk(F)` ties each finding to the tree: the judge needs the answer, the evidence and the specific proven tree content, with no unproven links among the people involved. The ruling form never lists these requirements before the second failed filing. F2 (deaths with no body), F3 (Desmond: no birth, no body) and F4 (Daphne's Marsh DNA) each rest on their own records and do not need the identity links that F1 proves.
 5. New people appear on the tree, new names turn up in the records, and the player searches those names next.
 
 Records are the only way in. A person's sources list, their hints and the facts on their profile fill in as records are opened. Family facts (parents, marriages) are not shown on a profile at all, only the tree's links.

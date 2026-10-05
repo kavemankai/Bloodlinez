@@ -32,6 +32,20 @@ const GAME='file://'+path.resolve(__dirname,'..')+'/index.html';
  await fresh(); ok(await ev(()=>!treeOk('F1')&&!treeOk('F5')),'with an empty tree no finding passes the tree check');
  await ev(()=>revealAllTree()); ok(await ev(()=>['F1','F2','F3','F4','F5'].every(treeOk)),'the fully built tree passes every tree check');
  await ev(()=>{const l=S.tree.links.find(l=>l.t==='same');removeLink(l.id);refreshLayout()}); ok(await ev(()=>!treeOk('F1')),'removing an identity link fails Finding 1');
+ // 2d. the ruling form does not give the answers away
+ await fresh(); await ev(()=>{go('matter/ruling','net');render()});
+ const leaks=await ev(()=>{ const T=document.body.innerText; return ['F1','F2','F3','F4','F5'].flatMap(f=>treeChecks(f).map(x=>x.text)).filter(t=>T.includes(t)); });
+ ok(leaks.length===0,'before filing, the ruling form names no tree requirement'+(leaks.length?': '+leaks[0]:''));
+ ok(await ev(()=>document.body.textContent.includes('Your tree:')),'the ruling form shows a neutral tree summary');
+ // 2e. F2, F3 and F4 no longer lean on the identity links
+ await ev(()=>{revealAllTree(); S.tree.links=S.tree.links.filter(l=>l.t!=='same'); refreshLayout()});
+ ok(await ev(()=>treeOk('F2')&&treeOk('F3')&&treeOk('F4')&&!treeOk('F1')),'without the identity links, F2 to F4 still pass their tree checks and F1 does not');
+ r=await ev(()=>tryEvent('cornelius','nobody','birth1934')); ok(!r.ok,'an event the record does not give is refused');
+ ok(await ev(()=>{go('record/birth1934','bl');render();return !!document.querySelector('form[data-form=event]')}),'the event form shows on records without events too');
+ await fresh(); await ev(()=>{FIND.forEach(f=>S.ans[f.id]=f.opts.find(o=>o[0]!==f.ans)[0]);go('matter/ruling','net');render()}); await p.click('form[data-form=rule] button.nbtn'); await p.waitForTimeout(150);
+ ok(await p.locator('ul.tchk li').count()===0,'after one failed filing, the tree requirements stay hidden');
+ await p.click('form[data-form=rule] button.nbtn'); await p.waitForTimeout(150);
+ ok(await p.locator('ul.tchk li').count()>=5,'after the second failed filing, each finding lists what its tree is missing');
  // 3. discovery is gated
  await fresh(); await ev(()=>tryLink('ambrose','parent','cornelius','birth1934'));
  ok(await ev(()=>knownRecs('ambrose').length===0),'Ambrose has no sources until a record naming him is opened');

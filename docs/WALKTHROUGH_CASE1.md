@@ -58,12 +58,12 @@ The tree starts with Cornelius, Julian, Margaret and Daphne. A route that reache
 
 ## What the tree must show before filing
 
-Each finding is checked against the tree as well as the answer and evidence. The ruling form lists these under each finding.
+The ruling form does not list these. It shows a neutral summary of the tree, and the missing items appear only in the nudges after a second failed filing. Each finding rests on its own records, so F2 to F4 pass without the identity links.
 
 - F1: Julian is the same person as Cornelius, and Cornelius is the same person as Ambrose, both proven by certified photo or handwriting comparisons (Vane hand only).
-- F2: Cornelius is the same person as Ambrose (proven).
-- F3: Desmond recorded as Julian's father in the tree, and the "no birth registered" event recorded from the nil return.
-- F4: the turning on 14 Feb 1888 recorded (hospital register, newspaper or diary), Cornelius proven as Ambrose, and Daphne linked to Cornelius.
+- F2: "died with no body seen" recorded for Cornelius (harbour report or funeral invoice) and for Ambrose (1934 death registration, inquest or newspaper).
+- F3: Desmond recorded as Julian's father, "has no birth record" from the nil return, and "died with no body seen" from the 1994 death registration or newspaper.
+- F4: the turning on 14 Feb 1888 recorded, Daphne linked to Cornelius as claimed, and her DNA recorded as matching Margaret through Marsh relatives.
 - F5: the proven chain Ambrose, Harriet, Thomas, Margaret, plus the turning event.
 
 Any unproven link among the people involved fails the finding. Remove it or prove it first.
