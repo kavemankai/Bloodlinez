@@ -14,7 +14,7 @@ Read this first if you are picking up Bloodlinez: a new session, a new developer
 - Work branch: `feat/first-hour-investigation`.
 - Review: [draft PR #8](https://github.com/kavemankai/Bloodlinez/pull/8), targeting `main`. Verified open and unmerged on 6 October 2026. This work has not merged or deployed the upgrade.
 - Verified implementation commit: `ce74920fcf72a213cb00ca34dd6021b56acec970` (the handover update follows this commit).
-- Local verification: **11 automated suites, 227 passing assertions**. The visible opening reaches an accepted preliminary report; the full-case submission test uses prepared proof fixtures and the actual claim controls. Desktop and 390px screenshots were inspected.
+- Local verification: **11 automated suites, 235 passing assertions** after the review follow-up (count-only revision feedback, source-based opening). The visible opening reaches an accepted preliminary report; the full-case submission test uses prepared proof fixtures and the actual claim controls. Desktop and 390px screenshots were inspected.
 - GitHub verification: [Verify game run 37410070661](https://github.com/kavemankai/Bloodlinez/actions/runs/37410070661) **passed** for that implementation commit. It installs dependencies, checks the generated build and runs the complete suite.
 - `tests/blind.js` tests the restricted viewing harness only. **The five independent persona reviews were not run:** the required Claude Code CLI was unavailable. Do not describe the automated suite as five blind playthroughs.
 - First-hour duration, human enjoyment and willingness to pay remain unverified. The hour is a pacing target, not a measured result.
@@ -23,10 +23,10 @@ Read [FIRST_HOUR_PLAN.md](FIRST_HOUR_PLAN.md) for the completed scope and accept
 
 ## What changed in the first-hour upgrade
 
-1. A shorter briefing gives the player a first job: verify the claimant's household relationship, read the objection and examine identification. Optional leads respond to discoveries while the whole archive remains open.
+1. A shorter briefing points the player at sources (the claimant and the objection to him) without naming steps or record types. Lead cards are titled by source. Specific steps live only in the opt-in hints. The whole archive stays open.
 2. The case desk compares two opened sources. A persistent notebook holds private theories. Matter metadata is collapsed to leave room for the work.
 3. A supported preliminary identity concern produces one partner reply and pauses distribution. It does not identify the culprit, decide inheritance or consume a final filing.
-4. Final findings use discovered people and saved provisions instead of sentences revealing the solution. Paperwork checks catch missing fields/attachments without grading correctness. Investigation mode allows revisions; optional challenge mode allows three final filings. Accepted findings lock in, and research hints are requested explicitly.
+4. Final findings use discovered people and saved provisions instead of sentences revealing the solution. Paperwork checks catch missing fields/attachments without grading correctness. Investigation mode allows unlimited revisions but reports only how many findings were accepted, never which; all five must pass in one filing, and the end card shows the filing count. Optional challenge mode allows three filings, marks each finding and locks accepted ones. Research hints are requested explicitly.
 5. Evidence assignment is order-independent. Continuous certified document chains can establish identity; a shared name alone cannot connect different unlinked faces. Tentative tree links no longer invalidate supported proof.
 6. Saves have schema validation, migration, recovery backups, export/import and visible failure notices. Photo inspection now works with arrow keys, Shift for fine movements, Enter/Space to mark and Home to centre.
 7. Every suite returns failure properly; `tests/run.js` aggregates assertions, crashes and timeouts. Pages publication now depends on the verification workflow.
@@ -98,7 +98,7 @@ Developer-only console helper: `revealAllTree()` builds the complete correct tre
   The last two are proven only by certified lab or handwriting reports, using `PHOTO_OWNER` and `SIGN_OWNER`.
 - **Events.** A record offers only the statements it makes (`EVENT_DEFS`). If a statement names the person, it's proven or unproven like a link. If it doesn't (the inquests), the player's choice is a "reading" with no verdict until filing.
 - **Flags.** `computeFlags` checks ages, deaths, overlaps and loops. Flags about the attack are questions until Accord Art. 3 is cited.
-- **Feedback.** Rejections identify failed findings; research hints require an explicit request. Investigation mode permits revisions; optional challenge mode allows three final filings.
+- **Feedback.** Investigation mode gives a count of accepted findings, so answers can't be found by cycling one finding at a time and watching it turn green. A player can still change one answer and watch the count; that is slow and shows in the filing count. Challenge mode names failed findings. Research hints require an explicit request.
 - **Playtest log.** `plog()` records every action when switched on (`?playtest=1` or the button on the matter overview).
 
 ## Save format and implementation cautions

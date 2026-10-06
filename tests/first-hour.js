@@ -20,7 +20,7 @@ const GAME='file://'+path.resolve(__dirname,'..')+'/index.html';
  await p.locator('.desk-dock [data-v="matter/overview"]').click();
  await p.locator('.investigation [data-a=open]').click();
  await p.locator('#modal [data-a=pin]').click();await p.locator('#modal [data-a=close]').click();
- ok(await ev(()=>leadState().current.id==='documents'),'UI: the objection leads to identification without a supplied solution');
+ ok(await ev(()=>leadState().current.id==='documents'),"UI: the objection leads to the claimant's papers without a supplied solution");
  await p.locator('.investigation [data-a=searchname]').click();
  for(const id of ['licence2019','licence2025']){
   if(id==='licence2025'){await p.locator('#back').click();}
@@ -65,6 +65,28 @@ const GAME='file://'+path.resolve(__dirname,'..')+'/index.html';
  // Filing policies use the same evidence evaluator.
  await fresh();result=await ev(()=>{FIND.forEach(f=>{S.ans[f.id]='wrong';S.ev[f.id]=[]});for(let i=0;i<4;i++)judge();return S.attempts===4&&!S.failed&&!S.won});ok(result,'investigation mode permits revisions after three unsuccessful filings');
  await fresh();result=await ev(()=>{S.mode='challenge';for(let i=0;i<4;i++)judge();return S.failed&&S.attempts===3});ok(result,'challenge mode stops after three unsuccessful final filings');
+ // The opening points at sources; it never names what to look for.
+ result=await ev(()=>{const banned=/household|identification|adoption|licence|scar/i,el=document.createElement('div');el.innerHTML=MAIL.m1.body();const brief=el.innerText||el.textContent;return {brief:!banned.test(brief),leads:leadState().steps.every(s=>!banned.test(s.title+' '+s.body+' '+s.action[2]))}});
+ ok(result.brief,'the briefing names no record type or conclusion');ok(result.leads,'visible lead cards name sources, not conclusions (hints exempt)');
+ // Investigation mode: one count, no per-finding verdicts, five in the same filing.
+ const solve=()=>{revealAllTree();S.viewed=Object.keys(REC);
+  const c=(a,b)=>{const id='cmp:'+[a,b].sort().join('-');S.reports[id]={a,b,ok:true,shared:['scar','mole']};REC[id]=cmpRec(id);return id;};
+  const lab=c('licence2025','photo1889');S.pins=[lab,'trust1934','inquest1934','marine2025','birth1903','dnaDaphne','birth1941','inquest1976','lawA4','news1888','birth1888'];
+  S.claims={F1:{person:'ambrose'},F3:{person:'desmond'},F4:{parent:'cornelius',share:'none'},F5:{heir:'margaret',law:'lawA4'}};FIND.forEach(f=>syncClaimAnswer(f.id));S.ans.F2='staged';
+  S.ev={F1:[lab,'trust1934','inquest1934'],F2:['marine2025','inquest1934'],F3:['inquest1934','birth1903'],F4:['dnaDaphne','birth1941','inquest1976'],F5:['lawA4','news1888','birth1888']};};
+ await fresh();await ev(`(${solve})()`);
+ result=await ev(()=>{S.claims.F3={person:'nobody'};syncClaimAnswer('F3');judge();go('matter/ruling','net');render();
+  const t=document.querySelector('#vp').innerText;return {won:S.won,count:/accepted 4 of 5 findings\. They don't say which/.test(t),pill:document.querySelectorAll('#vp .pill.green').length,marked:document.querySelectorAll('#vp fieldset.finding.ok,#vp fieldset.finding.no').length,locked:document.querySelectorAll('#vp form[data-form=rule] select:disabled').length,hints:document.querySelectorAll('#vp [data-a=finding-hint]').length};});
+ ok(!result.won&&result.count,'investigation mode reports only how many findings were accepted');
+ ok(result.pill===0&&result.marked===0&&result.locked===0,'investigation mode never marks or locks an individual finding');
+ ok(result.hints===5,'research hints are offered on every finding after a filing');
+ result=await ev(()=>{S.claims.F3={person:'desmond'};syncClaimAnswer('F3');S.claims.F1={person:'julian'};syncClaimAnswer('F1');judge();const a=S.won;S.claims.F1={person:'ambrose'};syncClaimAnswer('F1');judge();return !a&&S.won;});
+ ok(result,'a win needs all five findings accepted in the same filing');
+ await fresh();await ev(`(${solve})()`);
+ result=await ev(()=>{S.mode='challenge';S.claims.F3={person:'nobody'};syncClaimAnswer('F3');judge();go('matter/ruling','net');render();
+  return {won:S.won,pill:document.querySelectorAll('#vp .pill.green').length,ok:document.querySelectorAll('#vp fieldset.finding.ok').length,no:document.querySelectorAll('#vp fieldset.finding.no').length};});
+ ok(!result.won&&result.pill===4&&result.ok===4&&result.no===1,'challenge mode still marks and locks each finding');
+ await fresh();await ev(()=>go('matter/ruling','net'));ok((await p.locator('#vp').innerText()).includes('Save provisions from the law library to cite them here.'),'Finding 5 explains an empty provision list');
  // Real selectors can express a complete, supported solution.
  await fresh();await ev(()=>{revealAllTree();S.viewed=Object.keys(REC);S.pins=['cmp:licence2025-photo1889','trust1934','inquest1934','marine2025','birth1903','dnaDaphne','birth1941','inquest1976','lawA4','news1888','birth1888'];go('matter/ruling','net')});
  for(const [f,k,v] of [['F1','person','ambrose'],['F3','person','desmond'],['F4','parent','cornelius'],['F4','share','none'],['F5','heir','margaret'],['F5','law','lawA4']])await p.selectOption(`[data-claim=${f}][data-field=${k}]`,v);

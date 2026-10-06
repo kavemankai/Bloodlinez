@@ -22,9 +22,10 @@ The partners want **five findings**, each an answer plus the evidence that prove
 
 - A finding is accepted only if the answer is right **and** the evidence is the right kind.
 - A right answer on thin evidence is rejected, the same as a wrong answer.
-- Findings that are accepted lock in. You only have to fix the ones that failed.
-- Rejections identify failed findings. Research hints appear only when you request them.
-- In challenge mode, three unsuccessful filings cause reassignment.
+- In investigation mode the partners tell you how many findings they accepted, not which. All five must be accepted in the same filing. You can request a research hint on any finding after your first filing.
+- In challenge mode each finding is marked accepted or rejected, accepted findings lock in, and three unsuccessful filings cause reassignment.
+
+Investigation mode shows how many filings the ruling took instead of a letter grade.
 
 In challenge mode your grade depends on how many filings it took: **A** for one, **B** for two, **C** for three. A minus sign after the letter means you relied on a hint from someone else's tree.
 
@@ -33,8 +34,8 @@ In challenge mode your grade depends on how many filings it took: **A** for one,
 You do not need to read anything else before you start. The game teaches itself:
 
 1. Read the short assignment and search the claimant.
-2. Establish a supported household relationship, then read the objection.
-3. Open identification from different dates and compare originals at the **Case desk**.
+2. Find out how the claimant came into the family, and read the objection to him.
+3. Look at what the archive holds on the claimant and compare originals at the **Case desk**.
 4. Follow the family records and consult the law. Optional investigation leads respond to your discoveries; **Need a lead?** gives graduated hints.
 5. Submit a supported **Preliminary report** when you have an identity concern. It creates a partner reply without spending a final filing or settling the case.
 

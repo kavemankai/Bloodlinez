@@ -491,8 +491,8 @@ function evidenceOk(F, ev){
 const MAIL = {
   m1:{from:'R. Ashgrove, Senior Partner',time:'10:52 pm',subj:'Vane estate: your first file',body:()=>`
     <p>Welcome to nights. <b>Verify the claimant before we distribute the estate.</b></p>
-    <p>Cornelius Vane, 84, and his wife Helen were lost at sea in March. The will names <b>Julian Ambrose Vane</b> as the beneficiary after Helen. <b>Margaret Holloway</b> disputes his identity. <b>Daphne Marsh-Pike</b> has also lodged a claim.</p>
-    <p>Start with Julian. Find the record that brought him into the household and add the relationship it supports to your tree. Then read Margaret's account and check his identification.</p>
+    <p>Cornelius Vane, 84, and his wife Helen were lost at sea in March. The will names <b>Julian Ambrose Vane</b> as the beneficiary after Helen. <b>Margaret Holloway</b> objects to his claim. <b>Daphne Marsh-Pike</b> has also lodged a claim.</p>
+    <p>Start with the claimant himself, and with the objection to him. The archive is open to you.</p>
     <p>You may send a preliminary concern before settling the whole estate. It does not use a final filing.</p>
     <div class="opening-actions"><button class="mlbtn" data-a="searchname" data-v="Julian Vane">Search Julian Vane</button><button class="mlbtn ghost" data-a="go" data-t="net" data-v="matter/overview">Open your investigation</button></div>
     <details><summary>Full assignment and estate</summary><p>Vane House and the family investments are valued at $6,020,000. The cellar contents and family crypt are unvalued. The final ruling needs five supported findings. The Nocturnal Accord is in the law library; where it applies, it governs the estate.</p><p>${S.mode==='challenge'?'Challenge mode allows three final filings.':'Investigation mode allows revisions. Working theories are not submitted as proof.'}</p></details>

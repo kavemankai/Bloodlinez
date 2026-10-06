@@ -938,8 +938,8 @@ function mailApp(r){
 }
 function endCard(){
   if(S.failed) return `<div class="endcard"><b>Case lost</b><p>Three filings without five accepted findings.</p><div><button class="mlbtn" style="background:#fff;color:#1d1a1c" data-a="reset">Replay case</button></div></div>`;
-  const g = S.mode==='challenge' ? (['','A','B','C'][S.attempts]||'C') + (S.flags.usedHint?'−':'') : 'Accepted';
-  return `<div class="endcard"><small style="opacity:.7;letter-spacing:.06em;text-transform:uppercase">Case 1 complete · filings used: ${S.attempts}${S.mode==='challenge'?' of 3':''}</small><div class="g">${g}</div><p>Your tree has one branch now. It's going to get worse.</p><div><button class="mlbtn" style="background:#fff;color:#1d1a1c" data-a="reset">Replay case</button></div></div>`;
+  const g = S.mode==='challenge' ? (['','A','B','C'][S.attempts]||'C') + (S.flags.usedHint?'−':'') : `Accepted after ${S.attempts} filing${S.attempts===1?'':'s'}`;
+  return `<div class="endcard"><small style="opacity:.7;letter-spacing:.06em;text-transform:uppercase">Case 1 complete · filings used: ${S.attempts}${S.mode==='challenge'?' of 3':''}</small><div class="g" ${S.mode==='challenge'?'':'style="font-size:30px;line-height:1.2"'}>${g}</div><p>Your tree has one branch now. It's going to get worse.</p><div><button class="mlbtn" style="background:#fff;color:#1d1a1c" data-a="reset">Replay case</button></div></div>`;
 }
 
 /* ================= INTRANET ================= */
@@ -1059,8 +1059,10 @@ function ruleView(){ return argumentView(); }
 function judge(){
   if(S.won||S.failed) return;
   let all = true;
+  // challenge mode locks accepted findings; investigation mode re-judges all five every time and reports only a count
+  const lockIn = S.mode==='challenge';
   FIND.forEach(f=>{
-    if(S.res[f.id]===true) return;
+    if(lockIn && S.res[f.id]===true) return;
     const ev = (S.ev[f.id]||[]).filter(pinned), hint = ev.includes('hintOfficial');
     if(hint){ S.flags['hint_'+f.id]=true; S.flags.usedHint=true; }
     const ok = S.ans[f.id]===f.ans && evidenceOk(f.id, ev) && treeOk(f.id) && !hint;

@@ -56,7 +56,7 @@ A finding passes with one record from every group listed, at most four records, 
 
 ## Grade
 
-Investigation mode allows revisions without a letter grade. In challenge mode, one filing is an A, two a B, three a C. A minus sign means a hint from someone else's tree was attached as evidence.
+Investigation mode allows revisions without a letter grade. After each filing it reports only how many findings were accepted; all five must pass in one filing. The end card shows the number of filings. In challenge mode, one filing is an A, two a B, three a C. A minus sign means a hint from someone else's tree was attached as evidence.
 
 ## A route through the tree
 

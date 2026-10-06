@@ -1103,8 +1103,8 @@ function evidenceOk(F, ev){
 const MAIL = {
   m1:{from:'R. Ashgrove, Senior Partner',time:'10:52 pm',subj:'Vane estate: your first file',body:()=>`
     <p>Welcome to nights. <b>Verify the claimant before we distribute the estate.</b></p>
-    <p>Cornelius Vane, 84, and his wife Helen were lost at sea in March. The will names <b>Julian Ambrose Vane</b> as the beneficiary after Helen. <b>Margaret Holloway</b> disputes his identity. <b>Daphne Marsh-Pike</b> has also lodged a claim.</p>
-    <p>Start with Julian. Find the record that brought him into the household and add the relationship it supports to your tree. Then read Margaret's account and check his identification.</p>
+    <p>Cornelius Vane, 84, and his wife Helen were lost at sea in March. The will names <b>Julian Ambrose Vane</b> as the beneficiary after Helen. <b>Margaret Holloway</b> objects to his claim. <b>Daphne Marsh-Pike</b> has also lodged a claim.</p>
+    <p>Start with the claimant himself, and with the objection to him. The archive is open to you.</p>
     <p>You may send a preliminary concern before settling the whole estate. It does not use a final filing.</p>
     <div class="opening-actions"><button class="mlbtn" data-a="searchname" data-v="Julian Vane">Search Julian Vane</button><button class="mlbtn ghost" data-a="go" data-t="net" data-v="matter/overview">Open your investigation</button></div>
     <details><summary>Full assignment and estate</summary><p>Vane House and the family investments are valued at $6,020,000. The cellar contents and family crypt are unvalued. The final ruling needs five supported findings. The Nocturnal Accord is in the law library; where it applies, it governs the estate.</p><p>${S.mode==='challenge'?'Challenge mode allows three final filings.':'Investigation mode allows revisions. Working theories are not submitted as proof.'}</p></details>
@@ -2100,8 +2100,8 @@ function mailApp(r){
 }
 function endCard(){
   if(S.failed) return `<div class="endcard"><b>Case lost</b><p>Three filings without five accepted findings.</p><div><button class="mlbtn" style="background:#fff;color:#1d1a1c" data-a="reset">Replay case</button></div></div>`;
-  const g = S.mode==='challenge' ? (['','A','B','C'][S.attempts]||'C') + (S.flags.usedHint?'−':'') : 'Accepted';
-  return `<div class="endcard"><small style="opacity:.7;letter-spacing:.06em;text-transform:uppercase">Case 1 complete · filings used: ${S.attempts}${S.mode==='challenge'?' of 3':''}</small><div class="g">${g}</div><p>Your tree has one branch now. It's going to get worse.</p><div><button class="mlbtn" style="background:#fff;color:#1d1a1c" data-a="reset">Replay case</button></div></div>`;
+  const g = S.mode==='challenge' ? (['','A','B','C'][S.attempts]||'C') + (S.flags.usedHint?'−':'') : `Accepted after ${S.attempts} filing${S.attempts===1?'':'s'}`;
+  return `<div class="endcard"><small style="opacity:.7;letter-spacing:.06em;text-transform:uppercase">Case 1 complete · filings used: ${S.attempts}${S.mode==='challenge'?' of 3':''}</small><div class="g" ${S.mode==='challenge'?'':'style="font-size:30px;line-height:1.2"'}>${g}</div><p>Your tree has one branch now. It's going to get worse.</p><div><button class="mlbtn" style="background:#fff;color:#1d1a1c" data-a="reset">Replay case</button></div></div>`;
 }
 
 /* ================= INTRANET ================= */
@@ -2221,8 +2221,10 @@ function ruleView(){ return argumentView(); }
 function judge(){
   if(S.won||S.failed) return;
   let all = true;
+  // challenge mode locks accepted findings; investigation mode re-judges all five every time and reports only a count
+  const lockIn = S.mode==='challenge';
   FIND.forEach(f=>{
-    if(S.res[f.id]===true) return;
+    if(lockIn && S.res[f.id]===true) return;
     const ev = (S.ev[f.id]||[]).filter(pinned), hint = ev.includes('hintOfficial');
     if(hint){ S.flags['hint_'+f.id]=true; S.flags.usedHint=true; }
     const ok = S.ans[f.id]===f.ans && evidenceOk(f.id, ev) && treeOk(f.id) && !hint;
@@ -2451,12 +2453,12 @@ function leadState(){
  const pair=opened('licence2019')&&opened('licence2025');
  const older=Object.values(S.reports).some(r=>r.ok&&PH[r.a]&&PH[r.b]&&Math.abs(PH[r.a].year-PH[r.b].year)>100);
  const steps=[
-  {id:'relationship',title:'Establish the household relationship',done:adopted,body:'Find the record that brought Julian into the household. Add the relationship it supports to your tree.',action:['searchname','Julian Vane','Search the claimant'],hints:['Look for a record of a change in household, not just the will.','Try the adoption collection in the archive.','Search Julian Vane and open the 1996 adoption order.']},
-  {id:'objection',title:'Read the objection',done:opened('letterMargaret'),body:'Margaret disputes the claimant. Read her own account before deciding what to check.',action:['open','letterMargaret',"Read Margaret's letter"],hints:['An objection is a lead, not proof.','Separate what Margaret remembers from what she concludes.','Look for the feature she remembers about the boy.']},
-  {id:'documents',title:'Examine the identification',done:pair,body:'Check identification issued at different dates. Open the original records, then bring them to your case desk.',action:['searchname','Julian licence','Search identification records'],hints:['A replacement document is easier to assess beside an earlier one.','Search Julian licence. Both records are in the archive.','Open the 2019 and 2025 licences and compare the faces and conditions.']},
-  {id:'history',title:'Follow the family records',done:older,body:'The household records name earlier family members. Follow those names and compare what you find. The archive is open to you.',action:['go','tree','Open your tree','bl'],hints:['Keep track of names, dates and identifying features.','Family records can lead to portraits and photographs as well as registrations.','The older studio portraits can be compared in the photo lab. A resemblance still needs certification.']},
-  {id:'standard',title:'Check the standard of proof',done:pinned('lawA2'),body:'The law library explains how identity evidence is assessed. Read the provision and cite it before relying on a comparison.',action:['go','law','Open the law library','net'],hints:['Look for the article about identification.','Read what counts as an identifying document.','Article 2 describes the required documents and time span.']},
-  {id:'report',title:'Put your concern on the record',done:S.prelim.sent,body:'You can send a limited identity concern while the wider investigation continues. Explain it with selected evidence; this does not use a final filing.',action:['go','matter/preliminary','Prepare a preliminary report','net'],hints:['This report does not decide who inherits.','Use documents that show why identification needs another look.','Two dated licences and the witness account can support a request for review.']}
+  {id:'relationship',title:"The claimant's place in the family",done:adopted,body:'Look into how the claimant came to be named in the will. Add what the records support to your tree.',action:['searchname','Julian Vane','Search the claimant'],hints:['Look for a record of a change in household, not just the will.','Try the adoption collection in the archive.','Search Julian Vane and open the 1996 adoption order.']},
+  {id:'objection',title:'The objection',done:opened('letterMargaret'),body:'Margaret objects to the claimant. Read her own account before deciding what to check.',action:['open','letterMargaret',"Read Margaret's letter"],hints:['An objection is a lead, not proof.','Separate what Margaret remembers from what she concludes.','Look for the feature she remembers about the boy.']},
+  {id:'documents',title:"The claimant's papers",done:pair,body:'Look at what the archive holds on the claimant himself. Open the original records, then bring them to your case desk.',action:['searchname','Julian Vane','Search the claimant'],hints:['A replacement document is easier to assess beside an earlier one.','Search Julian licence. Both records are in the archive.','Open the 2019 and 2025 licences and compare the faces and conditions.']},
+  {id:'history',title:'The family records',done:older,body:'Older records name earlier members of the family. Follow those names and compare what you find. The archive is open to you.',action:['go','tree','Open your tree','bl'],hints:['Keep track of names, dates and identifying features.','Family records can lead to portraits and photographs as well as registrations.','The older studio portraits can be compared in the photo lab. A resemblance still needs certification.']},
+  {id:'standard',title:'The standard of proof',done:pinned('lawA2'),body:'The law library explains how identity evidence is assessed. Read the provision and cite it before relying on a comparison.',action:['go','law','Open the law library','net'],hints:['Look for the article about identification.','Read what counts as an identifying document.','Article 2 describes the required documents and time span.']},
+  {id:'report',title:'Your concern on the record',done:S.prelim.sent,body:'You can send a limited identity concern while the wider investigation continues. Explain it with selected evidence; this does not use a final filing.',action:['go','matter/preliminary','Prepare a preliminary report','net'],hints:['This report does not decide who inherits.','Use documents that show why identification needs another look.','Two dated licences and the witness account can support a request for review.']}
  ];
  return {steps,current:steps.find(s=>!s.done)||null};
 }
@@ -2472,10 +2474,10 @@ function investigationView(){
 function preliminaryCheck(){
  const ev=S.prelim.ev.filter(pinned);
  if(S.prelim.answer!=='review')return {ok:false,msg:'The attached material does not settle identity. State the limited concern you can support, rather than a final conclusion.'};
- if(!ev.includes('licence2019')||!ev.includes('licence2025'))return {ok:false,msg:'A concern about a change in identification needs dated identification from before and after the change.'};
+ if(!ev.includes('licence2019')||!ev.includes('licence2025'))return {ok:false,msg:'Attach the documents your concern rests on, and something that explains why they need another look.'};
  const witness=ev.includes('letterMargaret');
  const comparison=ev.some(id=>S.reports[id]?.ok&&[S.reports[id].a,S.reports[id].b].includes('licence2025'));
- if(!witness&&!comparison)return {ok:false,msg:'Add a witness account or a certified comparison to explain why the documents need review.'};
+ if(!witness&&!comparison)return {ok:false,msg:'Attach the documents your concern rests on, and something that explains why they need another look.'};
  return {ok:true,msg:'Concern recorded. The partners have paused distribution pending your full findings. This is not a determination of identity or inheritance.'};
 }
 function preliminaryView(){
@@ -2525,22 +2527,34 @@ function claimFields(f,locked){
  if(f.id==='F2')return `<label class="claim-field">Your finding<select data-answer="F2" ${locked?'disabled':''}><option value="">Choose…</option>${[['drowned','Death occurred as registered'],['staged','Death was staged'],['open','Leave the death unresolved']].map(([v,t])=>`<option value="${v}" ${S.ans.F2===v?'selected':''}>${t}</option>`).join('')}</select></label>`;
  if(f.id==='F3')return sel('person','Identity of the male remains',[...people,['stranger','Someone not yet identified'],['nobody','No male remains']]);
  if(f.id==='F4')return sel('parent',"Daphne's father",[...people,['unknown','Not established']])+sel('share','Entitlement in this estate',[['none','No share'],['child',"A child's share"],['hold','Hold the claim open']]);
- return sel('heir','Recipient',[...people,['registry','Nocturnal Registry'],['owner','Current owner'],['split','Joint distribution']])+sel('law','Provision relied on',S.pins.filter(id=>REC[id]?.kind==='Law'||id==='will2024').map(id=>[id,REC[id].title]));
+ return sel('heir','Recipient',[...people,['registry','Nocturnal Registry'],['owner','Current owner'],['split','Joint distribution']])+lawField(f,locked);
 }
+function lawField(f,locked){
+ const laws=S.pins.filter(id=>REC[id]?.kind==='Law'||id==='will2024');
+ if(!laws.length)return `<label class="claim-field">Provision relied on<span style="display:block;font-weight:400;color:var(--bl-muted)">Save provisions from the law library to cite them here.</span></label>`;
+ const c=claimValues(f.id);
+ return `<label class="claim-field">Provision relied on<select data-claim="${f.id}" data-field="law" ${locked?'disabled':''}><option value="">Choose…</option>${laws.map(id=>`<option value="${id}" ${c.law===id?'selected':''}>${esc(REC[id].title)}</option>`).join('')}</select></label>`;
+}
+/* challenge mode locks and marks each finding; investigation mode reports only how many passed, so answers can't be found by trial */
+const challenge = () => S.mode==='challenge';
+const lockedIn = f => challenge() && S.res[f.id]===true;
+const acceptedCount = () => FIND.filter(f=>S.res[f.id]===true).length;
 function preflight(){
- const missing=FIND.filter(f=>!S.res[f.id]&&!S.ans[f.id]);
+ const missing=FIND.filter(f=>!lockedIn(f)&&!S.ans[f.id]);
  if(missing.length)return ['Complete each final finding before filing.'];
- const empty=FIND.filter(f=>!S.res[f.id]&&!S.ev[f.id].some(pinned));
+ const empty=FIND.filter(f=>!lockedIn(f)&&!S.ev[f.id].some(pinned));
  if(empty.length)return [`Attach supporting evidence to finding${empty.length>1?'s':''} ${empty.map(f=>f.id.slice(1)).join(', ')}. No filing has been used.`];
  return [];
 }
 function showProcedureFeedback(message){const el=document.getElementById('rulemsg');el.textContent=message;el.focus();}
 function argumentView(){
  const done=S.won||S.failed,fire=['inquest1934','death1934','news1934'].some(opened);
- const feedback=f=>S.res[f.id]===false?`<p class="review-feedback">${S.ev[f.id].includes('hintOfficial')?'A member-tree hint is a lead, not original evidence.':'The submitted argument does not yet establish this finding. Recheck your conclusion, its sources and the supported claims in your tree.'}</p><button type="button" class="lnk" data-a="finding-hint" data-v="${f.id}">Request a research hint</button>${S.flags['research_'+f.id]?`<p class="nudge">${f.nudge}</p>`:''}`:'';
- return `<div class="box"><div class="bb"><div class="eyebrow">Final argument</div><h2>File a ruling</h2><p id="rulemsg" role="status" tabindex="-1">Build your findings from people and sources you have discovered. Working hypotheses stay in your tree; only the supported proof is assessed.</p>${treeSummary()}<p>${S.mode==='challenge'?`${Math.max(0,3-S.attempts)} final filings remaining`:`${S.attempts} final filings · revisions allowed`}. Accepted findings stay locked in.</p><button class="lnk" data-a="go" data-t="net" data-v="matter/preliminary">Only ready to flag an identity concern? Send a preliminary report.</button></div></div>
- <form data-form="rule" class="argument-form">${FIND.map((f,i)=>{const locked=done||S.res[f.id]===true;
- return `<fieldset class="finding ${S.res[f.id]===true?'ok':S.res[f.id]===false?'no':''}"><legend>Finding ${i+1} · ${f.id==='F3'&&!fire?'Earlier records':f.q}</legend>${S.res[f.id]===true?'<span class="pill green">Accepted</span>':''}${feedback(f)}
+ const hintBtn=f=>`<button type="button" class="lnk" data-a="finding-hint" data-v="${f.id}">Request a research hint</button>${S.flags['research_'+f.id]?`<p class="nudge">${f.nudge}</p>`:''}`;
+ const feedback=f=>challenge() ? (S.res[f.id]===false?`<p class="review-feedback">${S.ev[f.id].includes('hintOfficial')?'A member-tree hint is a lead, not original evidence.':'The submitted argument does not yet establish this finding. Recheck your conclusion, its sources and the supported claims in your tree.'}</p>${hintBtn(f)}`:'') : (S.attempts&&!done?hintBtn(f):'');
+ const tally = !challenge()&&S.attempts&&!S.won ? `<p class="review-feedback" role="status">Filing ${S.attempts}: the partners accepted ${acceptedCount()} of 5 findings. They don't say which.${FIND.some(f=>S.ev[f.id].includes('hintOfficial'))?' A member-tree hint is a lead, not original evidence.':''}</p>` : '';
+ return `<div class="box"><div class="bb"><div class="eyebrow">Final argument</div><h2>File a ruling</h2><p id="rulemsg" role="status" tabindex="-1">Build your findings from people and sources you have discovered. Working hypotheses stay in your tree; only the supported proof is assessed.</p>${treeSummary()}<p>${challenge()?`${Math.max(0,3-S.attempts)} final filings remaining. Accepted findings stay locked in.`:`${S.attempts} final filing${S.attempts===1?'':'s'} · revisions allowed. All five must be accepted in the same filing.`}</p>${tally}<button class="lnk" data-a="go" data-t="net" data-v="matter/preliminary">Only ready to flag an identity concern? Send a preliminary report.</button></div></div>
+ <form data-form="rule" class="argument-form">${FIND.map((f,i)=>{const locked=done||lockedIn(f);
+ return `<fieldset class="finding ${challenge()?(S.res[f.id]===true?'ok':S.res[f.id]===false?'no':''):''}"><legend>Finding ${i+1} · ${f.id==='F3'&&!fire?'Earlier records':f.q}</legend>${challenge()&&S.res[f.id]===true?'<span class="pill green">Accepted</span>':''}${feedback(f)}
  ${f.id==='F3'&&!fire&&!done?'<p>Follow the earlier family records before making this finding. The archive remains open.</p>':`<div class="claim-fields">${claimFields(f,locked)}</div>`}
  <p>Supporting evidence · ${S.ev[f.id].filter(pinned).length} attached · four at most${f.id==='F1'?' · three identifying documents required':''}</p>
  <details class="evidence-picker" data-evidence-panel="${f.id}" ${(S.flags['ev_'+f.id]??S.pins.length<8)?'open':''}><summary>Choose from ${S.pins.length} saved sources</summary><div class="chips">${S.pins.map(id=>`<button type="button" class="chip" data-a="ev" data-f="${f.id}" data-v="${id}" aria-pressed="${S.ev[f.id].includes(id)}" ${locked?'disabled':''}>${esc(REC[id].title)}</button>`).join('')||'<p>Save sources to the matter as you investigate.</p>'}</div></details></fieldset>`;
@@ -2549,8 +2563,8 @@ function argumentView(){
 }
 
 /* Keep help consistent with the new filing policy, without Case 1 answers. */
-GUIDE.find(g=>g.id==='job').h='<p>You are a night-shift associate at Ashgrove &amp; Pell. Verify the claimant before distributing the estate. Begin with a household relationship, check the objection and examine the identification.</p><p>A preliminary report records a limited concern. The final argument settles five findings with supported evidence and tree claims.</p>';
-GUIDE.find(g=>g.id==='ruling').h='<p>Choose discovered people and saved legal provisions, then attach the sources that establish each finding. Use Check paperwork to catch missing fields or attachments without using a filing. It does not tell you whether your theory is right.</p><p>Investigation mode allows revisions. Associate challenge allows three final filings. Choose a policy in the case desk before your first final filing. Accepted findings lock in. Research hints are optional and recorded separately.</p>';
+GUIDE.find(g=>g.id==='job').h='<p>You are a night-shift associate at Ashgrove &amp; Pell. Verify the claimant before distributing the estate. Begin with the claimant and the objection to him.</p><p>A preliminary report records a limited concern. The final argument settles five findings with supported evidence and tree claims.</p>';
+GUIDE.find(g=>g.id==='ruling').h='<p>Choose discovered people and saved legal provisions, then attach the sources that establish each finding. Use Check paperwork to catch missing fields or attachments without using a filing. It does not tell you whether your theory is right.</p><p>Investigation mode allows revisions: the partners tell you how many findings they accept, not which, and all five must pass in the same filing. Associate challenge allows three final filings and marks each finding; accepted findings lock in. Choose a policy in the case desk before your first final filing. Research hints are optional and recorded separately.</p>';
 GUIDE.find(g=>g.id==='tree').h=GUIDE.find(g=>g.id==='tree').h.replace('with no unproven links among the people involved. They will not tell you what is missing until your second filing.','using supported claims. Tentative links remain private working hypotheses and do not invalidate your proof.');
 GUIDE.find(g=>g.id==='lab').h+='<p>Keyboard: focus a photo, move the inspection cursor with arrow keys, hold Shift for smaller movements, then press Enter or Space to mark that point. Home returns the cursor to the centre. The same mark tolerance applies to mouse and keyboard.</p>';
 
