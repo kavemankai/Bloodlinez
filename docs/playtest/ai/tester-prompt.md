@@ -23,7 +23,7 @@ Rules
   - get stuck for more than a few actions;
   - are surprised, confused or annoyed;
   - think you've found a bug or a contradiction.
-- Stop when you have won, used all three filings, or taken 300 actions. Then run savelog.
+- Stop when you have won, had the matter reassigned in challenge mode, or taken 300 actions. Then run savelog.
 
 When you stop, write your review as your final answer, using exactly these headings:
 

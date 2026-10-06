@@ -20,7 +20,7 @@ The log records what you search, open, link and file, with times. It stays on yo
 - Play the way you would at home. Don't look things up outside the game.
 - If you can, think aloud or jot down a line when you're stuck, surprised or annoyed. Note the time.
 - The **Field guide** (top right) explains the tools. It does not contain answers.
-- You have three filings. Using all three is fine. Running out is useful data too.
+- Investigation mode allows revisions. The optional challenge has three final filings. Preliminary reports do not spend a final filing.
 
 ## When you finish (or give up)
 

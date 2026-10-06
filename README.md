@@ -6,13 +6,13 @@ Case 1, *The Vane Estate*, is fully playable.
 
 ## Play
 
-New to the game? Read `docs/GAME_GUIDE.md`, or just start: the game has a welcome email, a training list in the matter overview and a field guide in the bookmarks bar. If you get stuck, `docs/WALKTHROUGH_CASE1.md` has the full solution (spoilers).
+New to the game? Read `docs/GAME_GUIDE.md`, or just start: the game has a welcome email, optional investigation leads, a comparison desk and a field guide in the bookmarks bar. If you get stuck, `docs/WALKTHROUGH_CASE1.md` has the full solution (spoilers).
 
 Open `index.html` in a browser. There's nothing to install and no server is needed. Keep the `assets/` folder next to it, since the pictures load from there. Progress saves in the browser's local storage.
 
 ## Case 1 in brief
 
-Cornelius Vane, 84, and his wife Helen went overboard off Ashby Point. His will leaves everything to his grandson Julian, who brought the boat home alone. Margaret, the last of the old Vane blood, objects, and a third woman, Daphne, says she's his daughter. The house has buried a family every forty years since 1934. You get five findings to prove and three filings to get them past the partners.
+Cornelius Vane, 84, and his wife Helen went overboard off Ashby Point. His will leaves everything to his grandson Julian, who brought the boat home alone. Margaret, the last of the old Vane blood, objects, and a third woman, Daphne, says she's his daughter. The house has buried a family every forty years since 1934. Begin by verifying the claimant, then prove five findings. Investigation mode permits revisions; the optional associate challenge allows three final filings.
 
 The tools:
 
@@ -20,7 +20,7 @@ The tools:
 - **A&P Mail**: case briefings, claimant letters, attachments, and emails that react to what you find.
 - **A&P Intranet**: the matter page (parties, assets, evidence register, activity log), a photo lab that certifies identity by matching scars and moles, a handwriting examiner that compares signatures, the ruling form, and a law library holding the Succession Act and the Nocturnal Accord 1888.
 
-Each finding needs the right answer plus the evidence that actually proves it, with at most four items attached. A right answer with thin evidence, or with irrelevant records attached, is rejected the same way as a wrong one. Nudges appear from the second filing.
+Each finding needs the right answer plus the evidence that actually proves it, with at most four items attached. A right answer with thin evidence, or with irrelevant records attached, is rejected the same way as a wrong one. Research hints appear only on request. A preliminary report records a limited concern without spending a final filing.
 
 ## Repo layout
 
@@ -32,6 +32,7 @@ build.py          rebuilds index.html from src/
 src/template.html CSS and page markup (browser chrome, three site designs)
 src/data.js       case content: people, records, law, findings, mail, portrait art
 src/app.js        routing, rendering for each site, photo lab, ruling logic, events
+src/experience.js first-hour flow, case desk, neutral claims, save recovery, keyboard lab
 docs/DESIGN.md    premise, structure and the player's own arc
 docs/ASSETS.md    image assets still needed
 ```
@@ -51,8 +52,10 @@ New here? Start with `docs/HANDOVER.md`. For blind AI testers, see `docs/playtes
 - **Where testers play.** `.github/workflows/pages.yml` publishes the game (index.html and images only, no docs) to GitHub Pages on every push to `main`. The page is encrypted with a password (`scripts/encrypt_page.py`, AES-256-GCM); visitors must enter it, and it is remembered on their device. One-time setup: Settings › Pages › Source: **GitHub Actions**, and Settings › Secrets and variables › Actions › **New repository secret** named `PLAYTEST_PASSWORD`. Without the secret the workflow refuses to publish. Images are not encrypted, and this repo is public, so the password keeps out casual visitors, not someone who reads the repo. Send testers the Pages address with `?playtest=1` on the end, and the password separately.
 - **What to send them.** `docs/playtest/TESTER_BRIEF.md`. Run the session with `docs/playtest/FACILITATOR.md`, which has the post-play questions.
 - **The log.** Testers press **Save log file** under Matter 2025-0417 › Overview. The JSON file holds a summary plus every search, record opened, link, flag and filing with a timestamp.
-- **The report.** Put the files in one folder and run `python3 scripts/analyse_playtests.py that-folder/ > report.md`. It covers time to each finding, stalls with what came before and after, records nobody opened, wrong links, joint proofs, how the 1972 licence was found, empty searches, flags and tool use.
+- **The report.** Put the files in one folder and run `python3 scripts/analyse_playtests.py that-folder/ > report.md`. It covers time to each finding, stalls with what came before and after, records nobody opened, wrong links, joint proofs, how the 1979 licence was found, empty searches, flags and tool use.
 
 ## Status
 
-Prototype. The Case 1 art is in and wired: period photos with real scar and mole positions in the photo lab, portraits, era paper behind documents, stamps, mounts and branding. `build.py --artifact` writes a single file with no images, so use the normal build for the full game. The next priority is a second case built on a different creature's legal rules.
+Prototype. The Case 1 art is in and wired: period photos with real scar and mole positions in the photo lab, portraits, era paper behind documents, stamps, mounts and branding. `build.py --artifact` writes a single file with no images, so use the normal build for the full game. The next priority is fresh-player validation of the first-hour flow, then replacement of the remaining identity-photo placeholders. See docs/FIRST_HOUR_PLAN.md for this build and docs/UPGRADE_PATH.md for the production sequence.
+
+Automated verification: `npm ci`, `npx playwright-core install chromium`, `python3 -m pip install cryptography`, then `npm test`. Set `CHROME` to an existing Chromium executable if needed. CI verifies the generated build and all eleven suites; Pages publication depends on those checks.

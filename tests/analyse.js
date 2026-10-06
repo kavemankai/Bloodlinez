@@ -43,5 +43,5 @@ const ROOT=path.resolve(__dirname,'..'), GAME='file://'+ROOT+'/index.html', OUT=
  ok(/\| bob \|.*\| yes \|/.test(sec('Testers')),'bob used the planted hint');
  ok(/Never opened by anyone \(\d+\)/.test(sec('Records'))&&/Inquest|inquest/.test(sec('Records')),'records nobody opened are listed by title');
  ok(!/hidden|DNA kit report/.test(sec('Records').split('Never opened')[1]||''),'hidden records are left out of "never opened"');
- console.log(fails?'FAILURES: '+fails:'ALL PASS'); await b.close();
+ process.exitCode=fails?1:0; console.log(fails?'FAILURES: '+fails:'ALL PASS'); await b.close();
 })();

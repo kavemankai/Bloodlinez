@@ -7,7 +7,7 @@ Read this first if you are picking up Bloodlinez: a new session, a new developer
 - **Case 1 (the Vane estate) is complete and playable.** It has 89 records, 29 people from 1410 to 2025, five findings, the player-built tree, date flags, the photo lab, the handwriting examiner, nil returns, DNA pages and a law library.
 - **The canon was rewritten today.** Ambrose Vane lives four lives, with three staged deaths (1934 fire, 1976 car crash, 2025 at sea) and an adopted or step heir each time. `docs/CANON_CASE1.md` is the source of truth.
 - **No human has played the current build.** The playtest kit is ready. Running it is the next step (see Open work).
-- **All ten test suites pass** on `main`.
+- **First-hour redesign:** optional leads, case desk, notebook, preliminary report, neutral claim controls, revision mode, save migration and keyboard inspection. See `FIRST_HOUR_PLAN.md` for scope and current validation.
 
 ## Where things are
 
@@ -16,7 +16,8 @@ Read this first if you are picking up Bloodlinez: a new session, a new developer
 | `src/template.html` | Page shell and all CSS |
 | `src/data.js` | Content: photos, people, records, the law, hints, findings and evidence rules (`FIND`, `BEARS`, `NEED`), mail |
 | `src/app.js` | Engine: index entries (`IDX`), relations, tree layout, claims and proof, events, flags, findings checks, all three websites, the playtest log |
-| `build.py` | Joins the three into `index.html`. `--artifact` writes `dist/artifact.html` without images |
+| `src/experience.js` | First-hour flow, fair arguments, progress recovery and keyboard lab |
+| `build.py` | Joins the four into `index.html`. `--artifact` writes `dist/artifact.html` without images |
 | `index.html` | The built game, committed |
 | `assets/` | Images. Faces are `.jpg`, everything else `.webp` |
 | `docs/CANON_CASE1.md` | The truth of the case: every life, date and death |
@@ -29,7 +30,7 @@ Read this first if you are picking up Bloodlinez: a new session, a new developer
 | `scripts/encrypt_page.py` | Password-protects the page for GitHub Pages |
 | `scripts/blind/` | Harness and runner for blind AI testers |
 | `.github/workflows/pages.yml` | Publishes the encrypted game to GitHub Pages on push to `main` |
-| `tests/` | Ten Playwright suites; see `tests/README.md` |
+| `tests/` | Eleven Playwright suites; see `tests/README.md` |
 
 ## Build, run, test
 
@@ -39,7 +40,8 @@ python3 build.py --artifact           # writes dist/artifact.html (no images)
 
 # tests need playwright-core and Chromium
 export NODE_PATH=/path/to/node_modules CHROME=/path/to/chromium
-for t in e2e assets layout tree guide records playtest analyse gate blind; do node tests/$t.js | tail -1; done
+npm ci
+npm test  # fails on assertions, crashes, missing results or timeouts
 ```
 
 In the cloud session the paths were `NODE_PATH=/tmp/claude-0/pw/node_modules` and `CHROME=/opt/pw-browsers/chromium-1194/chrome-linux/chrome`. Those last only as long as the container.
@@ -70,7 +72,7 @@ Useful in the browser console: `revealAllTree()` builds the complete correct tre
   The last two are proven only by certified lab or handwriting reports, using `PHOTO_OWNER` and `SIGN_OWNER`.
 - **Events.** A record offers only the statements it makes (`EVENT_DEFS`). If a statement names the person, it's proven or unproven like a link. If it doesn't (the inquests), the player's choice is a "reading" with no verdict until filing.
 - **Flags.** `computeFlags` checks ages, deaths, overlaps and loops. Flags about the attack are questions until Accord Art. 3 is cited.
-- **Feedback.** The first failed filing names failed findings only; nudges and missing tree items come from the second.
+- **Feedback.** Rejections identify failed findings; research hints require an explicit request. Investigation mode permits revisions; optional challenge mode allows three final filings.
 - **Playtest log.** `plog()` records every action when switched on (`?playtest=1` or the button on the matter overview).
 
 ## Adding or changing a record
@@ -95,7 +97,7 @@ Do every step, or a test will catch you:
 1. **Run the playtests.** Start with blind AI testers (`docs/playtest/AI_TESTERS.md`) to catch giveaways and dead ends cheaply, fix those, then 5 to 8 people (`docs/playtest/FACILITATOR.md`). Turn on GitHub Pages first.
 2. **Art.** The real Desmond (1925) and the real Julian (2019) are drawn placeholders. Clara, Irene and Helen have no portraits. See the end of `docs/ASSETS_VANE.md`.
 3. **The design document** needs its Case 1 sections updated to the new canon.
-4. **After the playtest:** free-form claims instead of answer lists, the DNA-sides tool, the lab feature picker, a case-data format, then Case 2. The roadmap is in the design document.
+4. **After the playtest:** validate the new claim controls, the DNA-sides tool, the lab feature picker, a case-data format, then Case 2. The roadmap is in the design document.
 
 ## Things that will bite you
 

@@ -43,8 +43,8 @@ const GAME='file://'+path.resolve(__dirname,'..')+'/index.html';
  const c=await text('census1911');
  ok(/Ambrose Vane\s*Head\s*41/.test(c),'in 1911 Ambrose gives his age as 41 (should be 54)');
  ok(!/thirty-five|not past/.test(c),'the enumerator no longer says what he thinks');
- // trust deed: the player must notice the son is named before his birth
+ // The trust predates the fire; Desmond was already an adult in this canon.
  const t=await text('trust1934');
- ok(!/not yet born/.test(t)&&t.includes('20 January 1934'),'the trust deed no longer says the son is unborn; its date does');
- console.log('page errors:',errs.length?errs:'none'); console.log(fails?'FAILURES: '+fails:'ALL PASS'); await b.close();
+ ok(!/not yet born/.test(t)&&t.includes('20 January 1934'),'the trust deed gives its date without supplying the conclusion');
+ console.log('page errors:',errs.length?errs:'none'); process.exitCode=fails?1:0; console.log(fails?'FAILURES: '+fails:'ALL PASS'); await b.close();
 })();

@@ -8,7 +8,7 @@ You are a night-shift associate at Ashgrove & Pell, a probate firm. Your clients
 
 Everything happens on three websites inside the game: a genealogy site, the firm's webmail and the firm's intranet. You read records, work out who is who, and report to the partners.
 
-Case 1 is **The Vane Estate**. Cornelius Vane, 91, went overboard from his yacht in March. His will leaves everything to his grandson Julian. His great-niece Margaret objects. A third woman, Daphne, says she is his daughter.
+Case 1 is **The Vane Estate**. Cornelius Vane, 84, went overboard from his yacht in March. His will leaves everything to his grandson Julian. His great-niece Margaret objects. A third woman, Daphne, says she is his daughter.
 
 ## Opening the game
 
@@ -18,26 +18,27 @@ Your progress saves in the browser as you play. Close the page and come back lat
 
 ## The goal
 
-The partners want **five findings**, each an answer plus the evidence that proves it. You have **three filings**.
+The partners want **five findings**, each an answer plus the evidence that proves it. Investigation mode allows revisions. Choose the optional **three-filing challenge** at the case desk before your first final filing.
 
 - A finding is accepted only if the answer is right **and** the evidence is the right kind.
 - A right answer on thin evidence is rejected, the same as a wrong answer.
 - Findings that are accepted lock in. You only have to fix the ones that failed.
-- After your first filing you see which findings failed. From your second you also get a nudge on each.
-- Three filings used without all five accepted, and the file goes to someone else.
+- Rejections identify failed findings. Research hints appear only when you request them.
+- In challenge mode, three unsuccessful filings cause reassignment.
 
-Your grade depends on how many filings it took: **A** for one, **B** for two, **C** for three. A minus sign after the letter means you relied on a hint from someone else's tree.
+In challenge mode your grade depends on how many filings it took: **A** for one, **B** for two, **C** for three. A minus sign after the letter means you relied on a hint from someone else's tree.
 
 ## Your first night
 
 You do not need to read anything else before you start. The game teaches itself:
 
-1. The first email in the inbox is the brief. Read it.
-2. The second is a short welcome from the firm.
-3. In the matter overview there is a **Training** list. It has eight steps and ticks itself off as you play.
-4. A **Field guide** button sits on the right of the bookmarks bar at all times. It explains every tool.
+1. Read the short assignment and search the claimant.
+2. Establish a supported household relationship, then read the objection.
+3. Open identification from different dates and compare originals at the **Case desk**.
+4. Follow the family records and consult the law. Optional investigation leads respond to your discoveries; **Need a lead?** gives graduated hints.
+5. Submit a supported **Preliminary report** when you have an identity concern. It creates a partner reply without spending a final filing or settling the case.
 
-The eight steps are: read the brief, search for a name, open a record, add a link to the tree, save a record to the matter, certify a photo comparison, cite a provision from the law library, and file a ruling.
+The archive stays open throughout. The bottom dock keeps the investigation, case desk and persistent notebook close at hand. The Field guide explains every tool. Export or import progress at the case desk; keep an exported copy before changing devices. Older saves are checked and backed up during migration.
 
 ## The three screens
 
@@ -53,7 +54,9 @@ The tabs along the top are three different websites. You can move between them f
 **A&P Mail** is the firm's webmail. The brief, the claimants' letters and replies to your work arrive here. New mail appears as you find things, so check it now and then.
 
 **Matter 2025-0417** is the firm's intranet.
-- *Overview*: the parties, the estate's assets, your training list and an activity log.
+- *Investigation*: your current lead, optional milestones, parties, training and activity log.
+- *Case desk*: two original sources, progress backups and filing policy.
+- *Preliminary report*: a limited concern while investigation continues.
 - *Evidence*: everything you have saved.
 - *Photo lab* and *Handwriting*: the two examiners.
 - *Ruling*: where you answer the findings and file.
@@ -79,7 +82,7 @@ Families take people in. Use **adopted or raised as a stepchild** when a record 
 
 A name on paper is not always one person. If a man went on under another person's name, add **also lived under the name of**. If two entries are one man throughout, add **is the same person as**. Either is proven only after you have certified a photo or handwriting comparison between them. Compare pictures from before a change as well as after. Some records state a fact about a person, such as an attack or a death with no body found. The **This record says that someone** box on that record lets you put it in the tree, against the person you choose. A record only ever offers what it says itself. If it names the person, a wrong choice is marked unproven. If it doesn't name anyone (an inquest on unidentified remains, say), your choice is recorded as your reading and nobody tells you whether you're right until you file.
 
-Your findings depend on the tree. The partners check that it shows what each finding claims, and unproven links among the people involved will fail it. The ruling form shows only a summary of your tree; what is missing is named in the nudges from your second filing.
+Your findings depend on supported claims in the tree. Tentative links do not invalidate supported proof. Certified comparisons can form a connected identity chain, provided the actual compared documents connect; sharing a paper name is not enough. The ruling uses people and legal provisions you have discovered. Check paperwork catches missing fields and attachments without grading your theory or spending a filing.
 
 Events are recorded from the record page: *was attacked and turned*, *has no birth record*, *died with no body seen*, *shares DNA with Margaret through Marsh relatives*. The event form is on every record that names people, and it accepts only what that record states.
 
@@ -127,6 +130,8 @@ Choose two photographs you have already opened on Bloodlines. Click each permane
 - A positive result counts as one identifying document in a ruling.
 - Click on the mark itself. A click well away from it counts as a miss.
 
+Keyboard: focus either photo, use arrows to move the inspection cursor, hold Shift for smaller steps, and press Enter or Space to mark a point. Home returns to the centre. Mouse and keyboard use the same tolerance.
+
 ## The handwriting examiner
 
 Choose two signed documents you have opened. The examiner certifies whether the same hand wrote both. A positive result counts as one identifying document, but only when the hand is the one you are trying to identify.
@@ -137,7 +142,7 @@ The firm's rule is that if any party turns out not to be strictly human, the Noc
 
 ## Hints
 
-A hint marked with a red drop comes from a public member tree. Anyone can make one, including the people you are investigating. Check who owns the tree and when it was made. Accepting a hint can put an unproven link in your tree. Save the record behind a hint, not the hint itself. Using a hint costs you a mark on your grade.
+A hint marked with a red drop comes from a public member tree. Anyone can make one, including the people you are investigating. Check who owns the tree and when it was made. Accepting a hint can put an unproven link in your tree. Save the record behind a hint, not the hint itself. Attaching a member-tree hint affects the challenge grade. Optional research hints are logged separately.
 
 ## Mail
 
@@ -167,7 +172,7 @@ If you are playtesting, open **Matter 2025-0417 › Overview** and press **Start
 
 - **Matter**: a case file at the firm. This one is 2025-0417.
 - **Finding**: one question you must answer, with evidence.
-- **Filing**: one submission of all your findings. You get three.
+- **Filing**: one submission of all your findings. Revisions are allowed; challenge mode limits this to three.
 - **Informant**: the person who gave a registrar the details.
 - **Enumerator**: the person who collected census forms.
 - **Nil return**: a certificate that a search found no record.

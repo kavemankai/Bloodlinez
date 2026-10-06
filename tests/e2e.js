@@ -15,9 +15,11 @@ const {chromium}=require('playwright-core'); const path=require('path'); const R
  await visitPin(p,['photo1962','licence1979','licence2025','death2025','news2025','death1934','burial1934','letterDaphne','birth1966','lawA4','birth1888']);
  await file(p,ANS,{F1:['photo1962','licence1979','licence2025'],F2:['death2025','news2025'],F3:['death1934','burial1934'],F4:['letterDaphne','birth1966'],F5:['lawA4','birth1888']});
  ok(await p.evaluate(()=>Object.values(S.res).every(v=>v===false)),'A: shortcuts all rejected');
- ok(await p.locator('.nudge').count()===0,'A: no nudge after 1st failed filing');
+ ok(await p.locator('.nudge').count()===0,'A: research hints are opt-in');
  await p.click('form[data-form=rule] button.nbtn');
- ok(await p.locator('.nudge').count()===5,'A: nudges after 2nd filing');
+ ok(await p.locator('.nudge').count()===0,'A: a second filing does not reveal the solution');
+ await p.locator('[data-a=finding-hint]').first().click();
+ ok(await p.locator('.nudge').count()===1,'A: a requested hint appears only for that finding');
 
  // B. full win with the lab, the right records and the built tree
  p=await fresh();
@@ -64,9 +66,9 @@ const {chromium}=require('playwright-core'); const path=require('path'); const R
  // E. wrong answers fail even with good evidence and a full tree
  p=await fresh(); await p.evaluate(()=>revealAllTree());
  await visitPin(p,['inquest1934','birth1903','dnaDaphne','birth1941','inquest1976']);
- await file(p,{...ANS,F3:'ambrose',F4:'daughter'},{F1:[],F2:[],F3:['inquest1934','birth1903'],F4:['dnaDaphne','birth1941','inquest1976'],F5:[]});
+ await file(p,{...ANS,F3:'ambrose',F4:'daughter'},{F1:['inquest1934'],F2:['inquest1934'],F3:['inquest1934','birth1903'],F4:['dnaDaphne','birth1941','inquest1976'],F5:['birth1903']});
  ok(await p.evaluate(()=>S.res.F3===false&&S.res.F4===false),'E: "Ambrose died in the fire" and "Daphne takes a share" are rejected');
 
- console.log('page errors:',errs.length?errs:'none'); console.log(fails?'FAILURES: '+fails:'ALL PASS');
+ console.log('page errors:',errs.length?errs:'none'); process.exitCode=fails?1:0; console.log(fails?'FAILURES: '+fails:'ALL PASS');
  await b.close();
 })();

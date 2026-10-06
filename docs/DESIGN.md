@@ -19,13 +19,13 @@ The supernatural material has to create legal problems, not just flavour. Each c
 2. Explore the tree, search records, check DNA and read the law.
 3. Save evidence to the matter.
 4. Answer each finding and attach the evidence that proves it.
-5. File. The partners accept or reject each finding separately, with a nudge, without saying whether the answer or the evidence was wrong.
+5. File. The partners accept or reject each finding separately, with optional research hints, without saying whether the answer or the evidence was wrong.
 
-Three filings per case. Accepted findings lock in. The grade depends on filings used and on whether you relied on a planted hint.
+Investigation mode permits revisions. Optional challenge mode allows three final filings and grades attempts and reliance on member-tree hints. Accepted findings lock in. A preliminary report is separate from final findings.
 
 ## Depth of the archive
 
-The Vane line runs back fifteen generations, to Hugh atte Vane (born about 1410). The oldest record is a 1436 manor court roll for a messuage in Hollow Lane. Before the parish registers start in 1538, the records are court rolls and wills. After that they are baptisms, marriages and tax returns, then the censuses from 1841 and civil registration from 1850. There are 70 records in all and most are there so the archive feels older than the case needs.
+The Vane line runs back fifteen generations, to Hugh atte Vane (born about 1410). The oldest record is a 1436 manor court roll for a messuage in Hollow Lane. Before the parish registers start in 1538, the records are court rolls and wills. After that they are baptisms, marriages and tax returns, then the censuses from 1841 and civil registration from 1850. There are 89 records in all and most are there so the archive feels older than the case needs.
 
 The Vanes are mortal and ordinary: boatmen, then coopers, then a shipwright. Ambrose was an ordinary clerk until 14 February 1888. Keep it that way, because the Case 1 answer depends on it.
 
@@ -73,7 +73,7 @@ The tree is the player's work, not a map handed to them. It opens with the four 
 4. Any link is accepted. If an attached record shows it, it is drawn solid ("proven"). Otherwise it is dashed ("unproven"). Same-person links are proven only by a certified photo or handwriting report. Events (turned on 14 Feb 1888, no birth registered) come from records that state them.
 4a. A claim can list record sets: `P_('harriet','thomas',[['birth1920','photo1912']])`. A link is proven when every record of one set is attached to it; with part of a set attached it is "partly proven" (`linkPartial`), still drawn dashed. A record offers in its tree form only the people it names.
 4b. `computeFlags()` checks dates and raises flags (impossible, unusual, law, note). Flags never block a link. Turning flags are notes worded as questions until the player cites Art. 3, then law flags that point at the article; neither states the conclusion, and a law flag does not colour the line as wrong.
-4c. `treeOk(F)` ties each finding to the tree: the judge needs the answer, the evidence and the specific proven tree content, with no unproven links among the people involved. The ruling form never lists these requirements before the second failed filing. F2 (deaths with no body), F3 (Desmond: no birth, no body) and F4 (Daphne's Marsh DNA) each rest on their own records and do not need the identity links that F1 proves.
+4c. `treeOk(F)` requires supported content for each finding. Unproven working hypotheses do not contaminate a supported argument. F1 and F3 accept continuous certified document chains, without silently equating two different faces carrying the same name. F2 needs the current missing body and earlier misidentification. F4 needs the claimed father, paternal Askew matches and the 1976 misidentification. F5 needs the proven bloodline and turning event.
 5. New people appear on the tree, new names turn up in the records, and the player searches those names next.
 
 Records are the only way in. A person's sources list, their hints and the facts on their profile fill in as records are opened. Family facts (parents, marriages) are not shown on a profile at all, only the tree's links.
@@ -108,3 +108,7 @@ The full timeline is in `CANON_CASE1.md`; the answers and evidence are in `WALKT
 5. Under Accord Art. 4 the estate is forfeit and passes to issue of the blood. Harriet was conceived before the February 1888 turning, so Margaret inherits.
 
 The pattern the player should see without being told: every forty years, a widow with a child, a disaster, and a survivor who looks about thirty.
+
+## First-hour implementation
+
+See `FIRST_HOUR_PLAN.md` for the sequence and acceptance criteria. `src/experience.js` adds discovery-based prompts, a two-source desk and persistent notebook, a limited preliminary concern with partner reply, discovered-person claim controls, procedural preflight, versioned progress with backups, and keyboard photo marking. These support the existing archive and proof system. The one-hour pacing target still needs fresh-player observation.

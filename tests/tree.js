@@ -54,10 +54,10 @@ const GAME='file://'+path.resolve(__dirname,'..')+'/index.html';
  r=await ev(()=>tryEvent('ambrose','misid','inquest1934')); ok(r.ok&&r.st==='reading'&&!/not|wrong|unproven/i.test(r.msg),'naming whose remains were in the fire gets no verdict, even when wrong');
  r=await ev(()=>tryEvent('desmond','misid','inquest1934')); ok(r.ok&&r.st==='reading','the right answer gets the same neutral reply');
  ok(await ev(()=>hasEvent('desmond','misid')&&!hasEvent('cornelius','turned')),'only proven statements and readings count toward findings');
- await fresh(); await ev(()=>{FIND.forEach(f=>S.ans[f.id]=f.opts.find(o=>o[0]!==f.ans)[0]);go('matter/ruling','net');render()}); await p.click('form[data-form=rule] button.nbtn'); await p.waitForTimeout(150);
+ await fresh(); await ev(()=>{S.pins=['birth1888']; FIND.forEach(f=>{S.ans[f.id]=f.opts.find(o=>o[0]!==f.ans)[0];S.ev[f.id]=['birth1888']});go('matter/ruling','net');render()}); await p.click('form[data-form=rule] button.nbtn'); await p.waitForTimeout(150);
  ok(await p.locator('ul.tchk li').count()===0,'after one failed filing, the tree requirements stay hidden');
  await p.click('form[data-form=rule] button.nbtn'); await p.waitForTimeout(150);
- ok(await p.locator('ul.tchk li').count()>=5,'after the second failed filing, each finding lists what its tree is missing');
+ ok(await p.locator('ul.tchk li').count()===0,'the second filing does not expose the required solution graph');
  // 2f. joint proof: the Harriet line needs records joined
  await fresh();
  r=await ev(()=>tryLink('harriet','parent','thomas','birth1920')); ok(r.ok&&r.status==='unproven'&&/does not prove it alone/.test(r.msg),'Thomas\'s birth alone only partly proves Harriet is his mother');
@@ -122,5 +122,5 @@ const GAME='file://'+path.resolve(__dirname,'..')+'/index.html';
  // 8. saves
  await fresh(); await ev(()=>{tryLink('ambrose','parent','harriet','birth1888');save()}); await p.reload(); await p.waitForTimeout(200);
  ok(await ev(()=>S.tree.links.length===1&&S.tree.people.includes('ambrose')),'the tree you built survives a reload');
- console.log('page errors:',errs.length?errs:'none'); console.log(fails?'FAILURES: '+fails:'ALL PASS'); await b.close();
+ console.log('page errors:',errs.length?errs:'none'); process.exitCode=fails?1:0; console.log(fails?'FAILURES: '+fails:'ALL PASS'); await b.close();
 })();

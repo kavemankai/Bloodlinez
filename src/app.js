@@ -126,7 +126,7 @@ const IDX = {
   marine2025:[['Vessel','MY Marguerite'],['Report date','3 Mar 2025'],['Reported by','J. Vane'],['Reference','HA-25-031']],
   funeral2025:[['Account','J. Vane, Vane House'],['Service','Memorial, no bodies'],['Date','March 2025'],['Director','Mortlake & Daughters']]
 };
-const MAIL_DATE = {m1:'Sun 22:52',m0:'Sun 22:40',m2:'Sun 21:30',m3:'Sun 21:02',m10:'Sun 20:15',m4:'Fri 23:58',m11:'Now',m5:'Now',m6:'Now',m7:'Now',m9:'Now',m12:'Now'};
+const MAIL_DATE = {mPre:'Now',m1:'Sun 22:52',m0:'Sun 22:40',m2:'Sun 21:30',m3:'Sun 21:02',m10:'Sun 20:15',m4:'Fri 23:58',m11:'Now',m5:'Now',m6:'Now',m7:'Now',m9:'Now',m12:'Now'};
 const FILES = {cellarPhoto:'Cellar_photos.jpg',letterJulian:'Letter_JVane_claim.pdf',letterMargaret:'Letter_MHolloway_objection.pdf',letterDaphne:'Letter_DMarshPike_claim.pdf',diary1888:'EVane_diary_Feb1888.jpg'};
 
 /* ================= ICONS ================= */
@@ -154,15 +154,15 @@ const LEAF = '<svg class="leaf" viewBox="0 0 20 26" aria-hidden="true"><path d="
 const FRESH = () => ({tab:'mail',hist:{bl:{s:['home'],i:0},mail:{s:['inbox/m1'],i:0},net:{s:['matter/overview'],i:0}},
   navOpen:false,sel:null,zoom:1,tz:1,kit:'julian',cookie:false,mlRead:false,recent:[],
   pins:[],read:['m4'],seen:[],ans:{},ev:{F1:[],F2:[],F3:[],F4:[],F5:[]},res:{},attempts:0,won:false,failed:false,
-  flags:{},reports:{},lab:{a:'',b:'',ma:[],mb:[],miss:0},hw:{a:'',b:''},tree:{people:['cornelius','julian','margaret','daphne'],links:[],events:[],nid:0},viewed:[],notes:'',log:[],plog:[],q:{name:'',kw:'',kind:'All'},searched:false});
+  mode:'investigation',claims:{},desk:{a:'',b:''},prelim:{answer:'',ev:[],sent:false},flags:{},reports:{},lab:{a:'',b:'',ma:[],mb:[],miss:0},hw:{a:'',b:''},tree:{people:['cornelius','julian','margaret','daphne'],links:[],events:[],nid:0},viewed:[],notes:'',log:[],plog:[],q:{name:'',kw:'',kind:'All'},searched:false});
 const S = FRESH();
-const KEEP = ['tab','hist','kit','cookie','recent','pins','read','seen','ans','ev','res','attempts','won','failed','flags','reports','lab','hw','tree','viewed','notes','log','plog','q','searched'];
-try{const s=JSON.parse(localStorage.getItem('bloodlines-v3')||'null'); if(s) KEEP.forEach(k=>{ if(s[k]!==undefined) S[k]=s[k]; });}catch(e){}
-if(!S.plog) S.plog=[];
-if(/[?&]playtest=1\b/.test(location.search) && !S.flags.plog){ S.flags.plog=true; S.plog.push({t:Date.now(),type:'start'}); }
-if(!S.tree.events) S.tree.events=[]; if(!S.tree.nid) S.tree.nid=0; S.tree.links.forEach(l=>{ if(!l.id) l.id=++S.tree.nid; });
-function save(){try{const o={};KEEP.forEach(k=>o[k]=S[k]);localStorage.setItem('bloodlines-v3',JSON.stringify(o))}catch(e){}}
-for(const id in S.reports) REC[id] = id.startsWith('sig:') ? sigRec(id) : cmpRec(id);
+const KEEP = ['tab','hist','kit','cookie','recent','pins','read','seen','ans','ev','res','attempts','won','failed','flags','reports','lab','hw','tree','viewed','notes','log','plog','q','searched','mode','claims','desk','prelim'];
+let saveNotice = '';
+function save(){
+ try{localStorage.setItem('bloodlines-v3',JSON.stringify(progressPayload()));saveNotice='';}
+ catch(e){saveNotice='Progress could not be saved on this device. Export a backup from your case desk.';}
+ const notice=document.getElementById('save-status');if(notice){notice.textContent=saveNotice;notice.hidden=!saveNotice;}
+}
 
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -182,7 +182,7 @@ function plogSummary(){
     linksTried:c('link'),linksProven:L.filter(e=>e.type==='link'&&e.status==='proven').length,flagsShown:c('flag'),labRuns:c('lab'),handRuns:c('hand'),nilReturns:c('nil'),filings:L.filter(e=>e.type==='filing').map(e=>e.accepted),won:S.won,failed:S.failed};
 }
 function plogExport(){
-  const out={game:'Bloodlinez',case:1,exported:new Date().toISOString(),started:S.plog.length?new Date(S.plog[0].t).toISOString():null,userAgent:navigator.userAgent,summary:plogSummary(),
+  const out={game:'Bloodlinez',case:1,build:BUILD_VERSION,saveVersion:SAVE_VERSION,exported:new Date().toISOString(),started:S.plog.length?new Date(S.plog[0].t).toISOString():null,userAgent:navigator.userAgent,summary:plogSummary(),
     tree:{people:S.tree.people.length,links:S.tree.links.map(l=>({a:l.a,t:l.t,b:l.b,recs:l.recs,status:LSTAT[l.id]?LSTAT[l.id].status:null})),events:S.tree.events},events:S.plog};
   const name=`bloodlinez-playtest-${new Date().toISOString().slice(0,16).replace(/[:T]/g,'-')}.json`, text=JSON.stringify(out,null,1);
   if(window.claude && window.claude.use){ /* inside the claude.ai viewer: plain downloads are blocked, so ask the viewer through the downloads capability */
@@ -267,6 +267,7 @@ function render(){
   chrome();
   const r = cur();
   $('#vp').innerHTML = S.tab==='bl' ? blPage(r) : S.tab==='mail' ? mailApp(r) : netApp(r);
+  renderExperience();
   const cw = $('#cw'); if(cw){ if(keep!==null){ cw.scrollTop=keep.t; cw.scrollLeft=keep.l; } else { cw.scrollTop=0; cw.scrollLeft=Math.max(0,(LAY.w-cw.clientWidth)/2); } }
 }
 
@@ -712,14 +713,14 @@ const provenLink = (t,x,y) => { const l=linkOf(t,x,y); return !!l && !!LSTAT[l.i
 const hasEvent = (p,k) => S.tree.events.some(e=>e.p===p&&e.k===k&&e.st!=='unproven');
 function treeChecks(F){
   computeFlags(); const c=[]; const add=(ok,text)=>c.push({ok,text});
-  const took = who => provenLink('took','ambrose',who);
+  const took = who => identityPath('ambrose',who);
   if(F==='F1'){ add(took('desmond'),'A certified comparison proves Ambrose Vane also lived under the name of Desmond Vane'); add(took('cornelius'),'A certified comparison proves Ambrose Vane also lived under the name of Cornelius Vane'); add(took('julian'),'A certified comparison proves Ambrose Vane also lived under the name of Julian Vane'); }
   if(F==='F2'){ add(hasEvent('cornelius','nobody'),'Cornelius Vane is recorded as dying with no body seen'); add(hasEvent('desmond','misid')||hasEvent('cornelius','misid'),'An earlier death in the family is recorded as buried under another name'); }
   if(F==='F3'){ add(hasEvent('desmond','misid'),"Desmond Vane is recorded as dying in 1934 and buried under another man's name"); add(took('desmond'),'A certified comparison proves Ambrose Vane also lived under the name of Desmond Vane'); }
   if(F==='F4'){ add(!!(linkOf('parent','cornelius','daphne')||linkOf('claimed','cornelius','daphne')),'Daphne is linked to Cornelius Vane'); add(hasEvent('daphne','askew'),"Daphne's Askew-side DNA matches are recorded"); add(hasEvent('cornelius','misid'),"Cornelius Vane is recorded as dying in 1976 and buried under another man's name"); }
   if(F==='F5'){ add(provenLink('parent','ambrose','harriet')&&provenLink('parent','harriet','thomas')&&provenLink('parent','thomas','margaret'),'Margaret is linked to Ambrose through Thomas and Harriet, every link proven'); add(hasEvent('ambrose','turned'),'The date Ambrose was turned is recorded in your tree'); }
-  const inv=INVOLVED[F]; const bad=S.tree.links.filter(l=>(inv.includes(l.a)||inv.includes(l.b))&&LSTAT[l.id]&&LSTAT[l.id].status==='unproven');
-  add(bad.length===0, bad.length?`Your tree has ${bad.length} unproven link${bad.length>1?'s':''} among these people. Prove ${bad.length>1?'them':'it'} or remove ${bad.length>1?'them':'it'}`:'No unproven links among these people');
+  // Unproven links remain working hypotheses; only the supported proof above is submitted.
+
   return c;
 }
 const treeOk = F => treeChecks(F).every(x=>x.ok);
@@ -927,7 +928,7 @@ function mailApp(r){
     <div class="racts"><button disabled>${ic('reply')}Reply</button><button disabled>${ic('fwdm')}Forward</button></div></div>
     <div class="rtext">${m.body()}</div>
     ${m.attach?`<button class="attach" data-a="open" data-v="${m.attach}"><span class="fi">${(FILES[m.attach]||'x.pdf').split('.').pop().toUpperCase()}</span><span><b>${FILES[m.attach]}</b><small>${m.attach==='diary1888'?'1.2 MB':'214 KB'} · Click to preview</small></span></button>`:''}
-    ${id==='m1'?`<div style="margin-top:22px;display:flex;gap:10px;flex-wrap:wrap"><button class="mlbtn" data-a="go" data-t="bl" data-v="tree">Open the Vane tree on Bloodlines</button><button class="mlbtn ghost" data-a="go" data-t="net" data-v="matter/overview">Open matter 2025-0417</button><button class="mlbtn ghost" data-a="guide">Open the field guide</button></div>`:''}
+    ${id==='m1'?`<div style="margin-top:22px;display:flex;gap:10px;flex-wrap:wrap"><button class="mlbtn ghost" data-a="guide">Open the field guide</button></div>`:''}
     ${id==='m7'||id==='m12'?endCard():''}</div>`;
   return `<div class="ml ${S.mlRead?'reading':''}"><div class="mltop"><span class="brand"><i>A&amp;P</i>Mail</span><div class="mlsearch">${ic('search')}Search mail and people</div><span class="me">AS</span></div>
   <div class="mlbody"><nav class="folders"><span class="compose">${ic('draft')}New message</span>
@@ -937,8 +938,8 @@ function mailApp(r){
 }
 function endCard(){
   if(S.failed) return `<div class="endcard"><b>Case lost</b><p>Three filings without five accepted findings.</p><div><button class="mlbtn" style="background:#fff;color:#1d1a1c" data-a="reset">Replay case</button></div></div>`;
-  const g = ['','A','B','C'][S.attempts] + (S.flags.usedHint?'−':'');
-  return `<div class="endcard"><small style="opacity:.7;letter-spacing:.06em;text-transform:uppercase">Case 1 complete · filings used: ${S.attempts} of 3</small><div class="g">${g}</div><p>Your tree has one branch now. It's going to get worse.</p><div><button class="mlbtn" style="background:#fff;color:#1d1a1c" data-a="reset">Replay case</button></div></div>`;
+  const g = S.mode==='challenge' ? (['','A','B','C'][S.attempts]||'C') + (S.flags.usedHint?'−':'') : 'Accepted';
+  return `<div class="endcard"><small style="opacity:.7;letter-spacing:.06em;text-transform:uppercase">Case 1 complete · filings used: ${S.attempts}${S.mode==='challenge'?' of 3':''}</small><div class="g">${g}</div><p>Your tree has one branch now. It's going to get worse.</p><div><button class="mlbtn" style="background:#fff;color:#1d1a1c" data-a="reset">Replay case</button></div></div>`;
 }
 
 /* ================= INTRANET ================= */
@@ -957,11 +958,11 @@ function lawPage(){
 }
 function matterPage(sub){
   const status = S.won ? '<span class="pill green">Closed · ruling accepted</span>' : S.failed ? '<span class="pill red">Reassigned to D. Pell</span>' : '<span class="pill amber">Open · associate review</span>';
-  const tabs = [['overview','Overview'],['evidence',`Evidence (${S.pins.length})`],['lab','Photo lab'],['hand','Handwriting'],['ruling','Ruling'],['notes','Notes']];
-  const body = {overview:mOverview,evidence:mEvidence,lab:labView,hand:handView,ruling:ruleView,notes:()=>`<div class="box"><div class="bh"><h2>Working notes</h2><span style="color:var(--nt-muted);font-size:13px">Saved automatically</span></div><div class="bb"><textarea id="notes" placeholder="Private to you.">${esc(S.notes)}</textarea></div></div>`}[sub]();
+  const tabs = [['overview','Investigation'],['desk','Case desk'],['preliminary','Preliminary report'],['evidence',`Evidence (${S.pins.length})`],['lab','Photo lab'],['hand','Handwriting'],['ruling','Ruling'],['notes','Notes']];
+  const body = {overview:mOverview,desk:deskView,preliminary:preliminaryView,evidence:mEvidence,lab:labView,hand:handView,ruling:ruleView,notes:()=>`<div class="box"><div class="bh"><h2>Working notes</h2><span style="color:var(--nt-muted);font-size:13px">Saved automatically</span></div><div class="bb"><textarea id="notes" placeholder="Private to you.">${esc(S.notes)}</textarea></div></div>`}[sub]();
   return `<div class="crumbs" style="color:var(--nt-muted);padding:0;display:flex;gap:6px"><button class="lnk" data-a="go" data-t="net" data-v="matter/overview">Matters</button><span>›</span><span>Probate</span><span>›</span><span>2025-0417</span></div>
   <div class="mhd"><div><h1>Estate of Cornelius Vane</h1><div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">${status}<span class="pill">Probate · contested</span></div></div></div>
-  <div class="meta"><div><small>Matter</small><b>2025-0417</b></div><div><small>Responsible partner</small><b>R. Ashgrove</b></div><div><small>Assigned</small><b>Associate (nights)</b></div><div><small>Registry</small><b>Ashby Probate Registry</b></div><div><small>Filings used</small><b>${S.attempts} of 3</b></div></div>
+  <details class="matter-meta"><summary>Case details · ${S.attempts} final filing${S.attempts===1?'':'s'}${S.mode==='challenge'?' of 3':''}</summary><div class="meta"><div><small>Matter</small><b>2025-0417</b></div><div><small>Responsible partner</small><b>R. Ashgrove</b></div><div><small>Assigned</small><b>Associate (nights)</b></div><div><small>Registry</small><b>Ashby Probate Registry</b></div><div><small>Filings used</small><b>${S.attempts}${S.mode==='challenge'?' of 3':''}</b></div></div></details>
   <div class="mtabs">${tabs.map(([k,l])=>`<button class="${sub===k?'on':''}" data-a="go" data-t="net" data-v="matter/${k}">${l}</button>`).join('')}</div>${body}`;
 }
 function plogBox(){
@@ -970,7 +971,7 @@ function plogBox(){
     <div style="display:flex;gap:14px;flex-wrap:wrap">${on?`<button class="lnk" data-a="plog" data-v="off">Stop recording</button>`:`<button class="lnk" data-a="plog" data-v="on">Start recording</button>`}${n?`<button class="lnk" data-a="plog" data-v="export">Save log file</button><button class="lnk" data-a="plog" data-v="clear">Clear log</button>`:''}</div></div></div>`;
 }
 function mOverview(){
-  return `<div class="cols2"><div style="display:flex;flex-direction:column;gap:18px">
+  return `${investigationView()}<div class="cols2"><div style="display:flex;flex-direction:column;gap:18px">
     <div class="box"><div class="bh"><h2>Parties</h2></div><div class="ttable-wrap"><table class="ttable"><tr><th>Name</th><th>Role</th><th>Represented by</th><th>DNA kit</th></tr>
       <tr><td><button class="lnk" data-a="go" data-t="bl" data-v="person/cornelius/facts">Cornelius Vane</button></td><td>Deceased (registered)</td><td>—</td><td>None</td></tr>
       <tr><td><button class="lnk" data-a="go" data-t="bl" data-v="person/julian/facts">Julian Ambrose Vane</button></td><td>Named heir</td><td>Self</td><td><button class="lnk" data-a="go" data-t="bl" data-v="dna/julian">BL-77-0302</button></td></tr>
@@ -1003,7 +1004,7 @@ function labView(){
   const pane = side => { const id = L[side], marks = side==='a'?L.ma:L.mb;
     return `<div class="labpane"><label for="lab-${side}" style="font-size:12px;font-weight:600;color:var(--nt-muted);text-transform:uppercase;letter-spacing:.05em">Photo ${side.toUpperCase()}</label>
       <select id="lab-${side}" data-lab-select="${side}"><option value="">Choose a photo…</option>${avail.map(p=>`<option value="${p}" ${id===p?'selected':''}>${PH[p].who}</option>`).join('')}</select>
-      ${id?labSvg(id,marks):'<div class="empty">No photo selected.</div>'}
+      ${id?labSvg(id,marks,side):'<div class="empty">No photo selected.</div>'}
       ${id?`<ul class="marklist">${marks.length?marks.map(m=>`<li>${MARK_NAME[m]}</li>`).join(''):'<li>No marks found yet. Click a mark on the face.</li>'}</ul>`:''}</div>`; };
   const both = L.a && L.b && L.a!==L.b, shared = both ? L.ma.filter(m=>L.mb.includes(m)) : [];
   return `<div class="box"><div class="bh"><h2>Photo lab</h2></div><div class="bb" style="display:flex;flex-direction:column;gap:14px"><p style="margin:0;color:var(--nt-muted)">Choose two photographs you've viewed on Bloodlines. Click each permanent mark you can see on the face, such as a scar or a mole. Two or more marks found on both photos certifies a positive match.</p>
@@ -1011,10 +1012,12 @@ function labView(){
     <div class="lab">${pane('a')}${pane('b')}</div>
     ${both?`<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><span style="flex:1;min-width:200px;color:var(--nt-muted)">Marks found on both: ${shared.length}. Missed clicks: ${L.miss}.</span><button class="nbtn" data-a="certify">Certify comparison</button></div>`:''}</div></div>`;
 }
-function labSvg(id,marks){
-  const m = marksOf(id);
-  return photo(PH[id], `data-lab="1" data-id="${id}"`).replace('</svg>', marks.map(k=>`<circle class="markc" cx="${m[k][0]}" cy="${m[k][1]}" r="${PH[id].hit?PH[id].hit*0.55:6}" style="stroke-width:${PH[id].hit?3.5:1.6}"/>`).join('')+'</svg>');
+function labSvg(id,marks,side='a'){
+  const m = marksOf(id), cursor=inspectionCursor(side,id);
+  const cross=`<g class="inspection-cursor"><circle cx="${cursor.x}" cy="${cursor.y}" r="${photoSize(id).w/45}"/><path d="M${cursor.x-12},${cursor.y}h24 M${cursor.x},${cursor.y-12}v24"/></g>`;
+  return photo(PH[id], `data-lab="1" data-id="${id}" data-side="${side}" tabindex="0" aria-describedby="lab-keys-${side}"`).replace('</svg>', marks.map(k=>`<circle class="markc" cx="${m[k][0]}" cy="${m[k][1]}" r="${PH[id].hit?PH[id].hit*0.55:6}" style="stroke-width:${PH[id].hit?3.5:1.6}"/>`).join('')+cross+'</svg>')+`<p class="lab-keyhelp" id="lab-keys-${side}">Keyboard: arrow keys move the cursor; Shift moves finely. Enter marks a point. Home centres it.</p>`;
 }
+
 function cmpRec(id){
   const r = S.reports[id];
   return {kind:'Lab',year:2025,title:`Photo lab: ${PH[r.a].who} vs ${PH[r.b].who}`,k:'',hidden:true,
@@ -1051,24 +1054,10 @@ function treeSummary(){
   computeFlags(); const unp=S.tree.links.filter(l=>LSTAT[l.id]&&LSTAT[l.id].status==='unproven').length, bad=FLAGS.filter(f=>f.sev==='impossible').length;
   return `<p class="tsum" style="margin:6px 0 0;font-size:13.5px">Your tree: ${S.tree.people.length} people, ${S.tree.links.length} link${S.tree.links.length===1?'':'s'}, ${S.tree.events.length} event${S.tree.events.length===1?'':'s'} · ${unp} unproven link${unp===1?'':'s'} · ${bad} impossible flag${bad===1?'':'s'} · <button type="button" class="lnk" data-a="go" data-t="bl" data-v="tree">Open the tree</button></p>`;
 }
-function ruleView(){
-  const done = S.won||S.failed;
-  return `<div style="display:flex;flex-direction:column;gap:14px">
-    <div class="box"><div class="bb" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><div style="flex:1;min-width:220px"><h2>File a ruling</h2><p id="rulemsg" style="margin:4px 0 0;color:var(--nt-muted)">Answer each finding and attach the evidence that proves it. The partners also check that your family tree shows it. Accepted findings stay locked in.</p>${treeSummary()}</div>
-    <div class="attempts" aria-label="Filings used">${[0,1,2].map(i=>`<i class="${i<S.attempts?'used':''}"></i>`).join('')}<span>${3-S.attempts} filing${3-S.attempts===1?'':'s'} left</span></div></div></div>
-    <form data-form="rule" style="display:flex;flex-direction:column;gap:12px">
-    ${FIND.map((f,i)=>{ const r = S.res[f.id], locked = r===true||done;
-      return `<fieldset class="finding ${r===true?'ok':r===false?'no':''}"><div class="fhead"><span class="n">FINDING ${i+1}</span><legend>${f.q}</legend>${r===true?'<span class="pill green">Accepted</span>':r===false?'<span class="pill red">Not accepted</span>':''}</div>
-      ${r===false&&S.attempts>=2?`<p class="nudge">${f.nudge}${S.flags['hint_'+f.id]?' Also: you attached a hint from a member tree. The claimant built that tree.':''}</p>${treeOk(f.id)?'':`<ul class="tchk" aria-label="What your tree is missing">${treeChecks(f.id).filter(x=>!x.ok).map(x=>`<li class="no"><span aria-hidden="true">○</span>${esc(x.text)}</li>`).join('')}</ul>`}`:''}
-      ${f.opts.map(([v,l])=>`<label class="opt"><input type="radio" name="${f.id}" id="${f.id}-${v}" value="${v}" ${S.ans[f.id]===v?'checked':''} ${locked?'disabled':''}><span>${l}</span></label>`).join('')}
-      <div style="font-size:12px;font-weight:600;color:var(--nt-muted);text-transform:uppercase;letter-spacing:.05em;margin-top:4px">Supporting evidence · ${(S.ev[f.id]||[]).filter(pinned).length} attached · 4 at most${f.id==='F1'?' · needs 3 documents':''}</div>
-      ${S.pins.length?`<div class="chips">${S.pins.map(p=>`<button type="button" class="chip" data-a="ev" data-f="${f.id}" data-v="${p}" aria-pressed="${(S.ev[f.id]||[]).includes(p)}" ${locked?'disabled':''}>${REC[p].title}</button>`).join('')}</div>`:'<p style="font-size:13px;margin:0;color:var(--nt-muted)">Add evidence to the matter first. It will appear here.</p>'}
-      </fieldset>`;}).join('')}
-    <div><button class="nbtn" ${done?'disabled':''}>${S.won?'Ruling accepted':S.failed?'Matter reassigned':'File ruling with partners'}</button></div></form>
-    ${S.won?`<div class="verdict ok"><b>All five findings accepted</b><p>Ambrose, Cornelius and Julian Vane are one man. He registered his own birth twice and his own death twice, and inherited from himself in 1934. Under Article 4 the estate goes to Margaret Holloway. Check your mail.</p></div>`:''}
-    ${S.failed?`<div class="verdict no"><b>Matter reassigned</b><p>Three filings used. Check your mail.</p></div>`:''}</div>`;
-}
+function ruleView(){ return argumentView(); }
+
 function judge(){
+  if(S.won||S.failed) return;
   let all = true;
   FIND.forEach(f=>{
     if(S.res[f.id]===true) return;
@@ -1079,9 +1068,9 @@ function judge(){
   });
   S.attempts++;
   plog('filing',{attempt:S.attempts,answers:{...S.ans},evidence:JSON.parse(JSON.stringify(S.ev)),results:{...S.res},accepted:Object.values(S.res).filter(Boolean).length});
-  log(`Ruling filed (${S.attempts} of 3): ${Object.values(S.res).filter(Boolean).length} of 5 findings accepted`);
+  log(`Ruling filed (${S.attempts}${S.mode==='challenge'?' of 3':''}): ${Object.values(S.res).filter(Boolean).length} of 5 findings accepted`);
   if(all){ S.won = true; }
-  else if(S.attempts>=3){ S.failed = true; }
+  else if(S.mode==='challenge'&&S.attempts>=3){ S.failed = true; }
 }
 
 /* ================= EVENTS ================= */
@@ -1148,7 +1137,7 @@ document.addEventListener('click', e=>{
       if(nilFor){ log('Nil return requested: '+nm); showPreview(nilFor); return; }
       const words = low.split(/\s+/), has = Object.keys(REC).some(id=>!REC[id].hidden && REC[id].kind==='Birth' && words.every(w=>REC[id].title.toLowerCase().includes(w)));
       toast(has ? 'A birth record exists for that name. No nil return can be issued.' : 'Not certified. The firm only certifies searches for people in this matter.'); return; }
-    case 'reset': { const keep={on:S.flags.plog,log:S.plog}; try{localStorage.removeItem('bloodlines-v3')}catch(e){} for(const id in S.reports) delete REC[id]; Object.assign(S, FRESH()); if(keep.on){ S.flags.plog=true; S.plog=keep.log; plog('replay'); } save(); render(); return; }
+    case 'reset': { if(!confirm('Start this case again? Export a backup from the case desk first if you want to keep this investigation.')) return; const keep={on:S.flags.plog,log:S.plog}; try{localStorage.removeItem('bloodlines-v3')}catch(e){} for(const id in S.reports) delete REC[id]; Object.assign(S, FRESH()); if(keep.on){ S.flags.plog=true; S.plog=keep.log; plog('replay'); } save(); render(); return; }
     case 'plog': if(v==='on'){ S.flags.plog=true; plog('start'); } else if(v==='off'){ plog('stop'); S.flags.plog=false; } else if(v==='export'){ plogExport(); } else if(v==='clear'){ S.plog=[]; if(S.flags.plog) plog('start'); } save(); render(); return;
   }
 });
@@ -1179,11 +1168,9 @@ document.addEventListener('submit', e=>{
     return;
   }
   if(f.dataset.form==='rule'){
-    const missing = FIND.filter(x=>S.res[x.id]!==true && !S.ans[x.id]);
-    if(missing.length){ $('#rulemsg').textContent = `Answer every finding before filing. Missing: ${missing.map(x=>'Finding '+x.id.slice(1)).join(', ')}.`; $('#rulemsg').style.color='var(--bad)'; return; }
+    const issues=preflight(); if(issues.length){ showProcedureFeedback(issues.join(' ')); return; }
     judge(); save(); render(); $('#vp').scrollTop=0;
     toast(S.won?'Ruling accepted. You have new mail.':S.failed?'Matter reassigned. You have new mail.':'Ruling returned by the partners');
   }
 });
 document.addEventListener('keydown', e=>{ if(e.key==='Escape' && !$('#modal').hidden) closePreview(); });
-render();

@@ -11,6 +11,7 @@ src = root / "src"
 body = (src / "template.html").read_text()
 body = body.replace("/*__DATA__*/", (src / "data.js").read_text())
 body = body.replace("/*__APP__*/", (src / "app.js").read_text())
+body = body.replace("/*__EXPERIENCE__*/", (src / "experience.js").read_text())
 
 if "--artifact" in sys.argv:
     out = root / "dist" / "artifact.html"

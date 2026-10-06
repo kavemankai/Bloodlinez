@@ -53,5 +53,5 @@ const {chromium}=require('playwright-core'); const path=require('path'); const R
  await shot('lab',()=>{S.lab={a:'photo1889',b:'licence2025',ma:['scar','mole'],mb:['scar'],miss:1};go('matter/lab','net')});
  await shot('court',()=>{go('record/court1436','bl')});
  console.log('failed/404 requests:',bad.length?[...new Set(bad)]:'none','| page errors:',errs.length?errs:'none');
- console.log(fails?'FAILURES: '+fails:'ALL PASS'); await b.close();
+ process.exitCode=fails?1:0; console.log(fails?'FAILURES: '+fails:'ALL PASS'); await b.close();
 })();

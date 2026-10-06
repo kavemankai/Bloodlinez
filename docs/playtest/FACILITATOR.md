@@ -13,6 +13,12 @@ Find out whether Case 1 works for people who didn't make it: whether they finish
 2. Send `TESTER_BRIEF.md` with the link.
 3. If you can watch (in person or by screen share), stay quiet. Write down the time and what they said whenever they stall, laugh, swear or ask a question. Answer only "what would you try?".
 
+## First-hour observation
+
+Use investigation mode for the first cohort. Record time to the first meaningful search, supported relationship, spontaneous identity suspicion and accepted preliminary concern. Write down the player's explanation of the discrepancy before supplying any hint. Also record the build, requested hint levels, stalls longer than five minutes, accidental filings and whether the player wanted to continue.
+
+The timing target is a hypothesis: by 10 minutes understand the job and establish one link; by 30 minutes notice a defensible discrepancy; by 60 minutes produce a supported preliminary concern. Do not coach someone to hit it. Start with five fresh players. A proposed iteration gate is four of five understanding the task and reaching the preliminary report without facilitator rescue, with no unrecoverable progress loss. Small cohorts expose problems; they do not establish market demand.
+
 ## After play: questions
 
 Ask these in order, the same day. Write down their words, not your summary.

@@ -46,5 +46,5 @@ const GAME='file://'+path.resolve(__dirname,'..')+'/index.html';
  ok(info.nodes===n,'tree renders all '+n+' people'); ok(info.labels===3,'the three adoptions are labelled (a proven father replaces the claimed line)'); ok(info.find===n+1,'find-a-person lists everyone');
  ok(await p.evaluate(()=>{const A=LAY.pos; return A.harriet[0]<A.desmond[0]===(A.eliza[0]<A.clara[0]);}),'Harriet sits on her mother Eliza\'s side, Desmond on his mother Clara\'s side');
  await p.evaluate(()=>{S.sel='daphne';render()}); ok(await p.evaluate(()=>document.querySelector('.tnode.dis')!==null),'Daphne is drawn as disputed from her tag');
- console.log('page errors:',errs.length?errs:'none'); console.log(fails?'FAILURES: '+fails:'ALL PASS'); await b.close();
+ console.log('page errors:',errs.length?errs:'none'); process.exitCode=fails?1:0; console.log(fails?'FAILURES: '+fails:'ALL PASS'); await b.close();
 })();
