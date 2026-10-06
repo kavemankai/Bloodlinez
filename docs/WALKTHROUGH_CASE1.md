@@ -56,7 +56,7 @@ A finding passes with one record from every group listed, at most four records, 
 
 ## Grade
 
-One filing is an A, two a B, three a C. A minus sign means a hint from someone else's tree was attached as evidence.
+Investigation mode allows revisions without a letter grade. After each filing it reports only how many findings were accepted; all five must pass in one filing. The end card shows the number of filings. In challenge mode, one filing is an A, two a B, three a C. A minus sign means a hint from someone else's tree was attached as evidence.
 
 ## A route through the tree
 
@@ -73,7 +73,7 @@ The tree starts with Cornelius, Julian, Margaret and Daphne.
 
 Links to make that are not parent or spouse:
 - **adopted or raised as a stepchild:** Ambrose → Desmond (deed poll), Desmond → Cornelius (1948 order), Cornelius and Helen → Julian (1996 order).
-- **also lived under the name of:** Ambrose → Desmond, Cornelius and Julian, each proven by a certified comparison between an Ambrose photo and a photo of that name taken after the handover.
+- **also lived under the name of:** Ambrose → Desmond, Cornelius and Julian, proven by direct comparisons or a continuous chain of certified comparisons using photographs after each handover.
 
 ## The Harriet line (Finding 5)
 
@@ -84,7 +84,7 @@ Two links on Margaret's line need two records each.
 
 ## What the tree must show before filing
 
-The ruling form does not list these; they appear in the nudges after a second failed filing.
+The ruling form does not list this solution. Optional research hints point back to records.
 
 - F1: Ambrose also lived under the names of Desmond, Cornelius and Julian, each proven.
 - F2: "died with no body seen" for Cornelius, and an earlier death recorded as "buried under another man's name".
@@ -92,7 +92,7 @@ The ruling form does not list these; they appear in the nudges after a second fa
 - F4: Daphne linked to Cornelius; her Askew matches recorded; Cornelius recorded as "buried under another man's name" (from the 1976 inquest).
 - F5: the proven chain Ambrose, Harriet, Thomas, Margaret, and the turning.
 
-Any unproven link among the people involved fails the finding.
+Tentative links do not invalidate supported proof. Identity links can form a connected chain of actual compared documents; a shared paper name alone cannot bridge disconnected photo or handwriting comparisons.
 
 ## The Ashgrove trail (optional)
 
@@ -106,3 +106,7 @@ Search *Ashgrove*. He pledges in the 1436 court roll, writes the 1509 and 1577 w
 - **Pryor Legal's email** says Daphne's match with Margaret settles her claim. It is the wrong side of her tree.
 - **"Cornelius faked his death"** is half right. The answer to Finding 1 is the man underneath all three names.
 - **Attaching too many records**, or records unrelated to a finding, fails the evidence.
+
+## First-hour route
+
+Search Julian, open the 1996 adoption and add the supported relationship. Read and save Margaret's objection. Open and save both Julian licences (2019 and 2025), then compare them at the case desk. A preliminary report selecting “Identification needs further examination” with those two licences and Margaret's letter is accepted. A positive certified comparison involving the 2025 licence can replace the letter. This pauses distribution and creates one partner reply, without proving the final identity or using a final filing. Continue through earlier names and portraits to establish the broader identity chain.

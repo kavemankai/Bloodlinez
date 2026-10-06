@@ -25,5 +25,5 @@ const ROOT=path.resolve(__dirname,'..'), OUT=path.join(ROOT,'tests','shots','sit
  ok(await p.evaluate(()=>[...document.images].filter(i=>i.complete&&i.naturalWidth>0).length>0),'images load beside the encrypted page');
  await p.reload(); await p.waitForFunction(()=>typeof S!=='undefined',null,{timeout:15000});
  ok(await p.locator('#pw').count()===0,'a reload opens straight into the game');
- console.log('page errors:',errs.length?errs:'none'); console.log(fails?'FAILURES: '+fails:'ALL PASS'); await b.close();
+ console.log('page errors:',errs.length?errs:'none'); process.exitCode=fails?1:0; console.log(fails?'FAILURES: '+fails:'ALL PASS'); await b.close();
 })();

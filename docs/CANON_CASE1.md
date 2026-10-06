@@ -85,10 +85,10 @@ Ambrose → Harriet (b. 1888, conceived before the turning) → Thomas Holloway 
 
 | # | Question | Answer | Evidence groups (one of each) | Tree must show |
 |---|---|---|---|---|
-| F1 | Who is the man now calling himself Julian Ambrose Vane? | Ambrose Vane, who has also lived as Desmond and Cornelius | Positive photo-lab report; two of: trust deed 1934, inquest 1934, inquest 1976, adoption 1996, or a Vane-hand signature report; span > 100 years | Ambrose **took the identity of** Desmond, Cornelius and Julian, each proven by a certified comparison |
+| F1 | Who is the man now calling himself Julian Ambrose Vane? | Ambrose Vane, who has also lived as Desmond and Cornelius | Positive photo-lab report; two of: trust deed 1934, inquest 1934, inquest 1976, adoption 1996, hospital register 1888, or a Vane-hand signature report; span > 100 years | Ambrose **took the identity of** Desmond, Cornelius and Julian, proven by direct or continuous certified document comparisons |
 | F2 | Did Cornelius Vane die on 2 March 2025? | No. Staged | Harbour report or funeral invoice; plus one 1934 or 1976 record showing the same method | "Died with no body seen" for Cornelius; one earlier staged death recorded |
-| F3 | Who died in the Vane House fire of 1 February 1934? | His stepson, Desmond Vane | Inquest 1934; the 1925 Desmond photo or the negative lab report against it; trust deed or deed poll | Desmond (real) recorded as died 1934; Ambrose took his identity |
-| F4 | What is Daphne Marsh-Pike's claim worth? | She is the real Cornelius's daughter. He died in 1976 and owned nothing; she takes nothing from this estate | Daphne's DNA (paternal Askew matches); Cornelius's 1941 birth or 1948 adoption; inquest 1976 | Daphne linked to Cornelius; Cornelius (real) recorded as died 1976 |
+| F3 | Who died in the Vane House fire of 1 February 1934? | His stepson, Desmond Vane | Inquest 1934; one of birth 1903, deed poll 1907, census 1921 or the 1925 Desmond photo | Desmond (real) recorded as died 1934; Ambrose took his identity |
+| F4 | What is Daphne Marsh-Pike's claim worth? | She is the real Cornelius's daughter. He died in 1976 and owned nothing; she takes nothing from this estate | Daphne's DNA (paternal Askew matches); Cornelius's 1941 birth or 1948 adoption; inquest, death registration or newspaper 1976 | Daphne linked to Cornelius; paternal Askew matches recorded; Cornelius (real) recorded as died 1976 |
 | F5 | Who receives the estate? | Margaret, as issue of the blood, under Art. 4 | Art. 4; the turning date; Harriet's birth | The proven chain Ambrose → Harriet → Thomas → Margaret; the turning |
 
 ## Records: keep, change, add, remove

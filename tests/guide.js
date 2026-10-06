@@ -40,5 +40,5 @@ const GAME='file://'+path.resolve(__dirname,'..')+'/index.html';
  ok(await ev(()=>S.tab==='mail'),'a Go button takes you to the right place');
  await ev(()=>go('matter/overview','net')); await p.click('[data-a=training][data-v=hide]'); ok(await p.locator('.train').count()===0,'Hide this list collapses the training list');
  await p.click('[data-a=training][data-v=show]'); ok(await p.locator('.train').count()===1,'Show the training list brings it back');
- console.log('page errors:',errs.length?errs:'none'); console.log(fails?'FAILURES: '+fails:'ALL PASS'); await b.close();
+ console.log('page errors:',errs.length?errs:'none'); process.exitCode=fails?1:0; console.log(fails?'FAILURES: '+fails:'ALL PASS'); await b.close();
 })();

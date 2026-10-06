@@ -1,0 +1,7 @@
+{
+  "name": "bloodlinez",
+  "version": "0.2.0",
+  "private": true,
+  "scripts": { "build": "python3 build.py", "test": "node tests/run.js" },
+  "devDependencies": { "playwright-core": "1.62.1" }
+}

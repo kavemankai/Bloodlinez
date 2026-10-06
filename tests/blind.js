@@ -19,4 +19,4 @@ try{
  ok(J.events.some(e=>e.type==='search'),'savelog writes the playtest log with the search in it');
 }catch(e){ ok(false,'harness error: '+e.message.split('\n')[0]); }
 finally{ try{run('stop')}catch(e){} }
-console.log(fails?'FAILURES: '+fails:'ALL PASS');
+process.exitCode=fails?1:0; console.log(fails?'FAILURES: '+fails:'ALL PASS');

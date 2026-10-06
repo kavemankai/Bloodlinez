@@ -434,7 +434,7 @@ const FIND = [
     nudge:'Identity across names needs three independent documents spanning more than a century (Accord Art. 2). A photograph only counts once the photo lab has certified it. Compare faces from before and after each death in the family, not only after. Signatures can be compared too.'},
   {id:'F2',q:'Did Cornelius Vane die on 2 March 2025?',opts:[['drowned','Yes. He went overboard off Ashby Point.'],['staged','No. The death was staged.'],['open','It cannot be determined. Leave it as an open finding.']],ans:'staged',
     nudge:'Look at what happened to the boat afterwards, and at what was ordered for the memorial. Then look at how this family has died before.'},
-  {id:'F3',q:'Who died in the Vane House fire of 1 February 1934?',opts:[['ambrose','Ambrose Vane, as registered, with his wife and housekeeper'],['desmond','His stepson, Desmond Vane, with his wife and housekeeper'],['stranger','An unknown man, placed there to be found'],['nobody','No man died. The male remains were never his.']],ans:'desmond',
+  {id:'F3',q:'Who died in the Vane House fire of 1 February 1934?',opts:[['ambrose','Ambrose Vane, as registered, with his wife and housekeeper'],['desmond','Desmond Vane, with his mother Clara and the housekeeper Ada Kemp'],['stranger','An unknown man, placed there to be found'],['nobody','No man died. The male remains were never his.']],ans:'desmond',
     nudge:'Read what the pathologist said about the remains. Then work out who in that house was the right age.'},
   {id:'F4',q:"What is Daphne Marsh-Pike's claim worth?",opts:[['daughter',"She is the deceased's daughter and takes a child's share"],['realcornelius','Her father was the real Cornelius Vane, who died in 1976. She takes nothing from this estate.'],['notvane','She has no tie to the Vanes at all and takes nothing'],['unproven','Her claim is unproven for now and should be held open']],ans:'realcornelius',
     nudge:"Read the side of Daphne's DNA that Margaret doesn't share. Then find out what Cornelius was called before he was a Vane."},
@@ -472,26 +472,30 @@ function yearsOf(id){
  return [REC[id].year];
 }
 function evidenceOk(F, ev){
- if(ev.length>MAX_EV) return false;
+ if(!NEED[F] || ev.length>MAX_EV || ev.some(id=>!REC[id])) return false;
  if(ev.filter(id=>!relevant(id,F)).length>1) return false;
- const used = new Set(), counted = [];
- for(const g of NEED[F]){
-  const got = ev.filter(id=>inGroup(id,g) && !used.has(id));
-  if(got.length<g.n) return false;
-  got.slice(0,g.n).forEach(id=>{used.add(id); counted.push(id);});
+ // Try every distinct assignment. Attachment order cannot determine admissibility.
+ const slots=NEED[F].flatMap(g=>Array(g.n).fill(g));
+ function assign(i,used){
+  if(i===slots.length){
+   if(F!=='F1') return true;
+   const ys=[...used].flatMap(yearsOf);
+   return Math.max(...ys)-Math.min(...ys)>100;
+  }
+  return [...new Set(ev)].some(id=>!used.has(id)&&inGroup(id,slots[i])&&assign(i+1,new Set([...used,id])));
  }
- if(F==='F1'){ const ys = counted.flatMap(yearsOf); if(Math.max(...ys)-Math.min(...ys) <= 100) return false; }
- return true;
+ return assign(0,new Set());
 }
 
 /* ================= MAIL ================= */
 const MAIL = {
   m1:{from:'R. Ashgrove, Senior Partner',time:'10:52 pm',subj:'Vane estate: your first file',body:()=>`
-    <p>Welcome to nights. Your first file is the estate of <b>Cornelius Vane</b>, 84, lost overboard off Ashby Point in March with his wife Helen. Neither body was recovered.</p>
-    <p>The will leaves everything to Helen for life, then to his grandson, <b>Julian Ambrose Vane</b>. Helen died with him, so Julian takes all of it. <b>Margaret Holloway</b>, the last of the old Vane blood, objects. As of this afternoon a third party, <b>Daphne Marsh-Pike</b>, says she is Cornelius's daughter. All three claimants have taken Bloodlines DNA tests.</p>
-    <table class="assets"><tr><td>Vane House, 14 Hollow Lane (heritage listed)</td><td>$2,140,000</td></tr><tr><td>Vane Family Trust investments</td><td>$3,880,000</td></tr><tr><td>Cellar contents</td><td>Undisclosed</td></tr><tr><td>Family crypt, Ashby cemetery</td><td>Not valued</td></tr></table>
-    <p>The partners want five findings, each backed by evidence. The ruling form is in the case file. The tree has four names on it and no links. Find out who is related to whom: open a record, read it, and add the links it proves from the record page. Pin records as you go, then attach them to the findings they prove. You get three filings. After that, Pell takes the file and you take the blame.</p>
-    <p>The Nocturnal Accord is in the law library. Read it. If any party turns out not to be strictly human, it decides the matter and the Succession Act doesn't.</p>
+    <p>Welcome to nights. <b>Verify the claimant before we distribute the estate.</b></p>
+    <p>Cornelius Vane, 84, and his wife Helen were lost at sea in March. The will names <b>Julian Ambrose Vane</b> as the beneficiary after Helen. <b>Margaret Holloway</b> objects to his claim. <b>Daphne Marsh-Pike</b> has also lodged a claim.</p>
+    <p>Start with the claimant himself, and with the objection to him. The archive is open to you.</p>
+    <p>You may send a preliminary concern before settling the whole estate. It does not use a final filing.</p>
+    <div class="opening-actions"><button class="mlbtn" data-a="searchname" data-v="Julian Vane">Search Julian Vane</button><button class="mlbtn ghost" data-a="go" data-t="net" data-v="matter/overview">Open your investigation</button></div>
+    <details><summary>Full assignment and estate</summary><p>Vane House and the family investments are valued at $6,020,000. The cellar contents and family crypt are unvalued. The final ruling needs five supported findings. The Nocturnal Accord is in the law library; where it applies, it governs the estate.</p><p>${S.mode==='challenge'?'Challenge mode allows three final filings.':'Investigation mode allows revisions. Working theories are not submitted as proof.'}</p></details>
     <p>R.A.</p>`},
   m0:{from:'People & Culture',time:'10:40 pm',subj:'Your first night: how this works',body:()=>`
     <p>Welcome to the night roster. A few things before you start.</p>
