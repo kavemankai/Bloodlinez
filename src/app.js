@@ -152,7 +152,7 @@ const LEAF = '<svg class="leaf" viewBox="0 0 20 26" aria-hidden="true"><path d="
 
 /* ================= STATE ================= */
 const FRESH = () => ({tab:'mail',hist:{bl:{s:['home'],i:0},mail:{s:['inbox/m1'],i:0},net:{s:['matter/overview'],i:0}},
-  navOpen:false,sel:null,zoom:1,tz:1,kit:'julian',cookie:false,mlRead:false,recent:[],
+  navOpen:false,sel:null,zoom:1,tz:1,kit:'julian',cookie:false,mlRead:true,recent:[],
   pins:[],read:['m4'],seen:[],ans:{},ev:{F1:[],F2:[],F3:[],F4:[],F5:[]},res:{},attempts:0,won:false,failed:false,
   mode:'investigation',claims:{},desk:{a:'',b:''},prelim:{answer:'',ev:[],sent:false},flags:{},reports:{},lab:{a:'',b:'',ma:[],mb:[],miss:0},hw:{a:'',b:''},tree:{people:['cornelius','julian','margaret','daphne'],links:[],events:[],nid:0},viewed:[],notes:'',log:[],plog:[],q:{name:'',kw:'',kind:'All'},searched:false});
 const S = FRESH();
@@ -928,7 +928,6 @@ function mailApp(r){
     <div class="racts"><button disabled>${ic('reply')}Reply</button><button disabled>${ic('fwdm')}Forward</button></div></div>
     <div class="rtext">${m.body()}</div>
     ${m.attach?`<button class="attach" data-a="open" data-v="${m.attach}"><span class="fi">${(FILES[m.attach]||'x.pdf').split('.').pop().toUpperCase()}</span><span><b>${FILES[m.attach]}</b><small>${m.attach==='diary1888'?'1.2 MB':'214 KB'} · Click to preview</small></span></button>`:''}
-    ${id==='m1'?`<div style="margin-top:22px;display:flex;gap:10px;flex-wrap:wrap"><button class="mlbtn ghost" data-a="guide">Open the field guide</button></div>`:''}
     ${id==='m7'||id==='m12'?endCard():''}</div>`;
   return `<div class="ml ${S.mlRead?'reading':''}"><div class="mltop"><span class="brand"><i>A&amp;P</i>Mail</span><div class="mlsearch">${ic('search')}Search mail and people</div><span class="me">AS</span></div>
   <div class="mlbody"><nav class="folders"><span class="compose">${ic('draft')}New message</span>

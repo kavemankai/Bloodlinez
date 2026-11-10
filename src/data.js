@@ -489,20 +489,27 @@ function evidenceOk(F, ev){
 
 /* ================= MAIL ================= */
 const MAIL = {
-  m1:{from:'R. Ashgrove, Senior Partner',time:'10:52 pm',subj:'Vane estate: your first file',body:()=>`
-    <p>Welcome to nights. <b>Verify the claimant before we distribute the estate.</b></p>
-    <p>Cornelius Vane, 84, and his wife Helen were lost at sea in March. The will names <b>Julian Ambrose Vane</b> as the beneficiary after Helen. <b>Margaret Holloway</b> objects to his claim. <b>Daphne Marsh-Pike</b> has also lodged a claim.</p>
-    <p>Start with the claimant himself, and with the objection to him. The archive is open to you.</p>
-    <p>You may send a preliminary concern before settling the whole estate. It does not use a final filing.</p>
-    <div class="opening-actions"><button class="mlbtn" data-a="searchname" data-v="Julian Vane">Search Julian Vane</button><button class="mlbtn ghost" data-a="go" data-t="net" data-v="matter/overview">Open your investigation</button></div>
-    <details><summary>Full assignment and estate</summary><p>Vane House and the family investments are valued at $6,020,000. The cellar contents and family crypt are unvalued. The final ruling needs five supported findings. The Nocturnal Accord is in the law library; where it applies, it governs the estate.</p><p>${S.mode==='challenge'?'Challenge mode allows three final filings.':'Investigation mode allows revisions. Working theories are not submitted as proof.'}</p></details>
+  m1:{from:'R. Ashgrove, Senior Partner',time:'10:52 pm',subj:'Start here: your first night on the Vane estate',body:()=>`
+    <p>Welcome to Ashgrove &amp; Pell. You're our new night associate. Read this once and you'll know what the job is.</p>
+    <h3>What we do</h3>
+    <p>We settle estates. When a client dies, we decide who inherits, and we have to be able to prove it. Families keep secrets, records get things wrong and wills get contested. Your job is to find out from the documents what really happened, and put it on the record.</p>
+    <h3>Your file tonight</h3>
+    <p>Cornelius Vane, 84, and his wife Helen were lost at sea in March. The will leaves the estate (Vane House and the family investments, about $6,020,000) to <b>Julian Ambrose Vane</b> after Helen. <b>Margaret Holloway</b> objects to his claim. <b>Daphne Marsh-Pike</b> has lodged a claim of her own. Before we pay anyone, find out who is actually entitled.</p>
+    <h3>Where you work</h3>
+    <p>Three tabs run along the top of the screen.</p>
+    <ul>
+      <li><b>Bloodlines</b> is the records archive and your family tree. Search names, places and keywords, open the records, and add the people and relationships they support. The tree starts nearly empty.</li>
+      <li><b>Mail</b> is this inbox. People will write to you as the case moves.</li>
+      <li><b>Matter 2025-0417</b> is the firm's intranet: the evidence you save, a desk for comparing two documents, the photo lab, the law library and the ruling form. Its overview page has a short training list that ticks itself off as you work.</li>
+    </ul>
+    <h3>How you finish</h3>
+    <p>The partners want <b>five findings</b>. The questions are on the ruling form. Each finding is an answer plus the records that prove it. A right answer on thin evidence is refused, the same as a wrong one, and your tree has to back up what you file.</p>
+    <p>${S.mode==='challenge'?'You chose the challenge: three filings, and each finding is marked accepted or rejected.':'You can revise and refile as often as you need. The partners will tell you how many findings they accepted, not which ones.'} If something looks wrong early on, you can send a preliminary report. It doesn't use a filing.</p>
+    <h3>House rules</h3>
+    <p>Nobody here will give you the answers. Hints from public member trees can be made by anyone, including the people you're investigating, so save the record behind a hint, never the hint itself. Some of our clients keep unusual hours. Where it applies, the Nocturnal Accord in the law library governs their estates.</p>
+    <p>Start with the claimant himself, and with the objection to him. Read slowly. Most of what you need is in the small print.</p>
+    <div class="opening-actions"><button class="mlbtn" data-a="searchname" data-v="Julian Vane">Search Julian Vane</button><button class="mlbtn ghost" data-a="go" data-t="net" data-v="matter/overview">Open your investigation</button><button class="mlbtn ghost" data-a="guide">Open the field guide</button></div>
     <p>R.A.</p>`},
-  m0:{from:'People & Culture',time:'10:40 pm',subj:'Your first night: how this works',body:()=>`
-    <p>Welcome to the night roster. A few things before you start.</p>
-    <p>You work in three places, shown as tabs along the top: Bloodlines (records and the family tree), this mailbox, and the firm's intranet for matter 2025-0417. Your tree starts nearly empty. You fill it in from the records.</p>
-    <p>On the intranet, the matter overview has a short training list that ticks itself off as you work. The bookmarks bar has a field guide that explains every tool. Nobody here will give you the answers, so the guide won't either.</p>
-    <p>Read slowly. Most of what you need is in the small print.</p>
-    <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap"><button class="mlbtn" data-a="guide">Open the field guide</button><button class="mlbtn ghost" data-a="go" data-t="net" data-v="matter/overview">Open the training list</button></div>`},
   m2:{from:'Firm IT',time:'9:30 pm',subj:'Bloodlines: search tips and hints',body:()=>`
     <p>Two reminders for all staff.</p>
     <p>Most records aren't attached to any tree. Search covers names, places and keywords, so try "Hollow Lane", "Marguerite" or "hospital", not just surnames. If a search comes up empty, a nil return can be certified and saved.</p>
@@ -540,7 +547,7 @@ const MAIL = {
     <p>Don't take it personally. The first one is always the hardest. Most of them are.</p><p>R.A.</p>`}
 };
 function mailIds(){
-  const ids = ['m1','m0','m10','m2','m3','m4'];
+  const ids = ['m1','m10','m2','m3','m4'];
   if(S.flags.diary) ids.unshift('m11');
   if(S.won) ids.unshift('m7','m9','m6','m5');
   if(S.failed) ids.unshift('m12');

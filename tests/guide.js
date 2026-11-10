@@ -18,8 +18,8 @@ const GAME='file://'+path.resolve(__dirname,'..')+'/index.html';
  const spoil=await ev(()=>{const bad=['Ambrose','Desmond','Harriet','Eliza','Josiah','Hannah','Roland','Ashgrove estate','staged','fabricated','vampire','knots','latch','Marguerite','1740','cellar'];const txt=GUIDE.map(g=>g.t+' '+g.h).join(' ');return bad.filter(w=>txt.includes(w));});
  ok(spoil.length===0,'the guide contains no Case 1 spoilers'+(spoil.length?': '+spoil:''));
  // welcome mail
- ok(await ev(()=>mailIds().includes('m0')&&MAIL.m0.subj.includes('first night')),'the welcome email is in the inbox');
- await ev(()=>go('inbox/m0','mail')); ok(await p.locator('.rtext button[data-a=guide]').count()===1,'the welcome email links to the field guide');
+ ok(await ev(()=>mailIds()[0]==='m1'&&MAIL.m1.subj.startsWith('Start here')&&!mailIds().includes('m0')),'one start-here email opens the inbox');
+ await ev(()=>go('inbox/m1','mail')); ok(await p.locator('.rtext button[data-a=guide]').count()===1,'the start-here email links to the field guide');
  // training list
  await fresh(); await ev(()=>go('matter/overview','net')); await p.waitForTimeout(150);
  const count=()=>p.textContent('.bh:has(h2:text("Training")) span');

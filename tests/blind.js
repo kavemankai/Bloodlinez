@@ -7,7 +7,7 @@ try{
  fs.rmSync(DIR,{recursive:true,force:true});
  ok(/Game open/.test(run('start',path.join(ROOT,'index.html'))),'start opens the game');
  let L=run('look');
- ok(/\[1\] /.test(L)&&/Vane estate: your first file/.test(L),'look shows numbered controls and the inbox');
+ ok(/\[1\] /.test(L)&&/Start here: your first night/.test(L),'look shows numbered controls and the inbox');
  ok(!/function\s*\(|=>|REC\[|localStorage|<script|treeChecks|CLAIMS/.test(L),'look never shows source code or data');
  const n=(L.match(/\[(\d+)\] B Bloodlines/)||[])[1]; run('click',n); L=run('look');
  const f=(L.match(/\[(\d+): text field "Search names, places or keywords"\]/)||[])[1]; ok(!!f,'the search field is numbered');
